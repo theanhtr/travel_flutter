@@ -19,23 +19,21 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    redirectIntroScreen();
+    _redirectIntroScreen();
   }
 
-  void redirectIntroScreen() async {
+  void  _redirectIntroScreen() async {
     final ignoreIntroScreen =
         LocalStorageHelper.getValue('ignoreIntroScreen') as bool?;
-
     await Future.delayed(const Duration(seconds: 1));
-    // Navigator.of(context).pushNamed(IntroScreen.routeName);
-    if (ignoreIntroScreen != null && ignoreIntroScreen) {
-      Navigator.of(context).pushNamed(MainScreen.routeName);
-    } else {
-      Navigator.of(context).pushNamed(IntroScreen.routeName);
-      LocalStorageHelper.setValue('ignoreIntroScreen', true);
-    }
+    // if (ignoreIntroScreen != null && ignoreIntroScreen) {
+    //   Navigator.of(context).pushNamed(MainScreen.routeName);
+    // } else {
+    //   LocalStorageHelper.setValue('ignoreIntroScreen', true);
+    //   Navigator.of(context).pushNamed(IntroScreen.routeName);
+    // }
+    Navigator.of(context).pushNamed(IntroScreen.routeName);
   }
 
   @override

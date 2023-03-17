@@ -6,6 +6,7 @@ import 'package:travel_app_ytb/core/constants/dismention_constants.dart';
 import 'package:travel_app_ytb/core/constants/textstyle_constants.dart';
 import 'package:travel_app_ytb/helpers/asset_helper.dart';
 import 'package:travel_app_ytb/helpers/image_helper.dart';
+import 'package:travel_app_ytb/representation/screens/login_screen.dart';
 import 'package:travel_app_ytb/representation/screens/main_screen.dart';
 import 'package:travel_app_ytb/representation/widgets/button_widget.dart';
 
@@ -38,7 +39,8 @@ class _IntroScreenState extends State<IntroScreen> {
       Container(
           alignment: alignment,
           child: ImageHelper.loadFromAsset(image,
-              height: 375, fit: BoxFit.fitHeight)),
+               fit: BoxFit.fitHeight)
+      ),
       const SizedBox(
         height: kMediumPadding * 2,
       ),
@@ -117,7 +119,7 @@ class _IntroScreenState extends State<IntroScreen> {
                             ontap: () {
                               if (_pageController.page == 2) {
                                 Navigator.of(context)
-                                    .pushNamed(MainScreen.routeName);
+                                    .pushNamed(LoginScreen.routeName);
                               } else {
                                 _pageController.nextPage(
                                     duration: const Duration(microseconds: 200),
