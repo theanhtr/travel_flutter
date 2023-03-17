@@ -5,6 +5,12 @@ import 'package:travel_app_ytb/helpers/loginManager/login_manager.dart';
 import '../../representation/screens/main_screen.dart';
 
 class LoginFacebookManager extends LoginManager {
+  static final LoginFacebookManager _shared = LoginFacebookManager._internal();
+  factory LoginFacebookManager() {
+    return _shared;
+  }
+
+  LoginFacebookManager._internal();
   @override
   Future<bool> isLogIn() async {
     final AccessToken? accessToken = await FacebookAuth.instance.accessToken;
@@ -17,7 +23,6 @@ class LoginFacebookManager extends LoginManager {
   void logOut() {
     () async {
       await FacebookAuth.instance.logOut();
-      print("facebook logout");
     }();
   }
 
@@ -28,7 +33,7 @@ class LoginFacebookManager extends LoginManager {
       // you are logged
       final AccessToken accessToken = result.accessToken!;
       if (!context.mounted) return;
-      Navigator.pushNamed(context, MainScreen.routeName);
+      Navigator.popAndPushNamed(context, MainScreen.routeName);
     } else {
       print(result.status);
       print(result.message);
