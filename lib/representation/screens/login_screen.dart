@@ -9,9 +9,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travel_app_ytb/core/constants/color_palatte.dart';
 import 'package:travel_app_ytb/core/constants/dismention_constants.dart';
 import 'package:travel_app_ytb/core/constants/textstyle_constants.dart';
+import 'package:travel_app_ytb/core/constants/type_name_login.dart';
 import 'package:travel_app_ytb/helpers/asset_helper.dart';
 import 'package:travel_app_ytb/helpers/image_helper.dart';
 import 'package:travel_app_ytb/helpers/loginManager/login_facebook_manager.dart';
+import 'package:travel_app_ytb/helpers/loginManager/login_manager.dart';
 import 'package:travel_app_ytb/representation/screens/forgot_password_screen.dart';
 import 'package:travel_app_ytb/representation/screens/home_screen.dart';
 import 'package:travel_app_ytb/representation/screens/main_screen.dart';
@@ -37,17 +39,6 @@ class _LoginScreenState extends State<LoginScreen> {
   String email = "";
   String password = "";
   bool rememberMe = true;
-
-  @override
-  void initState() {
-    super.initState();
-    () async {
-      if (await LoginFacebookManager.isLogged()) {
-      if (!context.mounted) return;
-        Navigator.pushNamed(context, MainScreen.routeName);
-    }
-    } ();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -191,7 +182,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     textColor: ColorPalette.blackTextColor,
                     icon: ImageHelper.loadFromAsset(AssetHelper.googleIcon,
                         fit: BoxFit.contain, width: kDefaultPadding * 1.5),
-                    ontap: () {},
+                    ontap: () {
+                      LoginManager.shared(TypeNameLogin.google).loginAndNextScreen(context);
+                    },
                   ),
                 ),
                 SizedBox(width: kDefaultPadding / 2),
@@ -206,7 +199,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       color: Colors.white,
                     ),
                     ontap: () {
-                      LoginFacebookManager.loginAndNextScreen(context);
+                      LoginManager.shared(TypeNameLogin.facebook).loginAndNextScreen(context);
                     },
                   ),
                 ),

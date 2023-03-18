@@ -126,7 +126,8 @@ class _IntroScreenState extends State<IntroScreen> {
                                     curve: Curves.linear);
                               }
                             },
-                          ));
+                          )
+                      );
                     })
               ],
             ),

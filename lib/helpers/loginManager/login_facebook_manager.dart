@@ -1,21 +1,12 @@
-
-import 'dart:developer';
-import 'dart:ffi';
-import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:travel_app_ytb/helpers/loginManager/login_manager.dart';
 
 import '../../representation/screens/main_screen.dart';
 
-class LoginFacebookManager {
-  static final LoginFacebookManager _shared = LoginFacebookManager._internal();
-  factory LoginFacebookManager() {
-    return _shared;
-  }
-  LoginFacebookManager._internal();
-
-  static Future<bool> isLogged() async {
+class LoginFacebookManager extends LoginManager {
+  @override
+  Future<bool> isLogIn() async {
     final AccessToken? accessToken = await FacebookAuth.instance.accessToken;
     if (accessToken != null) {
       return true;
@@ -23,13 +14,15 @@ class LoginFacebookManager {
     return false;
   }
 
-  static void logOut() {
+  void logOut() {
     () async {
       await FacebookAuth.instance.logOut();
+      print("facebook logout");
     }();
   }
 
-  static void loginAndNextScreen(BuildContext context) async {
+  @override
+  void loginAndNextScreen(BuildContext context) async {
     final LoginResult result = await FacebookAuth.instance.login();
     if (result.status == LoginStatus.success) {
       // you are logged
