@@ -3,7 +3,10 @@ import 'package:travel_app_ytb/helpers/asset_helper.dart';
 import 'package:travel_app_ytb/helpers/image_helper.dart';
 import 'package:travel_app_ytb/helpers/local_storage_helper.dart';
 import 'package:travel_app_ytb/representation/screens/intro_screen.dart';
+import 'package:travel_app_ytb/representation/screens/login_screen.dart';
 import 'package:travel_app_ytb/representation/screens/main_screen.dart';
+
+import '../../helpers/loginManager/login_facebook_manager.dart';
 
 /*màn chạy khởi động khi vào app*/
 
@@ -27,13 +30,19 @@ class _SplashScreenState extends State<SplashScreen> {
     final ignoreIntroScreen =
         LocalStorageHelper.getValue('ignoreIntroScreen') as bool?;
     await Future.delayed(const Duration(seconds: 1));
-    // if (ignoreIntroScreen != null && ignoreIntroScreen) {
-    //   Navigator.of(context).pushNamed(MainScreen.routeName);
-    // } else {
-    //   LocalStorageHelper.setValue('ignoreIntroScreen', true);
-    //   Navigator.of(context).pushNamed(IntroScreen.routeName);
-    // }
-    Navigator.of(context).pushNamed(IntroScreen.routeName);
+    if (ignoreIntroScreen != null && ignoreIntroScreen) {
+      () async {
+        if (await LoginFacebookManager.isLogged()) {
+          if (!context.mounted) return;
+          Navigator.pushNamed(context, MainScreen.routeName);
+        } else {
+          Navigator.of(context).pushNamed(LoginScreen.routeName);
+        }
+      } ();
+    } else {
+      LocalStorageHelper.setValue('ignoreIntroScreen', true);
+      Navigator.of(context).pushNamed(IntroScreen.routeName);
+    }
   }
 
   @override

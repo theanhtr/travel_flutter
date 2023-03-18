@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -9,7 +11,10 @@ import 'package:travel_app_ytb/core/constants/dismention_constants.dart';
 import 'package:travel_app_ytb/core/constants/textstyle_constants.dart';
 import 'package:travel_app_ytb/helpers/asset_helper.dart';
 import 'package:travel_app_ytb/helpers/image_helper.dart';
+import 'package:travel_app_ytb/helpers/loginManager/login_facebook_manager.dart';
 import 'package:travel_app_ytb/representation/screens/forgot_password_screen.dart';
+import 'package:travel_app_ytb/representation/screens/home_screen.dart';
+import 'package:travel_app_ytb/representation/screens/main_screen.dart';
 import 'package:travel_app_ytb/representation/screens/sign_up_screen.dart';
 import 'package:travel_app_ytb/representation/widgets/app_bar_container.dart';
 import 'package:travel_app_ytb/representation/widgets/button_icon_widget.dart';
@@ -17,6 +22,7 @@ import 'package:travel_app_ytb/representation/widgets/button_widget.dart';
 import 'package:travel_app_ytb/representation/widgets/input_card.dart';
 import 'package:travel_app_ytb/representation/widgets/item_text_container.dart';
 import 'package:travel_app_ytb/representation/widgets/line_widget.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -31,6 +37,17 @@ class _LoginScreenState extends State<LoginScreen> {
   String email = "";
   String password = "";
   bool rememberMe = true;
+
+  @override
+  void initState() {
+    super.initState();
+    () async {
+      if (await LoginFacebookManager.isLogged()) {
+      if (!context.mounted) return;
+        Navigator.pushNamed(context, MainScreen.routeName);
+    }
+    } ();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -188,7 +205,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       FontAwesomeIcons.facebookF,
                       color: Colors.white,
                     ),
-                    ontap: () {},
+                    ontap: () {
+                      LoginFacebookManager.loginAndNextScreen(context);
+                    },
                   ),
                 ),
               ],
@@ -229,4 +248,5 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+
 }
