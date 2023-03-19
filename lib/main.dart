@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:travel_app_ytb/helpers/local_storage_helper.dart';
-import 'package:travel_app_ytb/representation/screens/login_screen.dart';
 import 'package:travel_app_ytb/representation/screens/splash_screen.dart';
 import 'package:travel_app_ytb/routes.dart';
 import './core/constants/color_palatte.dart';
-import './core/constants/dismention_constants.dart';
 
 void main() async {
   await Hive.initFlutter();
@@ -31,13 +29,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-// class MyHomePage extends StatelessWidget {
-//   const MyHomePage({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     // TODO: implement build
-//     return Container();
-//   }
-// }
