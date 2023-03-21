@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:travel_app_ytb/helpers/asset_helper.dart';
 import 'package:travel_app_ytb/helpers/image_helper.dart';
@@ -32,14 +33,11 @@ class _SplashScreenState extends State<SplashScreen> {
         LocalStorageHelper.getValue('ignoreIntroScreen') as bool?;
     await Future.delayed(const Duration(seconds: 1));
     if (ignoreIntroScreen != null && ignoreIntroScreen) {
-      () async {
-        if (await LoginManager.isLogged()) {
-          if (!context.mounted) return;
-          Navigator.pushNamed(context, MainScreen.routeName);
-        } else {
-          Navigator.of(context).pushNamed(LoginScreen.routeName);
-        }
-      } ();
+      if (FirebaseAuth.instance.currentUser == null) {
+        Navigator.popAndPushNamed(context, LoginScreen.routeName);
+      } else {
+        Navigator.popAndPushNamed(context, MainScreen.routeName);
+      }
     } else {
       LocalStorageHelper.setValue('ignoreIntroScreen', true);
       Navigator.of(context).pushNamed(IntroScreen.routeName);

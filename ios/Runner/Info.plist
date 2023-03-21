@@ -74,6 +74,8 @@
 	<array>
 		<string>fbapi</string>
 		<string>fb-messenger-share-api</string>
+        <string>fbauth2</string>
+        <string>fbshareextension</string>
 	</array>
 </dict>
 </plist>

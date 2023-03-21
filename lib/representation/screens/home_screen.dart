@@ -7,6 +7,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travel_app_ytb/core/constants/dismention_constants.dart';
 import 'package:travel_app_ytb/helpers/asset_helper.dart';
 import 'package:travel_app_ytb/helpers/image_helper.dart';
+import 'package:travel_app_ytb/representation/controllers/home_screen_controller.dart';
 import 'package:travel_app_ytb/representation/screens/hotel_booking_screen.dart';
 import 'package:travel_app_ytb/representation/widgets/app_bar_container.dart';
 
@@ -21,6 +22,20 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  HomeScreenController? _controller;
+  String? userName;
+  String? photoUrl;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = HomeScreenController();
+    setState(() {
+      userName = _controller?.getUser()?.displayName;
+      photoUrl = _controller?.getUser()?.photoURL;
+    });
+  }
+  
   @override
   Widget build(BuildContext context) {
     return AppBarContainer(
@@ -37,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Hi, TTA!',
+                    'Hi, $userName',
                     style: TextStyles.defaultStyle.whiteTextColor.bold
                         .setTextSize(24),
                   ),
@@ -59,7 +74,14 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             Container(
               margin: const EdgeInsets.only(left: kDefaultPadding),
-              child: ImageHelper.loadFromAsset(
+              child: photoUrl != null ? ClipRRect(
+                borderRadius: BorderRadius.circular(kMinPadding),
+                child: Image.network(
+                  photoUrl!,
+                  width: kDefaultIconSize * 2.5,
+                  fit: BoxFit.cover,
+                ),
+              ) : ImageHelper.loadFromAsset(
                 AssetHelper.userAvatar,
                 width: kDefaultIconSize * 2.5,
                 radius: BorderRadius.circular(kMinPadding),
