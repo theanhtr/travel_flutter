@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:travel_app_ytb/core/constants/color_palatte.dart';
 import 'package:travel_app_ytb/core/constants/dismention_constants.dart';
+import 'package:travel_app_ytb/helpers/loginManager/login_google_manager.dart';
 import 'package:travel_app_ytb/representation/screens/favorite_screen.dart';
 import 'package:travel_app_ytb/representation/screens/home_screen.dart';
 import 'package:travel_app_ytb/representation/screens/hotel_booking_screen.dart';
@@ -21,6 +22,11 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

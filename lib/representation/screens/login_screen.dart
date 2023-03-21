@@ -13,6 +13,7 @@ import 'package:travel_app_ytb/core/constants/type_name_login.dart';
 import 'package:travel_app_ytb/helpers/asset_helper.dart';
 import 'package:travel_app_ytb/helpers/image_helper.dart';
 import 'package:travel_app_ytb/helpers/loginManager/login_facebook_manager.dart';
+import 'package:travel_app_ytb/helpers/loginManager/login_google_manager.dart';
 import 'package:travel_app_ytb/helpers/loginManager/login_manager.dart';
 import 'package:travel_app_ytb/representation/screens/forgot_password_screen.dart';
 import 'package:travel_app_ytb/representation/screens/home_screen.dart';
@@ -183,7 +184,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     icon: ImageHelper.loadFromAsset(AssetHelper.googleIcon,
                         fit: BoxFit.contain, width: kDefaultPadding * 1.5),
                     ontap: () {
-                      LoginManager.shared(TypeNameLogin.google).loginAndNextScreen(context);
+                      LoginGoogleManager().signInWithGoogle().then((value) {
+                        Navigator.popAndPushNamed(context, MainScreen.routeName);
+                      });
                     },
                   ),
                 ),
@@ -199,7 +202,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       color: Colors.white,
                     ),
                     ontap: () {
-                      LoginManager.shared(TypeNameLogin.facebook).loginAndNextScreen(context);
+                      LoginFacebookManager().signInWithFacebook().then((value) {
+                        Navigator.popAndPushNamed(context, MainScreen.routeName);
+                      });
                     },
                   ),
                 ),

@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:travel_app_ytb/helpers/local_storage_helper.dart';
@@ -8,6 +9,7 @@ import './core/constants/color_palatte.dart';
 void main() async {
   await Hive.initFlutter();
   await LocalStorageHelper.initLocalStorageHelper();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
