@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -11,10 +12,12 @@ import 'package:travel_app_ytb/core/constants/dismention_constants.dart';
 import 'package:travel_app_ytb/core/constants/textstyle_constants.dart';
 import 'package:travel_app_ytb/core/constants/type_name_login.dart';
 import 'package:travel_app_ytb/helpers/asset_helper.dart';
+import 'package:travel_app_ytb/helpers/http/base_client.dart';
 import 'package:travel_app_ytb/helpers/image_helper.dart';
 import 'package:travel_app_ytb/helpers/loginManager/login_facebook_manager.dart';
 import 'package:travel_app_ytb/helpers/loginManager/login_google_manager.dart';
 import 'package:travel_app_ytb/helpers/loginManager/login_manager.dart';
+// import 'package:travel_app_ytb/helpers/loginManager/login_manager.dart';
 import 'package:travel_app_ytb/representation/screens/forgot_password_screen.dart';
 import 'package:travel_app_ytb/representation/screens/home_screen.dart';
 import 'package:travel_app_ytb/representation/screens/main_screen.dart';
@@ -138,8 +141,20 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             ButtonWidget(
               title: 'Login',
-              ontap: () {
-                print('$email, $rememberMe');
+              ontap: () async {
+                var response = await BaseClient("").post('/login', {
+                  'email': email,
+                  'password': password
+                }).catchError((err) {});
+                if (response == null) return;
+
+                Map dataResponse = json.decode(response);
+
+                /* lưu trữ access_token trên máy */
+
+                String tokenAuth = dataResponse['access_token'];
+
+                Navigator.popAndPushNamed(context, MainScreen.routeName);
               },
             ),
             const SizedBox(
@@ -185,7 +200,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         fit: BoxFit.contain, width: kDefaultPadding * 1.5),
                     ontap: () {
                       LoginGoogleManager().signInWithGoogle().then((value) {
-                        Navigator.popAndPushNamed(context, MainScreen.routeName);
+                        Navigator.popAndPushNamed(
+                            context, MainScreen.routeName);
                       });
                     },
                   ),
@@ -203,7 +219,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     ontap: () {
                       LoginFacebookManager().signInWithFacebook().then((value) {
-                        Navigator.popAndPushNamed(context, MainScreen.routeName);
+                        Navigator.popAndPushNamed(
+                            context, MainScreen.routeName);
                       });
                     },
                   ),
@@ -246,5 +263,4 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-
 }
