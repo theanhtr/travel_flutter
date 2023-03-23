@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-const String baseUrl = "http://10.0.2.2:8000/api";
+const String baseUrl = "http://192.168.1.244:9000/api";
 
 class BaseClient {
   var client = http.Client();
@@ -48,7 +48,10 @@ class BaseClient {
         || response.statusCode == 200
     ) {
       return response.body;
-    } else {}
+    } else {
+      return response.body;
+
+    }
   }
 
   Future<dynamic> patch(String api) async {}

@@ -1,24 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:travel_app_ytb/helpers/loginManager/login_manager.dart';
 import 'dart:async';
-import 'dart:convert' show json;
-
-import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:http/http.dart' as http;
-import 'package:travel_app_ytb/representation/models/user_model.dart';
-
-import '../../representation/screens/main_screen.dart';
 
 class LoginGoogleManager {
   static final LoginGoogleManager _shared = LoginGoogleManager._internal();
-  // final GoogleSignIn _googleSignIn = GoogleSignIn(
-  //   scopes: [
-  //     'email',
-  //     'https://www.googleapis.com/auth/contacts.readonly',
-  //   ],
-  // );
+  final GoogleSignIn _googleSignIn = GoogleSignIn(
+    scopes: [
+      'email',
+      'https://www.googleapis.com/auth/contacts.readonly',
+    ],
+  );
 
   factory LoginGoogleManager() {
     return _shared;
@@ -28,7 +19,7 @@ class LoginGoogleManager {
 
   Future<UserCredential> signInWithGoogle() async {
     // Trigger the authentication flow
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+    final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
 
     // Obtain the auth details from the request
     final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;

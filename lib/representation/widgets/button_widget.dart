@@ -11,10 +11,10 @@ class ButtonWidget extends StatefulWidget {
   const ButtonWidget({super.key, required this.title, this.ontap});
 
   @override
-  _ButtonWidgetState createState() => _ButtonWidgetState();
+  ButtonWidgetState createState() => ButtonWidgetState();
 }
 
-class _ButtonWidgetState extends State<ButtonWidget>
+class ButtonWidgetState extends State<ButtonWidget>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
