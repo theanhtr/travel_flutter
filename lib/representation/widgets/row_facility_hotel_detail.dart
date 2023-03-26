@@ -15,8 +15,8 @@ class RowDetailFacilityHotel extends StatefulWidget {
   final String facility;
   final Widget icon;
   final int index;
-  // List<RowDetailFacilityHotel> array;
   bool? checkBoxValue;
+
   @override
   State<RowDetailFacilityHotel> createState() => _RowDetailFacilityHotelState();
 }
@@ -65,7 +65,8 @@ class _RowDetailFacilityHotelState extends State<RowDetailFacilityHotel> {
                         widget.checkBoxValue = Value;
                       });
                       Text('Remember me');
-                    }),
+                    }
+                ),
               ],
             ),
           )

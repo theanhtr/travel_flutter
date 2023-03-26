@@ -16,52 +16,52 @@ class FacilityHotel extends StatefulWidget {
 }
 
 class _FacilityHotelState extends State<FacilityHotel> {
-  List<RowDetailFacilityHotel> selectedRows = [];
-  List<RowDetailFacilityHotel> Rows = [
-    RowDetailFacilityHotel(
+  bool isSelectedAll = true;
+  List<_CheckBoxState> listCheckbox = [
+    _CheckBoxState(
       facility: "Wifi",
       icon: ImageHelper.loadFromAsset(AssetHelper.wifiIcon,
           fit: BoxFit.contain, width: kDefaultPadding * 1.5),
       checkBoxValue: false,
       index: 0,
     ),
-    RowDetailFacilityHotel(
+    _CheckBoxState(
         facility: "Digital TV",
         icon: ImageHelper.loadFromAsset(AssetHelper.digitalTv,
             fit: BoxFit.contain, width: kDefaultPadding * 1.5),
         checkBoxValue: false,
         index: 1),
-    RowDetailFacilityHotel(
+    _CheckBoxState(
         facility: "Parking Area",
         icon: ImageHelper.loadFromAsset(AssetHelper.parkingAreaIcon,
             fit: BoxFit.contain, width: kDefaultPadding * 1.5),
         checkBoxValue: false,
         index: 2),
-    RowDetailFacilityHotel(
+    _CheckBoxState(
         facility: "Swimming Pool",
         icon: ImageHelper.loadFromAsset(AssetHelper.swimingPoolIcon,
             fit: BoxFit.contain, width: kDefaultPadding * 1.5),
         checkBoxValue: false,
         index: 3),
-    RowDetailFacilityHotel(
+    _CheckBoxState(
         facility: "Currency Exchange",
         icon: ImageHelper.loadFromAsset(AssetHelper.currencyExchangeIcon,
             fit: BoxFit.contain, width: kDefaultPadding * 1.5),
         checkBoxValue: false,
         index: 4),
-    RowDetailFacilityHotel(
+    _CheckBoxState(
         facility: "Restaurant",
         icon: ImageHelper.loadFromAsset(AssetHelper.restaurantIcon,
             fit: BoxFit.contain, width: kDefaultPadding * 1.5),
         checkBoxValue: false,
         index: 5),
-    RowDetailFacilityHotel(
+    _CheckBoxState(
         facility: "Car rental",
         icon: ImageHelper.loadFromAsset(AssetHelper.carRentalIcon,
             fit: BoxFit.contain, width: kDefaultPadding * 1.5),
         checkBoxValue: false,
         index: 6),
-    RowDetailFacilityHotel(
+    _CheckBoxState(
         facility: "24-hour Front Desk",
         icon: ImageHelper.loadFromAsset(AssetHelper.receptionIcon,
             fit: BoxFit.contain, width: kDefaultPadding * 1.5),
@@ -71,66 +71,81 @@ class _FacilityHotelState extends State<FacilityHotel> {
 
   @override
   Widget build(BuildContext context) {
-    print("chay laij");
     return AppBarContainer(
         implementLeading: true,
         titleString: "Facility",
-        child: Container(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: kMediumPadding * 3,
-                ),
-                StatefulBuilder(builder: (context, setState) {
-                  return Container(
-                    child: Column(children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              this.setState(() {
-                                for (var i = 0; i < Rows.length; i++)
-                                  Rows[i].checkBoxValue = true;
-
-                                print(Rows[5].checkBoxValue);
-                                selectedRows.addAll(Rows);
-                              });
-                            },
-                            child: RichText(
-                              text: TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: "Select all",
-                                    style: TextStyle(
-                                      color: hexToColor(kDefaultTextColor),
-                                    ),
-                                  ),
-                                ],
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(
+                height: kMediumPadding * 3,
+              ),
+              StatefulBuilder(builder: (context, setState) {
+                return Column(children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          this.setState(() {
+                            for (var i = 0; i < listCheckbox.length; i++) {
+                              listCheckbox[i].checkBoxValue = isSelectedAll;
+                            }
+                            isSelectedAll = !isSelectedAll;
+                          });
+                        },
+                        child: RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: "Select all",
+                                style: TextStyle(
+                                  color: hexToColor(kDefaultTextColor),
+                                ),
                               ),
-                            ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
-                    ]),
-                  );
-                }),
-                for (var item in Rows) item,
-                Container(
-                  margin: const EdgeInsets.only(top: kDefaultPadding),
-                  child: ButtonWidget(
-                    title: 'Apply',
-                    ontap: () {},
+                    ],
                   ),
+                ]);
+              }),
+              ListView(
+                shrinkWrap: true,
+                physics: const ScrollPhysics(),
+                children: [
+                  ...listCheckbox.map(buildItemCheckbox).toList()
+                ],
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: kDefaultPadding),
+                child: ButtonWidget(
+                  title: 'Apply',
+                  ontap: () {},
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ));
   }
+  Widget buildItemCheckbox(_CheckBoxState checkBoxSate) => RowDetailFacilityHotel(
+      facility: checkBoxSate.facility,
+      icon: checkBoxSate.icon,
+      checkBoxValue: checkBoxSate.checkBoxValue,
+      index: checkBoxSate.index,
+  );
 }
 
 Color hexToColor(String code) {
-  return new Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
+  return Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
+}
+
+class _CheckBoxState {
+  final String facility;
+  final Widget icon;
+  final int index;
+  bool checkBoxValue;
+
+  _CheckBoxState({required this.facility, required this.icon, required this.index, this.checkBoxValue = false});
 }
