@@ -9,5 +9,5 @@ const double kTopPadding = 8.0; // default top padding
 
 const double kDefaultIconSize = 18;
 const double kDefaultTextSize = 18;
-
+const String kDefaultTextColor = "#6155CC";
 const BorderRadius kDefaultBorderRadius = BorderRadius.all(Radius.circular(8));

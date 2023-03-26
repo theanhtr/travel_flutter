@@ -25,4 +25,14 @@ class AssetHelper {
   static const String arrowUpDownIcon = 'assets/icons/arrow_up_down_icon.png';
   static const String heartWhileIcon = 'assets/icons/heart_while_icon.png';
   static const String startYellowIcon = 'assets/icons/star_yellow_icon.png';
+  //facility hotel
+  static const String wifiIcon = 'assets/icons/wifi.png';
+  static const String digitalTv = 'assets/icons/digital_tivi.png';
+  static const String parkingAreaIcon = 'assets/icons/parking_area.png';
+  static const String swimingPoolIcon = 'assets/icons/swiming_pool.png';
+  static const String currencyExchangeIcon =
+      'assets/icons/currency_exchange.png';
+  static const String restaurantIcon = 'assets/icons/fork.png';
+  static const String carRentalIcon = 'assets/icons/car_rental.png';
+  static const String receptionIcon = 'assets/icons/reception.png';
 }

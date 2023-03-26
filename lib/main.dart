@@ -2,6 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:travel_app_ytb/helpers/local_storage_helper.dart';
+import 'package:travel_app_ytb/representation/screens/facility_hotel_screen.dart';
+import 'package:travel_app_ytb/representation/screens/hotel_booking_screen.dart';
 import 'package:travel_app_ytb/representation/screens/splash_screen.dart';
 import 'package:travel_app_ytb/routes.dart';
 import './core/constants/color_palatte.dart';
@@ -27,7 +29,9 @@ class MyApp extends StatelessWidget {
       ),
       routes: routes,
       debugShowCheckedModeBanner: false,
-      home: const SplashScreen(),
+      home: const FacilityHotel(),
+      // home: const HotelBookingScreen()
+      //  home: const SplashScreen(),
     );
   }
 }

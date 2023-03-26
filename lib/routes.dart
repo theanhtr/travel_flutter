@@ -14,6 +14,7 @@ import 'package:travel_app_ytb/representation/screens/select_guest_room_screen.d
 import 'package:travel_app_ytb/representation/screens/select_room_screen.dart';
 import 'package:travel_app_ytb/representation/screens/sign_up_screen.dart';
 import 'package:travel_app_ytb/representation/screens/splash_screen.dart';
+import 'package:travel_app_ytb/representation/screens/facility_hotel_screen.dart';
 
 final Map<String, WidgetBuilder> routes = {
   SplashScreen.routeName: (context) => const SplashScreen(),
@@ -31,4 +32,5 @@ final Map<String, WidgetBuilder> routes = {
   ForgotPasswordScreen.routeName: (context) => const ForgotPasswordScreen(),
   BookingFlightsScreen.routeName: (context) => const BookingFlightsScreen(),
   ResultFlightScreen.routeName: (context) => const ResultFlightScreen(),
+  FacilityHotel.routeName: (context) => const FacilityHotel(),
 };
