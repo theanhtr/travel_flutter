@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:travel_app_ytb/helpers/asset_helper.dart';
 import 'package:travel_app_ytb/helpers/image_helper.dart';
 import 'package:travel_app_ytb/helpers/local_storage_helper.dart';
-import 'package:travel_app_ytb/helpers/loginManager/login_manager.dart';
 import 'package:travel_app_ytb/representation/screens/intro_screen.dart';
 import 'package:travel_app_ytb/representation/screens/login_screen.dart';
 import 'package:travel_app_ytb/representation/screens/main_screen.dart';

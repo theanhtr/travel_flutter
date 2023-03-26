@@ -18,4 +18,7 @@ class AssetHelper {
   static const String locationTest = 'assets/images/location_test.png';
   static const String googleIcon = 'assets/icons/google_icon.png';
   static const String facebookIcon = 'assets/icons/facebook_icon.png';
+  static const String heartRedIcon = 'assets/icons/heart_red_icon.png';
+  static const String heartWhileIcon = 'assets/icons/heart_while_icon.png';
+  static const String startYellowIcon = 'assets/icons/star_yellow_icon.png';
 }

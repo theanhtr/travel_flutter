@@ -1,15 +1,21 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:travel_app_ytb/core/constants/color_palatte.dart';
 import 'package:travel_app_ytb/core/constants/dismention_constants.dart';
 import 'package:travel_app_ytb/helpers/asset_helper.dart';
 import 'package:travel_app_ytb/helpers/image_helper.dart';
 import 'package:travel_app_ytb/representation/controllers/home_screen_controller.dart';
 import 'package:travel_app_ytb/representation/screens/hotel_booking_screen.dart';
+import 'package:travel_app_ytb/representation/screens/hotel_detail_screen.dart';
 import 'package:travel_app_ytb/representation/widgets/app_bar_container.dart';
+import 'package:travel_app_ytb/representation/widgets/custom_checkbox_icon.dart';
+import 'package:travel_app_ytb/representation/widgets/tapable_widget.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 import '../../core/constants/textstyle_constants.dart';
 import '../widgets/item_text_container.dart';
@@ -25,6 +31,15 @@ class _HomeScreenState extends State<HomeScreen> {
   HomeScreenController? _controller;
   String? userName;
   String? photoUrl;
+  int _selectedCard = -1;
+  List<String> images = [
+    "https://images.unsplash.com/photo-1468877294001-94aef5ebfa1e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8bW91dGFpbnxlbnwwfHwwfHw%3D&w=1000&q=80",
+    "https://images.unsplash.com/photo-1468877294001-94aef5ebfa1e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8bW91dGFpbnxlbnwwfHwwfHw%3D&w=1000&q=80",
+    "https://images.unsplash.com/photo-1468877294001-94aef5ebfa1e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8bW91dGFpbnxlbnwwfHwwfHw%3D&w=1000&q=80",
+    "https://images.unsplash.com/photo-1468877294001-94aef5ebfa1e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8bW91dGFpbnxlbnwwfHwwfHw%3D&w=1000&q=80",
+    "https://images.unsplash.com/photo-1468877294001-94aef5ebfa1e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8bW91dGFpbnxlbnwwfHwwfHw%3D&w=1000&q=80",
+    "https://images.unsplash.com/photo-1468877294001-94aef5ebfa1e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8bW91dGFpbnxlbnwwfHwwfHw%3D&w=1000&q=80",
+  ];
 
   @override
   void initState() {
@@ -35,9 +50,11 @@ class _HomeScreenState extends State<HomeScreen> {
       photoUrl = _controller?.getUser()?.photoURL;
     });
   }
-  
+
   @override
   Widget build(BuildContext context) {
+    double ratio = 0.5;
+
     return AppBarContainer(
       title: Container(
         margin: const EdgeInsets.only(top: kItemPadding),
@@ -91,69 +108,282 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-      child: Column(
-        // ignore: prefer_const_literals_to_create_immutables
-        children: [
-          TextField(
-            decoration: InputDecoration(
-                hintText: 'Search your destination',
-                prefixIcon: Padding(
-                  padding: EdgeInsets.all(kTopPadding),
-                  child: Icon(
-                    FontAwesomeIcons.magnifyingGlass,
-                    color: Colors.black,
-                    size: kDefaultIconSize,
+      child: SingleChildScrollView(
+        child: Column(
+          // ignore: prefer_const_literals_to_create_immutables
+          children: [
+            TextField(
+              decoration: InputDecoration(
+                  hintText: 'Search your destination',
+                  prefixIcon: Padding(
+                    padding: EdgeInsets.all(kTopPadding),
+                    child: Icon(
+                      FontAwesomeIcons.magnifyingGlass,
+                      color: Colors.black,
+                      size: kDefaultIconSize,
+                    ),
                   ),
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                    borderRadius:
+                        BorderRadius.all(Radius.circular(kDefaultPadding)),
+                  )),
+            ),
+            Container(
+              margin: EdgeInsets.all(kDefaultPadding),
+              child: SizedBox(
+                height: 120,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    ItemText(
+                      icon: FontAwesomeIcons.hotel,
+                      text: 'Hotels',
+                      sizeItem: kDefaultPadding * 2,
+                      sizeText: 16,
+                      primaryColor: Color(0xffFE9C5E),
+                      secondaryColor: Color(0xffFE9C5E).withOpacity(0.2),
+                      ontap: () => {
+                        Navigator.of(context)
+                            .pushNamed(HotelBookingScreen.routeName)
+                      },
+                    ),
+                    ItemText(
+                      icon: FontAwesomeIcons.plane,
+                      text: 'Flights',
+                      sizeItem: kDefaultPadding * 2,
+                      sizeText: 16,
+                      primaryColor: Color(0xffF77777),
+                      secondaryColor: Color(0xffF77777).withOpacity(0.2),
+                    ),
+                    ItemText(
+                      icon: FontAwesomeIcons.earthAsia,
+                      text: 'All',
+                      sizeItem: kDefaultPadding * 2,
+                      sizeText: 16,
+                      primaryColor: Color(0xff3EC8BC),
+                      secondaryColor: Color(0xff3EC8BC).withOpacity(0.2),
+                    )
+                  ],
                 ),
-                filled: true,
-                fillColor: Colors.white,
-                border: OutlineInputBorder(
-                  borderSide: BorderSide.none,
-                  borderRadius:
-                      BorderRadius.all(Radius.circular(kDefaultPadding)),
-                )),
-          ),
-          Container(
-            margin: EdgeInsets.all(kDefaultPadding),
-            child: SizedBox(
-              height: 120,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  ItemText(
-                    icon: FontAwesomeIcons.hotel,
-                    text: 'Hotels',
-                    sizeItem: kDefaultPadding * 2,
-                    sizeText: 16,
-                    primaryColor: Color(0xffFE9C5E),
-                    secondaryColor: Color(0xffFE9C5E).withOpacity(0.2),
-                    ontap: () => {
-                      Navigator.of(context)
-                          .pushNamed(HotelBookingScreen.routeName)
-                    },
-                  ),
-                  ItemText(
-                    icon: FontAwesomeIcons.plane,
-                    text: 'Flights',
-                    sizeItem: kDefaultPadding * 2,
-                    sizeText: 16,
-                    primaryColor: Color(0xffF77777),
-                    secondaryColor: Color(0xffF77777).withOpacity(0.2),
-                  ),
-                  ItemText(
-                    icon: FontAwesomeIcons.earthAsia,
-                    text: 'All',
-                    sizeItem: kDefaultPadding * 2,
-                    sizeText: 16,
-                    primaryColor: Color(0xff3EC8BC),
-                    secondaryColor: Color(0xff3EC8BC).withOpacity(0.2),
-                  )
-                ],
               ),
             ),
+            Row(
+              children: [
+                Expanded(
+                  flex: 4,
+                  child: Text(
+                    "Popular Destinations",
+                    style: TextStyles.defaultStyle.blackTextColor
+                    .setTextSize(18).bold,
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: TapableWidget(
+                    onTap: () {
+                      print("next screen");
+                    },
+                    child: Text(
+                      "See All",
+                      style: TextStyles.defaultStyle.blackTextColor
+                          .setTextSize(16).bold.setColor(Colors.blueAccent),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Container(
+              padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
+                child: StaggeredGrid.count(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 10,
+                    crossAxisSpacing: 8,
+                  children: [
+                    StaggeredGridTile.count(
+                      crossAxisCellCount: 1,
+                      mainAxisCellCount: 2,
+                      child: CardDestinations(
+                        url: images[0],
+                        address: "amazooon lili",
+                      ),
+                    ),
+                    StaggeredGridTile.count(
+                      crossAxisCellCount: 1,
+                      mainAxisCellCount: 1,
+                      child: CardDestinations(
+                        url: images[1],
+                          address: "amazooon lili",
+                      ),
+                    ),
+                    StaggeredGridTile.count(
+                      crossAxisCellCount: 1,
+                      mainAxisCellCount: 2,
+                      child: CardDestinations(
+                        url: images[2],
+                      ),
+                    ),
+                    StaggeredGridTile.count(
+                      crossAxisCellCount: 1,
+                      mainAxisCellCount: 1,
+                      child: CardDestinations(
+                        url: images[3],
+                      ),
+                    ),
+                    StaggeredGridTile.count(
+                      crossAxisCellCount: 1,
+                      mainAxisCellCount: 2,
+                      child: CardDestinations(
+                        url: images[4],
+                      ),
+                    ),
+                    StaggeredGridTile.count(
+                      crossAxisCellCount: 1,
+                      mainAxisCellCount: 1,
+                      child: CardDestinations(
+                        url: images[1],
+                      ),
+                    ),
+                    StaggeredGridTile.count(
+                      crossAxisCellCount: 1,
+                      mainAxisCellCount: 2,
+                      child: CardDestinations(
+                        url: images[2],
+                      ),
+                    ),
+                    StaggeredGridTile.count(
+                      crossAxisCellCount: 1,
+                      mainAxisCellCount: 1,
+                      child: CardDestinations(
+                        url: images[3],
+                      ),
+                    ),
+                    StaggeredGridTile.count(
+                      crossAxisCellCount: 1,
+                      mainAxisCellCount: 2,
+                      child: CardDestinations(
+                        url: images[4],
+                      ),
+                    ),
+                    StaggeredGridTile.count(
+                      crossAxisCellCount: 1,
+                      mainAxisCellCount: 1,
+                      child: CardDestinations(
+                        url: images[1],
+                      ),
+                    ),
+                    StaggeredGridTile.count(
+                      crossAxisCellCount: 1,
+                      mainAxisCellCount: 2,
+                      child: CardDestinations(
+                        url: images[2],
+                      ),
+                    ),
+                    StaggeredGridTile.count(
+                      crossAxisCellCount: 1,
+                      mainAxisCellCount: 1,
+                      child: CardDestinations(
+                        url: images[3],
+                      ),
+                    ),
+                    StaggeredGridTile.count(
+                      crossAxisCellCount: 1,
+                      mainAxisCellCount: 2,
+                      child: CardDestinations(
+                        url: images[4],
+                      ),
+                    ),
+                  ],
+                )
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+@immutable
+class CardDestinations extends StatelessWidget {
+  CardDestinations({Key? key, this.url, this.address, this.isSelected = false}) : super(key: key);
+  final String? url;
+  final String? address;
+  bool isSelected;
+
+  @override
+  Widget build(BuildContext context) {
+    return TapableWidget(
+      onTap: () {
+          print("next screen destinations");
+      },
+      child: Stack(
+        fit: StackFit.passthrough,
+        children: [
+          Positioned.fill(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Image.network(
+                url ?? "",
+                fit: BoxFit.fitHeight,
+              ),
+            ),
+          ),
+          Positioned(
+              left: 10,
+              bottom: 50,
+              child: Text(
+                address ?? "",
+                style: TextStyles.defaultStyle.bold.whiteTextColor,
+              )
+          ),
+          Positioned(
+              top: 10,
+              right: 10,
+              height: kDefaultIconSize,
+              width: kDefaultIconSize,
+              child: CustomCheckboxIcon(
+                onChanged: (bool? value) {
+                  isSelected = value!;
+                  print(isSelected);
+                },
+                isChecked: isSelected,
+                selected: ImageHelper.loadFromAsset(AssetHelper.heartRedIcon),
+                unselected: ImageHelper.loadFromAsset(AssetHelper.heartWhileIcon),
+              )
+          ),
+          Positioned(
+              bottom: 5,
+              left: 10,
+              width: 60,
+              height: 30,
+              child: Container(
+                padding: EdgeInsets.all(kMinPadding),
+                decoration: BoxDecoration(
+                  color: ColorPalette.cardBackgroundColor,
+                  borderRadius: BorderRadius.circular(10)
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                        flex: 1,
+                        child: ImageHelper.loadFromAsset(AssetHelper.startYellowIcon)
+                    ),
+                    Expanded(
+                        flex: 1,
+                        child: Text(
+                            "4.5",
+                          textAlign: TextAlign.end,
+                        )
+                    )
+                  ],
+                ),
+              )
           )
         ],
       ),
     );
   }
 }
+
