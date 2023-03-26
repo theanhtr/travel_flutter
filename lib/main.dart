@@ -7,11 +7,13 @@ import 'package:travel_app_ytb/representation/screens/facility_flight_screen.dar
 import 'package:travel_app_ytb/representation/screens/facility_hotel_screen.dart';
 import 'package:travel_app_ytb/representation/screens/google_map_screen.dart';
 import 'package:travel_app_ytb/representation/screens/hotel_booking_screen.dart';
+import 'package:travel_app_ytb/representation/screens/hotel_filter_screen.dart';
 import 'package:travel_app_ytb/representation/screens/property_type_screen.dart';
 import 'package:travel_app_ytb/representation/screens/sort_by_filght_screen.dart';
 import 'package:travel_app_ytb/representation/screens/sort_by_hotel_screen.dart';
 
 import 'package:travel_app_ytb/representation/screens/splash_screen.dart';
+import 'package:travel_app_ytb/representation/widgets/slider.dart';
 import 'package:travel_app_ytb/routes.dart';
 import './core/constants/color_palatte.dart';
 
@@ -28,15 +30,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primaryColor: ColorPalette.primaryColor,
-        scaffoldBackgroundColor: ColorPalette.backgroundScaffoldColor,
-        backgroundColor: ColorPalette.backgroundScaffoldColor,
-      ),
-      routes: routes,
-      debugShowCheckedModeBanner: false,
-      home: const SplashScreen(),
-    );
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primaryColor: ColorPalette.primaryColor,
+          scaffoldBackgroundColor: ColorPalette.backgroundScaffoldColor,
+          backgroundColor: ColorPalette.backgroundScaffoldColor,
+        ),
+        routes: routes,
+        debugShowCheckedModeBanner: false,
+        // home: const GoogleMapScreen(),
+        home: const HotelFilterScreen()
+        // home: const MySliderApp()
+        // home: const SplashScreen(),
+        );
   }
 }

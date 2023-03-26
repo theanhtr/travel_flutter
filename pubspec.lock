@@ -449,6 +449,17 @@ packages:
     source: hosted
     version: "1.1.0"
   html:
+<<<<<<< HEAD
+=======
+    dependency: transitive
+    description:
+      name: html
+      sha256: "79d498e6d6761925a34ee5ea8fa6dfef38607781d2fa91e37523474282af55cb"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.15.2"
+  http:
+>>>>>>> 0cc70cd (fix_select_all_item)
     dependency: transitive
     description:
       name: html
