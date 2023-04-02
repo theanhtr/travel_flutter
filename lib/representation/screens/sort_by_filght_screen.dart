@@ -7,22 +7,24 @@ import 'package:travel_app_ytb/representation/widgets/row_facility_hotel_detail.
 import 'dart:developer';
 import '../../helpers/asset_helper.dart';
 
-class SortByHotel extends StatefulWidget {
-  const SortByHotel({super.key});
-  static const String routename = '/sort_by_hotel_screen';
+class SortByFlight extends StatefulWidget {
+  const SortByFlight({super.key});
+  static const String routename = '/sort_by_flight_screen';
 
   @override
-  State<SortByHotel> createState() => _SortByHotelState();
+  State<SortByFlight> createState() => _SortByFlightState();
 }
 
-class _SortByHotelState extends State<SortByHotel> {
+class _SortByFlightState extends State<SortByFlight> {
   bool isSelectedAll = true;
   List<_CheckBoxState> listCheckbox = [
+    _CheckBoxState(facility: "Earliest Departure", icon: Container(), index: 1),
+    _CheckBoxState(facility: "Latest Departure", icon: Container(), index: 2),
+    _CheckBoxState(facility: "Earliest Arrive", icon: Container(), index: 3),
+    _CheckBoxState(facility: "Latest Arrive", icon: Container(), index: 4),
+    _CheckBoxState(facility: "Shortest Duration", icon: Container(), index: 0),
+    _CheckBoxState(facility: "Lowest Price", icon: Container(), index: 0),
     _CheckBoxState(facility: "Highest popularity", icon: Container(), index: 0),
-    _CheckBoxState(facility: "Lowest Price", icon: Container(), index: 1),
-    _CheckBoxState(facility: "Highest Price", icon: Container(), index: 2),
-    _CheckBoxState(facility: "Highest Rating", icon: Container(), index: 3),
-    _CheckBoxState(facility: "Nearest Distance", icon: Container(), index: 4),
   ];
 
   @override
@@ -36,37 +38,6 @@ class _SortByHotelState extends State<SortByHotel> {
               const SizedBox(
                 height: kMediumPadding * 3,
               ),
-              StatefulBuilder(builder: (context, setState) {
-                return Column(children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          this.setState(() {
-                            for (var i = 0; i < listCheckbox.length; i++) {
-                              listCheckbox[i].checkBoxValue = isSelectedAll;
-                            }
-                            isSelectedAll = !isSelectedAll;
-                          });
-                        },
-                        child: RichText(
-                          text: TextSpan(
-                            children: [
-                              TextSpan(
-                                text: "Select all",
-                                style: TextStyle(
-                                  color: hexToColor(kDefaultTextColor),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ]);
-              }),
               ListView(
                 itemExtent: 84.0,
                 shrinkWrap: true,

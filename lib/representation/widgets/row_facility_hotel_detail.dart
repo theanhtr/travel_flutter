@@ -24,7 +24,7 @@ class RowDetailFacilityHotel extends StatefulWidget {
 class _RowDetailFacilityHotelState extends State<RowDetailFacilityHotel> {
   @override
   Widget build(BuildContext context) {
-    print("widgit con ơ dây");
+    print(widget.checkBoxValue);
     return Container(
       padding: const EdgeInsets.all(kDefaultPadding),
       child: Row(
@@ -65,8 +65,7 @@ class _RowDetailFacilityHotelState extends State<RowDetailFacilityHotel> {
                         widget.checkBoxValue = Value;
                       });
                       Text('Remember me');
-                    }
-                ),
+                    }),
               ],
             ),
           )

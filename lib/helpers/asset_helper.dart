@@ -35,4 +35,6 @@ class AssetHelper {
   static const String restaurantIcon = 'assets/icons/fork.png';
   static const String carRentalIcon = 'assets/icons/car_rental.png';
   static const String receptionIcon = 'assets/icons/reception.png';
+  static const String energyIcon = 'assets/icons/energy.png';
+  static const String luggageIcon = 'assets/icons/luggage.png';
 }

@@ -112,11 +112,10 @@ class _FacilityHotelState extends State<FacilityHotel> {
                 ]);
               }),
               ListView(
+                itemExtent: 84.0,
                 shrinkWrap: true,
                 physics: const ScrollPhysics(),
-                children: [
-                  ...listCheckbox.map(buildItemCheckbox).toList()
-                ],
+                children: [...listCheckbox.map(buildItemCheckbox).toList()],
               ),
               Container(
                 margin: const EdgeInsets.only(top: kDefaultPadding),
@@ -129,12 +128,14 @@ class _FacilityHotelState extends State<FacilityHotel> {
           ),
         ));
   }
-  Widget buildItemCheckbox(_CheckBoxState checkBoxSate) => RowDetailFacilityHotel(
-      facility: checkBoxSate.facility,
-      icon: checkBoxSate.icon,
-      checkBoxValue: checkBoxSate.checkBoxValue,
-      index: checkBoxSate.index,
-  );
+
+  Widget buildItemCheckbox(_CheckBoxState checkBoxSate) =>
+      RowDetailFacilityHotel(
+        facility: checkBoxSate.facility,
+        icon: checkBoxSate.icon,
+        checkBoxValue: checkBoxSate.checkBoxValue,
+        index: checkBoxSate.index,
+      );
 }
 
 Color hexToColor(String code) {
@@ -147,5 +148,9 @@ class _CheckBoxState {
   final int index;
   bool checkBoxValue;
 
-  _CheckBoxState({required this.facility, required this.icon, required this.index, this.checkBoxValue = false});
+  _CheckBoxState(
+      {required this.facility,
+      required this.icon,
+      required this.index,
+      this.checkBoxValue = false});
 }

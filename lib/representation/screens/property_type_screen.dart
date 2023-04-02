@@ -7,29 +7,32 @@ import 'package:travel_app_ytb/representation/widgets/row_facility_hotel_detail.
 import 'dart:developer';
 import '../../helpers/asset_helper.dart';
 
-class SortByHotel extends StatefulWidget {
-  const SortByHotel({super.key});
-  static const String routename = '/sort_by_hotel_screen';
+class PropertyType extends StatefulWidget {
+  const PropertyType({super.key});
+  static const String routeName = '/property_type_screen';
 
   @override
-  State<SortByHotel> createState() => _SortByHotelState();
+  State<PropertyType> createState() => _PropertyTypeState();
 }
 
-class _SortByHotelState extends State<SortByHotel> {
+class _PropertyTypeState extends State<PropertyType> {
   bool isSelectedAll = true;
   List<_CheckBoxState> listCheckbox = [
-    _CheckBoxState(facility: "Highest popularity", icon: Container(), index: 0),
-    _CheckBoxState(facility: "Lowest Price", icon: Container(), index: 1),
-    _CheckBoxState(facility: "Highest Price", icon: Container(), index: 2),
-    _CheckBoxState(facility: "Highest Rating", icon: Container(), index: 3),
-    _CheckBoxState(facility: "Nearest Distance", icon: Container(), index: 4),
+    _CheckBoxState(facility: "Hostels", icon: Container(), index: 0),
+    _CheckBoxState(facility: "Resorts", icon: Container(), index: 1),
+    _CheckBoxState(facility: "Hotels", icon: Container(), index: 2),
+    _CheckBoxState(facility: "Villas", icon: Container(), index: 3),
+    _CheckBoxState(facility: "Guest Houses", icon: Container(), index: 4),
+    _CheckBoxState(facility: "Homestays", icon: Container(), index: 5),
+    _CheckBoxState(facility: "Apartments", icon: Container(), index: 6),
+    _CheckBoxState(facility: "Others", icon: Container(), index: 7)
   ];
 
   @override
   Widget build(BuildContext context) {
     return AppBarContainer(
         implementLeading: true,
-        titleString: "Sort by",
+        titleString: "Property type",
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -76,7 +79,7 @@ class _SortByHotelState extends State<SortByHotel> {
               Container(
                 margin: const EdgeInsets.only(top: kDefaultPadding),
                 child: ButtonWidget(
-                  title: 'Apply',
+                  title: 'Done',
                   ontap: () {},
                 ),
               ),

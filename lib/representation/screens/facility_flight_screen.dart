@@ -7,29 +7,49 @@ import 'package:travel_app_ytb/representation/widgets/row_facility_hotel_detail.
 import 'dart:developer';
 import '../../helpers/asset_helper.dart';
 
-class SortByHotel extends StatefulWidget {
-  const SortByHotel({super.key});
-  static const String routename = '/sort_by_hotel_screen';
+class FacilityFlight extends StatefulWidget {
+  const FacilityFlight({super.key});
+  static const String routeName = '/facility_flight_screen';
 
   @override
-  State<SortByHotel> createState() => _SortByHotelState();
+  State<FacilityFlight> createState() => _FacilityFlightState();
 }
 
-class _SortByHotelState extends State<SortByHotel> {
+class _FacilityFlightState extends State<FacilityFlight> {
   bool isSelectedAll = true;
   List<_CheckBoxState> listCheckbox = [
-    _CheckBoxState(facility: "Highest popularity", icon: Container(), index: 0),
-    _CheckBoxState(facility: "Lowest Price", icon: Container(), index: 1),
-    _CheckBoxState(facility: "Highest Price", icon: Container(), index: 2),
-    _CheckBoxState(facility: "Highest Rating", icon: Container(), index: 3),
-    _CheckBoxState(facility: "Nearest Distance", icon: Container(), index: 4),
+    _CheckBoxState(
+      facility: "Wifi",
+      icon: ImageHelper.loadFromAsset(AssetHelper.wifiIcon,
+          fit: BoxFit.contain, width: kDefaultPadding * 1.5),
+      checkBoxValue: false,
+      index: 0,
+    ),
+    _CheckBoxState(
+        facility: "Baggage",
+        icon: ImageHelper.loadFromAsset(AssetHelper.luggageIcon,
+            fit: BoxFit.contain, width: kDefaultPadding * 1.5),
+        checkBoxValue: false,
+        index: 1),
+    _CheckBoxState(
+        facility: "Power / USB Port",
+        icon: ImageHelper.loadFromAsset(AssetHelper.energyIcon,
+            fit: BoxFit.contain, width: kDefaultPadding * 1.5),
+        checkBoxValue: false,
+        index: 2),
+    _CheckBoxState(
+        facility: "In-Flight Meal",
+        icon: ImageHelper.loadFromAsset(AssetHelper.restaurantIcon,
+            fit: BoxFit.contain, width: kDefaultPadding * 1.5),
+        checkBoxValue: false,
+        index: 3),
   ];
 
   @override
   Widget build(BuildContext context) {
     return AppBarContainer(
         implementLeading: true,
-        titleString: "Sort by",
+        titleString: "Facility",
         child: SingleChildScrollView(
           child: Column(
             children: [
