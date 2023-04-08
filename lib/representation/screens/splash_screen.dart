@@ -21,16 +21,9 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  @override
-  void initState() {
-    super.initState();
-    _redirectIntroScreen();
-  }
-
   void  _redirectIntroScreen() async {
     final ignoreIntroScreen =
-        LocalStorageHelper.getValue('ignoreIntroScreen') as bool?;
-    await Future.delayed(const Duration(seconds: 1));
+       await LocalStorageHelper.getValue('ignoreIntroScreen') as bool?;
     if (ignoreIntroScreen != null && ignoreIntroScreen) {
       if (FirebaseAuth.instance.currentUser == null) {
         Navigator.popAndPushNamed(context, LoginScreen.routeName);
@@ -45,6 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    _redirectIntroScreen();
     return Stack(
       children: [
         Positioned.fill(
