@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:travel_app_ytb/representation/screens/booking_flights_multi_city_screen.dart';
-import 'package:travel_app_ytb/representation/screens/booking_flights_round_trip_screen.dart';
 import 'package:travel_app_ytb/representation/screens/booking_flights_screen.dart';
 import 'package:travel_app_ytb/representation/screens/checkout_screen.dart';
 import 'package:travel_app_ytb/representation/screens/forgot_password_screen.dart';
@@ -31,6 +29,4 @@ final Map<String, WidgetBuilder> routes = {
   SignUpScreen.routeName: (context) => const SignUpScreen(),
   ForgotPasswordScreen.routeName: (context) => const ForgotPasswordScreen(),
   BookingFlightsScreen.routeName: (context) => const BookingFlightsScreen(),
-  BookingFlightsRoundTripScreen.routeName: (context) => const BookingFlightsRoundTripScreen(),
-  BookingFlightsMultiCityScreen.routeName: (context) => const BookingFlightsMultiCityScreen(),
 };
