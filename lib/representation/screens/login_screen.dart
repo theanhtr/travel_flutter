@@ -13,6 +13,7 @@ import 'package:travel_app_ytb/helpers/image_helper.dart';
 import 'package:travel_app_ytb/helpers/loginManager/login_facebook_manager.dart';
 import 'package:travel_app_ytb/helpers/loginManager/login_google_manager.dart';
 import 'package:travel_app_ytb/representation/screens/forgot_password_screen.dart';
+import 'package:travel_app_ytb/representation/screens/home_screen.dart';
 import 'package:travel_app_ytb/representation/screens/main_screen.dart';
 import 'package:travel_app_ytb/representation/screens/sign_up_screen.dart';
 import 'package:travel_app_ytb/representation/widgets/app_bar_container.dart';
@@ -198,6 +199,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Navigator.popAndPushNamed(
                             context, MainScreen.routeName);
                       });
+                      // Navigator.of(context).pushNamed(MainScreen.routeName);
                     },
                   ),
                 ),

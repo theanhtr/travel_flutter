@@ -10,7 +10,7 @@ import 'package:travel_app_ytb/core/constants/dismention_constants.dart';
 import 'package:travel_app_ytb/helpers/asset_helper.dart';
 import 'package:travel_app_ytb/helpers/image_helper.dart';
 import 'package:travel_app_ytb/representation/controllers/home_screen_controller.dart';
-import 'package:travel_app_ytb/representation/screens/flight_booking_screen.dart';
+import 'package:travel_app_ytb/representation/screens/booking_flights_screen.dart';
 import 'package:travel_app_ytb/representation/screens/hotel_booking_screen.dart';
 import 'package:travel_app_ytb/representation/screens/hotel_detail_screen.dart';
 import 'package:travel_app_ytb/representation/screens/result_flight_screen.dart';
@@ -210,9 +210,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       sizeText: 16,
                       primaryColor: Color(0xffF77777),
                       secondaryColor: Color(0xffF77777).withOpacity(0.2),
-                      ontap: () {
+                      ontap: () => {
                         Navigator.of(context)
-                            .pushNamed(ResultFlightScreen.routeName);
+                            .pushNamed(BookingFlightsScreen.routeName)
                       },
                     ),
                     ItemText(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:travel_app_ytb/representation/screens/booking_flights_screen.dart';
 import 'package:travel_app_ytb/representation/screens/checkout_screen.dart';
-import 'package:travel_app_ytb/representation/screens/flight_booking_screen.dart';
 import 'package:travel_app_ytb/representation/screens/forgot_password_screen.dart';
 import 'package:travel_app_ytb/representation/screens/hotel_booking_screen.dart';
 import 'package:travel_app_ytb/representation/screens/hotel_detail_screen.dart';
@@ -29,6 +29,6 @@ final Map<String, WidgetBuilder> routes = {
   LoginScreen.routeName: (context) => const LoginScreen(),
   SignUpScreen.routeName: (context) => const SignUpScreen(),
   ForgotPasswordScreen.routeName: (context) => const ForgotPasswordScreen(),
-  FlightBookingScreen.routeName: (context) => const FlightBookingScreen(),
+  BookingFlightsScreen.routeName: (context) => const BookingFlightsScreen(),
   ResultFlightScreen.routeName: (context) => const ResultFlightScreen(),
 };
