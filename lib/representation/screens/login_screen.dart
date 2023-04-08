@@ -196,10 +196,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         fit: BoxFit.contain, width: kDefaultPadding * 1.5),
                     ontap: () {
                       LoginGoogleManager().signInWithGoogle().then((value) {
-                        // Navigator.popAndPushNamed(
-                        //     context, MainScreen.routeName);
+                        Navigator.popAndPushNamed(
+                            context, MainScreen.routeName);
                       });
-                      Navigator.of(context).pushNamed(MainScreen.routeName);
+                      // Navigator.of(context).pushNamed(MainScreen.routeName);
                     },
                   ),
                 ),

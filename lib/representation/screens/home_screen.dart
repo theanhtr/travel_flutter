@@ -13,6 +13,7 @@ import 'package:travel_app_ytb/representation/controllers/home_screen_controller
 import 'package:travel_app_ytb/representation/screens/booking_flights_screen.dart';
 import 'package:travel_app_ytb/representation/screens/hotel_booking_screen.dart';
 import 'package:travel_app_ytb/representation/screens/hotel_detail_screen.dart';
+import 'package:travel_app_ytb/representation/screens/result_flight_screen.dart';
 import 'package:travel_app_ytb/representation/widgets/app_bar_container.dart';
 import 'package:travel_app_ytb/representation/widgets/custom_checkbox_icon.dart';
 import 'package:travel_app_ytb/representation/widgets/tapable_widget.dart';
@@ -40,6 +41,57 @@ class _HomeScreenState extends State<HomeScreen> {
     "https://images.unsplash.com/photo-1468877294001-94aef5ebfa1e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8bW91dGFpbnxlbnwwfHwwfHw%3D&w=1000&q=80",
     "https://images.unsplash.com/photo-1468877294001-94aef5ebfa1e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8bW91dGFpbnxlbnwwfHwwfHw%3D&w=1000&q=80",
     "https://images.unsplash.com/photo-1468877294001-94aef5ebfa1e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8bW91dGFpbnxlbnwwfHwwfHw%3D&w=1000&q=80",
+  ];
+  List<_DestinationEntity> listItem = [
+    _DestinationEntity(
+        url: "https://images.unsplash.com/photo-1468877294001-94aef5ebfa1e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8bW91dGFpbnxlbnwwfHwwfHw%3D&w=1000&q=80",
+        address: "adressss",
+        isSelected: false
+    ),
+    _DestinationEntity(
+        url: "https://images.unsplash.com/photo-1468877294001-94aef5ebfa1e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8bW91dGFpbnxlbnwwfHwwfHw%3D&w=1000&q=80",
+        address: "adressss",
+        isSelected: false
+    ),
+    _DestinationEntity(
+        url: "https://images.unsplash.com/photo-1468877294001-94aef5ebfa1e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8bW91dGFpbnxlbnwwfHwwfHw%3D&w=1000&q=80",
+        address: "adressss",
+        isSelected: false
+    ),
+    _DestinationEntity(
+        url: "https://images.unsplash.com/photo-1468877294001-94aef5ebfa1e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8bW91dGFpbnxlbnwwfHwwfHw%3D&w=1000&q=80",
+        address: "adressss",
+        isSelected: false
+    ),
+    _DestinationEntity(
+        url: "https://images.unsplash.com/photo-1468877294001-94aef5ebfa1e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8bW91dGFpbnxlbnwwfHwwfHw%3D&w=1000&q=80",
+        address: "adressss",
+        isSelected: false
+    ),_DestinationEntity(
+        url: "https://images.unsplash.com/photo-1468877294001-94aef5ebfa1e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8bW91dGFpbnxlbnwwfHwwfHw%3D&w=1000&q=80",
+        address: "adressss",
+        isSelected: false
+    ),
+    _DestinationEntity(
+        url: "https://images.unsplash.com/photo-1468877294001-94aef5ebfa1e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8bW91dGFpbnxlbnwwfHwwfHw%3D&w=1000&q=80",
+        address: "adressss",
+        isSelected: false
+    ),
+    _DestinationEntity(
+        url: "https://images.unsplash.com/photo-1468877294001-94aef5ebfa1e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8bW91dGFpbnxlbnwwfHwwfHw%3D&w=1000&q=80",
+        address: "adressss",
+        isSelected: false
+    ),
+    _DestinationEntity(
+        url: "https://images.unsplash.com/photo-1468877294001-94aef5ebfa1e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8bW91dGFpbnxlbnwwfHwwfHw%3D&w=1000&q=80",
+        address: "adressss",
+        isSelected: false
+    ),
+    _DestinationEntity(
+        url: "https://images.unsplash.com/photo-1468877294001-94aef5ebfa1e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8bW91dGFpbnxlbnwwfHwwfHw%3D&w=1000&q=80",
+        address: "adressss",
+        isSelected: false
+    )
   ];
 
   @override
@@ -207,99 +259,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisSpacing: 10,
                     crossAxisSpacing: 8,
                   children: [
-                    StaggeredGridTile.count(
-                      crossAxisCellCount: 1,
-                      mainAxisCellCount: 2,
-                      child: CardDestinations(
-                        url: images[0],
-                        address: "amazooon lili",
-                      ),
-                    ),
-                    StaggeredGridTile.count(
-                      crossAxisCellCount: 1,
-                      mainAxisCellCount: 1,
-                      child: CardDestinations(
-                        url: images[1],
-                          address: "amazooon lili",
-                      ),
-                    ),
-                    StaggeredGridTile.count(
-                      crossAxisCellCount: 1,
-                      mainAxisCellCount: 2,
-                      child: CardDestinations(
-                        url: images[2],
-                      ),
-                    ),
-                    StaggeredGridTile.count(
-                      crossAxisCellCount: 1,
-                      mainAxisCellCount: 1,
-                      child: CardDestinations(
-                        url: images[3],
-                      ),
-                    ),
-                    StaggeredGridTile.count(
-                      crossAxisCellCount: 1,
-                      mainAxisCellCount: 2,
-                      child: CardDestinations(
-                        url: images[4],
-                      ),
-                    ),
-                    StaggeredGridTile.count(
-                      crossAxisCellCount: 1,
-                      mainAxisCellCount: 1,
-                      child: CardDestinations(
-                        url: images[1],
-                      ),
-                    ),
-                    StaggeredGridTile.count(
-                      crossAxisCellCount: 1,
-                      mainAxisCellCount: 2,
-                      child: CardDestinations(
-                        url: images[2],
-                      ),
-                    ),
-                    StaggeredGridTile.count(
-                      crossAxisCellCount: 1,
-                      mainAxisCellCount: 1,
-                      child: CardDestinations(
-                        url: images[3],
-                      ),
-                    ),
-                    StaggeredGridTile.count(
-                      crossAxisCellCount: 1,
-                      mainAxisCellCount: 2,
-                      child: CardDestinations(
-                        url: images[4],
-                      ),
-                    ),
-                    StaggeredGridTile.count(
-                      crossAxisCellCount: 1,
-                      mainAxisCellCount: 1,
-                      child: CardDestinations(
-                        url: images[1],
-                      ),
-                    ),
-                    StaggeredGridTile.count(
-                      crossAxisCellCount: 1,
-                      mainAxisCellCount: 2,
-                      child: CardDestinations(
-                        url: images[2],
-                      ),
-                    ),
-                    StaggeredGridTile.count(
-                      crossAxisCellCount: 1,
-                      mainAxisCellCount: 1,
-                      child: CardDestinations(
-                        url: images[3],
-                      ),
-                    ),
-                    StaggeredGridTile.count(
-                      crossAxisCellCount: 1,
-                      mainAxisCellCount: 2,
-                      child: CardDestinations(
-                        url: images[4],
-                      ),
-                    ),
+                    for (var i = 0; i < listItem.length; i++) StaggeredGridTile.count(
+                        crossAxisCellCount: 1,
+                        mainAxisCellCount: i.isEven ? 2 : 1,
+                        child: CardDestinations(
+                          url: listItem[i].url,
+                          address: listItem[i].address,
+                          isSelected: listItem[i].isSelected,
+                        )
+                    )
                   ],
                 )
             )
@@ -310,7 +278,13 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-@immutable
+class _DestinationEntity {
+    final String? url;
+    final String? address;
+    bool isSelected;
+    _DestinationEntity({this.url, this.address, required this.isSelected});
+}
+
 class CardDestinations extends StatelessWidget {
   CardDestinations({Key? key, this.url, this.address, this.isSelected = false}) : super(key: key);
   final String? url;
@@ -391,4 +365,3 @@ class CardDestinations extends StatelessWidget {
     );
   }
 }
-

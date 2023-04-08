@@ -52,6 +52,7 @@ android {
         targetSdkVersion 33
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        vectorDrawables.useSupportLibrary = true
     }
 
     buildTypes {
