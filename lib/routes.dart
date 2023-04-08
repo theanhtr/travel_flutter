@@ -13,7 +13,13 @@ import 'package:travel_app_ytb/representation/screens/select_date_screen.dart';
 import 'package:travel_app_ytb/representation/screens/select_guest_room_screen.dart';
 import 'package:travel_app_ytb/representation/screens/select_room_screen.dart';
 import 'package:travel_app_ytb/representation/screens/sign_up_screen.dart';
+import 'package:travel_app_ytb/representation/screens/sort_by_filght_screen.dart';
+import 'package:travel_app_ytb/representation/screens/sort_by_hotel_screen.dart';
+
 import 'package:travel_app_ytb/representation/screens/splash_screen.dart';
+import 'package:travel_app_ytb/representation/screens/facility_hotel_screen.dart';
+
+import 'representation/screens/property_type_screen.dart';
 
 final Map<String, WidgetBuilder> routes = {
   SplashScreen.routeName: (context) => const SplashScreen(),
@@ -31,4 +37,8 @@ final Map<String, WidgetBuilder> routes = {
   ForgotPasswordScreen.routeName: (context) => const ForgotPasswordScreen(),
   BookingFlightsScreen.routeName: (context) => const BookingFlightsScreen(),
   ResultFlightScreen.routeName: (context) => const ResultFlightScreen(),
+  FacilityHotel.routeName: (context) => const FacilityHotel(),
+  PropertyType.routeName: (context) => const PropertyType(),
+  SortByHotel.routename: (context) => const SortByHotel(),
+  SortByFlight.routename: (context) => const SortByFlight()
 };
