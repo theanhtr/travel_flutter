@@ -46,6 +46,7 @@ class _HotelBookingScreenState extends State<HotelBookingScreen> {
             sizeText: kDefaultIconSize / 1.2,
             primaryColor: const Color(0xffFE9C5E),
             secondaryColor: const Color(0xffFE9C5E).withOpacity(0.2),
+            iconString: '',
           ),
           Container(
             margin: const EdgeInsets.symmetric(vertical: kDefaultPadding),
@@ -70,6 +71,7 @@ class _HotelBookingScreenState extends State<HotelBookingScreen> {
                     setState(() {});
                   }
                 },
+                iconString: '',
               );
             }),
           ),
@@ -96,6 +98,7 @@ class _HotelBookingScreenState extends State<HotelBookingScreen> {
                 setState(() {});
               }
             },
+            iconString: '',
           ),
           Container(
             margin: const EdgeInsets.only(top: kDefaultPadding),
