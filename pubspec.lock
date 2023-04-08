@@ -336,8 +336,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.1"
-<<<<<<< HEAD
-=======
   google_maps:
     dependency: transitive
     description:
@@ -346,7 +344,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.2.0"
->>>>>>> fa43906 (them gg map)
   google_maps_flutter:
     dependency: "direct main"
     description:
@@ -379,8 +376,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.6"
-<<<<<<< HEAD
-=======
   google_maps_flutter_web:
     dependency: "direct main"
     description:
@@ -389,7 +384,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.4.0+7"
->>>>>>> fa43906 (them gg map)
   google_sign_in:
     dependency: "direct main"
     description:
@@ -677,9 +671,6 @@ packages:
       sha256: e20abf2e449749432223a8b4e6647c212eef6c2b638e0ed8cc92eff9529c2b48
       url: "https://pub.dev"
     source: hosted
-<<<<<<< HEAD
-    version: "3.3.2"
-=======
     version: "3.3.1"
   sanitize_html:
     dependency: transitive
@@ -689,7 +680,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
->>>>>>> fa43906 (them gg map)
   sky_engine:
     dependency: transitive
     description: flutter
