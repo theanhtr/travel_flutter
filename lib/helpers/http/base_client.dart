@@ -35,7 +35,8 @@ class BaseClient {
 
     if (response.statusCode == 200) {
       return response.body;
-    } else {}
+    } else {
+    }
   }
 
   Future<dynamic> post(String api, dynamic object) async {

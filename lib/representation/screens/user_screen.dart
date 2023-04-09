@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:travel_app_ytb/helpers/loginManager/login_manager.dart';
 import 'package:travel_app_ytb/representation/widgets/button_widget.dart';
 
 import 'login_screen.dart';
@@ -19,8 +19,17 @@ class _UserScreenState extends State<UserScreen> {
       child: ButtonWidget(
         title: "logout",
         ontap: () {
-          FirebaseAuth.instance.signOut();
-          Navigator.popAndPushNamed(context, LoginScreen.routeName);
+          LoginManager().signOut().then((value) =>
+              {
+                if (value == true) {
+                  Navigator.popAndPushNamed(context, LoginScreen.routeName)
+                } else {
+                  FirebaseAuth.instance.signOut().then((value) =>
+                      Navigator.popAndPushNamed(context, LoginScreen.routeName)
+                  )
+                }
+              }
+          );
         },
       )
     );
