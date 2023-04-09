@@ -7,14 +7,16 @@ import 'package:travel_app_ytb/core/constants/dismention_constants.dart';
 import 'package:travel_app_ytb/core/constants/textstyle_constants.dart';
 
 class InputCard extends StatefulWidget {
-  const InputCard({
+  InputCard({
     super.key,
     required this.style,
     required this.onchange,
+    this.value,
   });
 
   final String style;
   final Function onchange;
+  String? value;
 
   @override
   State<InputCard> createState() => _InputCardState();
@@ -22,12 +24,18 @@ class InputCard extends StatefulWidget {
 
 class _InputCardState extends State<InputCard> {
   dynamic value;
-  final _textController = TextEditingController();
+  late final TextEditingController? _textController;
+
+  @override
+  void initState() {
+    super.initState();
+    _textController = TextEditingController();
+  }
 
   @override
   Widget build(BuildContext context) {
     String? style = widget.style;
-
+    _textController?.text = widget.value ?? "";
     bool showPassword = false;
 
     Widget widgetToDisplay;
@@ -47,7 +55,7 @@ class _InputCardState extends State<InputCard> {
           style: TextStyles.defaultStyle.blackTextColor.bold
               .setTextSize(kDefaultTextSize * 1.2),
           onChanged: (String query) {
-            value = _textController.text;
+            value = _textController?.text;
             widget.onchange(value);
           },
         );
@@ -74,7 +82,7 @@ class _InputCardState extends State<InputCard> {
             style: TextStyles.defaultStyle.blackTextColor.bold
                 .setTextSize(kDefaultTextSize * 1.2),
             onChanged: (String query) {
-              value = _textController.text;
+              value = _textController?.text;
               widget.onchange(value);
             },
             obscureText: showPassword,
@@ -94,7 +102,7 @@ class _InputCardState extends State<InputCard> {
           style: TextStyles.defaultStyle.blackTextColor.bold
               .setTextSize(kDefaultTextSize * 1.2),
           onChanged: (String query) {
-            value = _textController.text;
+            value = _textController?.text;
             widget.onchange(value);
           },
         );

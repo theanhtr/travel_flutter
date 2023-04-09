@@ -1,5 +1,4 @@
-import 'dart:convert';
-import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -10,8 +9,11 @@ import 'package:travel_app_ytb/core/constants/textstyle_constants.dart';
 import 'package:travel_app_ytb/helpers/asset_helper.dart';
 import 'package:travel_app_ytb/helpers/http/base_client.dart';
 import 'package:travel_app_ytb/helpers/image_helper.dart';
+import 'package:travel_app_ytb/helpers/local_storage_helper.dart';
 import 'package:travel_app_ytb/helpers/loginManager/login_facebook_manager.dart';
 import 'package:travel_app_ytb/helpers/loginManager/login_google_manager.dart';
+import 'package:travel_app_ytb/helpers/loginManager/login_manager.dart';
+import 'package:travel_app_ytb/representation/controllers/login_screen_controller.dart';
 import 'package:travel_app_ytb/representation/screens/forgot_password_screen.dart';
 import 'package:travel_app_ytb/representation/screens/home_screen.dart';
 import 'package:travel_app_ytb/representation/screens/main_screen.dart';
@@ -36,9 +38,39 @@ class _LoginScreenState extends State<LoginScreen> {
   String password = "";
   String token = "";
   bool rememberMe = true;
+  LoginScreenController? _controller;
+
+  Future<String> _fillEmail() async {
+    if (await LocalStorageHelper.getValue("email") != null) {
+      return await LocalStorageHelper.getValue("email");
+    } else {
+      return " ";
+    }
+  }
+
+  Future<String> _fillPassword() async {
+    if (await LocalStorageHelper.getValue("password") != null) {
+      return await LocalStorageHelper.getValue("password");
+    } else {
+      return " ";
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    _controller = LoginScreenController();
+    _fillEmail().then((value) =>
+        {
+          if (email.isEmpty) {
+            setState(() {
+              email = value;
+            })
+          }
+        }
+    );
+    _fillPassword().then((value) =>
+        password = value
+    );
     return AppBarContainer(
       titleString: 'Login',
       implementLeading: true,
@@ -55,8 +87,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 style: 'Email',
                 onchange: (String value) {
                   email = value;
-                  setState(() {});
                 },
+                value: email,
               ),
             ),
             const SizedBox(
@@ -67,8 +99,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 style: 'Password',
                 onchange: (String value) {
                   password = value;
-                  setState(() {});
                 },
+                value: password
               ),
             ),
             const SizedBox(
@@ -81,7 +113,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   return GestureDetector(
                     onTap: () {
                       rememberMe = !rememberMe;
-                      setState(() {});
+                      setState(() {
+                        LoginManager().remember(rememberMe);
+                      });
                     },
                     child: Row(
                       children: [
@@ -134,23 +168,40 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             ButtonWidget(
               title: 'Login',
-              ontap: () async {
-                var response = await BaseClient("").post('/login', {
-                  'email': email,
-                  'password': password
-                }).catchError((err) {});
-                if (response == null) return;
-
-                Map dataResponse = json.decode(response);
-
-                /* lưu trữ access_token trên máy */
-
-                token = dataResponse['access_token'];
-                String tokenAuth = dataResponse['access_token'];
-                 // String tokenAuth = dataResponse['message'];
-
-                debugPrint(tokenAuth);
-                //Navigator.popAndPushNamed(context, MainScreen.routeName);
+              ontap: () {
+                if (rememberMe == true) {
+                  LocalStorageHelper.setValue("email", email);
+                  LocalStorageHelper.setValue("password", password);
+                }
+                else {
+                  LocalStorageHelper.deleteValue("email");
+                  LocalStorageHelper.deleteValue("password");
+                }
+                 _controller?.loginByPassWord(email, password).then((value) => {
+                 if (value == true) {
+                     Navigator.popAndPushNamed(context, MainScreen.routeName)
+                    }
+                 else {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) => AlertDialog(
+                          title: const Text('ERROR YOUR PASSWORD'),
+                          content: const Text('Your password or email is wrong, please re-enter'),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () => Navigator.pop(context, 'Cancel'),
+                              child: const Text('Cancel'),
+                            ),
+                            TextButton(
+                              onPressed: () => Navigator.pop(context, 'OK'),
+                              child: const Text('OK'),
+                            ),
+                          ],
+                        ),
+                    )
+                 }
+                 }
+                 );
               },
             ),
             const SizedBox(
@@ -215,24 +266,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       color: Colors.white,
                     ),
                     ontap: () async {
-                      var response = await BaseClient(token).post('/user/confirm-password', {
-                        'password': password
-                      }).catchError((err) {});
-                      if (response == null) return;
-
-                      Map dataResponse = json.decode(response);
-
-                      /* lưu trữ access_token trên máy */
-
-                      String message = dataResponse['message'];
-                      // String tokenAuth = dataResponse['message'];
-
-                      debugPrint(message);
-                      //Navigator.popAndPushNamed(context, MainScreen.routeName);
-                      // LoginFacebookManager().signInWithFacebook().then((value) {
-                      //   Navigator.popAndPushNamed(
-                      //       context, MainScreen.routeName);
-                      // });
+                      Navigator.popAndPushNamed(context, MainScreen.routeName);
+                      LoginFacebookManager().signInWithFacebook().then((value) {
+                        Navigator.popAndPushNamed(
+                            context, MainScreen.routeName);
+                      });
                     },
                   ),
                 ),
