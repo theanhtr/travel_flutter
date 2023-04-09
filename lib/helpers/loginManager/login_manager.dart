@@ -22,11 +22,12 @@ class LoginManager {
       userModel.email = await LocalStorageHelper.getValue("userEmail");
       userModel.token = await LocalStorageHelper.getValue("userToken");
       await getCurrentUser().then((value) async => {
-      userModel.name = value?.name,
-      });
-      await getCurrentUserAvatar().then((value) => {
-        userModel.photoUrl = value
-      });
+            if (await LocalStorageHelper.getValue("userName") == null)
+              {LocalStorageHelper.setValue("userName", value?.name)}
+          });
+      await getCurrentUserAvatar()
+          .then((value) => {userModel.photoUrl = value});
+      userModel.name = await LocalStorageHelper.getValue("userName");
     }
   }
 
@@ -109,6 +110,8 @@ class LoginManager {
       if (dataResponse['success'] == true) {
         LocalStorageHelper.deleteValue("userToken");
         LocalStorageHelper.deleteValue("userEmail");
+        LocalStorageHelper.deleteValue("userName");
+        LocalStorageHelper.deleteValue("photoUrl");
         return true;
       }
     }
@@ -116,20 +119,23 @@ class LoginManager {
   }
 
   //signUp
-  Future<bool> signUpByPassword(String email, String password, String passwordConfirmation) async {
+  Future<Map> signUpByPassword(
+      String email, String password, String passwordConfirmation) async {
     final response = await BaseClient("").post("/auth/register", {
       "email": email,
       "password": password,
       "password_confirmation": passwordConfirmation,
-    }).catchError((err){
+    }).catchError((err) {
       debugPrint(err);
       return false;
     });
-    if (response == null) return false;
-    Map dataResponse = json.decode(response);
-    if (dataResponse['success'] == true) {
-      return true;
+    Map resultmap = Map<String, String>();
+    if (response == null) {
+      resultmap['result'] = 'null response';
+      return resultmap;
     }
-    return false;
+    Map dataResponse = json.decode(response);
+
+    return dataResponse;
   }
 }
