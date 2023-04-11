@@ -5,7 +5,8 @@ import '../../core/constants/color_palatte.dart';
 import '../../core/constants/textstyle_constants.dart';
 
 class OutButtonWidget extends StatelessWidget {
-  const OutButtonWidget({super.key, required this.title, this.ontap, this.backgroundColor});
+  const OutButtonWidget(
+      {super.key, required this.title, this.ontap, this.backgroundColor});
 
   final String title;
   final Color? backgroundColor;
@@ -19,13 +20,17 @@ class OutButtonWidget extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: kDefaultPadding),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(kMediumPadding),
-          gradient: backgroundColor != null ? null : Gradients.outButtonGradientBackground,
+          gradient: backgroundColor != null
+              ? null
+              : Gradients.outButtonGradientBackground,
           color: backgroundColor,
         ),
         alignment: Alignment.center,
-        child:
-            Text(title, style: TextStyles.defaultStyle.bold.copyWith(
-                color: backgroundColor != null ? Colors.white : ColorPalette.primaryColor,
+        child: Text(title,
+            style: TextStyles.defaultStyle.bold.copyWith(
+              color: backgroundColor != null
+                  ? Colors.white
+                  : ColorPalette.primaryColor,
             )),
       ),
     );

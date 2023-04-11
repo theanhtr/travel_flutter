@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class ColorPalette {
   static const Color primaryColor = Color(0xff6155CC);
-  static const Color secondColor = Color(0xff8F67E8);
+  static const Color secondColor = Color.fromARGB(255, 179, 166, 206);
   static const Color yellowColor = Color(0xffFE9C5E);
   static const Color opacityColor = Color(0xffE0DDF5);
 
@@ -15,7 +15,8 @@ class ColorPalette {
   static const Color noSelectbackgroundColor = Color(0xFF9d8ee1);
   static const Color cardBackgroundColor = Color.fromARGB(255, 218, 223, 239);
   static const Color blackTextColor = Colors.black;
-  
+
+  static const Color buttonReset1 = Color.fromARGB(255, 230, 223, 245);
 }
 
 class Gradients {
@@ -25,6 +26,15 @@ class Gradients {
     colors: [
       ColorPalette.secondColor,
       ColorPalette.primaryColor,
+    ],
+  );
+
+  static const Gradient defaultBackGroundButton = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomLeft,
+    colors: [
+      ColorPalette.buttonReset1,
+      ColorPalette.buttonReset1,
     ],
   );
 

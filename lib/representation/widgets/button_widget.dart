@@ -31,7 +31,7 @@ class ButtonWidgetState extends State<ButtonWidget>
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (widget.ontap),
-      onTapDown: (TapDownDetails details){
+      onTapDown: (TapDownDetails details) {
         _controller.forward();
         Future.delayed(const Duration(milliseconds: 200), () {
           _controller.reverse();
@@ -43,14 +43,18 @@ class ButtonWidgetState extends State<ButtonWidget>
           end: widget.scaleUp,
         ).animate(_controller),
         child: Container(
-                padding: const EdgeInsets.all(kDefaultPadding),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(kMediumPadding),
-                  gradient: Gradients.defaultGradientBackground,
-                ),
-                alignment: Alignment.center,
-                child: Text(widget.title, style: TextStyles.defaultStyle.bold.whiteTextColor)
-        ),
+            padding: const EdgeInsets.all(kDefaultPadding),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(kMediumPadding),
+              gradient: widget.title != "Reset"
+                  ? Gradients.defaultGradientBackground
+                  : Gradients.defaultBackGroundButton,
+            ),
+            alignment: Alignment.center,
+            child: Text(widget.title,
+                style: widget.title != "Reset"
+                    ? TextStyles.defaultStyle.bold.whiteTextColor
+                    : TextStyles.defaultStyle.bold.primaryTextColor)),
       ),
     );
   }

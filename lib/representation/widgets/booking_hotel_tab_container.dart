@@ -52,7 +52,7 @@ class _BookingHotelTabState extends State<BookingHotelTab> {
       child: Container(
         padding: const EdgeInsets.all(kDefaultPadding),
         decoration: const BoxDecoration(
-          color: ColorPalette.backgroundColor,
+          color: Color.fromARGB(255, 255, 255, 255),
           borderRadius: BorderRadius.all(Radius.circular(kItemPadding)),
         ),
         child: Row(
@@ -88,23 +88,29 @@ class _BookingHotelTabState extends State<BookingHotelTab> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    margin: const EdgeInsets.only(top: kMediumPadding / 5),
-                    child: Text(
-                      widget.title,
-                      style: TextStyles.defaultStyle.blackTextColor
-                          .setTextSize(widget.sizeText),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                      margin: const EdgeInsets.only(top: kMediumPadding / 5),
+                      child: Text(
+                        widget.title,
+                        style: TextStyles.defaultStyle.blackTextColor
+                            .setTextSize(widget.sizeText),
+                      ),
                     ),
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(
-                        top: kMediumPadding / 10, bottom: kMediumPadding / 4),
-                    child: Text(
-                      widget.description,
-                      style: TextStyles.defaultStyle.blackTextColor.bold
-                          .setTextSize(widget.sizeText),
-                    ),
-                  ),
+                  widget.description != ""
+                      ? Container(
+                          margin: const EdgeInsets.only(
+                              top: kMediumPadding / 10,
+                              bottom: kMediumPadding / 4),
+                          child: Text(
+                            widget.description,
+                            style: TextStyles.defaultStyle.blackTextColor.bold
+                                .setTextSize(widget.sizeText),
+                          ),
+                        )
+                      : SizedBox(width: 0, height: 0),
                 ],
               ),
             ),
