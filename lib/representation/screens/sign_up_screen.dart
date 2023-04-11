@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -7,6 +9,8 @@ import 'package:travel_app_ytb/core/constants/dismention_constants.dart';
 import 'package:travel_app_ytb/core/constants/textstyle_constants.dart';
 import 'package:travel_app_ytb/helpers/asset_helper.dart';
 import 'package:travel_app_ytb/helpers/image_helper.dart';
+import 'package:travel_app_ytb/representation/controllers/login_screen_controller.dart';
+import 'package:travel_app_ytb/representation/screens/login_screen.dart';
 import 'package:travel_app_ytb/representation/widgets/app_bar_container.dart';
 import 'package:travel_app_ytb/representation/widgets/button_icon_widget.dart';
 import 'package:travel_app_ytb/representation/widgets/button_widget.dart';
@@ -27,9 +31,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
   String password = "";
   String firstName = "";
   String lastName = "";
-
+  String passwordConfirmation = "";
+  LoginScreenController? _controller;
   @override
   Widget build(BuildContext context) {
+    _controller = LoginScreenController();
     return AppBarContainer(
       titleString: 'Sign Up',
       implementLeading: true,
@@ -38,30 +44,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const SizedBox(
-              height: kDefaultPadding * 5,
-            ),
-            StatefulBuilder(
-              builder: (context, setState) => InputCard(
-                style: 'First Name',
-                onchange: (String value) {
-                  firstName = value;
-                  setState(() {});
-                },
-              ),
-            ),
-            const SizedBox(
-              height: kDefaultPadding * 2,
-            ),
-            StatefulBuilder(
-              builder: (context, setState) => InputCard(
-                style: 'Last Name',
-                onchange: (String value) {
-                  lastName = value;
-                  setState(() {});
-                },
-              ),
-            ),
             const SizedBox(
               height: kDefaultPadding * 2,
             ),
@@ -82,6 +64,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 style: 'Password',
                 onchange: (String value) {
                   password = value;
+                  setState(() {});
+                },
+              ),
+            ),
+            const SizedBox(
+              height: kDefaultPadding * 2,
+            ),
+            StatefulBuilder(
+              builder: (context, setState) => InputCard(
+                style: 'Password Confirm',
+                onchange: (String value) {
+                  passwordConfirmation = value;
                   setState(() {});
                 },
               ),
@@ -124,7 +118,57 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
             ButtonWidget(
               title: 'Sign Up',
-              ontap: () {},
+              ontap: () {
+                _controller
+                    ?.signByPassWord(email, password, passwordConfirmation)
+                    .then((value) => {
+                          if (value['success'] == true)
+                            {
+                              Navigator.popAndPushNamed(
+                                  context, LoginScreen.routeName)
+                            }
+                          else
+                            {
+                              print('data: $value'),
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) => AlertDialog(
+                                  title: const Text(
+                                      'ERROR PASSWORD OR INVALID EMAIL'),
+                                  content: Container(
+                                    height: 120.0,
+                                    color: Colors.yellow,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                            'EMAIL: ${value['data']['email']}'),
+                                        const SizedBox(
+                                          height: kDefaultPadding,
+                                        ),
+                                        Text(
+                                            'PASSWORD: ${value['data']['password']}')
+                                      ],
+                                    ),
+                                  ),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(context, 'Cancel'),
+                                      child: const Text('Cancel'),
+                                    ),
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(context, 'OK'),
+                                      child: const Text('OK'),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            }
+                        });
+              },
             ),
             const SizedBox(
               height: kDefaultPadding,

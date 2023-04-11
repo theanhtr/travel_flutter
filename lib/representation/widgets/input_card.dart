@@ -81,6 +81,35 @@ class _InputCardState extends State<InputCard> {
           );
         });
         break;
+      case 'Password Confirm':
+        widgetToDisplay = StatefulBuilder(builder: (context, setState) {
+          return TextField(
+            controller: _textController,
+            decoration: InputDecoration(
+              labelText: style,
+              border: InputBorder.none,
+              labelStyle: TextStyles.defaultStyle.blackTextColor.light
+                  .setTextSize(kDefaultTextSize / 1.1),
+              suffixIcon: IconButton(
+                onPressed: () {
+                  showPassword = !showPassword;
+                  setState(() {});
+                },
+                icon: Icon(showPassword
+                    ? FontAwesomeIcons.eyeSlash
+                    : FontAwesomeIcons.eye),
+              ),
+            ),
+            style: TextStyles.defaultStyle.blackTextColor.bold
+                .setTextSize(kDefaultTextSize * 1.2),
+            onChanged: (String query) {
+              value = _textController.text;
+              widget.onchange(value);
+            },
+            obscureText: showPassword,
+          );
+        });
+        break;
       case 'Phone Number':
         widgetToDisplay = TextField(
           keyboardType: TextInputType.number,

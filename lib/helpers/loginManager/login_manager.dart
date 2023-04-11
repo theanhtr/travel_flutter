@@ -22,13 +22,11 @@ class LoginManager {
       userModel.email = await LocalStorageHelper.getValue("userEmail");
       userModel.token = await LocalStorageHelper.getValue("userToken");
       await getCurrentUser().then((value) async => {
-        if (await LocalStorageHelper.getValue("userName") == null) {
-          LocalStorageHelper.setValue("userName", value?.name)
-        }
-      });
-      await getCurrentUserAvatar().then((value) => {
-        userModel.photoUrl = value
-      });
+            if (await LocalStorageHelper.getValue("userName") == null)
+              {LocalStorageHelper.setValue("userName", value?.name)}
+          });
+      await getCurrentUserAvatar()
+          .then((value) => {userModel.photoUrl = value});
       userModel.name = await LocalStorageHelper.getValue("userName");
       print(userModel.photoUrl);
     }
@@ -38,10 +36,9 @@ class LoginManager {
   var _isRemember = true;
 
   Future<bool> signInWithEmailPassword(String email, String password) async {
-    var response = await BaseClient("").post('/auth/login', {
-      'email': email,
-      'password': password
-    }).catchError((err) {
+    var response = await BaseClient("")
+        .post('/auth/login', {'email': email, 'password': password}).catchError(
+            (err) {
       debugPrint(err);
     });
     if (response == null) return false;
@@ -49,7 +46,7 @@ class LoginManager {
     var token = await dataResponse['data']['token'];
     if (_isRemember == true) {
       final userToken =
-      await LocalStorageHelper.getValue('userToken') as String?;
+          await LocalStorageHelper.getValue('userToken') as String?;
       if (userToken == null) {
         LocalStorageHelper.setValue("userToken", token);
         LocalStorageHelper.setValue("userEmail", email);
@@ -73,7 +70,9 @@ class LoginManager {
   }
 
   Future<String> getCurrentUserAvatar() async {
-    var response = await BaseClient(userModel.token ?? "").get('/my-avatar').catchError((err) {
+    var response = await BaseClient(userModel.token ?? "")
+        .get('/my-avatar')
+        .catchError((err) {
       debugPrint(err);
     });
     if (response == null) return "";
@@ -82,7 +81,9 @@ class LoginManager {
   }
 
   Future<UserModel?> getCurrentUser() async {
-    var response = await BaseClient(userModel.token ?? "").get('/my-information').catchError((err) {
+    var response = await BaseClient(userModel.token ?? "")
+        .get('/my-information')
+        .catchError((err) {
       debugPrint("response get currentuser err $err");
     });
     if (response == null) return null;
@@ -118,20 +119,23 @@ class LoginManager {
   }
 
   //signUp
-  Future<bool> signUpByPassword(String email, String password, String passwordConfirmation) async {
+  Future<Map> signUpByPassword(
+      String email, String password, String passwordConfirmation) async {
     final response = await BaseClient("").post("/auth/register", {
       "email": email,
       "password": password,
       "password_confirmation": passwordConfirmation,
-    }).catchError((err){
+    }).catchError((err) {
       debugPrint(err);
       return false;
     });
-    if (response == null) return false;
-    Map dataResponse = json.decode(response);
-    if (dataResponse['success'] == true) {
-      return true;
+    Map resultmap = Map<String, String>();
+    if (response == null) {
+      resultmap['result'] = 'null response';
+      return resultmap;
     }
-    return false;
+    Map dataResponse = json.decode(response);
+
+    return dataResponse;
   }
 }

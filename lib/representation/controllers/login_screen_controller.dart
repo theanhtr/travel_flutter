@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
@@ -8,6 +7,13 @@ import '../../helpers/http/base_client.dart';
 
 class LoginScreenController {
   Future<bool> loginByPassWord(String email, String password) async {
-     return LoginManager().signInWithEmailPassword(email, password);
+    return LoginManager().signInWithEmailPassword(email, password);
+  }
+
+//String email, String password, String passwordConfirmation
+  Future<Map> signByPassWord(
+      String email, String password, String passwordConfirmation) async {
+    return LoginManager()
+        .signUpByPassword(email, password, passwordConfirmation);
   }
 }
