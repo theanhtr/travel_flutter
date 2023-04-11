@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:travel_app_ytb/helpers/local_storage_helper.dart';
+import 'package:travel_app_ytb/helpers/loginManager/login_manager.dart';
 import 'package:travel_app_ytb/representation/screens/facility_flight_screen.dart';
 import 'package:travel_app_ytb/representation/screens/facility_hotel_screen.dart';
 import 'package:travel_app_ytb/representation/screens/google_map_screen.dart';
@@ -35,9 +36,7 @@ class MyApp extends StatelessWidget {
       ),
       routes: routes,
       debugShowCheckedModeBanner: false,
-      home: const GoogleMapScreen(),
-      // home: const HotelBookingScreen()
-      // home: const SplashScreen(),
+      home: const SplashScreen(),
     );
   }
 }

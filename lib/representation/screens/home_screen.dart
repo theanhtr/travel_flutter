@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travel_app_ytb/core/constants/color_palatte.dart';
 import 'package:travel_app_ytb/core/constants/dismention_constants.dart';
@@ -98,16 +97,15 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _controller = HomeScreenController();
-    setState(() {
-      userName = _controller?.getUser()?.displayName;
-      photoUrl = _controller?.getUser()?.photoURL;
-    });
   }
 
   @override
   Widget build(BuildContext context) {
     double ratio = 0.5;
-
+    setState(() {
+      userName = _controller?.getUser()?.name;
+      photoUrl = _controller?.getUser()?.photoUrl;
+    });
     return AppBarContainer(
       title: Container(
         margin: const EdgeInsets.only(top: kItemPadding),
