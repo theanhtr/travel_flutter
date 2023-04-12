@@ -16,7 +16,7 @@ class InputCard extends StatefulWidget {
 
   final String style;
   final Function onchange;
-  String? value;
+  String? value = "";
 
   @override
   State<InputCard> createState() => _InputCardState();
@@ -35,7 +35,9 @@ class _InputCardState extends State<InputCard> {
   @override
   Widget build(BuildContext context) {
     String? style = widget.style;
-    _textController?.text = widget.value ?? "";
+    if (widget.value != null) {
+      _textController?.text = widget.value ?? "";
+    }
     bool showPassword = false;
 
     Widget widgetToDisplay;
@@ -61,6 +63,35 @@ class _InputCardState extends State<InputCard> {
         );
         break;
       case 'Password':
+        widgetToDisplay = StatefulBuilder(builder: (context, setState) {
+          return TextField(
+            controller: _textController,
+            decoration: InputDecoration(
+              labelText: style,
+              border: InputBorder.none,
+              labelStyle: TextStyles.defaultStyle.blackTextColor.light
+                  .setTextSize(kDefaultTextSize / 1.1),
+              suffixIcon: IconButton(
+                onPressed: () {
+                  showPassword = !showPassword;
+                  setState(() {});
+                },
+                icon: Icon(showPassword
+                    ? FontAwesomeIcons.eyeSlash
+                    : FontAwesomeIcons.eye),
+              ),
+            ),
+            style: TextStyles.defaultStyle.blackTextColor.bold
+                .setTextSize(kDefaultTextSize * 1.2),
+            onChanged: (String query) {
+              value = _textController?.text;
+              widget.onchange(value);
+            },
+            obscureText: showPassword,
+          );
+        });
+        break;
+      case 'Password Confirm':
         widgetToDisplay = StatefulBuilder(builder: (context, setState) {
           return TextField(
             controller: _textController,
