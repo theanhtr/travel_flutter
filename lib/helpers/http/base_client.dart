@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 const String baseUrl = "http://192.168.1.244:9000/api";
@@ -26,6 +28,39 @@ class BaseClient {
         'Accept': 'application/json',
       };
     }
+  }
+
+  static Future<bool> isConnectNetWork(BuildContext context) async {
+    try {
+      final result = await InternetAddress.lookup(baseUrl);
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        return true;
+      }
+    } on SocketException catch (_) {
+      return false;
+    }
+    return true;
+  }
+
+  static showErrorNetWork(BuildContext context) {
+    BaseClient.isConnectNetWork(context).then((value) => {
+      if (value == false) {
+        showDialog(context: context, builder: (BuildContext context) => AlertDialog(
+          title: const Text('ERROR NETWORK'),
+          content: const Text('Can not connect to serve'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'Cancel'),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'OK'),
+              child: const Text('OK'),
+            ),
+          ],
+        ),)
+      }
+    });
   }
 
   Future<dynamic> get(String api) async {
