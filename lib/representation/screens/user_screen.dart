@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:travel_app_ytb/helpers/loginManager/login_manager.dart';
 import 'package:travel_app_ytb/representation/widgets/button_widget.dart';
 
-import 'login_screen.dart';
+import 'login/login_screen.dart';
 
 class UserScreen extends StatefulWidget {
   const UserScreen({super.key});

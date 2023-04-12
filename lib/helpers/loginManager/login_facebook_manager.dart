@@ -11,11 +11,14 @@ class LoginFacebookManager {
   }
   LoginFacebookManager._internal();
 
-  Future<UserCredential> signInWithFacebook() async {
+  Future<UserCredential?> signInWithFacebook() async {
     // Trigger the sign-in flow
     final LoginResult loginResult = await FacebookAuth.instance.login();
 
-    // Create a credential from the access token
+    if (loginResult.accessToken == null) {
+      return null;
+    }
+
     final OAuthCredential facebookAuthCredential = FacebookAuthProvider.credential(
         loginResult.accessToken!.token
     );

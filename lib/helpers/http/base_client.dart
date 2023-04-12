@@ -50,7 +50,7 @@ class BaseClient {
     ) {
       return response.body;
     } else {
-
+      return response.statusCode;
     }
   }
 

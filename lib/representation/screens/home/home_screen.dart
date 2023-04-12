@@ -18,8 +18,8 @@ import 'package:travel_app_ytb/representation/widgets/custom_checkbox_icon.dart'
 import 'package:travel_app_ytb/representation/widgets/tapable_widget.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-import '../../core/constants/textstyle_constants.dart';
-import '../widgets/item_text_container.dart';
+import '../../../core/constants/textstyle_constants.dart';
+import '../../widgets/item_text_container.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

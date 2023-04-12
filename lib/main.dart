@@ -38,10 +38,7 @@ class MyApp extends StatelessWidget {
         ),
         routes: routes,
         debugShowCheckedModeBanner: false,
-        // home: const GoogleMapScreen(),
-        home: const HotelFilterScreen()
-        // home: const MySliderApp()
-        // home: const SplashScreen(),
+        home: const SplashScreen(),
         );
   }
 }

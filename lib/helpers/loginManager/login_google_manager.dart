@@ -17,12 +17,16 @@ class LoginGoogleManager {
 
   LoginGoogleManager._internal();
 
-  Future<UserCredential> signInWithGoogle() async {
+  Future<UserCredential?> signInWithGoogle() async {
     // Trigger the authentication flow
     final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
 
     // Obtain the auth details from the request
     final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+
+    if (googleAuth?.accessToken == null || googleAuth?.idToken == null) {
+      return null;
+    }
 
     // Create a new credential
     final googleCredential = GoogleAuthProvider.credential(

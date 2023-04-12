@@ -33,26 +33,32 @@ class LoginManager {
   //private
   var _isRemember = true;
 
-  Future<bool> signInWithEmailPassword(String email, String password) async {
+  Future<dynamic> signInWithEmailPassword(String email, String password) async {
     var response = await BaseClient("").post('/auth/login', {
       'email': email,
       'password': password
     }).catchError((err) {
-      debugPrint(err);
+      return err;
     });
     if (response == null) return false;
-    Map dataResponse = await json.decode(response);
-    var token = await dataResponse['data']['token'];
-    if (_isRemember == true) {
-      final userToken =
-      await LocalStorageHelper.getValue('userToken') as String?;
-      if (userToken == null) {
-        LocalStorageHelper.setValue("userToken", token);
-        LocalStorageHelper.setValue("userEmail", email);
-      }
+    if (response.runtimeType == int) {
+      return response;
     }
-    await setUserModel();
-    return dataResponse['success'];
+    if (response.runtimeType == String) {
+      Map dataResponse = await json.decode(response);
+      var token = await dataResponse['data']['token'];
+      if (_isRemember == true) {
+        final userToken =
+        await LocalStorageHelper.getValue('userToken') as String?;
+        if (userToken == null) {
+          LocalStorageHelper.setValue("userToken", token);
+          LocalStorageHelper.setValue("userEmail", email);
+        }
+      }
+      await setUserModel();
+      return dataResponse['success'];
+    }
+    return response;
   }
 
   void remember(bool isRemember) {
