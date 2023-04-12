@@ -60,6 +60,12 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    BaseClient.showErrorNetWork(context);
+  }
+
+  @override
   Widget build(BuildContext context) {
     _controller = LoginScreenController();
     _fillEmail().then((value) =>
