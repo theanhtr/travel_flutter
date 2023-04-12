@@ -6,7 +6,7 @@ import 'package:travel_app_ytb/representation/screens/hotel_booking_screen.dart'
 import 'package:travel_app_ytb/representation/screens/hotel_detail_screen.dart';
 import 'package:travel_app_ytb/representation/screens/hotel_filter_screen.dart';
 import 'package:travel_app_ytb/representation/screens/intro_screen.dart';
-import 'package:travel_app_ytb/representation/screens/login_screen.dart';
+import 'package:travel_app_ytb/representation/screens/login/login_screen.dart';
 import 'package:travel_app_ytb/representation/screens/main_screen.dart';
 import 'package:travel_app_ytb/representation/screens/result_flight_screen.dart';
 import 'package:travel_app_ytb/representation/screens/search_hotels_screen.dart';

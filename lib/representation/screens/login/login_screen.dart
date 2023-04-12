@@ -15,7 +15,7 @@ import 'package:travel_app_ytb/helpers/loginManager/login_google_manager.dart';
 import 'package:travel_app_ytb/helpers/loginManager/login_manager.dart';
 import 'package:travel_app_ytb/representation/controllers/login_screen_controller.dart';
 import 'package:travel_app_ytb/representation/screens/forgot_password_screen.dart';
-import 'package:travel_app_ytb/representation/screens/home_screen.dart';
+import 'package:travel_app_ytb/representation/screens/home/home_screen.dart';
 import 'package:travel_app_ytb/representation/screens/main_screen.dart';
 import 'package:travel_app_ytb/representation/screens/sign_up_screen.dart';
 import 'package:travel_app_ytb/representation/widgets/app_bar_container.dart';
@@ -23,6 +23,9 @@ import 'package:travel_app_ytb/representation/widgets/button_icon_widget.dart';
 import 'package:travel_app_ytb/representation/widgets/button_widget.dart';
 import 'package:travel_app_ytb/representation/widgets/input_card.dart';
 import 'package:travel_app_ytb/representation/widgets/line_widget.dart';
+import 'package:travel_app_ytb/representation/widgets/loading/loading.dart';
+
+import '../../../core/utils/animation_utils.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -177,11 +180,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   LocalStorageHelper.deleteValue("email");
                   LocalStorageHelper.deleteValue("password");
                 }
+                  Loading.show(context);
                  _controller?.loginByPassWord(email, password).then((value) => {
                  if (value == true) {
+                      Loading.dismiss(context),
                      Navigator.popAndPushNamed(context, MainScreen.routeName)
                     }
-                 else {
+                 else if (value == false) {
+                   Loading.dismiss(context),
                     showDialog(
                         context: context,
                         builder: (BuildContext context) => AlertDialog(
@@ -199,7 +205,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           ],
                         ),
                     )
-                 }
+                 },
+                 Loading.dismiss(context)
                  }
                  );
               },
@@ -246,9 +253,15 @@ class _LoginScreenState extends State<LoginScreen> {
                     icon: ImageHelper.loadFromAsset(AssetHelper.googleIcon,
                         fit: BoxFit.contain, width: kDefaultPadding * 1.5),
                     ontap: () {
+                      Loading.show(context);
                       LoginGoogleManager().signInWithGoogle().then((value) {
-                        Navigator.popAndPushNamed(
-                            context, MainScreen.routeName);
+                        if (value != null) {
+                          Loading.dismiss(context);
+                          Navigator.popAndPushNamed(
+                              context, MainScreen.routeName);
+                        } else {
+                          Loading.dismiss(context);
+                        }
                       });
                       // Navigator.of(context).pushNamed(MainScreen.routeName);
                     },
@@ -266,10 +279,15 @@ class _LoginScreenState extends State<LoginScreen> {
                       color: Colors.white,
                     ),
                     ontap: () async {
-                      Navigator.popAndPushNamed(context, MainScreen.routeName);
+                      Loading.show(context);
                       LoginFacebookManager().signInWithFacebook().then((value) {
-                        Navigator.popAndPushNamed(
-                            context, MainScreen.routeName);
+                        if (value != null) {
+                          Loading.dismiss(context);
+                          Navigator.popAndPushNamed(
+                              context, MainScreen.routeName);
+                        } else {
+                          Loading.dismiss(context);
+                        }
                       });
                     },
                   ),
