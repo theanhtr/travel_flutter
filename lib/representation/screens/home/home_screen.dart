@@ -11,14 +11,13 @@ import 'package:travel_app_ytb/helpers/image_helper.dart';
 import 'package:travel_app_ytb/representation/controllers/home_screen_controller.dart';
 import 'package:travel_app_ytb/representation/screens/booking_flights_screen.dart';
 import 'package:travel_app_ytb/representation/screens/hotel_booking_screen.dart';
-import 'package:travel_app_ytb/representation/screens/hotel_detail_screen.dart';
-import 'package:travel_app_ytb/representation/screens/result_flight_screen.dart';
 import 'package:travel_app_ytb/representation/widgets/app_bar_container.dart';
 import 'package:travel_app_ytb/representation/widgets/custom_checkbox_icon.dart';
 import 'package:travel_app_ytb/representation/widgets/tapable_widget.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 import '../../../core/constants/textstyle_constants.dart';
+import '../../../helpers/http/base_client.dart';
 import '../../widgets/item_text_container.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -32,7 +31,6 @@ class _HomeScreenState extends State<HomeScreen> {
   HomeScreenController? _controller;
   String? userName;
   String? photoUrl;
-  int _selectedCard = -1;
   List<String> images = [
     "https://images.unsplash.com/photo-1468877294001-94aef5ebfa1e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8bW91dGFpbnxlbnwwfHwwfHw%3D&w=1000&q=80",
     "https://images.unsplash.com/photo-1468877294001-94aef5ebfa1e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8bW91dGFpbnxlbnwwfHwwfHw%3D&w=1000&q=80",
@@ -97,6 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _controller = HomeScreenController();
+    BaseClient.showErrorNetWork(context);
   }
 
   @override

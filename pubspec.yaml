@@ -55,6 +55,7 @@ dependencies:
   bloc: ^8.1.1
   flutter_bloc: ^8.0.0
   equatable: ^2.0.5
+  stop_watch_timer: ^2.0.0
 
 dev_dependencies:
   flutter_test:

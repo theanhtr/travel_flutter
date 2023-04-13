@@ -138,6 +138,24 @@ class _InputCardState extends State<InputCard> {
           },
         );
         break;
+      case 'Verification Code':
+        widgetToDisplay = TextField(
+          keyboardType: TextInputType.number,
+          controller: _textController,
+          decoration: InputDecoration(
+            labelText: style,
+            border: InputBorder.none,
+            labelStyle: TextStyles.defaultStyle.blackTextColor.light
+                .setTextSize(kDefaultTextSize / 1.1),
+          ),
+          style: TextStyles.defaultStyle.blackTextColor.bold
+              .setTextSize(kDefaultTextSize * 1.2),
+          onChanged: (String query) {
+            value = _textController?.text;
+            widget.onchange(value);
+          },
+        );
+        break;
       default:
         widgetToDisplay = Text('Other');
     }
