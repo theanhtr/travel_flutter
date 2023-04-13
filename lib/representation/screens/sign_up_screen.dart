@@ -142,13 +142,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(
-                                            'EMAIL: ${value['data']['email']}'),
-                                        const SizedBox(
-                                          height: kDefaultPadding,
-                                        ),
-                                        Text(
-                                            'PASSWORD: ${value['data']['password']}')
+                                        value['data']['email'] != null
+                                            ? Text(
+                                                'EMAIL: ${value['data']['email']}')
+                                            : SizedBox(
+                                                height: kDefaultPadding,
+                                              ),
+                                        value['data']['email'] != null
+                                            ? Text(
+                                                'PASSWORD: ${value['data']['password']}')
+                                            : SizedBox(
+                                                height: 0,
+                                              )
                                       ],
                                     ),
                                   ),

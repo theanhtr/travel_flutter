@@ -2,7 +2,8 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-const String baseUrl = "http://192.168.1.244:9000/api";
+const String baseUrl =
+    "https://aade-2405-4802-1d30-4ee0-982b-3c7c-f97c-da5a.ngrok-free.app/api";
 
 class BaseClient {
   var client = http.Client();
@@ -35,8 +36,7 @@ class BaseClient {
 
     if (response.statusCode == 200) {
       return response.body;
-    } else {
-    }
+    } else {}
   }
 
   Future<dynamic> post(String api, dynamic object) async {
@@ -45,13 +45,12 @@ class BaseClient {
 
     var response = await client.post(url, body: payload, headers: _header);
 
-    if (response.statusCode == 201 || response.statusCode == 204
-        || response.statusCode == 200
-    ) {
+    if (response.statusCode == 201 ||
+        response.statusCode == 204 ||
+        response.statusCode == 200) {
       return response.body;
     } else {
       return response.body;
-
     }
   }
 
