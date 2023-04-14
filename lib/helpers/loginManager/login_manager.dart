@@ -130,6 +130,10 @@ class LoginManager {
       return false;
     });
     Map resultmap = Map<String, String>();
+    if (response.runtimeType == int) {
+      resultmap['result'] = 'statuscode $response';
+      return resultmap;
+    }
     if (response == null) {
       resultmap['result'] = 'null response';
       return resultmap;
