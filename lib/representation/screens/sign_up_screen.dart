@@ -1,6 +1,8 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travel_app_ytb/core/constants/color_palatte.dart';
 import 'package:travel_app_ytb/core/constants/dismention_constants.dart';
@@ -14,6 +16,7 @@ import 'package:travel_app_ytb/representation/widgets/button_icon_widget.dart';
 import 'package:travel_app_ytb/representation/widgets/button_widget.dart';
 import 'package:travel_app_ytb/representation/widgets/input_card.dart';
 import 'package:travel_app_ytb/representation/widgets/line_widget.dart';
+import 'package:travel_app_ytb/representation/widgets/loading/loading.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -117,17 +120,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ButtonWidget(
               title: 'Sign Up',
               ontap: () {
+                Loading.show(context);
                 _controller
                     ?.signByPassWord(email, password, passwordConfirmation)
                     .then((value) => {
                           if (value['success'] == true)
                             {
+                              Loading.dismiss(context),
                               Navigator.popAndPushNamed(
                                   context, LoginScreen.routeName)
                             }
                           else
                             {
-                              print('data: $value'),
+                              Loading.dismiss(context),
                               showDialog(
                                 context: context,
                                 builder: (BuildContext context) => AlertDialog(
@@ -140,13 +145,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(
-                                            'EMAIL: ${value['data']['email']}'),
-                                        const SizedBox(
-                                          height: kDefaultPadding,
-                                        ),
-                                        Text(
-                                            'PASSWORD: ${value['data']['password']}')
+                                        value['data']['email'] != null
+                                            ? Text(
+                                                'EMAIL: ${value['data']['email']}')
+                                            : SizedBox(
+                                                height: kDefaultPadding,
+                                              ),
+                                        value['data']['email'] != null
+                                            ? Text(
+                                                'PASSWORD: ${value['data']['password']}')
+                                            : SizedBox(
+                                                height: 0,
+                                              )
                                       ],
                                     ),
                                   ),
@@ -164,7 +174,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   ],
                                 ),
                               )
-                            }
+                            },
+                          Loading.dismiss(context),
                         });
               },
             ),
