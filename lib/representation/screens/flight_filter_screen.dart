@@ -10,14 +10,14 @@ import 'package:travel_app_ytb/representation/widgets/slider.dart';
 
 enum SampleItem { itemOne, itemTwo, itemThree }
 
-class HotelFilterScreen extends StatefulWidget {
-  const HotelFilterScreen({super.key});
-  static const String routeName = '/hotel_filter_screen';
+class FlightFilterScreen extends StatefulWidget {
+  const FlightFilterScreen({super.key});
+  static const String routeName = '/flight_filter_screen';
   @override
-  State<HotelFilterScreen> createState() => _HotelFilterScreenState();
+  State<FlightFilterScreen> createState() => _FlightFilterScreenState();
 }
 
-class _HotelFilterScreenState extends State<HotelFilterScreen> {
+class _FlightFilterScreenState extends State<FlightFilterScreen> {
   SampleItem? selectedMenu;
   var isBookingFlightsScreen = true;
   var isBookingFlightsRoundTripScreen = false;
@@ -201,7 +201,8 @@ class _ButtonInDialogState extends State<ButtonInDialog> {
               sizeItem: kDefaultIconSize / 1.5,
               sizeText: kDefaultIconSize / 1.2,
               primaryColor: const Color(0xffFE9C5E),
-              secondaryColor: const Color(0xffFE9C5E).withOpacity(0.2), iconString: '',
+              secondaryColor: const Color(0xffFE9C5E).withOpacity(0.2),
+              iconString: '',
             ),
             const SizedBox(
               height: kMinPadding,
@@ -214,7 +215,8 @@ class _ButtonInDialogState extends State<ButtonInDialog> {
               sizeText: kDefaultIconSize / 1.2,
               primaryColor: Color.fromARGB(255, 113, 228, 155),
               secondaryColor:
-                  Color.fromARGB(255, 126, 235, 193).withOpacity(0.2), iconString: 'id',
+                  Color.fromARGB(255, 126, 235, 193).withOpacity(0.2),
+              iconString: 'id',
             ),
           ]),
         ]),
