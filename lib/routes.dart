@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:travel_app_ytb/representation/screens/booking_flights_screen.dart';
 import 'package:travel_app_ytb/representation/screens/checkout_screen.dart';
-import 'package:travel_app_ytb/representation/screens/forgot_password_screen.dart';
+import 'package:travel_app_ytb/representation/screens/forgot_password/forgot_password_screen.dart';
+import 'package:travel_app_ytb/representation/screens/forgot_password/reset_password_screen.dart';
 import 'package:travel_app_ytb/representation/screens/hotel_booking_screen.dart';
 import 'package:travel_app_ytb/representation/screens/hotel_detail_screen.dart';
 import 'package:travel_app_ytb/representation/screens/hotel_filter_screen.dart';
@@ -43,4 +44,5 @@ final Map<String, WidgetBuilder> routes = {
   SortByHotel.routename: (context) => const SortByHotel(),
   SortByFlight.routename: (context) => const SortByFlight(),
   HotelFilterScreen.routeName: (context) => const HotelFilterScreen(),
+  //ResetPasswordScreen.routeName: (context) => const ResetPasswordScreen(),
 };
