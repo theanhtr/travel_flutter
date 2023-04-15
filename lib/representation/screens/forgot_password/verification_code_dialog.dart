@@ -72,7 +72,7 @@ class _VerificationCodeState extends State<VerificationCode> {
                 child: Padding(
                   padding: const EdgeInsets.all(10),
                   child: InputCard(
-                    style: 'Verification Code',
+                    style: TypeInputCard.verificationCode,
                     onchange: (String value) {
                       vefificationCode = value;
                     },

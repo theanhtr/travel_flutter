@@ -1,0 +1,14 @@
+{
+  "login": "Log In",
+  "logout": "Log Out",
+  "orLoginWith": "or login with",
+  "email": "Email",
+  "password": "Password",
+  "passwordConfirm": "Password Confirm",
+  "rememberMe": "Remember me",
+  "forgotPassword": "Forgot password?",
+  "don'tHaveAnAccount": "Don't have an account?",
+  "signUp": "Sign Up",
+  "Phone Number": "Phone Number",
+  "Verification Code": "Verification Code"
+}

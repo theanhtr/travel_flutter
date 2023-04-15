@@ -1,0 +1,14 @@
+{
+  "login": "Đăng Nhập",
+  "logout": "Đăng Xuất",
+  "orLoginWith": "Hoặc đăng nhập với",
+  "email": "Tài khoản email",
+  "password": "Mật khẩu",
+  "passwordConfirm": "Nhập lại mật khẩu",
+  "rememberMe": "Lưu lại đăng nhập",
+  "forgotPassword": "Quên mật khẩu?",
+  "don'tHaveAnAccount": "Không có tài khoản?",
+  "signUp": "Đăng ký",
+  "Phone Number": "Số điện thoại",
+  "Verification Code": "Mã xác thực"
+}

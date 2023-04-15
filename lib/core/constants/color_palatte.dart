@@ -15,6 +15,7 @@ class ColorPalette {
   static const Color noSelectbackgroundColor = Color(0xFF9d8ee1);
   static const Color cardBackgroundColor = Color.fromARGB(255, 218, 223, 239);
   static const Color blackTextColor = Colors.black;
+  static const Color lightGray = Color.fromRGBO(189, 189, 189, 1);
 
   static const Color buttonReset1 = Color.fromARGB(255, 230, 223, 245);
 }

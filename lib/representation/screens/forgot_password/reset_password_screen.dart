@@ -38,7 +38,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
           ),
           StatefulBuilder(
             builder: (context, setState) => InputCard(
-              style: 'Password',
+              style: TypeInputCard.password,
               onchange: (String value) {
                 password = value;
                 setState(() {});
@@ -50,7 +50,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
           ),
           StatefulBuilder(
             builder: (context, setState) => InputCard(
-              style: 'Password Confirm',
+              style: TypeInputCard.passwordConfirm,
               onchange: (String value) {
                 passwordConfirm = value;
                 setState(() {});

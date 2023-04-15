@@ -37,7 +37,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           ),
           StatefulBuilder(
             builder: (context, setState) => InputCard(
-              style: 'Email',
+              style: TypeInputCard.email,
               onchange: (String value) {
                 email = value;
                 setState(() {});

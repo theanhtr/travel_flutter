@@ -50,7 +50,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
             StatefulBuilder(
               builder: (context, setState) => InputCard(
-                style: 'Email',
+                style: TypeInputCard.email,
                 onchange: (String value) {
                   email = value;
                   setState(() {});
@@ -62,7 +62,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
             StatefulBuilder(
               builder: (context, setState) => InputCard(
-                style: 'Password',
+                style: TypeInputCard.password,
                 onchange: (String value) {
                   password = value;
                   setState(() {});
@@ -74,7 +74,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
             StatefulBuilder(
               builder: (context, setState) => InputCard(
-                style: 'Password Confirm',
+                style: TypeInputCard.passwordConfirm,
                 onchange: (String value) {
                   passwordConfirmation = value;
                   setState(() {});
@@ -124,15 +124,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 _controller
                     ?.signByPassWord(email, password, passwordConfirmation)
                     .then((value) => {
+                  Loading.dismiss(context),
                           if (value['success'] == true)
                             {
-                              Loading.dismiss(context),
                               Navigator.popAndPushNamed(
                                   context, LoginScreen.routeName)
                             }
-                          else
-                            {
-                              Loading.dismiss(context),
+                          else if (value['result'] == 'null response'){
                               showDialog(
                                 context: context,
                                 builder: (BuildContext context) => AlertDialog(
@@ -174,8 +172,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   ],
                                 ),
                               )
-                            },
-                          Loading.dismiss(context),
+                            } else {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) => AlertDialog(
+                                title: const Text('ERROR YOUR EMAIL OR PASSWORD'),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () => Navigator.pop(context, 'Cancel'),
+                                    child: const Text('Cancel'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () => Navigator.pop(context, 'OK'),
+                                    child: const Text('OK'),
+                                  ),
+                                ],
+                              ),
+                            )
+                          },
                         });
               },
             ),

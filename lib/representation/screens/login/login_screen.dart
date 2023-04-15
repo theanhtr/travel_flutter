@@ -26,6 +26,7 @@ import 'package:travel_app_ytb/representation/widgets/line_widget.dart';
 import 'package:travel_app_ytb/representation/widgets/loading/loading.dart';
 
 import '../../../core/utils/animation_utils.dart';
+import '../../../helpers/translations/localization_text.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -81,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
         password = value
     );
     return AppBarContainer(
-      titleString: 'Login',
+      titleString: LocalizationText.login,
       implementLeading: true,
       // ignore: prefer_const_literals_to_create_immutables
       child: SingleChildScrollView(
@@ -93,7 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             StatefulBuilder(
               builder: (context, setState) => InputCard(
-                style: 'Email',
+                style: TypeInputCard.email,
                 onchange: (String value) {
                   email = value;
                 },
@@ -105,7 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             StatefulBuilder(
               builder: (context, setState) => InputCard(
-                style: 'Password',
+                style: TypeInputCard.password,
                 onchange: (String value) {
                   password = value;
                 },
@@ -148,7 +149,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           width: kDefaultPadding / 2,
                         ),
                         Text(
-                          'Remember me',
+                          LocalizationText.rememberMe,
                           style: TextStyles.defaultStyle.light.blackTextColor
                               .setTextSize(kDefaultTextSize / 1.2),
                         ),
@@ -164,7 +165,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Container(
                     height: 22,
                     child: Text(
-                      'Forgot password?',
+                      LocalizationText.forgotPassword,
                       style: TextStyles.defaultStyle.light.blackTextColor
                           .setTextSize(kDefaultTextSize / 1.2),
                     ),
@@ -176,7 +177,7 @@ class _LoginScreenState extends State<LoginScreen> {
               height: kDefaultPadding,
             ),
             ButtonWidget(
-              title: 'Login',
+              title: LocalizationText.login,
               ontap: () {
                 if (rememberMe == true) {
                   LocalStorageHelper.setValue("email", email);
@@ -188,6 +189,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 }
                   Loading.show(context);
                  _controller?.loginByPassWord(email, password).then((value) => {
+                   print(value),
                  if (value == true) {
                       Loading.dismiss(context),
                      Navigator.popAndPushNamed(context, MainScreen.routeName)
@@ -224,22 +226,28 @@ class _LoginScreenState extends State<LoginScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const Line(
-                  width: 100,
+                Expanded(
+                  child: Container(
+                    height: 1,
+                    color: ColorPalette.lightGray,
+                  ),
                 ),
                 const SizedBox(
                   width: kDefaultPadding / 2,
                 ),
                 Text(
-                  'or login with',
+                  LocalizationText.orLoginWith,
                   style: TextStyles.defaultStyle.blackTextColor
                       .setTextSize(kDefaultTextSize / 1.1),
                 ),
                 const SizedBox(
                   width: kDefaultPadding / 2,
                 ),
-                const Line(
-                  width: 100,
+                Expanded(
+                  child: Container(
+                    height: 1,
+                    color: ColorPalette.lightGray,
+                  ),
                 ),
               ],
             ),
@@ -309,7 +317,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Row(
                   children: [
                     Text(
-                      'Don\'t have an account? ',
+                      LocalizationText.dontHaveAnAccount,
                       style: TextStyles.defaultStyle.blackTextColor
                           .setTextSize(kDefaultTextSize / 1.1),
                     ),
@@ -321,7 +329,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Container(
                         height: 22,
                         child: Text(
-                          'Sign Up',
+                          LocalizationText.signUp,
                           style: TextStyles.defaultStyle.primaryTextColor.bold
                               .setTextSize(kDefaultTextSize / 1.1),
                         ),
