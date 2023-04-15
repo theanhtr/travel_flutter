@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:travel_app_ytb/helpers/asset_helper.dart';
+import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
 import 'package:travel_app_ytb/representation/screens/hotel_detail_screen.dart';
 import 'package:travel_app_ytb/representation/widgets/app_bar_container.dart';
 import 'package:travel_app_ytb/representation/widgets/hotel_card_widget.dart';
@@ -21,7 +22,7 @@ class _SearchHotelsScreenState extends State<SearchHotelsScreen> {
   @override
   Widget build(BuildContext context) {
     return AppBarContainer(
-      titleString: 'Hotels',
+      titleString: LocalizationText.hotels,
       implementLeading: true,
       implementTrailing: true,
       child: SingleChildScrollView(

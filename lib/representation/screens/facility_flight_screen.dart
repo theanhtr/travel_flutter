@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travel_app_ytb/helpers/image_helper.dart';
+import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
 import 'package:travel_app_ytb/representation/widgets/app_bar_container.dart';
 import 'package:travel_app_ytb/core/constants/dismention_constants.dart';
 import 'package:travel_app_ytb/representation/widgets/button_widget.dart';
@@ -49,7 +50,7 @@ class _FacilityFlightState extends State<FacilityFlight> {
   Widget build(BuildContext context) {
     return AppBarContainer(
         implementLeading: true,
-        titleString: "Facility",
+        titleString: LocalizationText.facility,
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -74,7 +75,7 @@ class _FacilityFlightState extends State<FacilityFlight> {
                           text: TextSpan(
                             children: [
                               TextSpan(
-                                text: "Select all",
+                                text: LocalizationText.selectAll,
                                 style: TextStyle(
                                   color: hexToColor(kDefaultTextColor),
                                 ),
@@ -96,7 +97,7 @@ class _FacilityFlightState extends State<FacilityFlight> {
               Container(
                 margin: const EdgeInsets.only(top: kDefaultPadding),
                 child: ButtonWidget(
-                  title: 'Apply',
+                  title: LocalizationText.apply,
                   ontap: () {},
                 ),
               ),

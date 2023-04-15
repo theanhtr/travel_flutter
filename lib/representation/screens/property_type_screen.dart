@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travel_app_ytb/helpers/image_helper.dart';
+import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
 import 'package:travel_app_ytb/representation/widgets/app_bar_container.dart';
 import 'package:travel_app_ytb/core/constants/dismention_constants.dart';
 import 'package:travel_app_ytb/representation/widgets/button_widget.dart';
@@ -18,14 +19,22 @@ class PropertyType extends StatefulWidget {
 class _PropertyTypeState extends State<PropertyType> {
   bool isSelectedAll = true;
   List<_CheckBoxState> listCheckbox = [
-    _CheckBoxState(facility: "Hostels", icon: Container(), index: 0),
-    _CheckBoxState(facility: "Resorts", icon: Container(), index: 1),
-    _CheckBoxState(facility: "Hotels", icon: Container(), index: 2),
-    _CheckBoxState(facility: "Villas", icon: Container(), index: 3),
-    _CheckBoxState(facility: "Guest Houses", icon: Container(), index: 4),
-    _CheckBoxState(facility: "Homestays", icon: Container(), index: 5),
-    _CheckBoxState(facility: "Apartments", icon: Container(), index: 6),
-    _CheckBoxState(facility: "Others", icon: Container(), index: 7)
+    _CheckBoxState(
+        facility: LocalizationText.hostels, icon: Container(), index: 0),
+    _CheckBoxState(
+        facility: LocalizationText.resorts, icon: Container(), index: 1),
+    _CheckBoxState(
+        facility: LocalizationText.hotels, icon: Container(), index: 2),
+    _CheckBoxState(
+        facility: LocalizationText.villas, icon: Container(), index: 3),
+    _CheckBoxState(
+        facility: LocalizationText.guestHouse, icon: Container(), index: 4),
+    _CheckBoxState(
+        facility: LocalizationText.homeStay, icon: Container(), index: 5),
+    _CheckBoxState(
+        facility: LocalizationText.apartment, icon: Container(), index: 6),
+    _CheckBoxState(
+        facility: LocalizationText.others, icon: Container(), index: 7)
   ];
 
   @override
@@ -57,7 +66,7 @@ class _PropertyTypeState extends State<PropertyType> {
                           text: TextSpan(
                             children: [
                               TextSpan(
-                                text: "Select all",
+                                text: LocalizationText.selectAll,
                                 style: TextStyle(
                                   color: hexToColor(kDefaultTextColor),
                                 ),
@@ -79,7 +88,7 @@ class _PropertyTypeState extends State<PropertyType> {
               Container(
                 margin: const EdgeInsets.only(top: kDefaultPadding),
                 child: ButtonWidget(
-                  title: 'Done',
+                  title: LocalizationText.done,
                   ontap: () {},
                 ),
               ),

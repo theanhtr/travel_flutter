@@ -35,6 +35,8 @@ class LoginManager {
   var _isRemember = true;
 
   Future<dynamic> signInWithEmailPassword(String email, String password) async {
+    email = email.trim();
+    password = password.trim();
     var response = await BaseClient("").post('/auth/login', {
       'email': email,
       'password': password
@@ -121,6 +123,9 @@ class LoginManager {
   //signUp
   Future<Map> signUpByPassword(
       String email, String password, String passwordConfirmation) async {
+    email = email.trim();
+    password = password.trim();
+    passwordConfirmation = passwordConfirmation.trim();
     final response = await BaseClient("").post("/auth/register", {
       "email": email,
       "password": password,
@@ -144,7 +149,7 @@ class LoginManager {
   }
 
   Future<dynamic> forgotPassword(String email) async {
-    email.trim();
+    email = email.trim();
     final response = await BaseClient("").post("/auth/forgot-password", {
       "email": email,
     }).catchError((err) {
@@ -164,8 +169,8 @@ class LoginManager {
   }
 
   Future<dynamic> verificateCode(String email, String code) async{
-    email.trim();
-    code.trim();
+    email = email.trim();
+    code = code.trim();
     final response = await BaseClient("").post("/auth/check-token-reset-password", {
       "email": email,
       "token" : code,
@@ -186,6 +191,9 @@ class LoginManager {
   }
 
   Future<dynamic> resetPassword(String email, String password, String passwordConfirm, String token) async {
+    email = email.trim();
+    password = password.trim();
+    passwordConfirm = passwordConfirm.trim();
     final response = await BaseClient("").post("/auth/reset-password", {
       "email": email,
       "password": password,

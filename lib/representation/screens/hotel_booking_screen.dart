@@ -2,6 +2,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travel_app_ytb/core/constants/dismention_constants.dart';
+import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
 import 'package:travel_app_ytb/representation/screens/search_hotels_screen.dart';
 import 'package:travel_app_ytb/representation/screens/select_date_screen.dart';
 import 'package:travel_app_ytb/representation/screens/select_guest_room_screen.dart';
@@ -28,7 +29,7 @@ class _HotelBookingScreenState extends State<HotelBookingScreen> {
   @override
   Widget build(BuildContext context) {
     return AppBarContainer(
-      titleString: 'Hotel Booking',
+      titleString: LocalizationText.hotelBooking,
       // ignore: sort_child_properties_last
       child: Container(
           child: SingleChildScrollView(
@@ -40,7 +41,7 @@ class _HotelBookingScreenState extends State<HotelBookingScreen> {
           ),
           BookingHotelTab(
             icon: FontAwesomeIcons.locationDot,
-            title: 'Destination',
+            title: LocalizationText.destination,
             description: 'South Korea',
             sizeItem: kDefaultIconSize,
             sizeText: kDefaultIconSize / 1.2,
@@ -53,8 +54,8 @@ class _HotelBookingScreenState extends State<HotelBookingScreen> {
             child: StatefulBuilder(builder: (context, setState) {
               return BookingHotelTab(
                 icon: FontAwesomeIcons.calendarDay,
-                title: 'Select Date',
-                description: dateSelected ?? 'Please select date',
+                title: LocalizationText.selectDate,
+                description: dateSelected ?? LocalizationText.pleaseSelectDate,
                 sizeItem: kDefaultIconSize,
                 sizeText: kDefaultIconSize / 1.2,
                 primaryColor: const Color(0xffF77777),
@@ -77,8 +78,9 @@ class _HotelBookingScreenState extends State<HotelBookingScreen> {
           ),
           BookingHotelTab(
             icon: FontAwesomeIcons.bed,
-            title: 'Guest and Room',
-            description: '$guestCount Guest, $roomCount Room',
+            title: LocalizationText.guestAndRoom,
+            description:
+                '$guestCount ${LocalizationText.guest}, $roomCount ${LocalizationText.room}',
             sizeItem: kDefaultIconSize,
             sizeText: kDefaultIconSize / 1.2,
             primaryColor: const Color(0xff3EC8BC),
@@ -103,16 +105,15 @@ class _HotelBookingScreenState extends State<HotelBookingScreen> {
           Container(
             margin: const EdgeInsets.only(top: kDefaultPadding),
             child: ButtonWidget(
-              title: 'Search',
+              title: LocalizationText.search,
               ontap: () {
                 if (dateSelected == null) {
                   AwesomeDialog(
                     context: context,
                     dialogType: DialogType.warning,
                     animType: AnimType.topSlide,
-                    title: "Hey, check all again!",
-                    desc:
-                        "Maybe you haven't filled in one of the fields, please complete it :33",
+                    title: LocalizationText.checkAll,
+                    desc: LocalizationText.fieldsHavenotFill,
                     btnOkOnPress: () {},
                   ).show();
                 } else {

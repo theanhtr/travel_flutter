@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:travel_app_ytb/helpers/loginManager/login_manager.dart';
+import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
 import 'package:travel_app_ytb/representation/widgets/button_widget.dart';
 
 import 'login/login_screen.dart';
@@ -16,27 +17,24 @@ class _UserScreenState extends State<UserScreen> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: ButtonWidget(
-        title: "logout",
-        ontap: () {
-          LoginManager().signOut().then((value) =>
-              {
-                if (value == true && _isLogOut == false) {
+        child: ButtonWidget(
+      title: LocalizationText.logout,
+      ontap: () {
+        LoginManager().signOut().then((value) => {
+              if (value == true && _isLogOut == false)
+                {
                   Navigator.popAndPushNamed(context, LoginScreen.routeName),
                   _isLogOut = true,
                 }
-              }
-          );
-          FirebaseAuth.instance.signOut().then((value) =>
-              {
-                if (_isLogOut == false) {
+            });
+        FirebaseAuth.instance.signOut().then((value) => {
+              if (_isLogOut == false)
+                {
                   Navigator.popAndPushNamed(context, LoginScreen.routeName),
                   _isLogOut = true,
                 }
-              }
-          );
-        },
-      )
-    );
+            });
+      },
+    ));
   }
 }
