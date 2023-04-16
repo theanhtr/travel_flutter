@@ -47,7 +47,7 @@ class BaseClient {
       if (value == false) {
         showDialog(context: context, builder: (BuildContext context) => AlertDialog(
           title: const Text('ERROR NETWORK'),
-          content: const Text('Can not connect to serve'),
+          content: const Text('Can not connect to server'),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(context, 'Cancel'),

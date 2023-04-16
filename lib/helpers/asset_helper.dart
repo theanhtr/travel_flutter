@@ -24,7 +24,9 @@ class AssetHelper {
   static const String seatIcon = 'assets/icons/seat_icon.png';
   static const String arrowUpDownIcon = 'assets/icons/arrow_up_down_icon.png';
   static const String heartWhileIcon = 'assets/icons/heart_while_icon.png';
-  static const String startYellowIcon = 'assets/icons/star_yellow_icon.png';
+  static const String starYellowIcon = 'assets/icons/star_yellow_icon.png';
+  static const String starWhiteIcon = 'assets/icons/star_white_icon.png';
+  static const String skyscraperIcon = 'assets/icons/skyscraper_icon.png';
   //facility hotel
   static const String wifiIcon = 'assets/icons/wifi.png';
   static const String digitalTv = 'assets/icons/digital_tivi.png';

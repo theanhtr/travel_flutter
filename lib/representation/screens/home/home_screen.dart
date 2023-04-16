@@ -344,7 +344,7 @@ class CardDestinations extends StatelessWidget {
                   children: [
                     Expanded(
                         flex: 1,
-                        child: ImageHelper.loadFromAsset(AssetHelper.startYellowIcon)
+                        child: ImageHelper.loadFromAsset(AssetHelper.starYellowIcon)
                     ),
                     Expanded(
                         flex: 1,
