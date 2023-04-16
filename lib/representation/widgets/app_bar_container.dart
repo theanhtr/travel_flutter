@@ -19,10 +19,12 @@ class AppBarContainer extends StatelessWidget {
     this.titleString,
     this.implementLeading = false,
     this.implementTrailing = false,
+    this.widget,
   });
   final Widget? title;
   final String? titleString;
   final Widget child;
+  final Widget? widget;
   final bool implementLeading; //show button back or not
   final bool implementTrailing;
 
@@ -78,17 +80,26 @@ class AppBarContainer extends StatelessWidget {
                         ),
                       ),
                       if (implementTrailing)
-                        Container(
-                          padding: EdgeInsets.all(kItemPadding),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(
-                                Radius.circular(kDefaultPadding)),
-                            color: Colors.white,
-                          ),
-                          child: Icon(
-                            FontAwesomeIcons.bars,
-                            color: Colors.black,
-                            size: kDefaultIconSize,
+                        GestureDetector(
+                          onTap: () {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return widget ?? Container();
+                                });
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(kItemPadding),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(kDefaultPadding)),
+                              color: Colors.white,
+                            ),
+                            child: Icon(
+                              FontAwesomeIcons.bars,
+                              color: Colors.black,
+                              size: kDefaultIconSize,
+                            ),
                           ),
                         ),
                     ],

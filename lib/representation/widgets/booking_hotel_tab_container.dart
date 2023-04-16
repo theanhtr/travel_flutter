@@ -65,15 +65,21 @@ class _BookingHotelTabState extends State<BookingHotelTab> {
                           height: widget.sizeItem * 3,
                           child: ImageHelper.loadFromAsset(widget.iconString),
                         )
-                      : Container(
-                          padding: EdgeInsets.all(widget.sizeItem),
-                          margin: const EdgeInsets.all(kDefaultPadding),
-                          decoration: BoxDecoration(
-                              color: const Color(0xffFE9C5E).withOpacity(0.2),
-                              borderRadius:
-                                  BorderRadius.circular(kDefaultPadding)),
-                          child:
-                              ImageHelper.loadFromAsset(widget.iconString),
+                      : Column(
+                          children: [
+                            Container(
+                                padding: EdgeInsets.all(widget.sizeItem),
+                                decoration: BoxDecoration(
+                                    color: const Color(0xffFE9C5E)
+                                        .withOpacity(0.2),
+                                    borderRadius:
+                                        BorderRadius.circular(kDefaultPadding)),
+                                child: SizedBox(
+                                  child: ImageHelper.loadFromAsset(
+                                    widget.iconString,
+                                  ),
+                                )),
+                          ],
                         )
                   : ItemText(
                       icon: widget.icon,

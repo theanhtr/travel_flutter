@@ -9,12 +9,14 @@ class MySliderApp extends StatefulWidget {
   final double start;
   final double end;
   final String unit;
+  final int? divisions;
   const MySliderApp(
       {super.key,
       required this.initialFontSize,
       required this.start,
       required this.end,
-      required this.unit});
+      required this.unit,
+      this.divisions});
 
   @override
   _MySliderAppState createState() => _MySliderAppState();
@@ -52,7 +54,7 @@ class _MySliderAppState extends State<MySliderApp> {
             values: _currentRangeValues,
             min: widget.start,
             max: widget.end,
-            divisions: 10,
+            divisions: widget.divisions ?? 10,
             activeColor: ColorPalette.primaryColor,
             inactiveColor: ColorPalette.cardBackgroundColor,
             labels: RangeLabels(
