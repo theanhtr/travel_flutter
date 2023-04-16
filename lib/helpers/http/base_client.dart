@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-const String baseUrl = "http://192.168.1.244:9000/api";
+const String baseUrl = "https://53a7-2405-4802-1d30-4ee0-f942-c606-16d2-4f28.ngrok-free.app/api";
 
 class BaseClient {
   var client = http.Client();
@@ -30,9 +30,9 @@ class BaseClient {
     }
   }
 
-  static Future<bool> isConnectNetWork(BuildContext context) async {
+  static Future<bool> _isConnectNetWork(BuildContext context) async {
     try {
-      final result = await InternetAddress.lookup(baseUrl);
+      final result = await InternetAddress.lookup(baseUrl.substring(0, baseUrl.length - 4));
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         return true;
       }
@@ -43,7 +43,7 @@ class BaseClient {
   }
 
   static showErrorNetWork(BuildContext context) {
-    BaseClient.isConnectNetWork(context).then((value) => {
+    BaseClient._isConnectNetWork(context).then((value) => {
       if (value == false) {
         showDialog(context: context, builder: (BuildContext context) => AlertDialog(
           title: const Text('ERROR NETWORK'),

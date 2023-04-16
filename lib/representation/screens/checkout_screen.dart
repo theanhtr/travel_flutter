@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travel_app_ytb/core/constants/color_palatte.dart';
 import 'package:travel_app_ytb/core/constants/dismention_constants.dart';
 import 'package:travel_app_ytb/core/constants/textstyle_constants.dart';
+import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
 import 'package:travel_app_ytb/representation/widgets/app_bar_container.dart';
 import 'package:travel_app_ytb/representation/widgets/button_widget.dart';
 import 'package:travel_app_ytb/representation/widgets/info_card.dart';
@@ -72,7 +73,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                         width: kDefaultPadding / 3,
                       ),
                       Text(
-                        'Book and Review',
+                        LocalizationText.bookAndReview,
                         style: TextStyles.defaultStyle.whiteTextColor
                             .setTextSize(kDefaultTextSize / 1.5),
                       )
@@ -100,7 +101,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                         width: kDefaultPadding / 3,
                       ),
                       Text(
-                        'Payment',
+                        LocalizationText.payment,
                         style: TextStyles.defaultStyle.whiteTextColor
                             .setTextSize(kDefaultTextSize / 1.5),
                       )
@@ -128,7 +129,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                         width: kDefaultPadding / 3,
                       ),
                       Text(
-                        'Confirm',
+                        LocalizationText.confirm,
                         style: TextStyles.defaultStyle.whiteTextColor
                             .setTextSize(kDefaultTextSize / 1.5),
                       )
@@ -161,15 +162,17 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const InfoCard(title: 'Sign in as: ', infoList: <String>[
-                  'Name: Tran The Anh',
-                  'SĐT: 0912945494',
-                ]),
+                InfoCard(
+                    title: '${LocalizationText.signInAs}: ',
+                    infoList: <String>[
+                      'Name: Tran The Anh',
+                      'SĐT: 0912945494',
+                    ]),
                 const SizedBox(
                   height: kDefaultPadding,
                 ),
                 Text(
-                  'Thông tin liên hệ',
+                  LocalizationText.contactIf,
                   style: TextStyles.defaultStyle.bold.blackTextColor
                       .setTextSize(kDefaultTextSize),
                 ),
@@ -193,7 +196,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                               style: TextStyles.defaultStyle.redTextColor
                                   .setTextSize(kDefaultTextSize * 1.2)),
                           Text(
-                            'Thêm thông tin liên hệ',
+                            LocalizationText.addContactInfor,
                             style: TextStyles.defaultStyle.blackTextColor
                                 .setTextSize(kDefaultTextSize / 1.2),
                           ),
@@ -212,7 +215,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             const SizedBox(
               height: kDefaultPadding,
             ),
-            ButtonWidget(title: 'Next', ontap: () {}),
+            ButtonWidget(title: LocalizationText.Next, ontap: () {}),
             const SizedBox(
               height: kDefaultPadding,
             ),
@@ -220,7 +223,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         ),
       ),
       implementLeading: true,
-      titleString: 'Checkout',
+      titleString: LocalizationText.checkout,
     );
   }
 }

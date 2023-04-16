@@ -35,6 +35,8 @@ class LoginManager {
   var _isRemember = true;
 
   Future<dynamic> signInWithEmailPassword(String email, String password) async {
+    email = email.trim();
+    password = password.trim();
     var response = await BaseClient("").post('/auth/login', {
       'email': email,
       'password': password
@@ -121,6 +123,9 @@ class LoginManager {
   //signUp
   Future<Map> signUpByPassword(
       String email, String password, String passwordConfirmation) async {
+    email = email.trim();
+    password = password.trim();
+    passwordConfirmation = passwordConfirmation.trim();
     final response = await BaseClient("").post("/auth/register", {
       "email": email,
       "password": password,
@@ -130,6 +135,10 @@ class LoginManager {
       return false;
     });
     Map resultmap = Map<String, String>();
+    if (response.runtimeType == int) {
+      resultmap['result'] = 'statuscode $response';
+      return resultmap;
+    }
     if (response == null) {
       resultmap['result'] = 'null response';
       return resultmap;
@@ -138,4 +147,72 @@ class LoginManager {
 
     return dataResponse;
   }
+
+  Future<dynamic> forgotPassword(String email) async {
+    email = email.trim();
+    final response = await BaseClient("").post("/auth/forgot-password", {
+      "email": email,
+    }).catchError((err) {
+      return false;
+    });
+    if (response == null) {
+      return false;
+    }
+    if (response.runtimeType == int) {
+      return response;
+    }
+    Map dataResponse = json.decode(response);
+    if (dataResponse['success'] == true) {
+      return true;
+    }
+    return dataResponse;
+  }
+
+  Future<dynamic> verificateCode(String email, String code) async{
+    email = email.trim();
+    code = code.trim();
+    final response = await BaseClient("").post("/auth/check-token-reset-password", {
+      "email": email,
+      "token" : code,
+    }).catchError((err) {
+      return false;
+    });
+    if (response == null) {
+      return false;
+    }
+    if (response.runtimeType == int) {
+      return response;
+    }
+    Map dataResponse = json.decode(response);
+    if (dataResponse['success'] == true) {
+      return true;
+    }
+    return false;
+  }
+
+  Future<dynamic> resetPassword(String email, String password, String passwordConfirm, String token) async {
+    email = email.trim();
+    password = password.trim();
+    passwordConfirm = passwordConfirm.trim();
+    final response = await BaseClient("").post("/auth/reset-password", {
+      "email": email,
+      "password": password,
+      "password_confirmation": passwordConfirm,
+      "token" : token,
+    }).catchError((err) {
+      return false;
+    });
+    if (response == null) {
+      return false;
+    }
+    if (response.runtimeType == int) {
+      return response;
+    }
+    Map dataResponse = json.decode(response);
+    if (dataResponse['success'] == true) {
+      return true;
+    }
+    return response;
+  }
+
 }

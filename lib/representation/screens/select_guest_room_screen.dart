@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travel_app_ytb/core/constants/dismention_constants.dart';
+import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
 import 'package:travel_app_ytb/representation/widgets/add_tab_container.dart';
 import 'package:travel_app_ytb/representation/widgets/app_bar_container.dart';
 import 'package:travel_app_ytb/representation/widgets/button_widget.dart';
@@ -29,7 +30,7 @@ class _SelectGuestRoomScreenState extends State<SelectGuestRoomScreen> {
     roomCount = argss['roomCount'];
 
     return AppBarContainer(
-      titleString: 'Add guest and room',
+      titleString: LocalizationText.addGuetsAndRoom,
       implementLeading: true,
       child: Column(
         children: [
@@ -39,7 +40,7 @@ class _SelectGuestRoomScreenState extends State<SelectGuestRoomScreen> {
           StatefulBuilder(builder: (context, setState) {
             return AddTabContainer(
               icon: FontAwesomeIcons.peopleGroup,
-              content: 'Guest',
+              content: LocalizationText.guest,
               sizeItem: kDefaultIconSize,
               sizeText: kDefaultTextSize,
               primaryColor: const Color(0xffFE9C5E),
@@ -57,7 +58,7 @@ class _SelectGuestRoomScreenState extends State<SelectGuestRoomScreen> {
           StatefulBuilder(builder: (context, setState) {
             return AddTabContainer(
               icon: FontAwesomeIcons.peopleRoof,
-              content: 'Room',
+              content: LocalizationText.room,
               sizeItem: kDefaultIconSize,
               sizeText: kDefaultTextSize,
               primaryColor: const Color(0xffF77777),
@@ -73,7 +74,7 @@ class _SelectGuestRoomScreenState extends State<SelectGuestRoomScreen> {
             height: kDefaultPadding,
           ),
           ButtonWidget(
-            title: 'Done',
+            title: LocalizationText.done,
             ontap: () {
               Navigator.of(context).pop([guestCount, roomCount]);
             },

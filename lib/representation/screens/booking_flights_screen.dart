@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travel_app_ytb/core/constants/color_palatte.dart';
 import 'package:travel_app_ytb/core/constants/dismention_constants.dart';
+import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
 import 'package:travel_app_ytb/representation/widgets/button_icon_widget.dart';
 import 'package:travel_app_ytb/representation/widgets/button_widget.dart';
 import 'package:travel_app_ytb/representation/widgets/out_button_widget.dart';
@@ -30,7 +31,7 @@ class _BookingFlightsScreenState extends State<BookingFlightsScreen> {
   @override
   Widget build(BuildContext context) {
     return AppBarContainer(
-      titleString: '''Book Your Flight''',
+      titleString: LocalizationText.bookFlight,
       implementLeading: true,
       child: Container(
         margin: const EdgeInsets.only(top: kMediumPadding * 3),
@@ -40,7 +41,7 @@ class _BookingFlightsScreenState extends State<BookingFlightsScreen> {
               children: [
                 Expanded(
                   child: OutButtonWidget(
-                    title: 'One way',
+                    title: LocalizationText.oneWay,
                     ontap: () {
                       setState(() {
                         isBookingFlightsScreen = true;
@@ -57,7 +58,7 @@ class _BookingFlightsScreenState extends State<BookingFlightsScreen> {
                 ),
                 Expanded(
                   child: OutButtonWidget(
-                    title: 'Round trip',
+                    title: LocalizationText.roundTrip,
                     ontap: () {
                       setState(() {
                         isBookingFlightsScreen = false;
@@ -74,7 +75,7 @@ class _BookingFlightsScreenState extends State<BookingFlightsScreen> {
                 ),
                 Expanded(
                   child: OutButtonWidget(
-                    title: 'Multi-City',
+                    title: LocalizationText.multiCity,
                     ontap: () {
                       setState(() {
                         isBookingFlightsScreen = false;
@@ -102,7 +103,7 @@ class _BookingFlightsScreenState extends State<BookingFlightsScreen> {
                                 children: [
                                   BookingHotelTab(
                                     icon: FontAwesomeIcons.locationDot,
-                                    title: 'From',
+                                    title: LocalizationText.from,
                                     description: 'Jakarta',
                                     sizeItem: kDefaultIconSize,
                                     sizeText: kDefaultIconSize / 1.2,
@@ -117,7 +118,7 @@ class _BookingFlightsScreenState extends State<BookingFlightsScreen> {
                                   ),
                                   BookingHotelTab(
                                     icon: FontAwesomeIcons.locationDot,
-                                    title: 'To',
+                                    title: LocalizationText.to,
                                     description: 'Surabaya',
                                     sizeItem: kDefaultIconSize,
                                     sizeText: kDefaultIconSize / 1.2,
@@ -157,8 +158,8 @@ class _BookingFlightsScreenState extends State<BookingFlightsScreen> {
                             children: [
                               BookingHotelTab(
                                 icon: FontAwesomeIcons.calendarDay,
-                                title: 'Departure',
-                                description: 'Select Date',
+                                title: LocalizationText.departure,
+                                description: LocalizationText.departure,
                                 sizeItem: kDefaultIconSize,
                                 sizeText: kDefaultIconSize / 1.2,
                                 primaryColor: const Color(0xffFE9C5E),
@@ -171,8 +172,9 @@ class _BookingFlightsScreenState extends State<BookingFlightsScreen> {
                               ),
                               BookingHotelTab(
                                 icon: FontAwesomeIcons.solidUser,
-                                title: 'Passengers',
-                                description: '1 Passenger',
+                                title: LocalizationText.passenger,
+                                description:
+                                    '1 ${LocalizationText.passengerIT}',
                                 sizeItem: kDefaultIconSize,
                                 sizeText: kDefaultIconSize / 1.2,
                                 primaryColor: const Color(0xffFE9C5E),
@@ -185,8 +187,8 @@ class _BookingFlightsScreenState extends State<BookingFlightsScreen> {
                               ),
                               BookingHotelTab(
                                 icon: FontAwesomeIcons.locationDot,
-                                title: 'Class',
-                                description: 'Economy',
+                                title: LocalizationText.classh,
+                                description: LocalizationText.economy,
                                 sizeItem: kDefaultIconSize,
                                 sizeText: kDefaultIconSize / 1.2,
                                 primaryColor: const Color(0xffFE9C5E),
@@ -200,7 +202,7 @@ class _BookingFlightsScreenState extends State<BookingFlightsScreen> {
                                 height: kDefaultPadding,
                               ),
                               ButtonWidget(
-                                title: 'Search',
+                                title: LocalizationText.search,
                                 ontap: () {},
                               ),
                               const SizedBox(
@@ -219,7 +221,7 @@ class _BookingFlightsScreenState extends State<BookingFlightsScreen> {
                                     children: [
                                       BookingHotelTab(
                                         icon: FontAwesomeIcons.locationDot,
-                                        title: 'From',
+                                        title: LocalizationText.from,
                                         description: 'Jakarta',
                                         sizeItem: kDefaultIconSize,
                                         sizeText: kDefaultIconSize / 1.2,
@@ -234,7 +236,7 @@ class _BookingFlightsScreenState extends State<BookingFlightsScreen> {
                                       ),
                                       BookingHotelTab(
                                         icon: FontAwesomeIcons.locationDot,
-                                        title: 'To',
+                                        title: LocalizationText.to,
                                         description: 'Surabaya',
                                         sizeItem: kDefaultIconSize,
                                         sizeText: kDefaultIconSize / 1.2,
@@ -274,8 +276,8 @@ class _BookingFlightsScreenState extends State<BookingFlightsScreen> {
                                 children: [
                                   BookingHotelTab(
                                     icon: FontAwesomeIcons.calendarDay,
-                                    title: 'Departure',
-                                    description: 'Select Date',
+                                    title: LocalizationText.departure,
+                                    description: LocalizationText.departure,
                                     sizeItem: kDefaultIconSize,
                                     sizeText: kDefaultIconSize / 1.2,
                                     primaryColor: const Color(0xffFE9C5E),
@@ -288,8 +290,8 @@ class _BookingFlightsScreenState extends State<BookingFlightsScreen> {
                                   ),
                                   BookingHotelTab(
                                     icon: FontAwesomeIcons.calendarDay,
-                                    title: 'Return',
-                                    description: 'Select Date',
+                                    title: LocalizationText.returnn,
+                                    description: LocalizationText.departure,
                                     sizeItem: kDefaultIconSize,
                                     sizeText: kDefaultIconSize / 1.2,
                                     primaryColor: const Color(0xffFE9C5E),
@@ -302,8 +304,9 @@ class _BookingFlightsScreenState extends State<BookingFlightsScreen> {
                                   ),
                                   BookingHotelTab(
                                     icon: FontAwesomeIcons.solidUser,
-                                    title: 'Passengers',
-                                    description: '1 Passenger',
+                                    title: LocalizationText.passenger,
+                                    description:
+                                        '1 ${LocalizationText.passengerIT}',
                                     sizeItem: kDefaultIconSize,
                                     sizeText: kDefaultIconSize / 1.2,
                                     primaryColor: const Color(0xffFE9C5E),
@@ -316,8 +319,8 @@ class _BookingFlightsScreenState extends State<BookingFlightsScreen> {
                                   ),
                                   BookingHotelTab(
                                     icon: FontAwesomeIcons.locationDot,
-                                    title: 'Class',
-                                    description: 'Economy',
+                                    title: LocalizationText.classh,
+                                    description: LocalizationText.economy,
                                     sizeItem: kDefaultIconSize,
                                     sizeText: kDefaultIconSize / 1.2,
                                     primaryColor: const Color(0xffFE9C5E),
@@ -331,7 +334,7 @@ class _BookingFlightsScreenState extends State<BookingFlightsScreen> {
                                     height: kDefaultPadding,
                                   ),
                                   ButtonWidget(
-                                    title: 'Search',
+                                    title: LocalizationText.search,
                                     ontap: () {},
                                   ),
                                   const SizedBox(
@@ -344,8 +347,8 @@ class _BookingFlightsScreenState extends State<BookingFlightsScreen> {
                         : Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text(
-                                'Flight 1',
+                              Text(
+                                '${LocalizationText.flight} 1',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16,
@@ -360,7 +363,7 @@ class _BookingFlightsScreenState extends State<BookingFlightsScreen> {
                                     children: [
                                       BookingHotelTab(
                                         icon: FontAwesomeIcons.locationDot,
-                                        title: 'From',
+                                        title: LocalizationText.from,
                                         description: 'Jakarta',
                                         sizeItem: kDefaultIconSize,
                                         sizeText: kDefaultIconSize / 1.2,
@@ -375,7 +378,7 @@ class _BookingFlightsScreenState extends State<BookingFlightsScreen> {
                                       ),
                                       BookingHotelTab(
                                         icon: FontAwesomeIcons.locationDot,
-                                        title: 'To',
+                                        title: LocalizationText.to,
                                         description: 'Surabaya',
                                         sizeItem: kDefaultIconSize,
                                         sizeText: kDefaultIconSize / 1.2,
@@ -415,8 +418,8 @@ class _BookingFlightsScreenState extends State<BookingFlightsScreen> {
                                 children: [
                                   BookingHotelTab(
                                     icon: FontAwesomeIcons.calendarDay,
-                                    title: 'Departure',
-                                    description: 'Select Date',
+                                    title: LocalizationText.departure,
+                                    description: LocalizationText.departure,
                                     sizeItem: kDefaultIconSize,
                                     sizeText: kDefaultIconSize / 1.2,
                                     primaryColor: const Color(0xffFE9C5E),
@@ -429,8 +432,9 @@ class _BookingFlightsScreenState extends State<BookingFlightsScreen> {
                                   ),
                                   BookingHotelTab(
                                     icon: FontAwesomeIcons.solidUser,
-                                    title: 'Passengers',
-                                    description: '1 Passenger',
+                                    title: LocalizationText.passenger,
+                                    description:
+                                        '1 ${LocalizationText.passenger}',
                                     sizeItem: kDefaultIconSize,
                                     sizeText: kDefaultIconSize / 1.2,
                                     primaryColor: const Color(0xffFE9C5E),
@@ -443,8 +447,8 @@ class _BookingFlightsScreenState extends State<BookingFlightsScreen> {
                                   ),
                                   BookingHotelTab(
                                     icon: FontAwesomeIcons.locationDot,
-                                    title: 'Class',
-                                    description: 'Economy',
+                                    title: LocalizationText.classh,
+                                    description: LocalizationText.economy,
                                     sizeItem: kDefaultIconSize,
                                     sizeText: kDefaultIconSize / 1.2,
                                     primaryColor: const Color(0xffFE9C5E),
@@ -459,8 +463,8 @@ class _BookingFlightsScreenState extends State<BookingFlightsScreen> {
                               const SizedBox(
                                 height: kDefaultPadding,
                               ),
-                              const Text(
-                                'Flight 2',
+                              Text(
+                                '${LocalizationText.flight}  2',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16,
@@ -475,7 +479,7 @@ class _BookingFlightsScreenState extends State<BookingFlightsScreen> {
                                     children: [
                                       BookingHotelTab(
                                         icon: FontAwesomeIcons.locationDot,
-                                        title: 'From',
+                                        title: LocalizationText.from,
                                         description: 'Jakarta',
                                         sizeItem: kDefaultIconSize,
                                         sizeText: kDefaultIconSize / 1.2,
@@ -490,7 +494,7 @@ class _BookingFlightsScreenState extends State<BookingFlightsScreen> {
                                       ),
                                       BookingHotelTab(
                                         icon: FontAwesomeIcons.locationDot,
-                                        title: 'To',
+                                        title: LocalizationText.to,
                                         description: 'Surabaya',
                                         sizeItem: kDefaultIconSize,
                                         sizeText: kDefaultIconSize / 1.2,
@@ -530,8 +534,8 @@ class _BookingFlightsScreenState extends State<BookingFlightsScreen> {
                                 children: [
                                   BookingHotelTab(
                                     icon: FontAwesomeIcons.calendarDay,
-                                    title: 'Departure',
-                                    description: 'Select Date',
+                                    title: LocalizationText.departure,
+                                    description: LocalizationText.departure,
                                     sizeItem: kDefaultIconSize,
                                     sizeText: kDefaultIconSize / 1.2,
                                     primaryColor: const Color(0xffFE9C5E),
@@ -544,8 +548,9 @@ class _BookingFlightsScreenState extends State<BookingFlightsScreen> {
                                   ),
                                   BookingHotelTab(
                                     icon: FontAwesomeIcons.solidUser,
-                                    title: 'Passengers',
-                                    description: '1 Passenger',
+                                    title: LocalizationText.passenger,
+                                    description:
+                                        '1 ${LocalizationText.passengerIT}',
                                     sizeItem: kDefaultIconSize,
                                     sizeText: kDefaultIconSize / 1.2,
                                     primaryColor: const Color(0xffFE9C5E),
@@ -558,8 +563,8 @@ class _BookingFlightsScreenState extends State<BookingFlightsScreen> {
                                   ),
                                   BookingHotelTab(
                                     icon: FontAwesomeIcons.locationDot,
-                                    title: 'Class',
-                                    description: 'Economy',
+                                    title: LocalizationText.classh,
+                                    description: LocalizationText.economy,
                                     sizeItem: kDefaultIconSize,
                                     sizeText: kDefaultIconSize / 1.2,
                                     primaryColor: const Color(0xffFE9C5E),
@@ -573,7 +578,7 @@ class _BookingFlightsScreenState extends State<BookingFlightsScreen> {
                                     height: kDefaultPadding,
                                   ),
                                   ButtonWidget(
-                                    title: 'Search',
+                                    title: LocalizationText.search,
                                     ontap: () {},
                                   ),
                                   const SizedBox(

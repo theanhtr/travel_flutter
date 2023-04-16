@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travel_app_ytb/helpers/asset_helper.dart';
 import 'package:travel_app_ytb/helpers/image_helper.dart';
+import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
 import 'package:travel_app_ytb/representation/screens/hotel_detail_screen.dart';
 import 'package:travel_app_ytb/representation/widgets/app_bar_container.dart';
 import 'package:travel_app_ytb/representation/widgets/hotel_card_widget.dart';
@@ -13,7 +14,6 @@ import '../widgets/booking_hotel_tab_container.dart';
 import '../widgets/button_widget.dart';
 import '../widgets/out_button_widget.dart';
 import '../widgets/slider.dart';
-import 'hotel_filter_screen.dart';
 
 class SearchHotelsScreen extends StatefulWidget {
   const SearchHotelsScreen({super.key});

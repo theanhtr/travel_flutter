@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travel_app_ytb/core/constants/dismention_constants.dart';
 import 'package:travel_app_ytb/core/constants/textstyle_constants.dart';
+import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
 import 'package:travel_app_ytb/representation/widgets/booking_hotel_tab_container.dart';
 import 'package:travel_app_ytb/representation/widgets/button_widget.dart';
 import 'package:travel_app_ytb/representation/widgets/out_button_widget.dart';
@@ -9,14 +10,14 @@ import 'package:travel_app_ytb/representation/widgets/slider.dart';
 
 enum SampleItem { itemOne, itemTwo, itemThree }
 
-class HotelFilterScreen extends StatefulWidget {
-  const HotelFilterScreen({super.key});
+class FlightFilterScreen extends StatefulWidget {
+  const FlightFilterScreen({super.key});
   static const String routeName = '/hotel_filter_screen';
   @override
-  State<HotelFilterScreen> createState() => _HotelFilterScreenState();
+  State<FlightFilterScreen> createState() => _FlightFilterScreenState();
 }
 
-class _HotelFilterScreenState extends State<HotelFilterScreen> {
+class _FlightFilterScreenState extends State<FlightFilterScreen> {
   SampleItem? selectedMenu;
   var isBookingFlightsScreen = true;
   var isBookingFlightsRoundTripScreen = false;
@@ -72,7 +73,7 @@ class _ButtonInDialogState extends State<ButtonInDialog> {
       backgroundColor: Color.fromARGB(239, 255, 255, 229),
       scrollable: true,
       title: Text(
-        'Choose Your Filter',
+        LocalizationText.choseFilter,
         style: TextStyle(fontWeight: FontWeight.bold),
       ),
       content: Padding(
@@ -81,7 +82,7 @@ class _ButtonInDialogState extends State<ButtonInDialog> {
           Row(children: [
             Expanded(
               child: OutButtonWidget(
-                title: 'Direct',
+                title: LocalizationText.direct,
                 ontap: () {
                   setState(() {
                     isBookingFlightsScreen = true;
@@ -97,7 +98,7 @@ class _ButtonInDialogState extends State<ButtonInDialog> {
             ),
             Expanded(
               child: OutButtonWidget(
-                title: '1 Transit',
+                title: LocalizationText.transit_1,
                 ontap: () {
                   setState(() {
                     isBookingFlightsScreen = false;
@@ -114,7 +115,7 @@ class _ButtonInDialogState extends State<ButtonInDialog> {
             ),
             Expanded(
               child: OutButtonWidget(
-                title: '2+ Transits',
+                title: LocalizationText.transit_2_plus,
                 ontap: () {
                   setState(() {
                     isBookingFlightsScreen = false;
@@ -135,8 +136,8 @@ class _ButtonInDialogState extends State<ButtonInDialog> {
               Column(
                 // ignore: prefer_const_literals_to_create_immutables
                 children: [
-                  const Text(
-                    'Transit',
+                  Text(
+                    LocalizationText.transit,
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ],
@@ -166,8 +167,8 @@ class _ButtonInDialogState extends State<ButtonInDialog> {
               Column(
                 // ignore: prefer_const_literals_to_create_immutables
                 children: [
-                  const Text(
-                    'Transit',
+                  Text(
+                    LocalizationText.transit,
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ],
@@ -195,25 +196,27 @@ class _ButtonInDialogState extends State<ButtonInDialog> {
           Column(children: [
             BookingHotelTab(
               icon: FontAwesomeIcons.suitcaseMedical,
-              title: 'Facilities',
+              title: LocalizationText.facilities,
               description: '',
               sizeItem: kDefaultIconSize / 1.5,
               sizeText: kDefaultIconSize / 1.2,
               primaryColor: const Color(0xffFE9C5E),
-              secondaryColor: const Color(0xffFE9C5E).withOpacity(0.2), iconString: '',
+              secondaryColor: const Color(0xffFE9C5E).withOpacity(0.2),
+              iconString: '',
             ),
             const SizedBox(
               height: kMinPadding,
             ),
             BookingHotelTab(
               icon: FontAwesomeIcons.sort,
-              title: 'Sort By',
+              title: LocalizationText.sortBy,
               description: "",
               sizeItem: kDefaultIconSize / 1.5,
               sizeText: kDefaultIconSize / 1.2,
               primaryColor: Color.fromARGB(255, 113, 228, 155),
               secondaryColor:
-                  Color.fromARGB(255, 126, 235, 193).withOpacity(0.2), iconString: 'id',
+                  Color.fromARGB(255, 126, 235, 193).withOpacity(0.2),
+              iconString: 'id',
             ),
           ]),
         ]),
@@ -225,14 +228,14 @@ class _ButtonInDialogState extends State<ButtonInDialog> {
           child: Column(
             children: [
               ButtonWidget(
-                title: 'Apply',
+                title: LocalizationText.apply,
                 ontap: () {},
               ),
               const SizedBox(
                 height: kMinPadding,
               ),
               ButtonWidget(
-                title: 'Reset',
+                title: LocalizationText.reset,
                 ontap: () {},
               ),
             ],

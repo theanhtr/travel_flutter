@@ -1,12 +1,15 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travel_app_ytb/core/constants/color_palatte.dart';
 import 'package:travel_app_ytb/core/constants/dismention_constants.dart';
 import 'package:travel_app_ytb/core/constants/textstyle_constants.dart';
 import 'package:travel_app_ytb/helpers/asset_helper.dart';
 import 'package:travel_app_ytb/helpers/image_helper.dart';
+import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
 import 'package:travel_app_ytb/representation/controllers/login_screen_controller.dart';
 import 'package:travel_app_ytb/representation/screens/login/login_screen.dart';
 import 'package:travel_app_ytb/representation/widgets/app_bar_container.dart';
@@ -14,7 +17,12 @@ import 'package:travel_app_ytb/representation/widgets/button_icon_widget.dart';
 import 'package:travel_app_ytb/representation/widgets/button_widget.dart';
 import 'package:travel_app_ytb/representation/widgets/input_card.dart';
 import 'package:travel_app_ytb/representation/widgets/line_widget.dart';
+import 'package:travel_app_ytb/representation/widgets/loading/loading.dart';
 
+/*
+...
+...Đã làm chuyển ngữ
+*/
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
 
@@ -35,7 +43,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     _controller = LoginScreenController();
     return AppBarContainer(
-      titleString: 'Sign Up',
+      titleString: LocalizationText.signUp,
       implementLeading: true,
       // ignore: prefer_const_literals_to_create_immutables
       child: SingleChildScrollView(
@@ -47,7 +55,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
             StatefulBuilder(
               builder: (context, setState) => InputCard(
-                style: 'Email',
+                style: TypeInputCard.email,
                 onchange: (String value) {
                   email = value;
                   setState(() {});
@@ -59,7 +67,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
             StatefulBuilder(
               builder: (context, setState) => InputCard(
-                style: 'Password',
+                style: TypeInputCard.password,
                 onchange: (String value) {
                   password = value;
                   setState(() {});
@@ -71,7 +79,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
             StatefulBuilder(
               builder: (context, setState) => InputCard(
-                style: 'Password Confirm',
+                style: TypeInputCard.passwordConfirm,
                 onchange: (String value) {
                   passwordConfirmation = value;
                   setState(() {});
@@ -87,7 +95,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 Column(
                   children: [
                     Text(
-                      'By tapping sign up you agree to the',
+                      LocalizationText.tapSignUp1,
                       style: TextStyles.defaultStyle.blackTextColor
                           .setTextSize(kDefaultTextSize / 1.1),
                     ),
@@ -101,7 +109,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       child: Container(
                         height: 22,
                         child: Text(
-                          'Terms and Condition and Privacy Policy',
+                          LocalizationText.tapSignUp2,
                           style: TextStyles.defaultStyle.primaryTextColor.bold
                               .setTextSize(kDefaultTextSize / 1.1),
                         ),
@@ -115,24 +123,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
               height: kDefaultPadding,
             ),
             ButtonWidget(
-              title: 'Sign Up',
+              title: LocalizationText.signUp,
               ontap: () {
+                Loading.show(context);
                 _controller
                     ?.signByPassWord(email, password, passwordConfirmation)
                     .then((value) => {
+                          Loading.dismiss(context),
                           if (value['success'] == true)
                             {
                               Navigator.popAndPushNamed(
                                   context, LoginScreen.routeName)
                             }
-                          else
+                          else if (value['result'] == 'false')
                             {
-                              print('data: $value'),
                               showDialog(
                                 context: context,
                                 builder: (BuildContext context) => AlertDialog(
-                                  title: const Text(
-                                      'ERROR PASSWORD OR INVALID EMAIL'),
+                                  title: Text(LocalizationText.errPassOrEmail),
                                   content: Container(
                                     height: 120.0,
                                     color: Colors.yellow,
@@ -140,16 +148,42 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(
-                                            'EMAIL: ${value['data']['email']}'),
-                                        const SizedBox(
-                                          height: kDefaultPadding,
-                                        ),
-                                        Text(
-                                            'PASSWORD: ${value['data']['password']}')
+                                        value['data']['email'] != null
+                                            ? Text(
+                                                '${LocalizationText.email}: ${value['data']['email']}')
+                                            : SizedBox(
+                                                height: kDefaultPadding,
+                                              ),
+                                        value['data']['email'] != null
+                                            ? Text(
+                                                '${LocalizationText.password}: ${value['data']['password']}')
+                                            : SizedBox(
+                                                height: 0,
+                                              )
                                       ],
                                     ),
                                   ),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      onPressed: () => Navigator.pop(
+                                          context, LocalizationText.cancel),
+                                      child: Text(LocalizationText.ok),
+                                    ),
+                                    TextButton(
+                                      onPressed: () => Navigator.pop(
+                                          context, LocalizationText.ok),
+                                      child: Text(LocalizationText.ok),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            }
+                          else
+                            {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) => AlertDialog(
+                                  title: const Text('Null response'),
                                   actions: <Widget>[
                                     TextButton(
                                       onPressed: () =>
@@ -164,7 +198,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   ],
                                 ),
                               )
-                            }
+                            },
                         });
               },
             ),
