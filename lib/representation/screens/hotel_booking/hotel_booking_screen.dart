@@ -1,11 +1,12 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travel_app_ytb/core/constants/dismention_constants.dart';
 import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
-import 'package:travel_app_ytb/representation/screens/search_hotels_screen.dart';
-import 'package:travel_app_ytb/representation/screens/select_date_screen.dart';
-import 'package:travel_app_ytb/representation/screens/select_guest_room_screen.dart';
+import 'package:travel_app_ytb/representation/controllers/hotel_booking_screen_controller.dart';
+import 'package:travel_app_ytb/representation/screens/hotel_booking/search_your_destination_screen.dart';
+import 'package:travel_app_ytb/representation/screens/hotel_booking/search_hotels_screen.dart';
+import 'package:travel_app_ytb/representation/screens/hotel_booking/select_date_screen.dart';
+import 'package:travel_app_ytb/representation/screens/hotel_booking/select_guest_room_screen.dart';
 import 'package:travel_app_ytb/representation/widgets/app_bar_container.dart';
 import 'package:flutter/material.dart';
 import 'package:travel_app_ytb/representation/widgets/booking_hotel_tab_container.dart';
@@ -25,6 +26,16 @@ class _HotelBookingScreenState extends State<HotelBookingScreen> {
   String? dateSelected;
   int? guestCount = 1;
   int? roomCount = 1;
+  Map<String, dynamic>? selectedProvinceValue;
+  Map<String, dynamic>? selectedDistrictValue;
+  Map<String, dynamic>? selectedSubDistrictValue;
+  HotelBookingScreenController? _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = HotelBookingScreenController();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,12 +53,28 @@ class _HotelBookingScreenState extends State<HotelBookingScreen> {
           BookingHotelTab(
             icon: FontAwesomeIcons.locationDot,
             title: LocalizationText.destination,
-            description: 'South Korea',
+            description: selectedDistrictValue?.isEmpty == false ? "${selectedProvinceValue?['name'] ?? ""}, ${selectedDistrictValue?['name'] ?? ""}, ${selectedSubDistrictValue?['name'] ?? ""}"
+            : "",
             sizeItem: kDefaultIconSize,
             sizeText: kDefaultIconSize / 1.2,
             primaryColor: const Color(0xffFE9C5E),
             secondaryColor: const Color(0xffFE9C5E).withOpacity(0.2),
             iconString: '',
+            ontap: () async {
+                  final result = await Navigator.pushNamed(
+                      context, SearchYourDestinationScreen.routeName,
+                      arguments: {
+                        'selectedProvinceValue': selectedProvinceValue,
+                        'selectedDistrictValue': selectedDistrictValue,
+                        'selectedSubDistrictValue': selectedSubDistrictValue,
+                      });
+                  if (!(result as List<Map<String, dynamic>?>).any((element) => element == null)) {
+                    selectedProvinceValue = result[0];
+                    selectedDistrictValue = result[1];
+                    selectedSubDistrictValue = result[2];
+                    setState(() {});
+                  }
+            },
           ),
           Container(
             margin: const EdgeInsets.symmetric(vertical: kDefaultPadding),
@@ -117,7 +144,22 @@ class _HotelBookingScreenState extends State<HotelBookingScreen> {
                     btnOkOnPress: () {},
                   ).show();
                 } else {
-                  Navigator.pushNamed(context, SearchHotelsScreen.routeName);
+                  print(selectedDistrictValue?['id']);
+                  _controller?.getSearchHotels(selectedProvinceValue?['id'].toString() ?? "0", selectedDistrictValue?['id'].toString() ?? "0", selectedSubDistrictValue?['id'].toString() ?? "0")
+                  .then((value) => {
+                    debugPrint(value.toString()),
+                    if (value.runtimeType != int) {
+                      Navigator.pushNamed(context, SearchHotelsScreen.routeName, arguments:  {
+                        'listHotels': value,
+                        'dateSelected': dateSelected,
+                        'guestCount': guestCount,
+                        'roomCount': roomCount,
+                        'selectedProvinceValue': selectedProvinceValue,
+                        'selectedDistrictValue': selectedDistrictValue,
+                        'selectedSubDistrictValue': selectedSubDistrictValue,
+                      })
+                    }
+                  });
                 }
               },
             ),

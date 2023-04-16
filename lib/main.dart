@@ -3,18 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:travel_app_ytb/helpers/local_storage_helper.dart';
-import 'package:travel_app_ytb/helpers/loginManager/login_manager.dart';
-import 'package:travel_app_ytb/representation/screens/facility_flight_screen.dart';
-import 'package:travel_app_ytb/representation/screens/facility_hotel_screen.dart';
-import 'package:travel_app_ytb/representation/screens/google_map_screen.dart';
-import 'package:travel_app_ytb/representation/screens/hotel_booking_screen.dart';
-
-import 'package:travel_app_ytb/representation/screens/property_type_screen.dart';
-import 'package:travel_app_ytb/representation/screens/sort_by_filght_screen.dart';
-import 'package:travel_app_ytb/representation/screens/sort_by_hotel_screen.dart';
-
 import 'package:travel_app_ytb/representation/screens/splash_screen.dart';
-import 'package:travel_app_ytb/representation/widgets/slider.dart';
 import 'package:travel_app_ytb/routes.dart';
 import './core/constants/color_palatte.dart';
 

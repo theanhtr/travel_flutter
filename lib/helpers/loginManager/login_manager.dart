@@ -91,6 +91,9 @@ class LoginManager {
       debugPrint("response get currentuser err $err");
     });
     if (response == null) return null;
+    if (response.runtimeType == int) {
+      return null;
+    }
     Map dataResponse = json.decode(response);
     return UserModel(
       name: dataResponse['data']['last_name'],

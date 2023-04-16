@@ -10,7 +10,6 @@ import 'package:travel_app_ytb/helpers/asset_helper.dart';
 import 'package:travel_app_ytb/helpers/image_helper.dart';
 import 'package:travel_app_ytb/representation/controllers/home_screen_controller.dart';
 import 'package:travel_app_ytb/representation/screens/booking_flights_screen.dart';
-import 'package:travel_app_ytb/representation/screens/hotel_booking_screen.dart';
 import 'package:travel_app_ytb/representation/widgets/app_bar_container.dart';
 import 'package:travel_app_ytb/representation/widgets/custom_checkbox_icon.dart';
 import 'package:travel_app_ytb/representation/widgets/tapable_widget.dart';
@@ -19,6 +18,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import '../../../core/constants/textstyle_constants.dart';
 import '../../../helpers/http/base_client.dart';
 import '../../widgets/item_text_container.dart';
+import '../hotel_booking/hotel_booking_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

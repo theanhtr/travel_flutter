@@ -74,6 +74,7 @@ class AppBarContainer extends StatelessWidget {
                                 style: TextStyles
                                     .defaultStyle.bold.whiteTextColor
                                     .setTextSize(26),
+                                maxLines: 3,
                               ),
                             ]),
                           ),

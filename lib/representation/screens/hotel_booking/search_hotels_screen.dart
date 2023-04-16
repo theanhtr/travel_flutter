@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travel_app_ytb/helpers/asset_helper.dart';
-import 'package:travel_app_ytb/helpers/image_helper.dart';
 import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
 import 'package:travel_app_ytb/representation/screens/hotel_detail_screen.dart';
 import 'package:travel_app_ytb/representation/widgets/app_bar_container.dart';
 import 'package:travel_app_ytb/representation/widgets/hotel_card_widget.dart';
 
-import '../../core/constants/color_palatte.dart';
-import '../../core/constants/dismention_constants.dart';
-import '../../core/constants/textstyle_constants.dart';
-import '../widgets/booking_hotel_tab_container.dart';
-import '../widgets/button_widget.dart';
-import '../widgets/out_button_widget.dart';
-import '../widgets/slider.dart';
+import '../../../core/constants/color_palatte.dart';
+import '../../../core/constants/dismention_constants.dart';
+import '../../../core/constants/textstyle_constants.dart';
+import '../../../helpers/image_helper.dart';
+import '../../widgets/booking_hotel_tab_container.dart';
+import '../../widgets/button_widget.dart';
+import '../../widgets/slider.dart';
 
 class SearchHotelsScreen extends StatefulWidget {
   const SearchHotelsScreen({super.key});
@@ -25,89 +26,100 @@ class SearchHotelsScreen extends StatefulWidget {
 }
 
 class _SearchHotelsScreenState extends State<SearchHotelsScreen> {
+  final List<HotelCardWidget> listHotel = [];
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        alignment: Alignment.center,
-        children: [
-          AppBarContainer(
-            titleString: 'Hotels',
-            implementLeading: true,
-            implementTrailing: true,
-            widget: const ButtonInDialog(),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  HotelCardWidget(
-                    widthContainer: MediaQuery.of(context).size.width * 0.9,
-                    imageFilePath: AssetHelper.hotelImage1,
-                    name: 'Royal Palm Heritage',
-                    locationInfo: 'Purwokerto, Jateng',
-                    distanceInfo: '365 m',
-                    starInfo: 4.5,
-                    countReviews: 3123,
-                    priceInfo: 145,
-                    ontap: () async {
-                      await Navigator.pushNamed(
-                          context, HotelDetailScreen.routeName,
-                          arguments: {
-                            'name': 'Royal Palm Heritage',
-                            'priceInfo': 145,
-                            'locationInfo': 'Purwokerto, Jateng',
-                            'distanceInfo': '365 m',
-                            'starInfo': 4.5,
-                            'countReviews': 3123,
-                            'description':
-                                'You will find every comfort because many of the services that the hotel offers for travellers and of course the hotel is very comfortable.',
-                            'locationSpecial':
-                                'Located in the famous neighborhood of Seoul, Grand Luxury is set in a building built in the 2010s.',
-                            'services': <String>[
-                              'Restaurant',
-                              'Free Wifi',
-                              'Currency Exchange',
-                              'Private Pool',
-                              '24-hour Font Desk'
-                            ],
-                          });
-                    },
-                  ),
-                  const SizedBox(
-                    height: kDefaultPadding,
-                  ),
-                  HotelCardWidget(
-                    widthContainer: MediaQuery.of(context).size.width * 0.9,
-                    imageFilePath: AssetHelper.hotelImage2,
-                    name: 'Grand Luxury',
-                    locationInfo: 'Hanoi, Jateng',
-                    distanceInfo: '2.3 km',
-                    starInfo: 4.2,
-                    countReviews: 2623,
-                    priceInfo: 415,
-                    ontap: () {},
-                  ),
-                  const SizedBox(
-                    height: kDefaultPadding,
-                  ),
-                  HotelCardWidget(
-                    widthContainer: MediaQuery.of(context).size.width * 0.9,
-                    imageFilePath: AssetHelper.hotelImage3,
-                    name: 'Royal Palm Heritage',
-                    locationInfo: 'TpHoChiMinh, Jateng',
-                    distanceInfo: '365 km',
-                    starInfo: 4.5,
-                    countReviews: 3123,
-                    priceInfo: 145,
-                    ontap: () {},
-                  ),
-                  const SizedBox(
-                    height: kDefaultPadding * 2,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
+    final Map<String, dynamic> argss =
+    ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+    List<dynamic> hotels = argss['listHotels'];
+    hotels.forEach((element) {
+      HotelCardWidget hotel = HotelCardWidget(
+        widthContainer: MediaQuery.of(context).size.width * 0.9,
+        imageFilePath: AssetHelper.hotelImage1,
+        name: element['name'],
+        locationInfo: element['address_id'].toString(),
+        distanceInfo: '333',
+        starInfo: element['rating_average'] + 0.0,
+        countReviews: 1123,
+        priceInfo: element['min_price'],
+        ontap: () {  },
+      );
+      listHotel?.add(hotel);
+    });
+    return AppBarContainer(
+      titleString: LocalizationText.hotels,
+      implementLeading: true,
+      implementTrailing: true,
+      child: SingleChildScrollView(
+        child: Column(
+          children: listHotel as List<Widget>
+          // [
+          //   // HotelCardWidget(
+          //   //   widthContainer: MediaQuery.of(context).size.width * 0.9,
+          //   //   imageFilePath: AssetHelper.hotelImage1,
+          //   //   name: 'Royal Palm Heritage',
+          //   //   locationInfo: 'Purwokerto, Jateng',
+          //   //   distanceInfo: '365 m',
+          //   //   starInfo: 4.5,
+          //   //   countReviews: 3123,
+          //   //   priceInfo: 145,
+          //   //   ontap: () async {
+          //   //     await Navigator.pushNamed(context, HotelDetailScreen.routeName,
+          //   //         arguments: {
+          //   //           'name': 'Royal Palm Heritage',
+          //   //           'priceInfo': 145,
+          //   //           'locationInfo': 'Purwokerto, Jateng',
+          //   //           'distanceInfo': '365 m',
+          //   //           'starInfo': 4.5,
+          //   //           'countReviews': 3123,
+          //   //           'description':
+          //   //               'You will find every comfort because many of the services that the hotel offers for travellers and of course the hotel is very comfortable.',
+          //   //           'locationSpecial':
+          //   //               'Located in the famous neighborhood of Seoul, Grand Luxury is set in a building built in the 2010s.',
+          //   //           'services': <String>[
+          //   //             'Restaurant',
+          //   //             'Free Wifi',
+          //   //             'Currency Exchange',
+          //   //             'Private Pool',
+          //   //             '24-hour Font Desk'
+          //   //           ],
+          //   //         });
+          //   //   },
+          //   // ),
+          //   // const SizedBox(
+          //   //   height: kDefaultPadding,
+          //   // ),
+          //   // HotelCardWidget(
+          //   //   widthContainer: MediaQuery.of(context).size.width * 0.9,
+          //   //   imageFilePath: AssetHelper.hotelImage2,
+          //   //   name: 'Grand Luxury',
+          //   //   locationInfo: 'Hanoi, Jateng',
+          //   //   distanceInfo: '2.3 km',
+          //   //   starInfo: 4.2,
+          //   //   countReviews: 2623,
+          //   //   priceInfo: 415,
+          //   //   ontap: () {},
+          //   // ),
+          //   // const SizedBox(
+          //   //   height: kDefaultPadding,
+          //   // ),
+          //   // HotelCardWidget(
+          //   //   widthContainer: MediaQuery.of(context).size.width * 0.9,
+          //   //   imageFilePath: AssetHelper.hotelImage3,
+          //   //   name: 'Royal Palm Heritage',
+          //   //   locationInfo: 'TpHoChiMinh, Jateng',
+          //   //   distanceInfo: '365 km',
+          //   //   starInfo: 4.5,
+          //   //   countReviews: 3123,
+          //   //   priceInfo: 145,
+          //   //   ontap: () {},
+          //   // ),
+          //   // const SizedBox(
+          //   //   height: kDefaultPadding * 2,
+          //   // ),
+          // ],
+        ),
       ),
     );
   }
@@ -378,8 +390,8 @@ class _ButtonInDialogState extends State<ButtonInDialog> {
                                     primaryColor: const Color.fromARGB(
                                         255, 113, 228, 155),
                                     secondaryColor:
-                                        const Color.fromARGB(255, 126, 235, 193)
-                                            .withOpacity(0.2),
+                                    const Color.fromARGB(255, 126, 235, 193)
+                                        .withOpacity(0.2),
                                     iconString: 'id',
                                   ),
                                 ],
