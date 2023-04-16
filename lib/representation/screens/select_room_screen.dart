@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travel_app_ytb/helpers/asset_helper.dart';
+import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
 import 'package:travel_app_ytb/representation/screens/checkout_screen.dart';
 import 'package:travel_app_ytb/representation/screens/hotel_detail_screen.dart';
 import 'package:travel_app_ytb/representation/widgets/app_bar_container.dart';
@@ -63,7 +64,7 @@ class _SelectRoomScreenState extends State<SelectRoomScreen> {
   @override
   Widget build(BuildContext context) {
     return AppBarContainer(
-      titleString: 'Select Room',
+      titleString: LocalizationText.selectRoom,
       implementLeading: true,
       child: SingleChildScrollView(
         child: Column(

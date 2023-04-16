@@ -6,6 +6,7 @@ import 'package:travel_app_ytb/core/constants/dismention_constants.dart';
 import 'package:travel_app_ytb/core/constants/textstyle_constants.dart';
 import 'package:travel_app_ytb/helpers/asset_helper.dart';
 import 'package:travel_app_ytb/helpers/image_helper.dart';
+import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
 import 'package:travel_app_ytb/representation/screens/login/login_screen.dart';
 import 'package:travel_app_ytb/representation/screens/main_screen.dart';
 import 'package:travel_app_ytb/representation/widgets/button_widget.dart';
@@ -38,9 +39,7 @@ class _IntroScreenState extends State<IntroScreen> {
     return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
       Container(
           alignment: alignment,
-          child: ImageHelper.loadFromAsset(image,
-               fit: BoxFit.fitHeight)
-      ),
+          child: ImageHelper.loadFromAsset(image, fit: BoxFit.fitHeight)),
       const SizedBox(
         height: kMediumPadding * 2,
       ),
@@ -114,8 +113,8 @@ class _IntroScreenState extends State<IntroScreen> {
                           child: ButtonWidget(
                             title:
                                 ((snapshot.data! >= 1.6 && snapshot.data! <= 2)
-                                    ? 'Get Started'
-                                    : 'Next'),
+                                    ? LocalizationText.getStart
+                                    : LocalizationText.Next),
                             ontap: () {
                               if (_pageController.page == 2) {
                                 Navigator.of(context)
@@ -126,8 +125,7 @@ class _IntroScreenState extends State<IntroScreen> {
                                     curve: Curves.linear);
                               }
                             },
-                          )
-                      );
+                          ));
                     })
               ],
             ),
