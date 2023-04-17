@@ -6,8 +6,7 @@ import 'package:travel_app_ytb/representation/screens/forgot_password/forgot_pas
 import 'package:travel_app_ytb/representation/screens/forgot_password/reset_password_screen.dart';
 import 'package:travel_app_ytb/representation/screens/hotel_booking/hotel_booking_screen.dart';
 import 'package:travel_app_ytb/representation/screens/hotel_booking/search_your_destination_screen.dart';
-import 'package:travel_app_ytb/representation/screens/hotel_detail_screen.dart';
-
+import 'package:travel_app_ytb/representation/screens/hotel_detail/hotel_detail_screen.dart';
 import 'package:travel_app_ytb/representation/screens/intro_screen.dart';
 import 'package:travel_app_ytb/representation/screens/login/login_screen.dart';
 import 'package:travel_app_ytb/representation/screens/main_screen.dart';

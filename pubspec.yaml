@@ -58,6 +58,7 @@ dependencies:
   stop_watch_timer: ^2.0.0
   easy_localization: ^3.0.1
   dropdown_search: ^5.0.6
+  geolocator: ^9.0.2
 
 dev_dependencies:
   flutter_test:
