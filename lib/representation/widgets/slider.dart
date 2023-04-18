@@ -10,13 +10,16 @@ class MySliderApp extends StatefulWidget {
   final double end;
   final String unit;
   final int? divisions;
+  final Function(String, String)? getBudget;
+
   const MySliderApp(
       {super.key,
       required this.initialFontSize,
       required this.start,
       required this.end,
       required this.unit,
-      this.divisions});
+      this.divisions,
+      this.getBudget});
 
   @override
   _MySliderAppState createState() => _MySliderAppState();
@@ -64,6 +67,7 @@ class _MySliderAppState extends State<MySliderApp> {
             onChanged: (RangeValues values) {
               setState(() {
                 _currentRangeValues = values;
+                widget.getBudget(_currentRangeValues.start.round().toString() + widget.unit, _currentRangeValues.end.round().toString() + widget.unit);
               });
             },
           ),

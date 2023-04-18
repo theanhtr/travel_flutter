@@ -126,6 +126,9 @@ class _ButtonInDialogState extends State<ButtonInDialog> {
   var isYellow3 = false;
   var isYellow4 = false;
   var isYellow5 = false;
+  String budgetFrom = "";
+  String budgetTo = "";
+  String ratingAverage = "";
   @override
   Widget build(BuildContext context) {
     return DraggableScrollableSheet(
@@ -220,6 +223,7 @@ class _ButtonInDialogState extends State<ButtonInDialog> {
                                     child: GestureDetector(
                                       onTap: () {
                                         setState(() {
+                                          ratingAverage="1";
                                           isYellow1 = true;
                                           isYellow2 = false;
                                           isYellow3 = false;
@@ -243,6 +247,7 @@ class _ButtonInDialogState extends State<ButtonInDialog> {
                                     child: GestureDetector(
                                       onTap: () {
                                         setState(() {
+                                          ratingAverage="2";
                                           isYellow1 = true;
                                           isYellow2 = true;
                                           isYellow3 = false;
@@ -266,6 +271,7 @@ class _ButtonInDialogState extends State<ButtonInDialog> {
                                     child: GestureDetector(
                                       onTap: () {
                                         setState(() {
+                                          ratingAverage="3";
                                           isYellow1 = true;
                                           isYellow2 = true;
                                           isYellow3 = true;
@@ -289,6 +295,7 @@ class _ButtonInDialogState extends State<ButtonInDialog> {
                                     child: GestureDetector(
                                       onTap: () {
                                         setState(() {
+                                          ratingAverage="4";
                                           isYellow1 = true;
                                           isYellow2 = true;
                                           isYellow3 = true;
@@ -312,6 +319,7 @@ class _ButtonInDialogState extends State<ButtonInDialog> {
                                     child: GestureDetector(
                                       onTap: () {
                                         setState(() {
+                                          ratingAverage="5";
                                           isYellow1 = true;
                                           isYellow2 = true;
                                           isYellow3 = true;
