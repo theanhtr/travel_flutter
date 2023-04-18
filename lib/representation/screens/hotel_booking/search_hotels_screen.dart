@@ -3,7 +3,10 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travel_app_ytb/helpers/asset_helper.dart';
+import 'package:travel_app_ytb/helpers/location/location_helper.dart';
 import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
+import 'package:travel_app_ytb/representation/controllers/search_hotels_screen_controller.dart';
+import 'package:travel_app_ytb/representation/models/hotel_model.dart';
 import 'package:travel_app_ytb/representation/widgets/app_bar_container.dart';
 import 'package:travel_app_ytb/representation/widgets/hotel_card_widget.dart';
 
@@ -25,50 +28,86 @@ class SearchHotelsScreen extends StatefulWidget {
 }
 
 class _SearchHotelsScreenState extends State<SearchHotelsScreen> {
-  final List<HotelCardWidget> listHotel = [];
+  final List<HotelModel> listHotel = [];
+  final List<HotelCardWidget> listHotelCardWidget = [];
   bool _isLoading = false;
+  bool _canLoadCardView = false;
   List<dynamic> hotels = [];
+  SearchHotelsScreenController? _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    LocationHelper().determinePosition();
+    _controller = SearchHotelsScreenController();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final Map<String, dynamic> argss =
-    ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
-    hotels = argss['listHotels'];
+    final Map<String, dynamic> args =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+    hotels = args['listHotels'];
     if (_isLoading == false) {
       hotels.forEach((element) {
         List<dynamic> images = element['images'];
         String imagePath = "";
         if (images.isEmpty) {
-            imagePath = "https://cf.bstatic.com/images/hotel/max1024x768/378/378828506.jpg";
+          imagePath =
+              "https://cf.bstatic.com/images/hotel/max1024x768/378/378828506.jpg";
         } else {
-            imagePath = element['images'][0]['path'] ?? "";
+          imagePath = element['images'][0]['path'] ?? "";
         }
-
-        HotelCardWidget hotel = HotelCardWidget(
-          widthContainer: MediaQuery.of(context).size.width * 0.9,
+        String address =
+            "${element['address']['specific_address']}, ${element['address']['province']}, ${element['address']['district']}, ${element['address']['sub_district']}";
+        double distanceInfo = 0;
+        HotelModel hotel = HotelModel(
           imageFilePath: imagePath,
           name: element['name'],
+          address: address,
           locationInfo: element['address_id'].toString(),
-          distanceInfo: "123",
+          distanceInfo: distanceInfo.toString(),
           starInfo: element['rating_average'] + 0.0,
           countReviews: element['count_review'],
           priceInfo: "${element['min_price']} - ${element['max_price']}",
-          ontap: () {
-
-          },
         );
-        listHotel?.add(hotel);
+        listHotel.add(hotel);
       });
       _isLoading = true;
     }
+
+    listHotel.forEach((element) {
+      _controller?.getDistanceInformation(element.address ?? "")
+          .then((value) => {
+                element.distanceInfo = value.toString(),
+              });
+    });
+    _canLoadCardView = true;
+    if (_canLoadCardView == true) {
+      listHotel.forEach((element) {
+        listHotelCardWidget.add(HotelCardWidget(
+          widthContainer: MediaQuery.of(context).size.width * 0.9,
+          imageFilePath: element.imageFilePath ?? "",
+          name: element.name ?? "",
+          locationInfo: element.locationInfo ?? "",
+          distanceInfo: element.distanceInfo ?? "",
+          starInfo: element.starInfo ?? 0.0,
+          countReviews: element.countReviews ?? 0,
+          priceInfo: element.priceInfo ?? "",
+          ontap: () {},
+        ));
+      });
+      _canLoadCardView = false;
+    }
+
+    //debugPrint("list hotel ${listHotel[0].distanceInfo}");
     return AppBarContainer(
       titleString: LocalizationText.hotels,
       implementLeading: true,
       implementTrailing: true,
       child: SingleChildScrollView(
         child: Column(
-          children: listHotel
-        ),
+            children: listHotelCardWidget
+            ),
       ),
     );
   }
@@ -87,6 +126,7 @@ class _ButtonInDialogState extends State<ButtonInDialog> {
   var isYellow3 = false;
   var isYellow4 = false;
   var isYellow5 = false;
+
   @override
   Widget build(BuildContext context) {
     return DraggableScrollableSheet(
@@ -321,8 +361,8 @@ class _ButtonInDialogState extends State<ButtonInDialog> {
                                     primaryColor: const Color.fromARGB(
                                         255, 113, 228, 155),
                                     secondaryColor:
-                                    const Color.fromARGB(255, 126, 235, 193)
-                                        .withOpacity(0.2),
+                                        const Color.fromARGB(255, 126, 235, 193)
+                                            .withOpacity(0.2),
                                     iconString: AssetHelper.skyscraperIcon,
                                     useIconString: '',
                                     bordered: '',
@@ -339,8 +379,8 @@ class _ButtonInDialogState extends State<ButtonInDialog> {
                                     primaryColor: const Color.fromARGB(
                                         255, 113, 228, 155),
                                     secondaryColor:
-                                    const Color.fromARGB(255, 126, 235, 193)
-                                        .withOpacity(0.2),
+                                        const Color.fromARGB(255, 126, 235, 193)
+                                            .withOpacity(0.2),
                                     iconString: 'id',
                                   ),
                                 ],

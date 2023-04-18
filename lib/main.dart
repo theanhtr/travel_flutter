@@ -15,7 +15,7 @@ void main() async {
   await EasyLocalization.ensureInitialized();
   runApp(
     EasyLocalization(
-        supportedLocales: [Locale("en"), Locale("vi")],
+        supportedLocales: const [Locale("en"), Locale("vi")],
         path: 'assets/translations',
         child: MyApp()),
   );

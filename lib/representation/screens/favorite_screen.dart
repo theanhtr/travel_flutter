@@ -1,5 +1,5 @@
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter/material.dart';
+import 'package:travel_app_ytb/helpers/location/location_helper.dart';
 
 class FavoriteScreen extends StatefulWidget {
   const FavoriteScreen({super.key});
@@ -9,8 +9,18 @@ class FavoriteScreen extends StatefulWidget {
 }
 
 class _FavoriteScreenState extends State<FavoriteScreen> {
+  String currentPosition = "";
+
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    LocationHelper().getDistanceInformation("Hà Nội, Nam Từ Liêm");
+    return Center(
+      child: Text(
+          currentPosition,
+          style: TextStyle(
+            color: Colors.black
+          ),
+      ),
+    );
   }
 }

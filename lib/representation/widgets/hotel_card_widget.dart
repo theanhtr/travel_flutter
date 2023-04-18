@@ -19,7 +19,7 @@ class HotelCardWidget extends StatelessWidget {
     required this.countReviews,
     required this.priceInfo,
     required this.ontap,
-    this.discription
+    this.description,
   });
 
   final double widthContainer;
@@ -30,7 +30,7 @@ class HotelCardWidget extends StatelessWidget {
   final double starInfo;
   final int countReviews;
   final String priceInfo;
-  final String? discription;
+  final String? description;
   final Function() ontap;
 
   @override

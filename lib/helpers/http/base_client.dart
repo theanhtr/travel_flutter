@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-const String baseUrl = "http://192.168.1.244:9000/api";
+const String baseUrl = "https://2de0-2405-4802-1d30-4ee0-8060-7511-8151-c80a.ngrok-free.app/api";
 
 class BaseClient {
   var client = http.Client();
@@ -44,22 +44,23 @@ class BaseClient {
 
   static showErrorNetWork(BuildContext context) {
     BaseClient._isConnectNetWork(context).then((value) => {
-      if (value == true) {
-        showDialog(context: context, builder: (BuildContext context) => AlertDialog(
-          title: const Text('ERROR NETWORK'),
-          content: const Text('Can not connect to server'),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () => Navigator.pop(context, 'Cancel'),
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () => Navigator.pop(context, 'OK'),
-              child: const Text('OK'),
-            ),
-          ],
-        ),)
-      }
+      debugPrint(value.toString()),
+      // if (value == false) {
+      //   showDialog(context: context, builder: (BuildContext context) => AlertDialog(
+      //     title: const Text('ERROR NETWORK'),
+      //     content: const Text('Can not connect to server'),
+      //     actions: <Widget>[
+      //       TextButton(
+      //         onPressed: () => Navigator.pop(context, 'Cancel'),
+      //         child: const Text('Cancel'),
+      //       ),
+      //       TextButton(
+      //         onPressed: () => Navigator.pop(context, 'OK'),
+      //         child: const Text('OK'),
+      //       ),
+      //     ],
+      //   ),)
+      // }
     });
   }
 

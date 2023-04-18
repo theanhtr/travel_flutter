@@ -1,8 +1,7 @@
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:travel_app_ytb/helpers/location/location_helper.dart';
 
 class SearchHotelsScreenController {
-  Future<dynamic> getDistanceInformation(String districtId) async {
-    GoogleMapController? mapController;
-    Polyline
-  }
+    Future<double> getDistanceInformation(String address) async {
+        return LocationHelper().getDistanceInformation(address);
+    }
 }
