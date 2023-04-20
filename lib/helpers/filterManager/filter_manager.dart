@@ -1,10 +1,9 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
-import 'package:travel_app_ytb/helpers/local_storage_helper.dart';
 import 'package:travel_app_ytb/representation/models/user_model.dart';
 
 import '../http/base_client.dart';
+import '../local_storage_helper.dart';
 
 class FilterManager {
   static final FilterManager _shared = FilterManager._internal();
@@ -18,10 +17,13 @@ class FilterManager {
   final UserModel userModel = UserModel();
 
   Future<Map> filterHotels(String budgetFrom, String budgetTo, String ratingAverage) async {
-    final response = await BaseClient("").post("/filters/hotels", {
+    final token = await LocalStorageHelper.getValue("userToken") as String?;
+    final response = await BaseClient(token!).post("/filters/hotels", {
+      "province_id": "1",
       "budget_from": budgetFrom,
       "budget_to": budgetTo,
       "rating_average": ratingAverage,
+      "sort_by_id": "2",
     }).catchError((err) {
       return false;
     });

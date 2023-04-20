@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travel_app_ytb/helpers/asset_helper.dart';
@@ -6,12 +7,14 @@ import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
 import 'package:travel_app_ytb/representation/screens/hotel_detail_screen.dart';
 import 'package:travel_app_ytb/representation/widgets/app_bar_container.dart';
 import 'package:travel_app_ytb/representation/widgets/hotel_card_widget.dart';
+import 'package:travel_app_ytb/helpers/filterManager/filter_manager.dart';
 
 import '../../core/constants/color_palatte.dart';
 import '../../core/constants/dismention_constants.dart';
 import '../../core/constants/textstyle_constants.dart';
 import '../widgets/booking_hotel_tab_container.dart';
 import '../widgets/button_widget.dart';
+import '../widgets/loading/loading.dart';
 import '../widgets/out_button_widget.dart';
 import '../widgets/slider.dart';
 
@@ -126,9 +129,9 @@ class _ButtonInDialogState extends State<ButtonInDialog> {
   var isYellow3 = false;
   var isYellow4 = false;
   var isYellow5 = false;
-  String budgetFrom = "";
-  String budgetTo = "";
-  String ratingAverage = "";
+  String budgetFrom = "0";
+  String budgetTo = "1000";
+  String ratingAverage = "1";
   @override
   Widget build(BuildContext context) {
     return DraggableScrollableSheet(
@@ -190,16 +193,21 @@ class _ButtonInDialogState extends State<ButtonInDialog> {
                                 height: kMediumPadding * 1.5,
                               ),
                               Row(
-                                children: const [
+                                children: [
                                   Expanded(
                                     child: Material(
-                                      color: Color.fromARGB(255, 240, 242, 246),
+                                      color: const Color.fromARGB(
+                                          255, 240, 242, 246),
                                       child: MySliderApp(
                                         initialFontSize: 20,
                                         start: 0,
                                         end: 1000,
                                         unit: "\$",
                                         divisions: 100,
+                                        getBudget: (budgetFromT, budgetToT) {
+                                          budgetFrom = budgetFromT;
+                                          budgetTo = budgetToT;
+                                        },
                                       ),
                                     ),
                                   ),
@@ -223,7 +231,7 @@ class _ButtonInDialogState extends State<ButtonInDialog> {
                                     child: GestureDetector(
                                       onTap: () {
                                         setState(() {
-                                          ratingAverage="1";
+                                          ratingAverage = "1";
                                           isYellow1 = true;
                                           isYellow2 = false;
                                           isYellow3 = false;
@@ -247,7 +255,7 @@ class _ButtonInDialogState extends State<ButtonInDialog> {
                                     child: GestureDetector(
                                       onTap: () {
                                         setState(() {
-                                          ratingAverage="2";
+                                          ratingAverage = "2";
                                           isYellow1 = true;
                                           isYellow2 = true;
                                           isYellow3 = false;
@@ -271,7 +279,7 @@ class _ButtonInDialogState extends State<ButtonInDialog> {
                                     child: GestureDetector(
                                       onTap: () {
                                         setState(() {
-                                          ratingAverage="3";
+                                          ratingAverage = "3";
                                           isYellow1 = true;
                                           isYellow2 = true;
                                           isYellow3 = true;
@@ -295,7 +303,7 @@ class _ButtonInDialogState extends State<ButtonInDialog> {
                                     child: GestureDetector(
                                       onTap: () {
                                         setState(() {
-                                          ratingAverage="4";
+                                          ratingAverage = "4";
                                           isYellow1 = true;
                                           isYellow2 = true;
                                           isYellow3 = true;
@@ -319,7 +327,7 @@ class _ButtonInDialogState extends State<ButtonInDialog> {
                                     child: GestureDetector(
                                       onTap: () {
                                         setState(() {
-                                          ratingAverage="5";
+                                          ratingAverage = "5";
                                           isYellow1 = true;
                                           isYellow2 = true;
                                           isYellow3 = true;
@@ -368,8 +376,8 @@ class _ButtonInDialogState extends State<ButtonInDialog> {
                                     primaryColor: const Color.fromARGB(
                                         255, 113, 228, 155),
                                     secondaryColor:
-                                    const Color.fromARGB(255, 126, 235, 193)
-                                        .withOpacity(0.2),
+                                        const Color.fromARGB(255, 126, 235, 193)
+                                            .withOpacity(0.2),
                                     iconString: AssetHelper.skyscraperIcon,
                                     useIconString: '',
                                     bordered: '',
@@ -397,7 +405,87 @@ class _ButtonInDialogState extends State<ButtonInDialog> {
                               ),
                               ButtonWidget(
                                 title: 'Apply',
-                                ontap: () {},
+                                ontap: () {
+                                  Loading.show(context);
+                                  FilterManager()
+                                      .filterHotels(
+                                          budgetFrom, budgetTo, ratingAverage)
+                                      .then((value) => {
+                                            debugPrint(
+                                                "value forgot password $value"),
+                                            Loading.dismiss(context),
+                                            if (value['success'] == true)
+                                              {
+                                                Loading.dismiss(context),
+                                                Navigator.popAndPushNamed(context, SearchHotelsScreen.routeName, arguments: value['data'])
+                                              }
+                                            else if (value['result'] ==
+                                                'statuscode 500')
+                                              {
+                                                Loading.dismiss(context),
+                                                showDialog(
+                                                  context: context,
+                                                  builder:
+                                                      (BuildContext context) =>
+                                                          AlertDialog(
+                                                    title: const Text(
+                                                        'YOU MUST ENTER YOUR EMAIL'),
+                                                    content: const Text(''),
+                                                    actions: <Widget>[
+                                                      TextButton(
+                                                        onPressed: () =>
+                                                            Navigator.pop(
+                                                                context,
+                                                                'Cancel'),
+                                                        child: const Text(
+                                                            'Cancel'),
+                                                      ),
+                                                      TextButton(
+                                                        onPressed: () =>
+                                                            Navigator.pop(
+                                                                context, 'OK'),
+                                                        child: const Text('OK'),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                )
+                                              }
+                                            else if (value['result'] ==
+                                                    'statuscode 400' ||
+                                                value['result'] ==
+                                                    'statuscode 401')
+                                              {
+                                                Loading.dismiss(context),
+                                                showDialog(
+                                                  context: context,
+                                                  builder:
+                                                      (BuildContext context) =>
+                                                          AlertDialog(
+                                                    title: const Text(
+                                                        'No user found with this email'),
+                                                    content: const Text(''),
+                                                    actions: <Widget>[
+                                                      TextButton(
+                                                        onPressed: () =>
+                                                            Navigator.pop(
+                                                                context,
+                                                                'Cancel'),
+                                                        child: const Text(
+                                                            'Cancel'),
+                                                      ),
+                                                      TextButton(
+                                                        onPressed: () =>
+                                                            Navigator.pop(
+                                                                context, 'OK'),
+                                                        child: const Text('OK'),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                )
+                                              },
+                                            Loading.dismiss(context)
+                                          });
+                                },
                               ),
                               const SizedBox(
                                 height: kMinPadding,

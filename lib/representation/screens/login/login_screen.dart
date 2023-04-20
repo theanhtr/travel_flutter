@@ -267,17 +267,17 @@ class _LoginScreenState extends State<LoginScreen> {
                     icon: ImageHelper.loadFromAsset(AssetHelper.googleIcon,
                         fit: BoxFit.contain, width: kDefaultPadding * 1.5),
                     ontap: () {
-                      // Loading.show(context);
-                      // LoginGoogleManager().signInWithGoogle().then((value) {
-                      //   if (value != null) {
-                      //     Loading.dismiss(context);
-                      //     Navigator.popAndPushNamed(
-                      //         context, MainScreen.routeName);
-                      //   } else {
-                      //     Loading.dismiss(context);
-                      //   }
-                      // });
-                      Navigator.of(context).pushNamed(MainScreen.routeName);
+                      Loading.show(context);
+                      LoginGoogleManager().signInWithGoogle().then((value) {
+                        if (value != null) {
+                          Loading.dismiss(context);
+                          Navigator.popAndPushNamed(
+                              context, MainScreen.routeName);
+                        } else {
+                          Loading.dismiss(context);
+                        }
+                      });
+                      // Navigator.of(context).pushNamed(MainScreen.routeName);
                     },
                   ),
                 ),

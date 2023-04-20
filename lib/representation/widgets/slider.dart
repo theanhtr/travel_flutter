@@ -67,7 +67,8 @@ class _MySliderAppState extends State<MySliderApp> {
             onChanged: (RangeValues values) {
               setState(() {
                 _currentRangeValues = values;
-                widget.getBudget(_currentRangeValues.start.round().toString() + widget.unit, _currentRangeValues.end.round().toString() + widget.unit);
+                widget.getBudget!(_currentRangeValues.start.round().toString(),
+                    _currentRangeValues.end.round().toString());
               });
             },
           ),
