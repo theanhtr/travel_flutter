@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-const String baseUrl = "https://2de0-2405-4802-1d30-4ee0-8060-7511-8151-c80a.ngrok-free.app/api";
+const String baseUrl = "https://7a39-2405-4802-1d30-4ee0-c967-1336-fa7-2c22.ngrok-free.app/api";
 
 class BaseClient {
   var client = http.Client();

@@ -24,110 +24,158 @@ class _FacilityHotelState extends State<FacilityHotel> {
       icon: ImageHelper.loadFromAsset(AssetHelper.wifiIcon,
           fit: BoxFit.contain, width: kDefaultPadding * 1.5),
       checkBoxValue: false,
-      index: 0,
+      index: 1,
     ),
+    _CheckBoxState(
+      facility: "Free Breakfast",
+      icon: ImageHelper.loadFromAsset(AssetHelper.freeBreakfast,
+          fit: BoxFit.contain,
+          width: kDefaultPadding * 1.5,
+          tintColor: const Color.fromARGB(255, 97, 85, 204)),
+      checkBoxValue: false,
+      index: 2,
+    ),
+    _CheckBoxState(
+      facility: "Non Smoking",
+      icon: ImageHelper.loadFromAsset(AssetHelper.noSmoking,
+          fit: BoxFit.contain,
+          width: kDefaultPadding * 1.5,
+          tintColor: const Color.fromARGB(255, 97, 85, 204)),
+      checkBoxValue: false,
+      index: 3,
+    ),
+    _CheckBoxState(
+      facility: "Non Refundable",
+      icon: ImageHelper.loadFromAsset(AssetHelper.nonRefundable,
+          fit: BoxFit.contain,
+          width: kDefaultPadding * 1.5,
+          tintColor: const Color.fromARGB(255, 97, 85, 204)),
+      checkBoxValue: false,
+      index: 4,
+    ),
+    // _CheckBoxState(
+    //     facility: "Currency Exchange",
+    //     icon: ImageHelper.loadFromAsset(AssetHelper.currencyExchangeIcon,
+    //         fit: BoxFit.contain, width: kDefaultPadding * 1.5),
+    //     checkBoxValue: false,
+    //     index: 4),
+    // _CheckBoxState(
+    //     facility: "Car rental",
+    //     icon: ImageHelper.loadFromAsset(AssetHelper.carRentalIcon,
+    //         fit: BoxFit.contain, width: kDefaultPadding * 1.5),
+    //     checkBoxValue: false,
+    //     index: 6),
     _CheckBoxState(
         facility: "Digital TV",
         icon: ImageHelper.loadFromAsset(AssetHelper.digitalTv,
             fit: BoxFit.contain, width: kDefaultPadding * 1.5),
         checkBoxValue: false,
-        index: 1),
+        index: 6
+    ),
     _CheckBoxState(
         facility: "Parking Area",
         icon: ImageHelper.loadFromAsset(AssetHelper.parkingAreaIcon,
             fit: BoxFit.contain, width: kDefaultPadding * 1.5),
         checkBoxValue: false,
-        index: 2),
+        index: 7
+    ),
     _CheckBoxState(
         facility: "Swimming Pool",
         icon: ImageHelper.loadFromAsset(AssetHelper.swimingPoolIcon,
             fit: BoxFit.contain, width: kDefaultPadding * 1.5),
         checkBoxValue: false,
-        index: 3),
-    _CheckBoxState(
-        facility: "Currency Exchange",
-        icon: ImageHelper.loadFromAsset(AssetHelper.currencyExchangeIcon,
-            fit: BoxFit.contain, width: kDefaultPadding * 1.5),
-        checkBoxValue: false,
-        index: 4),
+        index: 8
+    ),
     _CheckBoxState(
         facility: "Restaurant",
         icon: ImageHelper.loadFromAsset(AssetHelper.restaurantIcon,
             fit: BoxFit.contain, width: kDefaultPadding * 1.5),
         checkBoxValue: false,
-        index: 5),
-    _CheckBoxState(
-        facility: "Car rental",
-        icon: ImageHelper.loadFromAsset(AssetHelper.carRentalIcon,
-            fit: BoxFit.contain, width: kDefaultPadding * 1.5),
-        checkBoxValue: false,
-        index: 6),
+        index: 9
+    ),
     _CheckBoxState(
         facility: "24-hour Front Desk",
         icon: ImageHelper.loadFromAsset(AssetHelper.receptionIcon,
             fit: BoxFit.contain, width: kDefaultPadding * 1.5),
         checkBoxValue: false,
-        index: 7)
+        index: 10
+    ),
   ];
 
   @override
   Widget build(BuildContext context) {
     return AppBarContainer(
-        implementLeading: true,
-        titleString: LocalizationText.facility,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              const SizedBox(
-                height: kMediumPadding * 3,
-              ),
-              StatefulBuilder(builder: (context, setState) {
-                return Column(children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          this.setState(() {
-                            for (var i = 0; i < listCheckbox.length; i++) {
-                              listCheckbox[i].checkBoxValue = isSelectedAll;
-                            }
-                            isSelectedAll = !isSelectedAll;
-                          });
-                        },
-                        child: RichText(
-                          text: TextSpan(
-                            children: [
-                              TextSpan(
-                                text: LocalizationText.selectAll,
-                                style: TextStyle(
-                                  color: hexToColor(kDefaultTextColor),
-                                ),
+      implementLeading: true,
+      titleString: LocalizationText.facility,
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            const SizedBox(
+              height: kMediumPadding * 3,
+            ),
+            StatefulBuilder(builder: (context, setState) {
+              return Column(children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        this.setState(() {
+                          for (var i = 0; i < listCheckbox.length; i++) {
+                            listCheckbox[i].checkBoxValue = isSelectedAll;
+                          }
+                          isSelectedAll = !isSelectedAll;
+                        });
+                      },
+                      child: RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: LocalizationText.selectAll,
+                              style: TextStyle(
+                                color: hexToColor(kDefaultTextColor),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
-                ]);
-              }),
-              ListView(
-                itemExtent: 84.0,
-                shrinkWrap: true,
-                physics: const ScrollPhysics(),
-                children: [...listCheckbox.map(buildItemCheckbox).toList()],
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: kDefaultPadding),
-                child: ButtonWidget(
-                  title: LocalizationText.apply,
-                  ontap: () {},
+                    ),
+                  ],
                 ),
+              ]);
+            }),
+            ListView(
+              itemExtent: 84.0,
+              shrinkWrap: true,
+              physics: const ScrollPhysics(),
+              children: [...listCheckbox.map(buildItemCheckbox).toList()],
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: kDefaultPadding),
+              child: ButtonWidget(
+                title: LocalizationText.apply,
+                ontap: () {
+                  String amenities = "";
+                  for (var i = 0; i < listCheckbox.length; i++) {
+                    if (listCheckbox[i].checkBoxValue == true) {
+                      if (amenities == "") {
+                        amenities += '${listCheckbox[i].index}';
+                      } else {
+                        amenities += ',${listCheckbox[i].index}';
+                      }
+                    }
+                  }
+                  Navigator.pop(context, amenities);
+                },
               ),
-            ],
-          ),
-        ));
+            ),
+            const SizedBox(
+              height: kMediumPadding,
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget buildItemCheckbox(_CheckBoxState checkBoxSate) =>
@@ -136,6 +184,9 @@ class _FacilityHotelState extends State<FacilityHotel> {
         icon: checkBoxSate.icon,
         checkBoxValue: checkBoxSate.checkBoxValue,
         index: checkBoxSate.index,
+        getCheckBoxValue: (checkValue) {
+          checkBoxSate.checkBoxValue = checkValue;
+        },
       );
 }
 

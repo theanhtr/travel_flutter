@@ -4,7 +4,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travel_app_ytb/helpers/asset_helper.dart';
 import 'package:travel_app_ytb/helpers/image_helper.dart';
 import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
+import 'package:travel_app_ytb/representation/screens/facility_hotel_screen.dart';
 import 'package:travel_app_ytb/representation/screens/hotel_detail_screen.dart';
+import 'package:travel_app_ytb/representation/screens/property_type_screen.dart';
+import 'package:travel_app_ytb/representation/screens/sort_by_hotel_screen.dart';
 import 'package:travel_app_ytb/representation/widgets/app_bar_container.dart';
 import 'package:travel_app_ytb/representation/widgets/hotel_card_widget.dart';
 import 'package:travel_app_ytb/helpers/filterManager/filter_manager.dart';
@@ -28,6 +31,7 @@ class SearchHotelsScreen extends StatefulWidget {
 }
 
 class _SearchHotelsScreenState extends State<SearchHotelsScreen> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -124,14 +128,18 @@ class ButtonInDialog extends StatefulWidget {
 }
 
 class _ButtonInDialogState extends State<ButtonInDialog> {
+  final sliderKey = GlobalKey<MySliderAppState>();
   var isYellow1 = false;
   var isYellow2 = false;
   var isYellow3 = false;
   var isYellow4 = false;
   var isYellow5 = false;
   String budgetFrom = "0";
-  String budgetTo = "1000";
+  String budgetTo = "9999";
   String ratingAverage = "1";
+  String amenities = "";
+  String sortById = "1";
+
   @override
   Widget build(BuildContext context) {
     return DraggableScrollableSheet(
@@ -199,11 +207,12 @@ class _ButtonInDialogState extends State<ButtonInDialog> {
                                       color: const Color.fromARGB(
                                           255, 240, 242, 246),
                                       child: MySliderApp(
+                                        key: sliderKey,
                                         initialFontSize: 20,
                                         start: 0,
-                                        end: 1000,
+                                        end: 9999,
                                         unit: "\$",
-                                        divisions: 100,
+                                        divisions: 1000,
                                         getBudget: (budgetFromT, budgetToT) {
                                           budgetFrom = budgetFromT;
                                           budgetTo = budgetToT;
@@ -363,24 +372,11 @@ class _ButtonInDialogState extends State<ButtonInDialog> {
                                     iconString: AssetHelper.wifiIcon,
                                     useIconString: '',
                                     bordered: '',
-                                  ),
-                                  const SizedBox(
-                                    height: kDefaultPadding,
-                                  ),
-                                  BookingHotelTab(
-                                    icon: FontAwesomeIcons.sort,
-                                    title: 'Property Type',
-                                    description: "",
-                                    sizeItem: kDefaultIconSize / 1.5,
-                                    sizeText: kDefaultIconSize / 1.2,
-                                    primaryColor: const Color.fromARGB(
-                                        255, 113, 228, 155),
-                                    secondaryColor:
-                                        const Color.fromARGB(255, 126, 235, 193)
-                                            .withOpacity(0.2),
-                                    iconString: AssetHelper.skyscraperIcon,
-                                    useIconString: '',
-                                    bordered: '',
+                                    ontap: () async {
+                                      amenities = await Navigator.pushNamed(
+                                          context, FacilityHotel.routeName,
+                                          arguments: {}) as String;
+                                    },
                                   ),
                                   const SizedBox(
                                     height: kDefaultPadding,
@@ -397,6 +393,11 @@ class _ButtonInDialogState extends State<ButtonInDialog> {
                                         const Color.fromARGB(255, 126, 235, 193)
                                             .withOpacity(0.2),
                                     iconString: 'id',
+                                    ontap: () async {
+                                      sortById = await Navigator.pushNamed(
+                                          context, SortByHotel.routeName,
+                                          arguments: {}) as String;
+                                    },
                                   ),
                                 ],
                               ),
@@ -408,28 +409,26 @@ class _ButtonInDialogState extends State<ButtonInDialog> {
                                 ontap: () {
                                   Loading.show(context);
                                   FilterManager()
-                                      .filterHotels(
-                                          budgetFrom, budgetTo, ratingAverage)
+                                      .filterHotels(budgetFrom, budgetTo,
+                                          ratingAverage, amenities, sortById)
                                       .then((value) => {
-                                            debugPrint(
-                                                "value forgot password $value"),
                                             Loading.dismiss(context),
+                                            debugPrint("status $value"),
                                             if (value['success'] == true)
                                               {
-                                                Loading.dismiss(context),
-                                                Navigator.popAndPushNamed(context, SearchHotelsScreen.routeName, arguments: value['data'])
+                                                Navigator.pop(
+                                                    context, value['data'])
                                               }
                                             else if (value['result'] ==
                                                 'statuscode 500')
                                               {
-                                                Loading.dismiss(context),
                                                 showDialog(
                                                   context: context,
                                                   builder:
                                                       (BuildContext context) =>
                                                           AlertDialog(
                                                     title: const Text(
-                                                        'YOU MUST ENTER YOUR EMAIL'),
+                                                        'INVALID INPUT PARAMETER STRUCTURE!'),
                                                     content: const Text(''),
                                                     actions: <Widget>[
                                                       TextButton(
@@ -451,9 +450,7 @@ class _ButtonInDialogState extends State<ButtonInDialog> {
                                                 )
                                               }
                                             else if (value['result'] ==
-                                                    'statuscode 400' ||
-                                                value['result'] ==
-                                                    'statuscode 401')
+                                                'statuscode 401')
                                               {
                                                 Loading.dismiss(context),
                                                 showDialog(
@@ -462,7 +459,7 @@ class _ButtonInDialogState extends State<ButtonInDialog> {
                                                       (BuildContext context) =>
                                                           AlertDialog(
                                                     title: const Text(
-                                                        'No user found with this email'),
+                                                        'UNAUTHENTICATED!'),
                                                     content: const Text(''),
                                                     actions: <Widget>[
                                                       TextButton(
@@ -481,9 +478,39 @@ class _ButtonInDialogState extends State<ButtonInDialog> {
                                                       ),
                                                     ],
                                                   ),
-                                                )
-                                              },
-                                            Loading.dismiss(context)
+                                                ),
+                                              }
+                                            else if (value['result'] ==
+                                                'null response')
+                                              {
+                                                Loading.dismiss(context),
+                                                showDialog(
+                                                  context: context,
+                                                  builder:
+                                                      (BuildContext context) =>
+                                                          AlertDialog(
+                                                    title: const Text(
+                                                        'NULL RESPONSE!'),
+                                                    content: const Text(''),
+                                                    actions: <Widget>[
+                                                      TextButton(
+                                                        onPressed: () =>
+                                                            Navigator.pop(
+                                                                context,
+                                                                'Cancel'),
+                                                        child: const Text(
+                                                            'Cancel'),
+                                                      ),
+                                                      TextButton(
+                                                        onPressed: () =>
+                                                            Navigator.pop(
+                                                                context, 'OK'),
+                                                        child: const Text('OK'),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              }
                                           });
                                 },
                               ),
@@ -492,7 +519,20 @@ class _ButtonInDialogState extends State<ButtonInDialog> {
                               ),
                               ButtonWidget(
                                 title: 'Reset',
-                                ontap: () {},
+                                ontap: () {
+                                  budgetFrom = "0";
+                                  budgetTo = "9999";
+                                  sliderKey.currentState?.reset();
+                                  ratingAverage = "1";
+                                  isYellow1 = false;
+                                  isYellow2 = false;
+                                  isYellow3 = false;
+                                  isYellow4 = false;
+                                  isYellow5 = false;
+                                  amenities = "";
+                                  sortById = "1";
+                                  setState(() {});
+                                },
                               ),
                               // ButtonWidget(
                               //   title: 'Book a room',

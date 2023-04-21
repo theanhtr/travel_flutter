@@ -92,6 +92,9 @@ class _PropertyTypeState extends State<PropertyType> {
                   ontap: () {},
                 ),
               ),
+              const SizedBox(
+                height: kMediumPadding,
+              ),
             ],
           ),
         ));

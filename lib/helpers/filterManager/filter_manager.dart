@@ -16,14 +16,15 @@ class FilterManager {
 
   final UserModel userModel = UserModel();
 
-  Future<Map> filterHotels(String budgetFrom, String budgetTo, String ratingAverage) async {
+  Future<Map> filterHotels(String budgetFrom, String budgetTo, String ratingAverage, String amenities, String sortById) async {
     final token = await LocalStorageHelper.getValue("userToken") as String?;
     final response = await BaseClient(token!).post("/filters/hotels", {
       "province_id": "1",
       "budget_from": budgetFrom,
       "budget_to": budgetTo,
       "rating_average": ratingAverage,
-      "sort_by_id": "2",
+      "amenities": amenities,
+      "sort_by_id": sortById,
     }).catchError((err) {
       return false;
     });

@@ -10,7 +10,7 @@ import '../../helpers/asset_helper.dart';
 
 class SortByFlight extends StatefulWidget {
   const SortByFlight({super.key});
-  static const String routename = '/sort_by_flight_screen';
+  static const String routeName = '/sort_by_flight_screen';
 
   @override
   State<SortByFlight> createState() => _SortByFlightState();

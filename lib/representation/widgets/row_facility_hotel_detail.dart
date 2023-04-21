@@ -11,11 +11,13 @@ class RowDetailFacilityHotel extends StatefulWidget {
     required this.icon,
     required this.checkBoxValue,
     required this.index,
+    this.getCheckBoxValue,
   });
   final String facility;
   final Widget icon;
   final int index;
   bool? checkBoxValue;
+  final Function(bool)? getCheckBoxValue;
 
   @override
   State<RowDetailFacilityHotel> createState() => _RowDetailFacilityHotelState();
@@ -34,10 +36,11 @@ class _RowDetailFacilityHotelState extends State<RowDetailFacilityHotel> {
             text: TextSpan(
               children: [
                 WidgetSpan(
-                    child: Container(
-                  padding: const EdgeInsets.only(right: 10.0),
-                  child: widget.icon,
-                )),
+                  child: Container(
+                    padding: const EdgeInsets.only(right: 10.0),
+                    child: widget.icon,
+                  ),
+                ),
                 TextSpan(
                   text: widget.facility,
                   style: TextStyle(
@@ -55,19 +58,22 @@ class _RowDetailFacilityHotelState extends State<RowDetailFacilityHotel> {
           // ),
           Container(
             padding: EdgeInsets.all(10.0),
-            child: Column(
-              children: <Widget>[
+            child:
+                // Column(
+                //   children: <Widget>[
                 Checkbox(
-                    value: widget.checkBoxValue,
-                    activeColor: Colors.green,
-                    onChanged: (bool? Value) {
-                      setState(() {
-                        widget.checkBoxValue = Value;
-                      });
-                      Text('Remember me');
-                    }),
-              ],
+              value: widget.checkBoxValue,
+              activeColor: Colors.green,
+              onChanged: (bool? Value) {
+                setState(() {
+                  widget.checkBoxValue = Value;
+                  widget.getCheckBoxValue!(Value!);
+                });
+                Text('Remember me');
+              },
             ),
+            // ],
+            // ),
           )
         ],
       ),

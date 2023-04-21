@@ -22,10 +22,10 @@ class MySliderApp extends StatefulWidget {
       this.getBudget});
 
   @override
-  _MySliderAppState createState() => _MySliderAppState();
+  MySliderAppState createState() => MySliderAppState();
 }
 
-class _MySliderAppState extends State<MySliderApp> {
+class MySliderAppState extends State<MySliderApp> {
   /// current selection of the slider
   double start = 0;
   double end = 0;
@@ -47,6 +47,10 @@ class _MySliderAppState extends State<MySliderApp> {
   //   start = widget.start;
   //   end = widget.end;
   // }
+  void reset() {
+    _currentRangeValues = RangeValues(start, end);
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,11 +69,10 @@ class _MySliderAppState extends State<MySliderApp> {
               _currentRangeValues.end.round().toString() + widget.unit,
             ),
             onChanged: (RangeValues values) {
-              setState(() {
                 _currentRangeValues = values;
                 widget.getBudget!(_currentRangeValues.start.round().toString(),
                     _currentRangeValues.end.round().toString());
-              });
+                setState(() {});
             },
           ),
         ));

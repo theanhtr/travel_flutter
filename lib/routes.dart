@@ -42,8 +42,8 @@ final Map<String, WidgetBuilder> routes = {
   ResultFlightScreen.routeName: (context) => const ResultFlightScreen(),
   FacilityHotel.routeName: (context) => const FacilityHotel(),
   PropertyType.routeName: (context) => const PropertyType(),
-  SortByHotel.routename: (context) => const SortByHotel(),
-  SortByFlight.routename: (context) => const SortByFlight(),
+  SortByHotel.routeName: (context) => const SortByHotel(),
+  SortByFlight.routeName: (context) => const SortByFlight(),
   FlightFilterScreen.routeName: (context) => const FlightFilterScreen(),
   //ResetPasswordScreen.routeName: (context) => const ResetPasswordScreen(),
 };
