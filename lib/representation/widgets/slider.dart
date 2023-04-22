@@ -56,8 +56,7 @@ class MySliderAppState extends State<MySliderApp> {
   Widget build(BuildContext context) {
     return Container(
         constraints: BoxConstraints(minWidth: 100, maxWidth: 232),
-        child: Expanded(
-          child: RangeSlider(
+        child: RangeSlider(
             values: _currentRangeValues,
             min: widget.start,
             max: widget.end,
@@ -74,7 +73,6 @@ class MySliderAppState extends State<MySliderApp> {
                     _currentRangeValues.end.round().toString());
                 setState(() {});
             },
-          ),
-        ));
+          ),);
   }
 }

@@ -179,22 +179,22 @@ class ButtonInDialogState extends State<ButtonInDialog> {
                     topLeft: Radius.circular(kDefaultPadding * 1.5),
                     topRight: Radius.circular(kDefaultPadding * 1.5),
                   )),
-              child: Column(
-                children: [
-                  Container(
-                    alignment: Alignment.center,
-                    margin: const EdgeInsets.only(top: kMinPadding),
-                    child: Container(
-                      height: 5,
-                      width: 80,
-                      decoration: BoxDecoration(
-                        color: ColorPalette.primaryColor,
-                        borderRadius: BorderRadius.circular(kItemPadding),
+              child: Scaffold(
+                body: Column(
+                  children: [
+                    Container(
+                      alignment: Alignment.center,
+                      margin: const EdgeInsets.only(top: kMinPadding),
+                      child: Container(
+                        height: 5,
+                        width: 80,
+                        decoration: BoxDecoration(
+                          color: ColorPalette.primaryColor,
+                          borderRadius: BorderRadius.circular(kItemPadding),
+                        ),
                       ),
                     ),
-                  ),
-                  Expanded(
-                    child: Column(
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
@@ -598,8 +598,8 @@ class ButtonInDialogState extends State<ButtonInDialog> {
                         ),
                       ],
                     ),
-                  )
-                ],
+                  ],
+                ),
               ),
             ),
           ],
