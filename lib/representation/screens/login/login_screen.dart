@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -61,26 +60,17 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    BaseClient.showErrorNetWork(context);
-  }
-
-  @override
   Widget build(BuildContext context) {
     _controller = LoginScreenController();
-    _fillEmail().then((value) =>
-        {
-          if (email.isEmpty) {
-            setState(() {
-              email = value;
-            })
-          }
-        }
-    );
-    _fillPassword().then((value) =>
-        password = value
-    );
+    _fillEmail().then((value) => {
+          if (email.isEmpty)
+            {
+              setState(() {
+                email = value;
+              })
+            }
+        });
+    _fillPassword().then((value) => password = value);
     return AppBarContainer(
       titleString: LocalizationText.login,
       implementLeading: true,
@@ -106,12 +96,11 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             StatefulBuilder(
               builder: (context, setState) => InputCard(
-                style: TypeInputCard.password,
-                onchange: (String value) {
-                  password = value;
-                },
-                value: password
-              ),
+                  style: TypeInputCard.password,
+                  onchange: (String value) {
+                    password = value;
+                  },
+                  value: password),
             ),
             const SizedBox(
               height: kDefaultPadding * 2,
@@ -182,41 +171,44 @@ class _LoginScreenState extends State<LoginScreen> {
                 if (rememberMe == true) {
                   LocalStorageHelper.setValue("email", email);
                   LocalStorageHelper.setValue("password", password);
-                }
-                else {
+                } else {
                   LocalStorageHelper.deleteValue("email");
                   LocalStorageHelper.deleteValue("password");
                 }
-                  Loading.show(context);
-                 _controller?.loginByPassWord(email, password).then((value) => {
-                   print(value),
-                 if (value == true) {
-                      Loading.dismiss(context),
-                     Navigator.popAndPushNamed(context, MainScreen.routeName)
-                    }
-                 else {
-                   Loading.dismiss(context),
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) => AlertDialog(
-                          title: const Text('ERROR YOUR PASSWORD'),
-                          content: const Text('Your password or email is wrong, please re-enter'),
-                          actions: <Widget>[
-                            TextButton(
-                              onPressed: () => Navigator.pop(context, 'Cancel'),
-                              child: const Text('Cancel'),
+                Loading.show(context);
+                _controller?.loginByPassWord(email, password).then((value) => {
+                      print(value),
+                      if (value == true)
+                        {
+                          Loading.dismiss(context),
+                          Navigator.popAndPushNamed(
+                              context, MainScreen.routeName)
+                        }
+                      else
+                        {
+                          Loading.dismiss(context),
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                              title: const Text('ERROR YOUR PASSWORD'),
+                              content: const Text(
+                                  'Your password or email is wrong, please re-enter'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(context, 'Cancel'),
+                                  child: const Text('Cancel'),
+                                ),
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context, 'OK'),
+                                  child: const Text('OK'),
+                                ),
+                              ],
                             ),
-                            TextButton(
-                              onPressed: () => Navigator.pop(context, 'OK'),
-                              child: const Text('OK'),
-                            ),
-                          ],
-                        ),
-                    )
-                 },
-                 Loading.dismiss(context)
-                 }
-                 );
+                          )
+                        },
+                      Loading.dismiss(context)
+                    });
               },
             ),
             const SizedBox(

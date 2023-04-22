@@ -8,8 +8,9 @@ import 'package:travel_app_ytb/core/constants/dismention_constants.dart';
 import 'package:travel_app_ytb/helpers/loginManager/login_google_manager.dart';
 import 'package:travel_app_ytb/representation/screens/favorite_screen.dart';
 import 'package:travel_app_ytb/representation/screens/home/home_screen.dart';
-import 'package:travel_app_ytb/representation/screens/hotel_booking_screen.dart';
 import 'package:travel_app_ytb/representation/screens/user_screen.dart';
+
+import 'hotel_booking/hotel_booking_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});

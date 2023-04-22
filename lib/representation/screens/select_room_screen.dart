@@ -5,7 +5,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travel_app_ytb/helpers/asset_helper.dart';
 import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
 import 'package:travel_app_ytb/representation/screens/checkout_screen.dart';
-import 'package:travel_app_ytb/representation/screens/hotel_detail_screen.dart';
 import 'package:travel_app_ytb/representation/widgets/app_bar_container.dart';
 import 'package:travel_app_ytb/representation/widgets/hotel_card_widget.dart';
 import 'package:travel_app_ytb/representation/widgets/room_card_widget.dart';

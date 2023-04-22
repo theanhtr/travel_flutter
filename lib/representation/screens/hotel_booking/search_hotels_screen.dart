@@ -1,25 +1,28 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travel_app_ytb/helpers/asset_helper.dart';
-import 'package:travel_app_ytb/helpers/image_helper.dart';
+import 'package:travel_app_ytb/helpers/location/location_helper.dart';
 import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
 import 'package:travel_app_ytb/representation/screens/facility_hotel_screen.dart';
-import 'package:travel_app_ytb/representation/screens/hotel_detail_screen.dart';
 import 'package:travel_app_ytb/representation/screens/property_type_screen.dart';
 import 'package:travel_app_ytb/representation/screens/sort_by_hotel_screen.dart';
+import 'package:travel_app_ytb/representation/controllers/search_hotels_screen_controller.dart';
+import 'package:travel_app_ytb/representation/models/hotel_model.dart';
 import 'package:travel_app_ytb/representation/widgets/app_bar_container.dart';
 import 'package:travel_app_ytb/representation/widgets/hotel_card_widget.dart';
 import 'package:travel_app_ytb/helpers/filterManager/filter_manager.dart';
 
-import '../../core/constants/color_palatte.dart';
-import '../../core/constants/dismention_constants.dart';
-import '../../core/constants/textstyle_constants.dart';
-import '../widgets/booking_hotel_tab_container.dart';
-import '../widgets/button_widget.dart';
-import '../widgets/loading/loading.dart';
-import '../widgets/out_button_widget.dart';
-import '../widgets/slider.dart';
+import '../../../core/constants/color_palatte.dart';
+import '../../../core/constants/dismention_constants.dart';
+import '../../../core/constants/textstyle_constants.dart';
+import '../../../helpers/image_helper.dart';
+import '../../widgets/booking_hotel_tab_container.dart';
+import '../../widgets/button_widget.dart';
+import '../../widgets/loading/loading.dart';
+import '../../widgets/slider.dart';
 
 class SearchHotelsScreen extends StatefulWidget {
   const SearchHotelsScreen({super.key});
@@ -31,103 +34,120 @@ class SearchHotelsScreen extends StatefulWidget {
 }
 
 class _SearchHotelsScreenState extends State<SearchHotelsScreen> {
+  final filterKey = GlobalKey<ButtonInDialogState>();
+  List<HotelModel> listHotel = [];
+  List<HotelCardWidget> listHotelCardWidget = [];
+  bool _isLoading = false;
+  bool _canLoadCardView = false;
+  List<dynamic> hotels = [];
+  SearchHotelsScreenController? _controller;
+  Map<String, dynamic> args = <String, dynamic>{};
+  bool isFirst = true;
+
+  @override
+  void initState() {
+    super.initState();
+    LocationHelper().determinePosition();
+    _controller = SearchHotelsScreenController();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        alignment: Alignment.center,
-        children: [
-          AppBarContainer(
-            titleString: 'Hotels',
-            implementLeading: true,
-            implementTrailing: true,
-            widget: const ButtonInDialog(),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  HotelCardWidget(
-                    widthContainer: MediaQuery.of(context).size.width * 0.9,
-                    imageFilePath: AssetHelper.hotelImage1,
-                    name: 'Royal Palm Heritage',
-                    locationInfo: 'Purwokerto, Jateng',
-                    distanceInfo: '365 m',
-                    starInfo: 4.5,
-                    countReviews: 3123,
-                    priceInfo: 145,
-                    ontap: () async {
-                      await Navigator.pushNamed(
-                          context, HotelDetailScreen.routeName,
-                          arguments: {
-                            'name': 'Royal Palm Heritage',
-                            'priceInfo': 145,
-                            'locationInfo': 'Purwokerto, Jateng',
-                            'distanceInfo': '365 m',
-                            'starInfo': 4.5,
-                            'countReviews': 3123,
-                            'description':
-                                'You will find every comfort because many of the services that the hotel offers for travellers and of course the hotel is very comfortable.',
-                            'locationSpecial':
-                                'Located in the famous neighborhood of Seoul, Grand Luxury is set in a building built in the 2010s.',
-                            'services': <String>[
-                              'Restaurant',
-                              'Free Wifi',
-                              'Currency Exchange',
-                              'Private Pool',
-                              '24-hour Font Desk'
-                            ],
-                          });
-                    },
-                  ),
-                  const SizedBox(
-                    height: kDefaultPadding,
-                  ),
-                  HotelCardWidget(
-                    widthContainer: MediaQuery.of(context).size.width * 0.9,
-                    imageFilePath: AssetHelper.hotelImage2,
-                    name: 'Grand Luxury',
-                    locationInfo: 'Hanoi, Jateng',
-                    distanceInfo: '2.3 km',
-                    starInfo: 4.2,
-                    countReviews: 2623,
-                    priceInfo: 415,
-                    ontap: () {},
-                  ),
-                  const SizedBox(
-                    height: kDefaultPadding,
-                  ),
-                  HotelCardWidget(
-                    widthContainer: MediaQuery.of(context).size.width * 0.9,
-                    imageFilePath: AssetHelper.hotelImage3,
-                    name: 'Royal Palm Heritage',
-                    locationInfo: 'TpHoChiMinh, Jateng',
-                    distanceInfo: '365 km',
-                    starInfo: 4.5,
-                    countReviews: 3123,
-                    priceInfo: 145,
-                    ontap: () {},
-                  ),
-                  const SizedBox(
-                    height: kDefaultPadding * 2,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
+    if (isFirst) {
+      isFirst = false;
+      args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+      hotels = args['listHotels'];
+    }
+    if (_isLoading == false) {
+      hotels.forEach((element) {
+        List<dynamic> images = element['images'];
+        String imagePath = "";
+        if (images.isEmpty) {
+          imagePath =
+              "https://cf.bstatic.com/images/hotel/max1024x768/378/378828506.jpg";
+        } else {
+          imagePath = element['images'][0]['path'] ?? "";
+        }
+        String address =
+            "${element['address']['specific_address']}, ${element['address']['province']}, ${element['address']['district']}, ${element['address']['sub_district']}";
+        double distanceInfo = 0;
+        HotelModel hotel = HotelModel(
+          imageFilePath: imagePath,
+          name: element['name'],
+          address: address,
+          locationInfo: element['address_id'].toString(),
+          distanceInfo: distanceInfo.toString(),
+          starInfo: element['rating_average'] + 0.0,
+          countReviews: element['count_review'],
+          priceInfo: "${element['min_price']} - ${element['max_price']}",
+        );
+        listHotel.add(hotel);
+      });
+      _isLoading = true;
+    }
+
+    listHotel.forEach((element) {
+      _controller
+          ?.getDistanceInformation(element.address ?? "")
+          .then((value) => {
+                element.distanceInfo = value.toString(),
+              });
+    });
+    _canLoadCardView = true;
+    if (_canLoadCardView == true) {
+      listHotel.forEach((element) {
+        listHotelCardWidget.add(HotelCardWidget(
+          widthContainer: MediaQuery.of(context).size.width * 0.9,
+          imageFilePath: element.imageFilePath ?? "",
+          name: element.name ?? "",
+          locationInfo: element.locationInfo ?? "",
+          distanceInfo: element.distanceInfo ?? "",
+          starInfo: element.starInfo ?? 0.0,
+          countReviews: element.countReviews ?? 0,
+          priceInfo: element.priceInfo ?? "",
+          ontap: () {},
+        ));
+      });
+      _canLoadCardView = false;
+    }
+
+    //debugPrint("list hotel ${listHotel[0].distanceInfo}");
+    return AppBarContainer(
+      titleString: LocalizationText.hotels,
+      implementLeading: true,
+      implementTrailing: true,
+      widget: ButtonInDialog(
+        key: filterKey,
+        args: args,
+        getData: (data) {
+          hotels = data;
+          listHotel = [];
+          listHotelCardWidget = [];
+          _isLoading = false;
+          _canLoadCardView = false;
+          setState(() {});
+        },
+      ),
+      child: SingleChildScrollView(
+        child: Column(children: listHotelCardWidget),
       ),
     );
   }
 }
 
 class ButtonInDialog extends StatefulWidget {
-  const ButtonInDialog({super.key});
+  const ButtonInDialog(
+      {super.key,
+      this.args = const <String, dynamic>{},
+      required this.getData});
+  final Map<String, dynamic> args;
+  final Function(List<dynamic>) getData;
 
   @override
-  State<ButtonInDialog> createState() => _ButtonInDialogState();
+  State<ButtonInDialog> createState() => ButtonInDialogState();
 }
 
-class _ButtonInDialogState extends State<ButtonInDialog> {
+class ButtonInDialogState extends State<ButtonInDialog> {
   final sliderKey = GlobalKey<MySliderAppState>();
   var isYellow1 = false;
   var isYellow2 = false;
@@ -378,6 +398,24 @@ class _ButtonInDialogState extends State<ButtonInDialog> {
                                           arguments: {}) as String;
                                     },
                                   ),
+                                  // const SizedBox(
+                                  //   height: kDefaultPadding,
+                                  // ),
+                                  // BookingHotelTab(
+                                  //   icon: FontAwesomeIcons.sort,
+                                  //   title: 'Property Type',
+                                  //   description: "",
+                                  //   sizeItem: kDefaultIconSize / 1.5,
+                                  //   sizeText: kDefaultIconSize / 1.2,
+                                  //   primaryColor: const Color.fromARGB(
+                                  //       255, 113, 228, 155),
+                                  //   secondaryColor:
+                                  //       const Color.fromARGB(255, 126, 235, 193)
+                                  //           .withOpacity(0.2),
+                                  //   iconString: AssetHelper.skyscraperIcon,
+                                  //   useIconString: '',
+                                  //   bordered: '',
+                                  // ),
                                   const SizedBox(
                                     height: kDefaultPadding,
                                   ),
@@ -409,15 +447,29 @@ class _ButtonInDialogState extends State<ButtonInDialog> {
                                 ontap: () {
                                   Loading.show(context);
                                   FilterManager()
-                                      .filterHotels(budgetFrom, budgetTo,
-                                          ratingAverage, amenities, sortById)
+                                      .filterHotels(
+                                          widget.args['selectedProvinceValue']
+                                                  ['id']
+                                              .toString(),
+                                          widget.args['selectedDistrictValue']
+                                                  ['id']
+                                              .toString(),
+                                          widget
+                                              .args['selectedSubDistrictValue']
+                                                  ['id']
+                                              .toString(),
+                                          budgetFrom,
+                                          budgetTo,
+                                          ratingAverage,
+                                          amenities,
+                                          sortById)
                                       .then((value) => {
                                             Loading.dismiss(context),
                                             debugPrint("status $value"),
                                             if (value['success'] == true)
                                               {
-                                                Navigator.pop(
-                                                    context, value['data'])
+                                                widget.getData(value['data']),
+                                                Navigator.pop(context),
                                               }
                                             else if (value['result'] ==
                                                 'statuscode 500')
