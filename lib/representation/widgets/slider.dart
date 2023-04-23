@@ -10,19 +10,22 @@ class MySliderApp extends StatefulWidget {
   final double end;
   final String unit;
   final int? divisions;
+  final Function(String, String)? getBudget;
+
   const MySliderApp(
       {super.key,
       required this.initialFontSize,
       required this.start,
       required this.end,
       required this.unit,
-      this.divisions});
+      this.divisions,
+      this.getBudget});
 
   @override
-  _MySliderAppState createState() => _MySliderAppState();
+  MySliderAppState createState() => MySliderAppState();
 }
 
-class _MySliderAppState extends State<MySliderApp> {
+class MySliderAppState extends State<MySliderApp> {
   /// current selection of the slider
   double start = 0;
   double end = 0;
@@ -44,13 +47,16 @@ class _MySliderAppState extends State<MySliderApp> {
   //   start = widget.start;
   //   end = widget.end;
   // }
+  void reset() {
+    _currentRangeValues = RangeValues(start, end);
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
         constraints: BoxConstraints(minWidth: 100, maxWidth: 232),
-        child: Expanded(
-          child: RangeSlider(
+        child: RangeSlider(
             values: _currentRangeValues,
             min: widget.start,
             max: widget.end,
@@ -62,11 +68,11 @@ class _MySliderAppState extends State<MySliderApp> {
               _currentRangeValues.end.round().toString() + widget.unit,
             ),
             onChanged: (RangeValues values) {
-              setState(() {
                 _currentRangeValues = values;
-              });
+                widget.getBudget!(_currentRangeValues.start.round().toString(),
+                    _currentRangeValues.end.round().toString());
+                setState(() {});
             },
-          ),
-        ));
+          ),);
   }
 }

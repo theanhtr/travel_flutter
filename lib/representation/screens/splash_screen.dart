@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:travel_app_ytb/helpers/asset_helper.dart';
+import 'package:travel_app_ytb/helpers/http/base_client.dart';
 import 'package:travel_app_ytb/helpers/image_helper.dart';
 import 'package:travel_app_ytb/helpers/local_storage_helper.dart';
 import 'package:travel_app_ytb/helpers/loginManager/login_manager.dart';
@@ -8,7 +9,6 @@ import 'package:travel_app_ytb/representation/screens/intro_screen.dart';
 import 'package:travel_app_ytb/representation/screens/login/login_screen.dart';
 import 'package:travel_app_ytb/representation/screens/main_screen.dart';
 
-import '../../helpers/loginManager/login_facebook_manager.dart';
 
 /*màn chạy khởi động khi vào app*/
 
@@ -43,6 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    BaseClient.showErrorNetWork(context);
     _redirectIntroScreen();
     return Stack(
       children: [

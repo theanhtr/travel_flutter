@@ -10,7 +10,7 @@ import '../../helpers/asset_helper.dart';
 
 class SortByHotel extends StatefulWidget {
   const SortByHotel({super.key});
-  static const String routename = '/sort_by_hotel_screen';
+  static const String routeName = '/sort_by_hotel_screen';
 
   @override
   State<SortByHotel> createState() => _SortByHotelState();
@@ -18,13 +18,13 @@ class SortByHotel extends StatefulWidget {
 
 class _SortByHotelState extends State<SortByHotel> {
   bool isSelectedAll = true;
+  int sortById = 1;
   List<_CheckBoxState> listCheckbox = [
     _CheckBoxState(
-        facility: LocalizationText.highestPopularity,
-        icon: Container(),
-        index: 0),
-    _CheckBoxState(
-        facility: LocalizationText.lowestPrice, icon: Container(), index: 1),
+      facility: LocalizationText.lowestPrice,
+      icon: Container(),
+      index: 1,
+    ),
     _CheckBoxState(
         facility: LocalizationText.highestPrice, icon: Container(), index: 2),
     _CheckBoxState(
@@ -34,9 +34,19 @@ class _SortByHotelState extends State<SortByHotel> {
         icon: Container(),
         index: 4),
   ];
+  bool isFirst = true;
 
   @override
   Widget build(BuildContext context) {
+    String selected = "";
+    final Map<String, dynamic> args =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+    if (isFirst) {
+      isFirst = false;
+      sortById = args['oldSortById'];
+      listCheckbox[args['oldSortById'] - 1].checkBoxValue = true;
+    }
+
     return AppBarContainer(
         implementLeading: true,
         titleString: LocalizationText.sortBy,
@@ -46,48 +56,53 @@ class _SortByHotelState extends State<SortByHotel> {
               const SizedBox(
                 height: kMediumPadding * 3,
               ),
-              StatefulBuilder(builder: (context, setState) {
-                return Column(children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          this.setState(() {
-                            for (var i = 0; i < listCheckbox.length; i++) {
-                              listCheckbox[i].checkBoxValue = isSelectedAll;
-                            }
-                            isSelectedAll = !isSelectedAll;
-                          });
-                        },
-                        child: RichText(
-                          text: TextSpan(
-                            children: [
-                              TextSpan(
-                                text: LocalizationText.selectAll,
-                                style: TextStyle(
-                                  color: hexToColor(kDefaultTextColor),
-                                ),
-                              ),
-                            ],
-                          ),
+
+              // ListView(
+              //   itemExtent: 84.0,
+              //   shrinkWrap: true,
+              //   physics: const ScrollPhysics(),
+              //   children: [...listCheckbox.map(buildItemCheckbox).toList()],
+
+              // ),
+              Column(children: [
+                Column(
+                  children: List.generate(
+                    listCheckbox.length,
+                    (index) => CheckboxListTile(
+                      controlAffinity: ListTileControlAffinity.leading,
+                      contentPadding: EdgeInsets.zero,
+                      dense: true,
+                      title: Text(
+                        listCheckbox[index].facility,
+                        style: const TextStyle(
+                          fontSize: 16.0,
+                          color: Colors.black,
                         ),
                       ),
-                    ],
+                      value: listCheckbox[index].checkBoxValue,
+                      onChanged: (value) {
+                        setState(() {
+                          for (var element in listCheckbox) {
+                            element.checkBoxValue = false;
+                          }
+                          listCheckbox[index].checkBoxValue = value ?? false;
+                          selected =
+                              "${listCheckbox[index].facility}, ${listCheckbox[index].index}, ${listCheckbox[index].checkBoxValue}";
+                          sortById = index + 1;
+                        });
+                      },
+                    ),
                   ),
-                ]);
-              }),
-              ListView(
-                itemExtent: 84.0,
-                shrinkWrap: true,
-                physics: const ScrollPhysics(),
-                children: [...listCheckbox.map(buildItemCheckbox).toList()],
-              ),
+                )
+              ]),
               Container(
                 margin: const EdgeInsets.only(top: kDefaultPadding),
                 child: ButtonWidget(
                   title: LocalizationText.apply,
-                  ontap: () {},
+                  ontap: () {
+                    args['getData'](sortById);
+                    Navigator.pop(context);
+                  },
                 ),
               ),
             ],

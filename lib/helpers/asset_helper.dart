@@ -27,6 +27,9 @@ class AssetHelper {
   static const String starYellowIcon = 'assets/icons/star_yellow_icon.png';
   static const String starWhiteIcon = 'assets/icons/star_white_icon.png';
   static const String skyscraperIcon = 'assets/icons/skyscraper_icon.png';
+  static const String freeBreakfast = 'assets/icons/free_breakfast.png';
+  static const String noSmoking = 'assets/icons/no_smoking.png';
+  static const String nonRefundable = 'assets/icons/non_refundable.png';
   //facility hotel
   static const String wifiIcon = 'assets/icons/wifi.png';
   static const String digitalTv = 'assets/icons/digital_tivi.png';

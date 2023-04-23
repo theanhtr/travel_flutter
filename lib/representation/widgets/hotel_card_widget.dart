@@ -19,6 +19,7 @@ class HotelCardWidget extends StatelessWidget {
     required this.countReviews,
     required this.priceInfo,
     required this.ontap,
+    this.description,
   });
 
   final double widthContainer;
@@ -28,7 +29,8 @@ class HotelCardWidget extends StatelessWidget {
   final String distanceInfo;
   final double starInfo;
   final int countReviews;
-  final int priceInfo;
+  final String priceInfo;
+  final String? description;
   final Function() ontap;
 
   @override
@@ -45,7 +47,7 @@ class HotelCardWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ImageHelper.loadFromAsset(
+          ImageHelper.loadFromNetwork(
             imageFilePath,
             width: widthContainer,
             fit: BoxFit.fitWidth,
@@ -126,34 +128,23 @@ class HotelCardWidget extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      Expanded(
-                        flex: 4,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              '\$ $priceInfo',
-                              style: TextStyles.defaultStyle.bold.blackTextColor
-                                  .setTextSize(kDefaultTextSize * 1.6),
-                            ),
-                            Text(
-                              '/night',
-                              style: TextStyles
-                                  .defaultStyle.medium.medium.blackTextColor
-                                  .setTextSize(kDefaultTextSize / 1.5),
-                            ),
-                          ],
-                        ),
+                      Text(
+                        '\$ $priceInfo',
+                        style: TextStyles.defaultStyle.bold.blackTextColor
+                            .setTextSize(kDefaultTextSize * 1.6),
                       ),
-                      Expanded(
-                        flex: 6,
-                        child: ButtonWidget(
-                          title: 'Book a room',
-                          ontap: ontap,
-                        ),
-                      )
+                      Text(
+                        '/night',
+                        style: TextStyles
+                            .defaultStyle.medium.medium.blackTextColor
+                            .setTextSize(kDefaultTextSize / 1.5),
+                      ),
                     ],
-                  )
+                  ),
+                  ButtonWidget(
+                    title: 'Book a room',
+                    ontap: ontap,
+                  ),
                 ],
               ))
         ],
