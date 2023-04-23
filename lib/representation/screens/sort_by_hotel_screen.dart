@@ -18,10 +18,13 @@ class SortByHotel extends StatefulWidget {
 
 class _SortByHotelState extends State<SortByHotel> {
   bool isSelectedAll = true;
-  String sortById = "";
+  int sortById = 1;
   List<_CheckBoxState> listCheckbox = [
     _CheckBoxState(
-        facility: LocalizationText.lowestPrice, icon: Container(), index: 1),
+      facility: LocalizationText.lowestPrice,
+      icon: Container(),
+      index: 1,
+    ),
     _CheckBoxState(
         facility: LocalizationText.highestPrice, icon: Container(), index: 2),
     _CheckBoxState(
@@ -31,10 +34,19 @@ class _SortByHotelState extends State<SortByHotel> {
         icon: Container(),
         index: 4),
   ];
+  bool isFirst = true;
 
   @override
   Widget build(BuildContext context) {
     String selected = "";
+    final Map<String, dynamic> args =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+    if (isFirst) {
+      isFirst = false;
+      sortById = args['oldSortById'];
+      listCheckbox[args['oldSortById'] - 1].checkBoxValue = true;
+    }
+
     return AppBarContainer(
         implementLeading: true,
         titleString: LocalizationText.sortBy,
@@ -76,8 +88,7 @@ class _SortByHotelState extends State<SortByHotel> {
                           listCheckbox[index].checkBoxValue = value ?? false;
                           selected =
                               "${listCheckbox[index].facility}, ${listCheckbox[index].index}, ${listCheckbox[index].checkBoxValue}";
-                          sortById = '$index';
-                          debugPrint('KKKKKKK ${sortById}');
+                          sortById = index + 1;
                         });
                       },
                     ),
@@ -89,7 +100,8 @@ class _SortByHotelState extends State<SortByHotel> {
                 child: ButtonWidget(
                   title: LocalizationText.apply,
                   ontap: () {
-                    Navigator.pop(context, sortById);
+                    args['getData'](sortById);
+                    Navigator.pop(context);
                   },
                 ),
               ),

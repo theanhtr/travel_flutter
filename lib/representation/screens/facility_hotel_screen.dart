@@ -70,40 +70,42 @@ class _FacilityHotelState extends State<FacilityHotel> {
         icon: ImageHelper.loadFromAsset(AssetHelper.digitalTv,
             fit: BoxFit.contain, width: kDefaultPadding * 1.5),
         checkBoxValue: false,
-        index: 6
-    ),
+        index: 6),
     _CheckBoxState(
         facility: "Parking Area",
         icon: ImageHelper.loadFromAsset(AssetHelper.parkingAreaIcon,
             fit: BoxFit.contain, width: kDefaultPadding * 1.5),
         checkBoxValue: false,
-        index: 7
-    ),
+        index: 7),
     _CheckBoxState(
         facility: "Swimming Pool",
         icon: ImageHelper.loadFromAsset(AssetHelper.swimingPoolIcon,
             fit: BoxFit.contain, width: kDefaultPadding * 1.5),
         checkBoxValue: false,
-        index: 8
-    ),
+        index: 8),
     _CheckBoxState(
         facility: "Restaurant",
         icon: ImageHelper.loadFromAsset(AssetHelper.restaurantIcon,
             fit: BoxFit.contain, width: kDefaultPadding * 1.5),
         checkBoxValue: false,
-        index: 9
-    ),
+        index: 9),
     _CheckBoxState(
         facility: "24-hour Front Desk",
         icon: ImageHelper.loadFromAsset(AssetHelper.receptionIcon,
             fit: BoxFit.contain, width: kDefaultPadding * 1.5),
         checkBoxValue: false,
-        index: 10
-    ),
+        index: 10),
   ];
 
   @override
   Widget build(BuildContext context) {
+    final Map<String, dynamic> args =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+
+    for (var i = 0; i < args['oldAmenities'].length; i++) {
+      listCheckbox[args['oldAmenities'][i]].checkBoxValue = true;
+    }
+
     return AppBarContainer(
       implementLeading: true,
       titleString: LocalizationText.facility,
@@ -156,8 +158,10 @@ class _FacilityHotelState extends State<FacilityHotel> {
                 title: LocalizationText.apply,
                 ontap: () {
                   String amenities = "";
+                  List<int> listCheckboxPosition = [];
                   for (var i = 0; i < listCheckbox.length; i++) {
                     if (listCheckbox[i].checkBoxValue == true) {
+                      listCheckboxPosition.add(i);
                       if (amenities == "") {
                         amenities += '${listCheckbox[i].index}';
                       } else {
@@ -165,7 +169,8 @@ class _FacilityHotelState extends State<FacilityHotel> {
                       }
                     }
                   }
-                  Navigator.pop(context, amenities);
+                  args['getData'](listCheckboxPosition, amenities);
+                  Navigator.pop(context);
                 },
               ),
             ),

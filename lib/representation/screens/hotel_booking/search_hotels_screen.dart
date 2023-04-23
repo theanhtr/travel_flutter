@@ -149,7 +149,7 @@ class ButtonInDialog extends StatefulWidget {
 
 class ButtonInDialogState extends State<ButtonInDialog> {
   final sliderKey = GlobalKey<MySliderAppState>();
-  var isYellow1 = false;
+  var isYellow1 = true;
   var isYellow2 = false;
   var isYellow3 = false;
   var isYellow4 = false;
@@ -159,6 +159,8 @@ class ButtonInDialogState extends State<ButtonInDialog> {
   String ratingAverage = "1";
   String amenities = "";
   String sortById = "1";
+  List<int> amenitiesResults = [];
+  int sortByIdResult = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -393,9 +395,17 @@ class ButtonInDialogState extends State<ButtonInDialog> {
                                     useIconString: '',
                                     bordered: '',
                                     ontap: () async {
-                                      amenities = await Navigator.pushNamed(
+                                      await Navigator.pushNamed(
                                           context, FacilityHotel.routeName,
-                                          arguments: {}) as String;
+                                          arguments: {
+                                            'oldAmenities': amenitiesResults,
+                                            'getData': (listCheckboxPosition,
+                                                amenitiesT) {
+                                              amenities = amenitiesT;
+                                              amenitiesResults =
+                                                  listCheckboxPosition;
+                                            },
+                                          });
                                     },
                                   ),
                                   // const SizedBox(
@@ -432,9 +442,15 @@ class ButtonInDialogState extends State<ButtonInDialog> {
                                             .withOpacity(0.2),
                                     iconString: 'id',
                                     ontap: () async {
-                                      sortById = await Navigator.pushNamed(
+                                      await Navigator.pushNamed(
                                           context, SortByHotel.routeName,
-                                          arguments: {}) as String;
+                                          arguments: {
+                                            'oldSortById': sortByIdResult,
+                                            'getData': (sortByIdT) {
+                                              sortById = '$sortByIdT';
+                                              sortByIdResult = sortByIdT;
+                                            },
+                                          });
                                     },
                                   ),
                                 ],
@@ -576,13 +592,15 @@ class ButtonInDialogState extends State<ButtonInDialog> {
                                   budgetTo = "9999";
                                   sliderKey.currentState?.reset();
                                   ratingAverage = "1";
-                                  isYellow1 = false;
+                                  isYellow1 = true;
                                   isYellow2 = false;
                                   isYellow3 = false;
                                   isYellow4 = false;
                                   isYellow5 = false;
                                   amenities = "";
                                   sortById = "1";
+                                  amenitiesResults = [];
+                                  sortByIdResult = 1;
                                   setState(() {});
                                 },
                               ),
