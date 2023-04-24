@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:translator/translator.dart';
@@ -11,8 +14,7 @@ class LocationHelper {
   }
 
   LocationHelper.internal();
-
-  Future<Position> determinePosition() async {
+  Future<void> requestPermission() async {
     bool serviceEnabled;
     LocationPermission permission;
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
@@ -32,19 +34,34 @@ class LocationHelper {
       return Future.error(
           'Location permissions are permanently denied, we cannot request permissions.');
     }
+  }
 
+  Future<Position> _determinePosition() async {
     return await Geolocator.getCurrentPosition();
   }
 
-  Future<double> getDistanceInformation(String address) async {
+  Future<String> getDistanceInformation(String address) async {
     final translator = GoogleTranslator();
-    var translateAddress = await translator.translate(address, to: 'en');
-    debugPrint(translateAddress.text);
-    List<Location> locations = await locationFromAddress(translateAddress.text);
-    Location geoPointFromAddress = locations.isNotEmpty ? locations[0] : Location(latitude: 0, longitude: 0, timestamp: DateTime.now());
-    Position currentPosition = await determinePosition();
+    var translateAddress = await translator.translate(address, to: 'vi');
+    Location geoPointFromAddress = await getGeoPointFromAddress(translateAddress.text);
+    Position currentPosition = await _determinePosition();
     double distanceInMeters = Geolocator.distanceBetween(currentPosition.latitude, currentPosition.longitude, geoPointFromAddress.latitude, geoPointFromAddress.longitude);
-    return distanceInMeters;
+    return (distanceInMeters/1000).toStringAsFixed(2);
   }
 
+  Future<Location> getGeoPointFromAddress(String address) async {
+    debugPrint("address $address");
+    locationFromAddress(address).then((value) => {
+      debugPrint("location $value"),
+    }, onError: (error) {
+      debugPrint("error $error");
+    });
+    final List<Location> locations = await locationFromAddress(address);
+    if (locations.isNotEmpty) {
+      final Location location = locations.first;
+      return location;
+    } else {
+      return Location(latitude: 0, longitude: 0, timestamp: DateTime.now());
+    }
+  }
 }

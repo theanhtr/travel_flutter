@@ -6,6 +6,7 @@ import 'package:travel_app_ytb/representation/controllers/favorite_screen_contro
 import 'package:travel_app_ytb/representation/screens/hotel_detail/hotel_detail_screen.dart';
 import 'package:travel_app_ytb/representation/widgets/app_bar_container.dart';
 
+import '../../core/utils/const_utils.dart';
 import '../controllers/search_hotels_screen_controller.dart';
 import '../models/hotel_model.dart';
 import '../widgets/hotel_card_widget.dart';
@@ -31,7 +32,6 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   @override
   void initState() {
     super.initState();
-    LocationHelper().determinePosition();
     _controller = SearchHotelsScreenController();
   }
 
@@ -39,7 +39,6 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   Widget build(BuildContext context) {
     print('KKKK $isFirst');
     if (isFirst) {
-      LocationHelper().getDistanceInformation("Hà Nội, Nam Từ Liêm");
       FavoriteScreenController().getAllHotelsLike().then((value) => {
             if (value.runtimeType == List<dynamic>)
               {
@@ -52,13 +51,12 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                       List<dynamic> images = element['images'];
                       String imagePath = "";
                       if (images.isEmpty) {
-                        imagePath =
-                            "https://cf.bstatic.com/images/hotel/max1024x768/378/378828506.jpg";
+                        imagePath = ConstUtils.imgHotelDefault;
                       } else {
                         imagePath = element['images'][0]['path'] ?? "";
                       }
                       String address =
-                          "${element['address']['specific_address']}, ${element['address']['province']}, ${element['address']['district']}, ${element['address']['sub_district']}";
+                          "${element['address']['specific_address']}, ${element['address']['sub_district']}, ${element['address']['district']}, ${element['address']['province']}";
                       double distanceInfo = 0;
                       HotelModel hotel = HotelModel(
                         imageFilePath: imagePath,

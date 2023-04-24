@@ -23,11 +23,11 @@ class _SelectGuestRoomScreenState extends State<SelectGuestRoomScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final Map<String, dynamic> argss =
+    final Map<String, dynamic> args =
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
 
-    guestCount = argss['guestCount'];
-    roomCount = argss['roomCount'];
+    guestCount = args['guestCount'];
+    roomCount = args['roomCount'];
 
     return AppBarContainer(
       titleString: LocalizationText.addGuetsAndRoom,

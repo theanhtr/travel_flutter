@@ -2,12 +2,17 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:travel_app_ytb/core/utils/animation_utils.dart';
+import 'package:travel_app_ytb/core/utils/navigation_utils.dart';
 import 'package:travel_app_ytb/helpers/asset_helper.dart';
 import 'package:travel_app_ytb/helpers/location/location_helper.dart';
 import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
 import 'package:travel_app_ytb/representation/screens/facility_hotel_screen.dart';
+import 'package:travel_app_ytb/representation/screens/hotel_detail/hotel_detail_screen.dart';
 import 'package:travel_app_ytb/representation/screens/property_type_screen.dart';
+import 'package:travel_app_ytb/representation/screens/room_booking/select_room_screen.dart';
 import 'package:travel_app_ytb/representation/screens/sort_by_hotel_screen.dart';
 import 'package:travel_app_ytb/representation/controllers/search_hotels_screen_controller.dart';
 import 'package:travel_app_ytb/representation/models/hotel_model.dart';
@@ -18,6 +23,7 @@ import 'package:travel_app_ytb/helpers/filterManager/filter_manager.dart';
 import '../../../core/constants/color_palatte.dart';
 import '../../../core/constants/dismention_constants.dart';
 import '../../../core/constants/textstyle_constants.dart';
+import '../../../core/utils/const_utils.dart';
 import '../../../helpers/image_helper.dart';
 import '../../widgets/booking_hotel_tab_container.dart';
 import '../../widgets/button_widget.dart';
@@ -39,40 +45,103 @@ class _SearchHotelsScreenState extends State<SearchHotelsScreen> {
   List<HotelModel> listHotel = [];
   List<HotelCardWidget> listHotelCardWidget = [];
   bool _isLoading = false;
-  bool _canLoadCardView = false;
-  List<dynamic> hotels = [];
+  bool _canLoadCardView = true;
+  List<dynamic> _hotels = [];
+  String _dateSelected = "";
+  int _guestCount = 1;
+  int _roomCount = 1;
   SearchHotelsScreenController? _controller;
   Map<String, dynamic> args = <String, dynamic>{};
-  bool isFirst = true;
+  bool _isFirst = true;
 
   @override
   void initState() {
     super.initState();
-    LocationHelper().determinePosition();
-    _controller = SearchHotelsScreenController();
   }
 
   @override
-  Widget build(BuildContext context) {
-    if (isFirst) {
-      isFirst = false;
+  void dispose() {
+    super.dispose();
+    _controller = null;
+  }
+
+  Future<void> _setCardList() async {
+    for (var element in listHotel) {
+      await _controller?.getDistanceInformation(element.address ?? "").then(
+          (value) => {
+                listHotelCardWidget.add(HotelCardWidget(
+                  widthContainer: MediaQuery.of(context).size.width * 0.9,
+                  imageFilePath: element.imageFilePath ?? "",
+                  name: element.name ?? "",
+                  locationInfo: element.locationInfo ?? "",
+                  distanceInfo: "$value km" ?? "",
+                  starInfo: element.starInfo ?? 0.0,
+                  countReviews: element.countReviews ?? 0,
+                  priceInfo: element.priceInfo ?? "",
+                  ontap: () {
+                    NavigationUtils.navigate(
+                        context, HotelDetailScreen.routeName,
+                        arguments: {
+                          "hotelId": element.id,
+                          "distanceInfo": "$value km" ?? "",
+                          'dateSelected': _dateSelected,
+                          'guestCount': _guestCount,
+                          'roomCount': _roomCount,
+                        });
+                  },
+                )),
+              },
+          onError: (error) => {
+                listHotelCardWidget.add(HotelCardWidget(
+                  widthContainer: MediaQuery.of(context).size.width * 0.9,
+                  imageFilePath: element.imageFilePath ?? "",
+                  name: element.name ?? "",
+                  locationInfo: element.locationInfo ?? "",
+                  distanceInfo: element.distanceInfo ?? "",
+                  starInfo: element.starInfo ?? 0.0,
+                  countReviews: element.countReviews ?? 0,
+                  priceInfo: element.priceInfo ?? "",
+                  ontap: () {
+                    NavigationUtils.navigate(
+                        context, HotelDetailScreen.routeName,
+                        arguments: {
+                          "hotelId": element.id,
+                          "distanceInfo": "0",
+                          'dateSelected': _dateSelected,
+                          'guestCount': _guestCount,
+                          'roomCount': _roomCount,
+                        });
+                  },
+                )),
+              });
+    }
+  }
+
+  @override
+  AppBarContainer build(BuildContext context) {
+    _controller = SearchHotelsScreenController();
+    if (_isFirst) {
+      _isFirst = false;
       args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
-      hotels = args['listHotels'];
+      _hotels = args['listHotels'];
+      _dateSelected = args['dateSelected'];
+      _guestCount = args['guestCount'];
+      _roomCount = args['roomCount'];
     }
     if (_isLoading == false) {
-      hotels.forEach((element) {
+      _hotels.forEach((element) {
         List<dynamic> images = element['images'];
         String imagePath = "";
         if (images.isEmpty) {
-          imagePath =
-              "https://cf.bstatic.com/images/hotel/max1024x768/378/378828506.jpg";
+          imagePath = ConstUtils.imgHotelDefault;
         } else {
           imagePath = element['images'][0]['path'] ?? "";
         }
         String address =
-            "${element['address']['specific_address']}, ${element['address']['province']}, ${element['address']['district']}, ${element['address']['sub_district']}";
+            "${element['address']['specific_address']}, ${element['address']['sub_district']}, ${element['address']['district']}, ${element['address']['province']}";
         double distanceInfo = 0;
-        HotelModel hotel = HotelModel(
+        listHotel.add(HotelModel(
+          id: element['id'],
           imageFilePath: imagePath,
           name: element['name'],
           address: address,
@@ -81,71 +150,38 @@ class _SearchHotelsScreenState extends State<SearchHotelsScreen> {
           starInfo: element['rating_average'] + 0.0,
           countReviews: element['count_review'],
           priceInfo: "${element['min_price']} - ${element['max_price']}",
-          id: element['id'],
-        );
-        listHotel.add(hotel);
+        ));
       });
       _isLoading = true;
     }
 
-    listHotel.forEach((element) {
-      _controller
-          ?.getDistanceInformation(element.address ?? "")
-          .then((value) => {
-                element.distanceInfo = value.toString(),
-              });
-    });
-    _canLoadCardView = true;
     if (_canLoadCardView == true) {
-      listHotel.forEach((element) {
-        listHotelCardWidget.add(HotelCardWidget(
-          widthContainer: MediaQuery.of(context).size.width * 0.9,
-          imageFilePath: element.imageFilePath ?? "",
-          name: element.name ?? "",
-          locationInfo: element.locationInfo ?? "",
-          distanceInfo: element.distanceInfo ?? "",
-          starInfo: element.starInfo ?? 0.0,
-          countReviews: element.countReviews ?? 0,
-          priceInfo: element.priceInfo ?? "",
-          ontap: () {
-            Loading.show(context);
-            _controller?.getHotelDetail(element.id ?? -1).then((value) => {
-                  Loading.dismiss(context),
-                  print('typeout ${value.runtimeType}'),
-                  if (value.runtimeType.toString() == '_Map<String, dynamic>')
-                    {
-                      print('type ${value.runtimeType}'),
-                      Navigator.pushNamed(context, HotelDetailScreen.routeName,
-                          arguments: {
-                            'id': element.id,
-                            'name': element.name ?? "",
-                            'priceInfo': element.priceInfo ?? "",
-                            'locationInfo': element.locationInfo ?? "",
-                            'distanceInfo': element.distanceInfo ?? "",
-                            'starInfo': element.starInfo ?? 0.0,
-                            'countReviews': element.countReviews ?? 0,
-                            'description':
-                                'You will find every comfort because many of the services that the hotel offers for travellers and of course the hotel is very comfortable.',
-                            'locationSpecial':
-                                'Located in the famous neighborhood of Seoul, Grand Luxury is set in a building built in the 2010s.',
-                            'services': <String>[
-                              'Restaurant',
-                              'Free Wifi',
-                              'Currency Exchange',
-                              'Private Pool',
-                              '24-hour Font Desk'
-                            ],
-                            'isLike': value['is_like'],
-                          }),
-                    },
-                });
-          },
-        ));
-      });
+      _setCardList().then((value) => {setState(() {})});
       _canLoadCardView = false;
+      return AppBarContainer(
+        titleString: LocalizationText.hotels,
+        implementLeading: true,
+        implementTrailing: true,
+        useFilter: true,
+        widget: ButtonInDialog(
+          key: filterKey,
+          args: args,
+          getData: (data) {
+            _hotels = data;
+            listHotel = [];
+            listHotelCardWidget = [];
+            _isLoading = false;
+            _canLoadCardView = true;
+            setState(() {});
+          },
+        ),
+        child: const SpinKitCircle(
+          color: Colors.black,
+          size: 64.0,
+        ),
+      );
     }
 
-    //debugPrint("list hotel ${listHotel[0].distanceInfo}");
     return AppBarContainer(
       titleString: LocalizationText.hotels,
       implementLeading: true,
@@ -155,11 +191,11 @@ class _SearchHotelsScreenState extends State<SearchHotelsScreen> {
         key: filterKey,
         args: args,
         getData: (data) {
-          hotels = data;
+          _hotels = data;
           listHotel = [];
           listHotelCardWidget = [];
           _isLoading = false;
-          _canLoadCardView = false;
+          _canLoadCardView = true;
           setState(() {});
         },
       ),
@@ -175,6 +211,7 @@ class ButtonInDialog extends StatefulWidget {
       {super.key,
       this.args = const <String, dynamic>{},
       required this.getData});
+
   final Map<String, dynamic> args;
   final Function(List<dynamic>) getData;
 

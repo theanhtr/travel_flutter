@@ -6,7 +6,7 @@ import '../../helpers/http/base_client.dart';
 import '../../helpers/loginManager/login_manager.dart';
 
 class SearchHotelsScreenController {
-    Future<double> getDistanceInformation(String address) async {
+    Future<String> getDistanceInformation(String address) async {
         return LocationHelper().getDistanceInformation(address);
     }
 
