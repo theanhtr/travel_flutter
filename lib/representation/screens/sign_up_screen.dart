@@ -104,7 +104,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        print('Terms and Condition and Privacy Policy');
+                        print(LocalizationText.tapSignUp2);
                       },
                       child: Container(
                         height: 22,
@@ -183,17 +183,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               showDialog(
                                 context: context,
                                 builder: (BuildContext context) => AlertDialog(
-                                  title: const Text('Null response'),
+                                  title: Text(LocalizationText.nullResponse),
                                   actions: <Widget>[
                                     TextButton(
                                       onPressed: () =>
                                           Navigator.pop(context, 'Cancel'),
-                                      child: const Text('Cancel'),
+                                      child: Text(LocalizationText.cancel),
                                     ),
                                     TextButton(
                                       onPressed: () =>
                                           Navigator.pop(context, 'OK'),
-                                      child: const Text('OK'),
+                                      child: Text(LocalizationText.ok),
                                     ),
                                   ],
                                 ),
@@ -216,7 +216,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   width: kDefaultPadding / 2,
                 ),
                 Text(
-                  'or sign up with',
+                  LocalizationText.optionSignUp,
                   style: TextStyles.defaultStyle.blackTextColor
                       .setTextSize(kDefaultTextSize / 1.1),
                 ),

@@ -110,10 +110,13 @@ class _BookingHotelTabState extends State<BookingHotelTab> {
                           margin: const EdgeInsets.only(
                               top: kMediumPadding / 10,
                               bottom: kMediumPadding / 4),
-                          child: Text(
-                            widget.description,
-                            style: TextStyles.defaultStyle.blackTextColor.bold
-                                .setTextSize(widget.sizeText),
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              widget.description,
+                              style: TextStyles.defaultStyle.blackTextColor.bold
+                                  .setTextSize(widget.sizeText),
+                            ),
                           ),
                         )
                       : SizedBox(width: 0, height: 0),

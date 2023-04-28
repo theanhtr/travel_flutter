@@ -4,9 +4,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-const String baseUrl = "https://5e2a-2405-4802-1d1c-e710-b0d8-d3fc-5a82-39f1.ngrok-free.app/api";
+const String baseUrl =
+    "https://10ac-2405-4802-1d02-d2e0-7920-24f5-5791-67f.ngrok-free.app/api";
 
 class BaseClient {
+  String baseUrlForImport = baseUrl;
   var client = http.Client();
   String tokenAuth = "";
   var _header = {
@@ -90,9 +92,41 @@ class BaseClient {
     }
   }
 
-  Future<dynamic> patch(String api) async {}
+  Future<dynamic> postHaiAnhDung(String api, dynamic object) async {
+    var url = Uri.parse(baseUrl + api);
+    var payload = json.encode(object);
 
-  Future<dynamic> put(String api) async {}
+    var response = await client.post(url, body: payload, headers: _header);
+    debugPrint(response.body.toString());
+    debugPrint("dong 104 base client");
+    print(response.body.runtimeType);
+    if (response.statusCode == 201 ||
+        response.statusCode == 204 ||
+        response.statusCode == 200) {
+      return response.body.toString();
+    } else {
+      return response.body.toString();
+    }
+  }
+
+  Future<dynamic> put(String api, dynamic object) async {
+    var url = Uri.parse(baseUrl + api);
+    var payload = json.encode(object);
+
+    var response = await client.put(url, body: payload, headers: _header);
+    debugPrint(response.body.toString());
+    // debugPrint("dong 122 base client");
+    // print(response.body.runtimeType);
+    if (response.statusCode == 201 ||
+        response.statusCode == 204 ||
+        response.statusCode == 200) {
+      return response.body.toString();
+    } else {
+      return response.body.toString();
+    }
+  }
+
+  Future<dynamic> patch(String api) async {}
 
   Future<dynamic> delete(String api, String id) async {
     var url = Uri.parse(baseUrl + api + '/${id}');
