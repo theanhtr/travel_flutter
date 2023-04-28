@@ -32,13 +32,13 @@ class MyApp extends StatelessWidget {
       supportedLocales: context.supportedLocales,
       locale: context.locale,
       theme: ThemeData(
-        primaryColor: ColorPalette.primaryColor,
-        scaffoldBackgroundColor: ColorPalette.backgroundScaffoldColor,
-        backgroundColor: ColorPalette.backgroundScaffoldColor,
-      ),
+          primaryColor: ColorPalette.primaryColor,
+          scaffoldBackgroundColor: ColorPalette.backgroundScaffoldColor,
+          backgroundColor: ColorPalette.backgroundScaffoldColor,
+          dividerColor: Color.fromARGB(255, 0, 0, 0)),
       routes: routes,
       debugShowCheckedModeBanner: false,
-      home: const SplashScreen(),
+      home: SplashScreen(),
     );
   }
 }

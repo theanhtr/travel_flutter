@@ -6,8 +6,12 @@ import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:travel_app_ytb/core/constants/color_palatte.dart';
 import 'package:travel_app_ytb/core/constants/dismention_constants.dart';
 import 'package:travel_app_ytb/helpers/loginManager/login_google_manager.dart';
+import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
 import 'package:travel_app_ytb/representation/screens/favorite_screen.dart';
 import 'package:travel_app_ytb/representation/screens/home/home_screen.dart';
+
+import 'package:travel_app_ytb/representation/screens/profile_screen.dart';
+import 'package:travel_app_ytb/representation/screens/user_fill_in_information_screen.dart';
 import 'package:travel_app_ytb/representation/screens/user_screen.dart';
 
 import 'hotel_booking/hotel_booking_screen.dart';
@@ -41,7 +45,7 @@ class _MainScreenState extends State<MainScreen> {
           HotelBookingScreen(
             useImplementLeading: false,
           ),
-          UserScreen(),
+          ProfilePage(),
         ],
       ),
       bottomNavigationBar: SalomonBottomBar(
@@ -61,28 +65,28 @@ class _MainScreenState extends State<MainScreen> {
               FontAwesomeIcons.house,
               size: kDefaultIconSize,
             ),
-            title: Text('Home'),
+            title: Text(LocalizationText.home),
           ),
           SalomonBottomBarItem(
             icon: const Icon(
               FontAwesomeIcons.solidHeart,
               size: kDefaultIconSize,
             ),
-            title: Text('Favorite'),
+            title: Text(LocalizationText.favourite),
           ),
           SalomonBottomBarItem(
             icon: const Icon(
               FontAwesomeIcons.briefcase,
               size: kDefaultIconSize,
             ),
-            title: Text('Booking'),
+            title: Text(LocalizationText.booking),
           ),
           SalomonBottomBarItem(
             icon: const Icon(
               FontAwesomeIcons.solidUser,
               size: kDefaultIconSize,
             ),
-            title: Text('User'),
+            title: Text(LocalizationText.user),
           ),
         ],
       ),

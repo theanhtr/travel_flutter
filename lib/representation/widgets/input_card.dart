@@ -16,7 +16,8 @@ enum TypeInputCard {
   passwordConfirm,
   phoneNumber,
   verificationCode,
-  roleId
+  roleId,
+  dateOfBirth
 }
 
 class InputCard extends StatefulWidget {
@@ -58,6 +59,24 @@ class _InputCardState extends State<InputCard> {
     switch (style) {
       // case 'First Name':
       // case 'Last Name':
+
+      case TypeInputCard.firstName:
+        widgetToDisplay = TextField(
+          controller: _textController,
+          decoration: InputDecoration(
+            labelText: LocalizationText.firstname,
+            border: InputBorder.none,
+            labelStyle: TextStyles.defaultStyle.blackTextColor.light
+                .setTextSize(kDefaultTextSize / 1.1),
+          ),
+          style: TextStyles.defaultStyle.blackTextColor.bold
+              .setTextSize(kDefaultTextSize * 1.2),
+          onChanged: (String query) {
+            value = _textController?.text;
+            widget.onchange(value);
+          },
+        );
+        break;
       case TypeInputCard.email:
         widgetToDisplay = TextField(
           controller: _textController,
@@ -81,6 +100,57 @@ class _InputCardState extends State<InputCard> {
           controller: _textController,
           decoration: InputDecoration(
             labelText: 'Role id',
+            border: InputBorder.none,
+            labelStyle: TextStyles.defaultStyle.blackTextColor.light
+                .setTextSize(kDefaultTextSize / 1.1),
+          ),
+          style: TextStyles.defaultStyle.blackTextColor.bold
+              .setTextSize(kDefaultTextSize * 1.2),
+          onChanged: (String query) {
+            value = _textController?.text;
+            widget.onchange(value);
+          },
+        );
+        break;
+      case TypeInputCard.lastName:
+        widgetToDisplay = TextField(
+          controller: _textController,
+          decoration: InputDecoration(
+            labelText: LocalizationText.lastname,
+            border: InputBorder.none,
+            labelStyle: TextStyles.defaultStyle.blackTextColor.light
+                .setTextSize(kDefaultTextSize / 1.1),
+          ),
+          style: TextStyles.defaultStyle.blackTextColor.bold
+              .setTextSize(kDefaultTextSize * 1.2),
+          onChanged: (String query) {
+            value = _textController?.text;
+            widget.onchange(value);
+          },
+        );
+        break;
+      case TypeInputCard.phoneNumber:
+        widgetToDisplay = TextField(
+          controller: _textController,
+          decoration: InputDecoration(
+            labelText: LocalizationText.phoneNumber,
+            border: InputBorder.none,
+            labelStyle: TextStyles.defaultStyle.blackTextColor.light
+                .setTextSize(kDefaultTextSize / 1.1),
+          ),
+          style: TextStyles.defaultStyle.blackTextColor.bold
+              .setTextSize(kDefaultTextSize * 1.2),
+          onChanged: (String query) {
+            value = _textController?.text;
+            widget.onchange(value);
+          },
+        );
+        break;
+      case TypeInputCard.dateOfBirth:
+        widgetToDisplay = TextField(
+          controller: _textController,
+          decoration: InputDecoration(
+            labelText: LocalizationText.dateofbirth,
             border: InputBorder.none,
             labelStyle: TextStyles.defaultStyle.blackTextColor.light
                 .setTextSize(kDefaultTextSize / 1.1),
@@ -151,24 +221,7 @@ class _InputCardState extends State<InputCard> {
           );
         });
         break;
-      case TypeInputCard.phoneNumber:
-        widgetToDisplay = TextField(
-          keyboardType: TextInputType.number,
-          controller: _textController,
-          decoration: InputDecoration(
-            labelText: LocalizationText.phoneNumber,
-            border: InputBorder.none,
-            labelStyle: TextStyles.defaultStyle.blackTextColor.light
-                .setTextSize(kDefaultTextSize / 1.1),
-          ),
-          style: TextStyles.defaultStyle.blackTextColor.bold
-              .setTextSize(kDefaultTextSize * 1.2),
-          onChanged: (String query) {
-            value = _textController?.text;
-            widget.onchange(value);
-          },
-        );
-        break;
+
       case TypeInputCard.verificationCode:
         widgetToDisplay = TextField(
           keyboardType: TextInputType.number,
