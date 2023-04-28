@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:travel_app_ytb/representation/screens/edit_profile_page.dart';
 import 'package:travel_app_ytb/representation/screens/booking_flights_screen.dart';
 import 'package:travel_app_ytb/representation/screens/checkout_screen.dart';
+import 'package:travel_app_ytb/representation/screens/flight_filter_screen.dart';
 import 'package:travel_app_ytb/representation/screens/forgot_password/forgot_password_screen.dart';
 import 'package:travel_app_ytb/representation/screens/forgot_password/reset_password_screen.dart';
 import 'package:travel_app_ytb/representation/screens/hotel_booking_screen.dart';
 import 'package:travel_app_ytb/representation/screens/hotel_detail_screen.dart';
-import 'package:travel_app_ytb/representation/screens/hotel_filter_screen.dart';
+
 import 'package:travel_app_ytb/representation/screens/intro_screen.dart';
 import 'package:travel_app_ytb/representation/screens/login/login_screen.dart';
 import 'package:travel_app_ytb/representation/screens/main_screen.dart';
+import 'package:travel_app_ytb/representation/screens/profile_screen.dart';
 import 'package:travel_app_ytb/representation/screens/result_flight_screen.dart';
 import 'package:travel_app_ytb/representation/screens/search_hotels_screen.dart';
 import 'package:travel_app_ytb/representation/screens/select_date_screen.dart';
@@ -20,6 +23,8 @@ import 'package:travel_app_ytb/representation/screens/sort_by_hotel_screen.dart'
 
 import 'package:travel_app_ytb/representation/screens/splash_screen.dart';
 import 'package:travel_app_ytb/representation/screens/facility_hotel_screen.dart';
+import 'package:travel_app_ytb/representation/screens/upload_image_screen.dart';
+import 'package:travel_app_ytb/representation/screens/user_fill_in_information_screen.dart';
 
 import 'representation/screens/property_type_screen.dart';
 
@@ -43,6 +48,10 @@ final Map<String, WidgetBuilder> routes = {
   PropertyType.routeName: (context) => const PropertyType(),
   SortByHotel.routename: (context) => const SortByHotel(),
   SortByFlight.routename: (context) => const SortByFlight(),
-  HotelFilterScreen.routeName: (context) => const HotelFilterScreen(),
+  FlightFilterScreen.routeName: (context) => const FlightFilterScreen(),
   //ResetPasswordScreen.routeName: (context) => const ResetPasswordScreen(),
+  ProfilePage.routeName: (context) => ProfilePage(),
+  EditProfilePage.routeName: (context) => EditProfilePage(),
+  FillInforScreen.routeName: (context) => const FillInforScreen(),
+  // UploadIamge.routename: (context) => UploadIamge(),
 };

@@ -6,6 +6,7 @@ import 'package:travel_app_ytb/core/constants/dismention_constants.dart';
 import 'package:travel_app_ytb/core/constants/textstyle_constants.dart';
 import 'package:travel_app_ytb/helpers/asset_helper.dart';
 import 'package:travel_app_ytb/helpers/image_helper.dart';
+import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
 import 'package:travel_app_ytb/representation/screens/login/login_screen.dart';
 import 'package:travel_app_ytb/representation/screens/main_screen.dart';
 import 'package:travel_app_ytb/representation/widgets/button_widget.dart';
@@ -38,9 +39,7 @@ class _IntroScreenState extends State<IntroScreen> {
     return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
       Container(
           alignment: alignment,
-          child: ImageHelper.loadFromAsset(image,
-               fit: BoxFit.fitHeight)
-      ),
+          child: ImageHelper.loadFromAsset(image, fit: BoxFit.fitHeight)),
       const SizedBox(
         height: kMediumPadding * 2,
       ),
@@ -65,15 +64,12 @@ class _IntroScreenState extends State<IntroScreen> {
 
   @override
   Widget build(BuildContext context) {
-    String title1 = 'Book a flight';
-    String description1 =
-        'Found a flight that matches your destination and schedule? Book it instantly.';
-    String title2 = 'Find a hotel room';
-    String description2 =
-        'Select the day, book your room. We give you the best price.';
-    String title3 = 'Enjoy your trip';
-    String description3 =
-        'Easy discovering new places and share these between your friends and travel together.';
+    String title1 = LocalizationText.bookAFlight;
+    String description1 = LocalizationText.foundFlight;
+    String title2 = LocalizationText.findHotel;
+    String description2 = LocalizationText.selectDayAndWish;
+    String title3 = LocalizationText.enjoyTrip;
+    String description3 = LocalizationText.easyDiscoverAndShare;
     return Scaffold(
       body: Stack(
         children: [
@@ -114,8 +110,8 @@ class _IntroScreenState extends State<IntroScreen> {
                           child: ButtonWidget(
                             title:
                                 ((snapshot.data! >= 1.6 && snapshot.data! <= 2)
-                                    ? 'Get Started'
-                                    : 'Next'),
+                                    ? LocalizationText.getStart
+                                    : LocalizationText.Next),
                             ontap: () {
                               if (_pageController.page == 2) {
                                 Navigator.of(context)
@@ -126,8 +122,7 @@ class _IntroScreenState extends State<IntroScreen> {
                                     curve: Curves.linear);
                               }
                             },
-                          )
-                      );
+                          ));
                     })
               ],
             ),

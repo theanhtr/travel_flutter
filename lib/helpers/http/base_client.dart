@@ -4,7 +4,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-const String baseUrl = "https://a901-2405-4802-1d30-4ee0-d45a-8485-aad9-40da.ngrok-free.app/api";
+const String baseUrl =
+    "https://0981-2405-4802-1d49-5c70-68b4-75ba-27c9-59b5.ngrok-free.app/api";
 
 class BaseClient {
   var client = http.Client();
@@ -32,7 +33,8 @@ class BaseClient {
 
   static Future<bool> _isConnectNetWork(BuildContext context) async {
     try {
-      final result = await InternetAddress.lookup(baseUrl.substring(0, baseUrl.length - 4));
+      final result = await InternetAddress.lookup(
+          baseUrl.substring(0, baseUrl.length - 4));
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         return true;
       }
@@ -44,23 +46,27 @@ class BaseClient {
 
   static showErrorNetWork(BuildContext context) {
     BaseClient._isConnectNetWork(context).then((value) => {
-      if (value == false) {
-        showDialog(context: context, builder: (BuildContext context) => AlertDialog(
-          title: const Text('ERROR NETWORK'),
-          content: const Text('Can not connect to serve'),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () => Navigator.pop(context, 'Cancel'),
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () => Navigator.pop(context, 'OK'),
-              child: const Text('OK'),
-            ),
-          ],
-        ),)
-      }
-    });
+          if (value == false)
+            {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) => AlertDialog(
+                  title: const Text('ERROR NETWORK'),
+                  content: const Text('Can not connect to serve'),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, 'Cancel'),
+                      child: const Text('Cancel'),
+                    ),
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, 'OK'),
+                      child: const Text('OK'),
+                    ),
+                  ],
+                ),
+              )
+            }
+        });
   }
 
   Future<dynamic> get(String api) async {
@@ -70,8 +76,7 @@ class BaseClient {
 
     if (response.statusCode == 200) {
       return response.body;
-    } else {
-    }
+    } else {}
   }
 
   Future<dynamic> post(String api, dynamic object) async {
@@ -79,19 +84,53 @@ class BaseClient {
     var payload = json.encode(object);
 
     var response = await client.post(url, body: payload, headers: _header);
-
-    if (response.statusCode == 201 || response.statusCode == 204
-        || response.statusCode == 200
-    ) {
+    debugPrint("dong 86 base client");
+    // debugPrint(response.body);
+    // debugPrint(response.statusCode.toString());
+    if (response.statusCode == 201 ||
+        response.statusCode == 204 ||
+        response.statusCode == 200) {
       return response.body;
     } else {
       return response.statusCode;
     }
   }
 
-  Future<dynamic> patch(String api) async {}
+  Future<dynamic> postHaiAnhDung(String api, dynamic object) async {
+    var url = Uri.parse(baseUrl + api);
+    var payload = json.encode(object);
 
-  Future<dynamic> put(String api) async {}
+    var response = await client.post(url, body: payload, headers: _header);
+    debugPrint(response.body.toString());
+    debugPrint("dong 104 base client");
+    print(response.body.runtimeType);
+    if (response.statusCode == 201 ||
+        response.statusCode == 204 ||
+        response.statusCode == 200) {
+      return response.body.toString();
+    } else {
+      return response.body.toString();
+    }
+  }
+
+  Future<dynamic> put(String api, dynamic object) async {
+    var url = Uri.parse(baseUrl + api);
+    var payload = json.encode(object);
+
+    var response = await client.put(url, body: payload, headers: _header);
+    debugPrint(response.body.toString());
+    // debugPrint("dong 122 base client");
+    // print(response.body.runtimeType);
+    if (response.statusCode == 201 ||
+        response.statusCode == 204 ||
+        response.statusCode == 200) {
+      return response.body.toString();
+    } else {
+      return response.body.toString();
+    }
+  }
+
+  Future<dynamic> patch(String api) async {}
 
   Future<dynamic> delete(String api) async {}
 }

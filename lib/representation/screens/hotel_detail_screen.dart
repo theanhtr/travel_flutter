@@ -12,6 +12,7 @@ import 'package:travel_app_ytb/core/constants/textstyle_constants.dart';
 import 'package:travel_app_ytb/helpers/asset_helper.dart';
 import 'package:travel_app_ytb/helpers/image_helper.dart';
 import 'package:travel_app_ytb/helpers/service_load_helper.dart';
+import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
 import 'package:travel_app_ytb/representation/screens/select_room_screen.dart';
 import 'package:travel_app_ytb/representation/widgets/button_widget.dart';
 import 'package:travel_app_ytb/representation/widgets/item_text_container.dart';
@@ -213,7 +214,7 @@ class _HotelDetailScreenState extends State<HotelDetailScreen> {
                                                         kDefaultTextSize * 1.1),
                                               ),
                                               Text(
-                                                '/night',
+                                                LocalizationText.night,
                                                 style: TextStyles
                                                     .defaultStyle
                                                     .medium
@@ -249,7 +250,7 @@ class _HotelDetailScreenState extends State<HotelDetailScreen> {
                                                       kDefaultTextSize / 1.4),
                                             ),
                                             Text(
-                                              ' -- $distanceInfo from destination',
+                                              ' -- $distanceInfo ${LocalizationText.fromDestination}',
                                               style: TextStyles.defaultStyle
                                                   .blackTextColor.light
                                                   .setTextSize(
@@ -295,7 +296,7 @@ class _HotelDetailScreenState extends State<HotelDetailScreen> {
                                                               1.2),
                                                 ),
                                                 Text(
-                                                  ' ($countReviews reviews)',
+                                                  ' ($countReviews ${LocalizationText.reviews})',
                                                   style: TextStyles.defaultStyle
                                                       .blackTextColor.light
                                                       .setTextSize(
@@ -305,7 +306,7 @@ class _HotelDetailScreenState extends State<HotelDetailScreen> {
                                               ],
                                             ),
                                             Text(
-                                              'See All',
+                                              LocalizationText.seeAll,
                                               style: TextStyles.defaultStyle
                                                   .bold.primaryTextColor
                                                   .setTextSize(
@@ -324,7 +325,7 @@ class _HotelDetailScreenState extends State<HotelDetailScreen> {
                                           height: kDefaultPadding,
                                         ),
                                         Text(
-                                          'Infomation',
+                                          LocalizationText.information,
                                           style: TextStyles
                                               .defaultStyle.bold.blackTextColor
                                               .setTextSize(
@@ -356,7 +357,7 @@ class _HotelDetailScreenState extends State<HotelDetailScreen> {
                                           height: kDefaultPadding,
                                         ),
                                         Text(
-                                          'Location',
+                                          LocalizationText.location,
                                           style: TextStyles
                                               .defaultStyle.bold.blackTextColor
                                               .setTextSize(
@@ -401,7 +402,7 @@ class _HotelDetailScreenState extends State<HotelDetailScreen> {
               height: 50,
               width: 200,
               child: ButtonWidget(
-                title: 'Select Room',
+                title: LocalizationText.selectRoom,
                 ontap: () {
                   Navigator.pushNamed(context, SelectRoomScreen.routeName);
                 },

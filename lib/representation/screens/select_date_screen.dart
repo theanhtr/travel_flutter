@@ -5,6 +5,7 @@ import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:travel_app_ytb/core/constants/color_palatte.dart';
 import 'package:travel_app_ytb/core/constants/dismention_constants.dart';
 import 'package:travel_app_ytb/helpers/date_helper.dart';
+import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
 import 'package:travel_app_ytb/representation/widgets/app_bar_container.dart';
 import 'package:travel_app_ytb/representation/widgets/button_widget.dart';
 import 'package:travel_app_ytb/representation/widgets/out_button_widget.dart';
@@ -34,7 +35,7 @@ class SelectDateScreen extends StatelessWidget {
 
     return AppBarContainer(
       implementLeading: true,
-      titleString: 'Select date',
+      titleString: LocalizationText.selectDate,
       child: Column(
         children: [
           const SizedBox(
@@ -73,7 +74,7 @@ class SelectDateScreen extends StatelessWidget {
             },
           ),
           ButtonWidget(
-            title: 'Select',
+            title: LocalizationText.select,
             ontap: () {
               Navigator.of(context).pop([rangeStartDate, rangeEndDate]);
             },
@@ -82,7 +83,7 @@ class SelectDateScreen extends StatelessWidget {
             height: kDefaultPadding,
           ),
           OutButtonWidget(
-            title: 'Cancel',
+            title: LocalizationText.cancel,
             ontap: () {
               Navigator.of(context).pop([null]);
             },
