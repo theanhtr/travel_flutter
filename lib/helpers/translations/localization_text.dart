@@ -11,103 +11,129 @@ class LocalizationText {
   static String rememberMe = "rememberMe".tr();
   static String forgotPassword = "forgotPassword".tr();
   static String dontHaveAnAccount = "don'tHaveAnAccount".tr();
-  static String phoneNumber = "Phone Number".tr();
-  static String verificationCode = "Verification Code".tr();
+  static String phoneNumber = "phoneNumber".tr();
+  static String verificationCode = "verificationCode".tr();
   // Màn sign up
-  static String tapSignUp1 = "By tapping sign up you agree to the".tr();
-  static String tapSignUp2 = "Terms and Condition and Privacy Policy".tr();
-  static String errPassOrEmail = "ERROR PASSWORD OR INVALID EMAIL".tr();
-  static String cancel = "Cancel".tr();
-  static String ok = "OK".tr();
-  static String nullResponse = "Null response".tr();
-  static String optionSignUp = "or sign up with".tr();
+  static String tapSignUp1 = "tapSignUp1".tr();
+  static String tapSignUp2 = "tapSignUp2".tr();
+  static String errPassOrEmail = "errPassOrEmail".tr();
+  static String cancel = "cancel".tr();
+  static String ok = "ok".tr();
+  static String nullResponse = "nullResponse".tr();
+  static String optionSignUp = "optionSignUp".tr();
 // Màn sort by hotel
-  static String highestPopularity = "Highest popularity".tr();
-  static String lowestPrice = "Lowest Price".tr();
-  static String highestPrice = "Highest Price".tr();
-  static String highestRating = "Highest Rating".tr();
-  static String nearestDistance = "Nearest Distance".tr();
-  static String sortBy = "Sort by".tr();
-  static String selectAll = "Select all".tr();
-  static String apply = "Apply".tr();
+  static String highestPopularity = "highestPopularity".tr();
+  static String lowestPrice = "lowestPrice".tr();
+  static String highestPrice = "highestPrice".tr();
+  static String highestRating = "highestRating".tr();
+  static String nearestDistanec = "nearestDistanec".tr();
+  static String sortBy = "sortBy".tr();
+  static String selectAll = "selectAll".tr();
+  static String apply = "apply".tr();
 
   // Màn facility filght và facility hotel
-  static String facility = "Facility".tr();
+  static String facility = "facility".tr();
 
   // Màn facility filght và facility hotel
-  static String bookFlight = "Book Your Flight".tr();
-  static String oneWay = "One way".tr();
-  static String roundTrip = "Round trip".tr();
-  static String multiCity = "Multi-City".tr();
-  static String from = "From".tr();
-  static String to = "To".tr();
-  static String departure = "Departure".tr();
-  static String selectDate = "Select Date".tr();
-  static String passenger = "Passengers".tr();
-  static String passengerIT = "Passenger".tr();
-  static String classh = "Class".tr();
-  static String economy = "Economy".tr();
-  static String search = "Search".tr();
-  static String flight = "Flight".tr();
-  static String returnn = "Return".tr();
+  static String bookFlight = "bookFlight".tr();
+  static String oneWay = "oneWay".tr();
+  static String roundTrip = "roundTrip".tr();
+  static String multiCity = "multiCity".tr();
+  static String from = "from".tr();
+  static String to = "to".tr();
+  static String departure = "departure".tr();
+  static String selectDate = "selectDate".tr();
+  static String passenger = "passenger".tr();
+  static String passengerIT = "passengerIT".tr();
+  static String classh = "classh".tr();
+  static String economy = "economy".tr();
+  static String search = "search".tr();
+  static String flight = "flight".tr();
+  static String returnn = "return".tr();
 
   // Màn hotel booking
-  static String hotelBooking = "Hotel Booking".tr();
-  static String destination = "Destination".tr();
-  static String pleaseSelectDate = "Please select date".tr();
-  static String guestAndRoom = "Guest and Room".tr();
-  static String guest = "Guest".tr();
-  static String room = "Room".tr();
-  static String checkAll = "Hey.tr(); check all again!".tr();
-  static String fieldsHavenotFill =
-      "Maybe you haven't filled in one of the fields, please complete it :33"
-          .tr();
+  static String hotelBooking = "hotelBooking".tr();
+  static String destination = "destination".tr();
+  static String pleaseSelectDate = "pleaseSelectDate".tr();
+  static String guestAndRoom = "guestAndRoom".tr();
+  static String guest = "guest".tr();
+  static String room = "room".tr();
+  static String checkAll = "checkAll".tr();
+  static String fieldsHavenotFill = "fieldsHavenotFill".tr();
 
   //sort by flight screen
-  static String earlisetDepart = "Earliest Departure".tr();
-  static String latestDepart = "Latest Departure".tr();
-  static String earliesArrive = "Earliest Arrive".tr();
-  static String latestArrive = "Latest Arrive".tr();
-  static String shortestDuration = "Shortest Duration".tr();
+  static String earlisetDepart = "earlisetDepart".tr();
+  static String latestDepart = "latestDepart".tr();
+  static String earliesArrive = "earliesArrive".tr();
+  static String latestArrive = "latestArrive".tr();
+  static String shortestDuration = "shortestDuration".tr();
 
-  static String selectRoom = "Select Room".tr();
+  static String selectRoom = "selectRoom".tr();
   //select guess and room screen
-  static String addGuetsAndRoom = "Add guest and room".tr();
-  static String done = "Done".tr();
-  static String select = "Select".tr();
-  static String hotels = "Hotels".tr();
+  static String addGuetsAndRoom = "addGuetsAndRoom".tr();
+  static String done = "done".tr();
+  static String select = "select".tr();
+  static String hotels = "hotels".tr();
 
-  static String propertyType = "Property type".tr();
-  static String resorts = "Resorts".tr();
-  static String hostels = "Hostels".tr();
-  static String villas = "Villas".tr();
-  static String guestHouse = "Guest House".tr();
-  static String homeStay = "Homestays";
-  static String apartment = "Apartments".tr();
-  static String others = "Others".tr();
+  static String propertyType = "propertyType".tr();
+  static String resorts = "resorts".tr();
+  static String hostels = "hostels".tr();
+  static String villas = "villas".tr();
+  static String guestHouse = "guestHouse".tr();
+  static String homeStay = "homeStay";
+  static String apartment = "apartment".tr();
+  static String others = "others".tr();
 //filter flight screen
-  static String direct = "Direct".tr();
-  static String transit_1 = "1 Transit".tr();
-  static String transit_2_plus = "2+ Transits".tr();
-  static String transit = "Transit".tr();
-  static String facilities = "Facilities".tr();
-  static String reset = "Reset".tr();
-  static String choseFilter = "Choose Your Filter".tr();
+  static String direct = "direct".tr();
+  static String transit_1 = "transit_1".tr();
+  static String transit_2_plus = "transit_2_plus".tr();
+  static String transit = "transit".tr();
+  static String facilities = "facilities".tr();
+  static String reset = "reset".tr();
+  static String choseFilter = "choseFilter".tr();
 
-  static String location = "Location".tr();
-  static String information = "Infomation".tr();
-  static String seeAll = "See All".tr();
+  static String location = "location".tr();
+  static String information = "information".tr();
+  static String seeAll = "seeAll".tr();
   static String reviews = "reviews".tr();
-  static String fromDestination = "from destination".tr();
+  static String fromDestination = "fromDestination".tr();
 
-  static String getStart = "Get start".tr();
+  static String getStart = "getStart".tr();
   static String Next = "Next".tr();
 
-  static String bookAndReview = "Đặt chỗ và phản ánh".tr();
-  static String payment = "Thanh toán".tr();
-  static String confirm = "Xác nhận".tr();
-  static String signInAs = "Đăng nhập với tư cách".tr();
-  static String contactIf = "Thông tin liên lạc".tr();
-  static String addContactInfor = "Thêm thông tin liên lạc".tr();
-  static String checkout = "Checkout".tr();
+  static String bookAndReview = "bookAndReview".tr();
+  static String payment = "payment".tr();
+  static String confirm = "confirm".tr();
+  static String signInAs = "signInAs".tr();
+  static String contactIf = "contactIf".tr();
+  static String addContactInfor = "addContactInfor".tr();
+  static String checkout = "checkout".tr();
+  static String firstname = "firstname".tr();
+  static String lastname = "lastname".tr();
+  static String dateofbirth = "dateofbirth".tr();
+  static String createInformationUser = "createInformationUser".tr();
+  static String profile = "profile".tr();
+  static String update = "update".tr();
+
+  static String updateUserInfor = "updateUserInfor".tr();
+  static String successCreateUserInfo = "successCreateUserInfo".tr();
+  static String about = "about".tr();
+  static String choseMedia = "choseMedia".tr();
+  static String fromGallery = "fromGallery".tr();
+  static String fromCamera = "fromCamera".tr();
+  static String uploadAvatar = "uploadAvatar".tr();
+  static String noImage = "noImage".tr();
+  static String fillInfoForm = "fillInfoForm".tr();
+  static String bookAFlight = "bookAFlight".tr();
+  static String foundFlight = "foundFlight".tr();
+  static String findHotel = "findHotel".tr();
+  static String selectDayAndWish = "selectDayAndWish".tr();
+  static String enjoyTrip = "enjoyTrip".tr();
+  static String easyDiscoverAndShare = "easyDiscoverAndShare".tr();
+  static String home = "home".tr();
+  static String favourite = "favourite".tr();
+  static String booking = "booking".tr();
+  static String user = "user".tr();
+  static String night = "night".tr();
+  static String nearestDistance = "nearestDistance".tr();
 }

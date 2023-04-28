@@ -64,15 +64,12 @@ class _IntroScreenState extends State<IntroScreen> {
 
   @override
   Widget build(BuildContext context) {
-    String title1 = 'Book a flight';
-    String description1 =
-        'Found a flight that matches your destination and schedule? Book it instantly.';
-    String title2 = 'Find a hotel room';
-    String description2 =
-        'Select the day, book your room. We give you the best price.';
-    String title3 = 'Enjoy your trip';
-    String description3 =
-        'Easy discovering new places and share these between your friends and travel together.';
+    String title1 = LocalizationText.bookAFlight;
+    String description1 = LocalizationText.foundFlight;
+    String title2 = LocalizationText.findHotel;
+    String description2 = LocalizationText.selectDayAndWish;
+    String title3 = LocalizationText.enjoyTrip;
+    String description3 = LocalizationText.easyDiscoverAndShare;
     return Scaffold(
       body: Stack(
         children: [

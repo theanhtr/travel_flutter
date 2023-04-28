@@ -233,7 +233,7 @@ class _HotelDetailScreenState extends State<HotelDetailScreen> {
                                                         kDefaultTextSize * 1.1),
                                               ),
                                               Text(
-                                                '/night',
+                                                LocalizationText.night,
                                                 style: TextStyles
                                                     .defaultStyle
                                                     .medium
@@ -325,7 +325,7 @@ class _HotelDetailScreenState extends State<HotelDetailScreen> {
                                               ],
                                             ),
                                             Text(
-                                              'See All',
+                                              LocalizationText.seeAll,
                                               style: TextStyles.defaultStyle
                                                   .bold.primaryTextColor
                                                   .setTextSize(
