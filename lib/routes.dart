@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:travel_app_ytb/representation/screens/admin/drawer_page_screen.dart';
+import 'package:travel_app_ytb/representation/screens/admin_screen.dart';
 import 'package:travel_app_ytb/representation/screens/booking_flights_screen.dart';
 import 'package:travel_app_ytb/representation/screens/checkout_screen.dart';
 import 'package:travel_app_ytb/representation/screens/flight_filter_screen.dart';
@@ -42,9 +44,17 @@ final Map<String, WidgetBuilder> routes = {
   ResultFlightScreen.routeName: (context) => const ResultFlightScreen(),
   FacilityHotel.routeName: (context) => const FacilityHotel(),
   PropertyType.routeName: (context) => const PropertyType(),
+
   SortByHotel.routeName: (context) => const SortByHotel(),
   SortByFlight.routeName: (context) => const SortByFlight(),
   FlightFilterScreen.routeName: (context) => const FlightFilterScreen(),
   ResetPasswordScreen.routeName: (context) => const ResetPasswordScreen(),
-  SearchYourDestinationScreen.routeName: (context) => const SearchYourDestinationScreen(),
+  SearchYourDestinationScreen.routeName: (context) =>
+      const SearchYourDestinationScreen(),
+
+  SortByHotel.routeName: (context) => const SortByHotel(),
+  SortByFlight.routeName: (context) => const SortByFlight(),
+  // HotelFilterScreen.routeName: (context) => const HotelFilterScreen(),
+  //ResetPasswordScreen.routeName: (context) => const ResetPasswordScreen(),
+  AdminScreen.routeName: (context) => const AdminScreen(),
 };
