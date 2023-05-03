@@ -185,7 +185,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Loading.dismiss(context),
                           if (value['data']['role_id'] == 1)
                             Navigator.popAndPushNamed(
-                                context, AdminScreen.routeName)
+                                context, MainScreen.routeName)
                           else if (value['data']['role_id'] == 2)
                             Navigator.popAndPushNamed(
                                 context, AdminScreen.routeName)
