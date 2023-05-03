@@ -37,10 +37,9 @@ class LoginManager {
   Future<dynamic> signInWithEmailPassword(String email, String password) async {
     email = email.trim();
     password = password.trim();
-    var response = await BaseClient("").post('/auth/login', {
-      'email': email,
-      'password': password
-    }).catchError((err) {
+    var response = await BaseClient("")
+        .post('/auth/login', {'email': email, 'password': password}).catchError(
+            (err) {
       return err;
     });
     if (response == null) return false;
@@ -52,14 +51,15 @@ class LoginManager {
       var token = await dataResponse['data']['token'];
       if (_isRemember == true) {
         final userToken =
-        await LocalStorageHelper.getValue('userToken') as String?;
+            await LocalStorageHelper.getValue('userToken') as String?;
         if (userToken == null) {
           LocalStorageHelper.setValue("userToken", token);
           LocalStorageHelper.setValue("userEmail", email);
         }
       }
       await setUserModel();
-      return dataResponse['success'];
+      debugPrint('${dataResponse['data']['role_id'].runtimeType}}');
+      return dataResponse;
     }
     return response;
   }
@@ -78,16 +78,21 @@ class LoginManager {
   }
 
   Future<String> getCurrentUserAvatar() async {
-    var response = await BaseClient(userModel.token ?? "").get('/my-information/avatar').catchError((err) {
+    var response = await BaseClient(userModel.token ?? "")
+        .get('/my-information/avatar')
+        .catchError((err) {
       debugPrint(err);
     });
-    if (response == null) return "https://cdn.mos.cms.futurecdn.net/JarKa4TVZxSCuN8x8WNPSN.jpg";
+    if (response == null)
+      return "https://cdn.mos.cms.futurecdn.net/JarKa4TVZxSCuN8x8WNPSN.jpg";
     Map dataResponse = json.decode(response);
     return dataResponse['data']['path'];
   }
 
   Future<UserModel?> getCurrentUser() async {
-    var response = await BaseClient(userModel.token ?? "").get('/my-information').catchError((err) {
+    var response = await BaseClient(userModel.token ?? "")
+        .get('/my-information')
+        .catchError((err) {
       debugPrint("response get currentuser err $err");
     });
     if (response == null) return null;
@@ -171,12 +176,13 @@ class LoginManager {
     return dataResponse;
   }
 
-  Future<dynamic> verificateCode(String email, String code) async{
+  Future<dynamic> verificateCode(String email, String code) async {
     email = email.trim();
     code = code.trim();
-    final response = await BaseClient("").post("/auth/check-token-reset-password", {
+    final response =
+        await BaseClient("").post("/auth/check-token-reset-password", {
       "email": email,
-      "token" : code,
+      "token": code,
     }).catchError((err) {
       return false;
     });
@@ -193,7 +199,8 @@ class LoginManager {
     return false;
   }
 
-  Future<dynamic> resetPassword(String email, String password, String passwordConfirm, String token) async {
+  Future<dynamic> resetPassword(String email, String password,
+      String passwordConfirm, String token) async {
     email = email.trim();
     password = password.trim();
     passwordConfirm = passwordConfirm.trim();
@@ -201,7 +208,7 @@ class LoginManager {
       "email": email,
       "password": password,
       "password_confirmation": passwordConfirm,
-      "token" : token,
+      "token": token,
     }).catchError((err) {
       return false;
     });
@@ -217,5 +224,4 @@ class LoginManager {
     }
     return response;
   }
-
 }

@@ -12,25 +12,33 @@ import 'package:travel_app_ytb/helpers/image_helper.dart';
 import '../../core/constants/textstyle_constants.dart';
 
 class AppBarContainer extends StatelessWidget {
-  const AppBarContainer({
-    super.key,
-    required this.child,
-    this.title,
-    this.titleString,
-    this.implementLeading = false,
-    this.implementTrailing = false,
-    this.widget,
-  });
+  AppBarContainer(
+      {super.key,
+      required this.child,
+      this.title,
+      this.titleString,
+      this.implementLeading = false,
+      this.implementTrailing = false,
+      this.widget,
+      this.drawer,
+      this.backGroundColor,
+      this.onPressTrailing});
   final Widget? title;
   final String? titleString;
   final Widget child;
   final Widget? widget;
   final bool implementLeading; //show button back or not
   final bool implementTrailing;
-
+  final Widget? drawer;
+  final Color? backGroundColor;
+  final Function()? onPressTrailing;
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
+      drawer: drawer,
+      backgroundColor: backGroundColor,
       body: Stack(
         children: [
           SizedBox(
@@ -82,13 +90,7 @@ class AppBarContainer extends StatelessWidget {
                       ),
                       if (implementTrailing)
                         GestureDetector(
-                          onTap: () {
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return widget ?? Container();
-                                });
-                          },
+                          onTap: () => _displayDrawer(context),
                           child: Container(
                             padding: EdgeInsets.all(kItemPadding),
                             decoration: BoxDecoration(
@@ -138,5 +140,9 @@ class AppBarContainer extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void _displayDrawer(BuildContext context) {
+    _scaffoldKey.currentState?.openDrawer();
   }
 }

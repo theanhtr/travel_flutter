@@ -16,6 +16,7 @@ enum TypeInputCard {
   passwordConfirm,
   phoneNumber,
   verificationCode,
+  roleId
 }
 
 class InputCard extends StatefulWidget {
@@ -62,6 +63,24 @@ class _InputCardState extends State<InputCard> {
           controller: _textController,
           decoration: InputDecoration(
             labelText: LocalizationText.email,
+            border: InputBorder.none,
+            labelStyle: TextStyles.defaultStyle.blackTextColor.light
+                .setTextSize(kDefaultTextSize / 1.1),
+          ),
+          style: TextStyles.defaultStyle.blackTextColor.bold
+              .setTextSize(kDefaultTextSize * 1.2),
+          onChanged: (String query) {
+            value = _textController?.text;
+            widget.onchange(value);
+          },
+        );
+        break;
+
+      case TypeInputCard.roleId:
+        widgetToDisplay = TextField(
+          controller: _textController,
+          decoration: InputDecoration(
+            labelText: 'Role id',
             border: InputBorder.none,
             labelStyle: TextStyles.defaultStyle.blackTextColor.light
                 .setTextSize(kDefaultTextSize / 1.1),

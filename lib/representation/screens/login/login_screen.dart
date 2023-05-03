@@ -13,6 +13,7 @@ import 'package:travel_app_ytb/helpers/loginManager/login_facebook_manager.dart'
 import 'package:travel_app_ytb/helpers/loginManager/login_google_manager.dart';
 import 'package:travel_app_ytb/helpers/loginManager/login_manager.dart';
 import 'package:travel_app_ytb/representation/controllers/login_screen_controller.dart';
+import 'package:travel_app_ytb/representation/screens/admin_screen.dart';
 import 'package:travel_app_ytb/representation/screens/forgot_password/forgot_password_screen.dart';
 import 'package:travel_app_ytb/representation/screens/home/home_screen.dart';
 import 'package:travel_app_ytb/representation/screens/main_screen.dart';
@@ -177,12 +178,17 @@ class _LoginScreenState extends State<LoginScreen> {
                 }
                 Loading.show(context);
                 _controller?.loginByPassWord(email, password).then((value) => {
-                      print(value),
-                      if (value == true)
+                      if (value['success'] == true)
                         {
+                          LocalStorageHelper.setValue(
+                              "roleId", value['data']['role_id']),
                           Loading.dismiss(context),
-                          Navigator.popAndPushNamed(
-                              context, MainScreen.routeName)
+                          if (value['data']['role_id'] == 1)
+                            Navigator.popAndPushNamed(
+                                context, MainScreen.routeName)
+                          else if (value['data']['role_id'] == 2)
+                            Navigator.popAndPushNamed(
+                                context, AdminScreen.routeName)
                         }
                       else
                         {

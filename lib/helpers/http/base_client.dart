@@ -32,7 +32,8 @@ class BaseClient {
 
   static Future<bool> _isConnectNetWork(BuildContext context) async {
     try {
-      final result = await InternetAddress.lookup(baseUrl.substring(0, baseUrl.length - 4));
+      final result = await InternetAddress.lookup(
+          baseUrl.substring(0, baseUrl.length - 4));
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         return true;
       }
@@ -44,24 +45,24 @@ class BaseClient {
 
   static showErrorNetWork(BuildContext context) {
     BaseClient._isConnectNetWork(context).then((value) => {
-      debugPrint(value.toString()),
-      // if (value == false) {
-      //   showDialog(context: context, builder: (BuildContext context) => AlertDialog(
-      //     title: const Text('ERROR NETWORK'),
-      //     content: const Text('Can not connect to server'),
-      //     actions: <Widget>[
-      //       TextButton(
-      //         onPressed: () => Navigator.pop(context, 'Cancel'),
-      //         child: const Text('Cancel'),
-      //       ),
-      //       TextButton(
-      //         onPressed: () => Navigator.pop(context, 'OK'),
-      //         child: const Text('OK'),
-      //       ),
-      //     ],
-      //   ),)
-      // }
-    });
+          debugPrint(value.toString()),
+          // if (value == false) {
+          //   showDialog(context: context, builder: (BuildContext context) => AlertDialog(
+          //     title: const Text('ERROR NETWORK'),
+          //     content: const Text('Can not connect to server'),
+          //     actions: <Widget>[
+          //       TextButton(
+          //         onPressed: () => Navigator.pop(context, 'Cancel'),
+          //         child: const Text('Cancel'),
+          //       ),
+          //       TextButton(
+          //         onPressed: () => Navigator.pop(context, 'OK'),
+          //         child: const Text('OK'),
+          //       ),
+          //     ],
+          //   ),)
+          // }
+        });
   }
 
   Future<dynamic> get(String api) async {
@@ -71,8 +72,7 @@ class BaseClient {
 
     if (response.statusCode == 200) {
       return response.body;
-    } else {
-    }
+    } else {}
   }
 
   Future<dynamic> post(String api, dynamic object) async {
@@ -81,9 +81,9 @@ class BaseClient {
 
     var response = await client.post(url, body: payload, headers: _header);
 
-    if (response.statusCode == 201 || response.statusCode == 204
-        || response.statusCode == 200
-    ) {
+    if (response.statusCode == 201 ||
+        response.statusCode == 204 ||
+        response.statusCode == 200) {
       return response.body;
     } else {
       return response.statusCode;
@@ -94,5 +94,17 @@ class BaseClient {
 
   Future<dynamic> put(String api) async {}
 
-  Future<dynamic> delete(String api) async {}
+  Future<dynamic> delete(String api, String id) async {
+    var url = Uri.parse(baseUrl + api + '/${id}');
+
+    var response = await client.delete(url, body: {}, headers: _header);
+
+    if (response.statusCode == 201 ||
+        response.statusCode == 204 ||
+        response.statusCode == 200) {
+      return response.body;
+    } else {
+      return response.statusCode;
+    }
+  }
 }
