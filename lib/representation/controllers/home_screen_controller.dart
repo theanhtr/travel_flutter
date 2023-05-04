@@ -26,14 +26,17 @@ class HomeScreenController {
   Future<dynamic> getPopularDestination() async {
     var response = await BaseClient(LoginManager().userModel.token ?? "").get("/popular-destination")
         .catchError((err) {
-          debugPrint(err);
-          return false;
+          return err;
     });
     if (response == null) {
       return false;
     }
-    Map dataResponse = json.decode(response);
-    return dataResponse['data'];
+    print('hehehehehe ${response.toString()}');
+    if (response.runtimeType == String) {
+      Map dataResponse = json.decode(response);
+      return dataResponse['data'];
+    }
+    return false;
   }
 
   Future<dynamic> likePopularDestination(int destinationId) async {

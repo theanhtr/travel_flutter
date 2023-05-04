@@ -14,9 +14,11 @@ import 'package:travel_app_ytb/representation/widgets/button_widget.dart';
 import 'package:travel_app_ytb/core/extensions/date_ext.dart';
 
 class HotelBookingScreen extends StatefulWidget {
-  const HotelBookingScreen({super.key});
+  const HotelBookingScreen({super.key, this.useImplementLeading = true});
 
   static const String routeName = '/hotel_booking_screen';
+
+  final bool useImplementLeading;
 
   @override
   State<HotelBookingScreen> createState() => _HotelBookingScreenState();
@@ -41,6 +43,7 @@ class _HotelBookingScreenState extends State<HotelBookingScreen> {
   Widget build(BuildContext context) {
     return AppBarContainer(
       titleString: LocalizationText.hotelBooking,
+      implementLeading: widget.useImplementLeading,
       // ignore: sort_child_properties_last
       child: Container(
           child: SingleChildScrollView(
@@ -178,7 +181,6 @@ class _HotelBookingScreenState extends State<HotelBookingScreen> {
           ),
         ]),
       )),
-      implementLeading: true,
     );
   }
 }

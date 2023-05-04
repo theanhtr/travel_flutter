@@ -58,7 +58,7 @@ class LoginManager {
         }
       }
       await setUserModel();
-      debugPrint('${dataResponse['data']['role_id'].runtimeType}}');
+      debugPrint('${dataResponse['data']['role_id'].runtimeType}');
       return dataResponse;
     }
     return response;

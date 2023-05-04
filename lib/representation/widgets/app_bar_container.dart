@@ -22,13 +22,15 @@ class AppBarContainer extends StatelessWidget {
       this.widget,
       this.drawer,
       this.backGroundColor,
-      this.onPressTrailing});
+      this.onPressTrailing,
+      this.useFilter = false});
   final Widget? title;
   final String? titleString;
   final Widget child;
   final Widget? widget;
   final bool implementLeading; //show button back or not
   final bool implementTrailing;
+  final bool useFilter;
   final Widget? drawer;
   final Color? backGroundColor;
   final Function()? onPressTrailing;
@@ -90,7 +92,15 @@ class AppBarContainer extends StatelessWidget {
                       ),
                       if (implementTrailing)
                         GestureDetector(
-                          onTap: () => _displayDrawer(context),
+                          onTap: useFilter
+                              ? () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return widget ?? Container();
+                                      });
+                                }
+                              : () => _displayDrawer(context),
                           child: Container(
                             padding: EdgeInsets.all(kItemPadding),
                             decoration: BoxDecoration(

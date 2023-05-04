@@ -8,6 +8,7 @@ class HotelModel {
   int? countReviews;
   String? priceInfo;
   String? description;
+  int? id;
   HotelModel(
       {this.imageFilePath,
       this.name,
@@ -17,5 +18,6 @@ class HotelModel {
       this.countReviews,
       this.priceInfo,
       this.description,
-      this.address});
+      this.address,
+      this.id});
 }

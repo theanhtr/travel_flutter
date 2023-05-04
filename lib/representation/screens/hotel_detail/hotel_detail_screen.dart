@@ -17,6 +17,8 @@ import 'package:travel_app_ytb/representation/screens/select_room_screen.dart';
 import 'package:travel_app_ytb/representation/widgets/button_widget.dart';
 import 'package:travel_app_ytb/representation/widgets/item_text_container.dart';
 
+import '../../controllers/hotel_detail_screen_controller.dart';
+
 class HotelDetailScreen extends StatefulWidget {
   const HotelDetailScreen({super.key});
 
@@ -28,14 +30,17 @@ class HotelDetailScreen extends StatefulWidget {
 
 class _HotelDetailScreenState extends State<HotelDetailScreen> {
   String? name;
-  int? priceInfo;
+  String? priceInfo;
   String? locationInfo;
   String? distanceInfo;
   double? starInfo;
   int? countReviews;
+  int id = -1;
   String? description;
   String? locationSpecial;
   List<String>? services;
+  bool isLike = false;
+  bool isFirst = true;
 
   final PageController _pageController = PageController();
   int pageCount = 3;
@@ -54,11 +59,15 @@ class _HotelDetailScreenState extends State<HotelDetailScreen> {
   }
 
   Widget _buildItemHotelDetail(String image) {
-    return Positioned.fill(
-        child: ImageHelper.loadFromAsset(
-      image,
-      fit: BoxFit.fill,
-    ));
+    return Stack(
+      children: [
+        Positioned.fill(
+            child: ImageHelper.loadFromAsset(
+          image,
+          fit: BoxFit.fill,
+        ))
+      ],
+    );
   }
 
   @override
@@ -75,6 +84,11 @@ class _HotelDetailScreenState extends State<HotelDetailScreen> {
     description = args['description'];
     locationSpecial = args['locationSpecial'];
     services = args['services'];
+    id = args['id'];
+    if (isFirst) {
+      isFirst = false;
+      isLike = args['isLike'];
+    }
 
     return Scaffold(
       body: Stack(
@@ -117,7 +131,12 @@ class _HotelDetailScreenState extends State<HotelDetailScreen> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.of(context).pop([null]);
+                    HotelDetailScreenController().likeHotel(id).then((value) => {
+                    if (value.runtimeType == bool) {
+                      isLike = value,
+                      setState((){}),
+                    }
+                    });
                   },
                   child: Container(
                     padding: const EdgeInsets.all(kItemPadding),
@@ -126,9 +145,9 @@ class _HotelDetailScreenState extends State<HotelDetailScreen> {
                           BorderRadius.all(Radius.circular(kDefaultPadding)),
                       color: Colors.white,
                     ),
-                    child: const Icon(
+                    child: Icon(
                       FontAwesomeIcons.solidHeart,
-                      color: Color(0xffF5DCDC),
+                      color: isLike ? Colors.red : const Color(0xffF5DCDC),
                       size: kDefaultIconSize,
                     ),
                   ),

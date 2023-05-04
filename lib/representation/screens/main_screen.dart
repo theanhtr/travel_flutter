@@ -35,10 +35,12 @@ class _MainScreenState extends State<MainScreen> {
       backgroundColor: Colors.white,
       body: IndexedStack(
         index: _currentIndex,
-        children: const [
+        children: [
           HomeScreen(),
           FavoriteScreen(),
-          HotelBookingScreen(),
+          HotelBookingScreen(
+            useImplementLeading: false,
+          ),
           UserScreen(),
         ],
       ),

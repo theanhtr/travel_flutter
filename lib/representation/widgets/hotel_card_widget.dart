@@ -37,7 +37,10 @@ class HotelCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: kDefaultPadding / 2.5),
+      margin: const EdgeInsets.symmetric(
+        horizontal: kDefaultPadding / 2.5,
+        vertical: kDefaultPadding / 2.5,
+      ),
       alignment: Alignment.center,
       padding: const EdgeInsets.all(kDefaultPadding / 2.5),
       width: widthContainer,

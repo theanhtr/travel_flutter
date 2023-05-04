@@ -10,6 +10,7 @@ import 'package:travel_app_ytb/helpers/asset_helper.dart';
 import 'package:travel_app_ytb/helpers/image_helper.dart';
 import 'package:travel_app_ytb/representation/controllers/home_screen_controller.dart';
 import 'package:travel_app_ytb/representation/screens/booking_flights_screen.dart';
+import 'package:travel_app_ytb/representation/screens/see_all_destinations_screen.dart';
 import 'package:travel_app_ytb/representation/widgets/app_bar_container.dart';
 import 'package:travel_app_ytb/representation/widgets/custom_checkbox_icon.dart';
 import 'package:travel_app_ytb/representation/widgets/loading/loading.dart';
@@ -32,6 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
   String? photoUrl;
   List<_DestinationEntity> listItem = [];
   bool _isLoaded = false;
+  bool isFirst = true;
 
   @override
   void initState() {
@@ -42,11 +44,15 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     double ratio = 0.5;
-    setState(() {
-      userName = _controller?.getUser()?.name;
-      photoUrl = _controller?.getUser()?.photoUrl;
-    });
+    if (isFirst) {
+      isFirst = false;
+      setState(() {
+        userName = _controller?.getUser()?.name;
+        photoUrl = _controller?.getUser()?.photoUrl;
+      });
+    }
     if (_isLoaded == false) {
+      _isLoaded = true;
       _controller?.getPopularDestination().then((destinations) => {
             if (destinations != false)
               {
@@ -62,11 +68,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                 })
               },
-            setState(() {})
+            setState(() {}),
           });
-      _isLoaded = true;
     }
-    //debugPrint(listItem.toString());
+    debugPrint('${listItem.length}');
     return AppBarContainer(
       title: Container(
         margin: const EdgeInsets.only(top: kItemPadding),
@@ -215,8 +220,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 Expanded(
                   flex: 1,
                   child: TapableWidget(
-                    onTap: () {
-                      print("next screen");
+                    onTap: () async {
+                      await Navigator.pushNamed(
+                          context, SeeAllDestinationsScreen.routeName);
+                      listItem = [];
+                      _isLoaded = false;
+                      setState(() {});
                     },
                     child: Text(
                       "See All",
@@ -229,38 +238,40 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
-            listItem.isNotEmpty ? Container(
-                padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
-                child: StaggeredGrid.count(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 10,
-                  crossAxisSpacing: 8,
-                  children: [
-                    for (var i = 0; i < listItem.length; i++)
-                      StaggeredGridTile.count(
-                          crossAxisCellCount: 1,
-                          mainAxisCellCount: i.isEven ? 2 : 1,
-                          child: CardDestinations(
-                            imagePath: listItem[i].imagePath,
-                            provinceName: listItem[i].provinceName,
-                            isSelected:
-                                listItem[i].isSelected == 1 ? true : false,
-                            onTap: () {
-                              print("next screeen");
-                            },
-                            onChangeSelected: () {
-                              _controller
-                                  ?.likePopularDestination(listItem[i].id ?? 0)
-                                  .then((value) => {
-                                debugPrint(value.toString())
-                              });
-                            },
-                          ))
-                  ],
-                )) : SpinKitCircle(
-              color: Colors.black,
-              size: 64.0,
-            )
+            listItem.isNotEmpty
+                ? Container(
+                    padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
+                    child: StaggeredGrid.count(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 10,
+                      crossAxisSpacing: 8,
+                      children: [
+                        for (var i = 0; i < listItem.length; i++)
+                          StaggeredGridTile.count(
+                              crossAxisCellCount: 1,
+                              mainAxisCellCount: i.isEven ? 2 : 1,
+                              child: CardDestinations(
+                                imagePath: listItem[i].imagePath,
+                                provinceName: listItem[i].provinceName,
+                                isSelected:
+                                    listItem[i].isSelected == 1 ? true : false,
+                                onTap: () {
+                                  print("next screeen");
+                                },
+                                onChangeSelected: () {
+                                  _controller
+                                      ?.likePopularDestination(
+                                          listItem[i].id ?? 0)
+                                      .then((value) =>
+                                          {debugPrint(value.toString())});
+                                },
+                              ))
+                      ],
+                    ))
+                : SpinKitCircle(
+                    color: Colors.black,
+                    size: 64.0,
+                  )
           ],
         ),
       ),
