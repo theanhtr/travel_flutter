@@ -16,6 +16,7 @@ import 'package:travel_app_ytb/representation/screens/result_flight_screen.dart'
 import 'package:travel_app_ytb/representation/screens/hotel_booking/search_hotels_screen.dart';
 import 'package:travel_app_ytb/representation/screens/hotel_booking/select_date_screen.dart';
 import 'package:travel_app_ytb/representation/screens/hotel_booking/select_guest_room_screen.dart';
+import 'package:travel_app_ytb/representation/screens/see_all_destinations_screen.dart';
 import 'package:travel_app_ytb/representation/screens/select_room_screen.dart';
 import 'package:travel_app_ytb/representation/screens/sign_up_screen.dart';
 import 'package:travel_app_ytb/representation/screens/sort_by_filght_screen.dart';
@@ -52,9 +53,9 @@ final Map<String, WidgetBuilder> routes = {
   SearchYourDestinationScreen.routeName: (context) =>
       const SearchYourDestinationScreen(),
 
-  SortByHotel.routeName: (context) => const SortByHotel(),
-  SortByFlight.routeName: (context) => const SortByFlight(),
   // HotelFilterScreen.routeName: (context) => const HotelFilterScreen(),
   //ResetPasswordScreen.routeName: (context) => const ResetPasswordScreen(),
   AdminScreen.routeName: (context) => const AdminScreen(),
+  SeeAllDestinationsScreen.routeName: (context) =>
+      const SeeAllDestinationsScreen(),
 };

@@ -23,6 +23,7 @@ import '../../widgets/booking_hotel_tab_container.dart';
 import '../../widgets/button_widget.dart';
 import '../../widgets/loading/loading.dart';
 import '../../widgets/slider.dart';
+import '../hotel_detail/hotel_detail_screen.dart';
 
 class SearchHotelsScreen extends StatefulWidget {
   const SearchHotelsScreen({super.key});
@@ -80,6 +81,7 @@ class _SearchHotelsScreenState extends State<SearchHotelsScreen> {
           starInfo: element['rating_average'] + 0.0,
           countReviews: element['count_review'],
           priceInfo: "${element['min_price']} - ${element['max_price']}",
+          id: element['id'],
         );
         listHotel.add(hotel);
       });
@@ -105,7 +107,39 @@ class _SearchHotelsScreenState extends State<SearchHotelsScreen> {
           starInfo: element.starInfo ?? 0.0,
           countReviews: element.countReviews ?? 0,
           priceInfo: element.priceInfo ?? "",
-          ontap: () {},
+          ontap: () {
+            Loading.show(context);
+            _controller?.getHotelDetail(element.id ?? -1).then((value) => {
+                  Loading.dismiss(context),
+                  print('typeout ${value.runtimeType}'),
+                  if (value.runtimeType.toString() == '_Map<String, dynamic>')
+                    {
+                      print('type ${value.runtimeType}'),
+                      Navigator.pushNamed(context, HotelDetailScreen.routeName,
+                          arguments: {
+                            'id': element.id,
+                            'name': element.name ?? "",
+                            'priceInfo': element.priceInfo ?? "",
+                            'locationInfo': element.locationInfo ?? "",
+                            'distanceInfo': element.distanceInfo ?? "",
+                            'starInfo': element.starInfo ?? 0.0,
+                            'countReviews': element.countReviews ?? 0,
+                            'description':
+                                'You will find every comfort because many of the services that the hotel offers for travellers and of course the hotel is very comfortable.',
+                            'locationSpecial':
+                                'Located in the famous neighborhood of Seoul, Grand Luxury is set in a building built in the 2010s.',
+                            'services': <String>[
+                              'Restaurant',
+                              'Free Wifi',
+                              'Currency Exchange',
+                              'Private Pool',
+                              '24-hour Font Desk'
+                            ],
+                            'isLike': value['is_like'],
+                          }),
+                    },
+                });
+          },
         ));
       });
       _canLoadCardView = false;
@@ -116,6 +150,7 @@ class _SearchHotelsScreenState extends State<SearchHotelsScreen> {
       titleString: LocalizationText.hotels,
       implementLeading: true,
       implementTrailing: true,
+      useFilter: true,
       widget: ButtonInDialog(
         key: filterKey,
         args: args,

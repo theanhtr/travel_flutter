@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 import 'dart:ffi';
 
@@ -9,7 +8,6 @@ import 'package:travel_app_ytb/helpers/loginManager/login_manager.dart';
 import 'package:travel_app_ytb/representation/models/user_model.dart';
 
 class HomeScreenController {
-
   UserModel? getUser() {
     if (FirebaseAuth.instance.currentUser != null) {
       final currentUser = FirebaseAuth.instance.currentUser;
@@ -22,23 +20,28 @@ class HomeScreenController {
       return LoginManager().userModel;
     }
   }
-  
+
   Future<dynamic> getPopularDestination() async {
-    var response = await BaseClient(LoginManager().userModel.token ?? "").get("/popular-destination")
+    print('hehehehehe ${LoginManager().userModel.token}');
+    var response = await BaseClient(LoginManager().userModel.token ?? "")
+        .get("/popular-destination")
         .catchError((err) {
-          debugPrint(err);
-          return false;
+      return err;
     });
     if (response == null) {
       return false;
     }
-    Map dataResponse = json.decode(response);
-    return dataResponse['data'];
+    print('hehehehehe ${response.toString()}');
+    if (response.runtimeType == String) {
+      Map dataResponse = json.decode(response);
+      return dataResponse['data'];
+    }
+    return false;
   }
 
   Future<dynamic> likePopularDestination(int destinationId) async {
-    var response = await BaseClient(LoginManager().userModel.token ?? "").post("/likes/popular-destination/$destinationId", {})
-        .catchError((err) {
+    var response = await BaseClient(LoginManager().userModel.token ?? "").post(
+        "/likes/popular-destination/$destinationId", {}).catchError((err) {
       debugPrint(err);
       return false;
     });
