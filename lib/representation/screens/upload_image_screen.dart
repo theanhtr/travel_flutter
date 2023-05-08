@@ -8,8 +8,9 @@ import 'package:travel_app_ytb/representation/widgets/profile_widget.dart';
 class UploadIamge extends StatefulWidget {
   static const String routename = '/upload_image_screen';
   late LoginManager log = LoginManager();
-
-  UploadIamge({required this.onchange, required this.imagePath});
+  bool isEdit;
+  UploadIamge(
+      {required this.onchange, required this.imagePath, required this.isEdit});
   final Function onchange;
   String imagePath;
   @override
@@ -18,6 +19,7 @@ class UploadIamge extends StatefulWidget {
 
 class _UploadIamgeState extends State<UploadIamge> {
   XFile? image;
+  bool? test;
 
   final ImagePicker picker = ImagePicker();
 
@@ -29,8 +31,10 @@ class _UploadIamgeState extends State<UploadIamge> {
     setState(() {
       image = img;
       widget.imagePath = img.path;
+      test = true;
     });
     widget.onchange(image);
+    debugPrint('anhr dong 34: ${image}');
   }
 
   //show popup dialog
@@ -81,6 +85,7 @@ class _UploadIamgeState extends State<UploadIamge> {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('anhr: ${image} va ${test}');
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
@@ -88,8 +93,8 @@ class _UploadIamgeState extends State<UploadIamge> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ProfileWidget(
-                imagePath: image?.path ?? widget.imagePath,
-                isEdit: image?.path != null ? true : false,
+                imagePath: widget.imagePath,
+                isEdit: widget.isEdit,
                 onClicked: () {
                   myAlert();
                 },

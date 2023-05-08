@@ -5,11 +5,13 @@ import 'dart:io';
 // import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:travel_app_ytb/core/constants/color_palatte.dart';
 import 'package:travel_app_ytb/core/constants/dismention_constants.dart';
 import 'package:travel_app_ytb/core/utils/user_preferences.dart';
+import 'package:travel_app_ytb/helpers/http/base_client.dart';
 import 'package:travel_app_ytb/helpers/local_storage_helper.dart';
 import 'package:travel_app_ytb/helpers/loginManager/login_manager.dart';
 import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
@@ -18,6 +20,7 @@ import 'package:travel_app_ytb/representation/models/user_model.dart';
 import 'package:travel_app_ytb/representation/screens/profile_screen.dart';
 import 'package:travel_app_ytb/representation/screens/upload_image_screen.dart';
 import 'package:travel_app_ytb/representation/widgets/app_bar_container.dart';
+import 'package:travel_app_ytb/representation/widgets/booking_hotel_tab_container.dart';
 import 'package:travel_app_ytb/representation/widgets/button_widget.dart';
 import 'package:travel_app_ytb/representation/widgets/loading/loading.dart';
 import 'package:travel_app_ytb/representation/widgets/profile_widget.dart';
@@ -54,6 +57,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   bool check = false;
   String image = "";
   XFile? imageFileUpdate;
+  BaseClient a = BaseClient(LocalStorageHelper.getValue("userToken"));
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
         context: context,
@@ -100,7 +104,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 Container(
                   height: kMediumPadding * 7.5,
                   child: UploadIamge(
-                    imagePath: widget.log.userModelProfile.photoUrl.toString(),
+                    isEdit: imageFileUpdate != null ? true : false,
+                    imagePath: imageFileUpdate?.path ??
+                        widget.log.userModelProfile.photoUrl.toString(),
                     onchange: (XFile file) => {
                       setState(
                         () {
@@ -151,23 +157,44 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   },
                 ),
                 const SizedBox(height: 24),
-                StatefulBuilder(
-                  builder: (context, setState) => ElevatedButton(
-                    onPressed: () => _selectDate(context),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Text("${date_of_birth.toLocal()}".split(' ')[0]),
-                        const SizedBox(
-                          height: 20.0,
-                        ),
-                        ElevatedButton(
-                          onPressed: () => _selectDate(context),
-                          child: Text(LocalizationText.selectDate),
-                        ),
-                      ],
-                    ),
-                  ),
+                // StatefulBuilder(
+                //   builder: (context, setState) =>
+
+                // ElevatedButton(
+                //   onPressed: () => _selectDate(context),
+                //   child: Column(
+                //     mainAxisSize: MainAxisSize.min,
+                //     children: <Widget>[
+                //       Text("${date_of_birth.toLocal()}".split(' ')[0]),
+                //       const SizedBox(
+                //         height: 20.0,
+                //       ),
+                //       ElevatedButton(
+                //         onPressed: () => _selectDate(context),
+                //         child: Text(LocalizationText.selectDate),
+                //       ),
+                //     ],
+                //   ),
+                // ),
+                // ),
+
+                Container(
+                  margin: const EdgeInsets.symmetric(vertical: kDefaultPadding),
+                  child: StatefulBuilder(builder: (context, setState) {
+                    return BookingHotelTab(
+                      icon: FontAwesomeIcons.calendarDay,
+                      title: LocalizationText.selectDate,
+                      description: "${date_of_birth.toLocal()}".split(' ')[0],
+                      sizeItem: kDefaultIconSize,
+                      sizeText: kDefaultIconSize / 1.2,
+                      primaryColor: const Color(0xffF77777),
+                      secondaryColor: const Color(0xffF77777).withOpacity(0.2),
+                      implementSetting: true,
+                      ontap: () => _selectDate(context),
+                      //         child: Text(LocalizationText.selectDate),
+                      iconString: '',
+                    );
+                  }),
                 ),
                 const SizedBox(height: 24),
                 Container(
@@ -220,7 +247,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
                           //[5] SEND TO SERVER
                           var response = await dioRequest.post(
-                            "https://0981-2405-4802-1d49-5c70-68b4-75ba-27c9-59b5.ngrok-free.app/api/my-information/change",
+                            "${a.baseUrlForImport}/my-information/change",
                             data: formData,
                           );
                           Loading.dismiss(context);

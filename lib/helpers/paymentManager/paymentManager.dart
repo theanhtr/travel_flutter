@@ -12,7 +12,7 @@ import 'package:path/path.dart';
 import '../http/base_client.dart';
 
 const String baseUrl =
-    "https://0981-2405-4802-1d49-5c70-68b4-75ba-27c9-59b5.ngrok-free.app/api";
+    "https://0f09-2405-4802-1d02-d2e0-3155-56ed-d9f4-fda9.ngrok-free.app/api";
 
 class paymentManager {
   static final paymentManager _shared = paymentManager._internal();

@@ -8,6 +8,7 @@ import 'package:travel_app_ytb/core/constants/color_palatte.dart';
 import 'package:travel_app_ytb/core/constants/dismention_constants.dart';
 import 'package:travel_app_ytb/core/constants/textstyle_constants.dart';
 import 'package:travel_app_ytb/helpers/asset_helper.dart';
+import 'package:travel_app_ytb/helpers/http/base_client.dart';
 import 'package:travel_app_ytb/helpers/image_helper.dart';
 import 'package:travel_app_ytb/helpers/local_storage_helper.dart';
 import 'package:travel_app_ytb/helpers/loginManager/login_manager.dart';
@@ -49,6 +50,7 @@ class _FillInforScreenState extends State<FillInforScreen> {
   DateTime date_of_birth = DateTime.now();
   XFile? image;
   UserController? _controller;
+  BaseClient a = BaseClient(LocalStorageHelper.getValue("userToken"));
   late LoginManager log;
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -181,8 +183,9 @@ class _FillInforScreenState extends State<FillInforScreen> {
             Container(
               height: kMediumPadding * 7,
               child: UploadIamge(
-                imagePath:
-                    'https://0981-2405-4802-1d49-5c70-68b4-75ba-27c9-59b5.ngrok-free.app/uploads/Zqi6ut8OWnmPChLctU0HGtNj77GCWmjX_1681916482_d6041957-cd72-41d1-b4e8-0af084c544396367113315388879086.jpg',
+                isEdit: image != null ? true : false,
+                imagePath: image?.path ??
+                    'https://www.searchenginejournal.com/wp-content/uploads/2022/06/image-search-1600-x-840-px-62c6dc4ff1eee-sej.png',
                 onchange: (XFile file) => {
                   setState(
                     () {
@@ -235,7 +238,7 @@ class _FillInforScreenState extends State<FillInforScreen> {
                     }
                     //[5] SEND TO SERVER
                     var response = await dioRequest.post(
-                      "https://0981-2405-4802-1d49-5c70-68b4-75ba-27c9-59b5.ngrok-free.app/api/my-information",
+                      "${a.baseUrlForImport}/my-information",
                       data: formData,
                     );
                     // Loading.dismiss(context);

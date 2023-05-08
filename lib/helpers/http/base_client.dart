@@ -5,9 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 const String baseUrl =
-    "https://0981-2405-4802-1d49-5c70-68b4-75ba-27c9-59b5.ngrok-free.app/api";
+    "https://0f09-2405-4802-1d02-d2e0-3155-56ed-d9f4-fda9.ngrok-free.app/api";
 
 class BaseClient {
+  String baseUrlForImport =
+      "https://0f09-2405-4802-1d02-d2e0-3155-56ed-d9f4-fda9.ngrok-free.app/api";
   var client = http.Client();
   String tokenAuth = "";
   var _header = {
