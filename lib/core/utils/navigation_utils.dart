@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_base/screens/screen_names.dart';
+import 'package:travel_app_ytb/routes.dart';
 
 class NavigationUtils {
   static void navigate(
       BuildContext context,
-      ScreenName screenName, {
+      String screenName, {
         Object? arguments,
       }) {
     Navigator.of(context).pushNamed(
-      screenName.name,
+      screenName,
       arguments: arguments,
     );
   }
@@ -22,7 +22,7 @@ class NavigationUtils {
 
   static void navigateWithAnimation(
       BuildContext context,
-      ScreenName screenName, {
+      String screenName, {
         Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         animation,
         int? duration,
@@ -39,12 +39,12 @@ class NavigationUtils {
 
   static Route? buildPageRoute(
       BuildContext context,
-      ScreenName screenName, {
+      String screenName, {
         Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transitionsBuilder,
         int? duration,
       }) {
-    final screenRoute = screenRoutes[screenName.name];
+    final screenRoute = routes[screenName];
     if (screenRoute == null) return null;
     final screen = screenRoute(context);
 
@@ -64,7 +64,7 @@ class NavigationUtils {
       reverseTransitionDuration:
       Duration(milliseconds: duration ?? defaultDuration),
       transitionsBuilder: transitionsBuilder ?? defaultTransitionsBuilder,
-      settings: RouteSettings(name: screenName.name),
+      settings: RouteSettings(name: screenName),
     );
   }
 }
