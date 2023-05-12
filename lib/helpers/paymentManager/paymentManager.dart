@@ -11,8 +11,7 @@ import 'package:travel_app_ytb/representation/models/user_model.dart';
 import 'package:path/path.dart';
 import '../http/base_client.dart';
 
-const String baseUrl =
-    "https://0f09-2405-4802-1d02-d2e0-3155-56ed-d9f4-fda9.ngrok-free.app/api";
+const String baseUrl = "https://e13b-42-113-195-129.ngrok-free.app/api";
 
 class paymentManager {
   static final paymentManager _shared = paymentManager._internal();
