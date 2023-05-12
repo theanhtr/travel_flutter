@@ -10,7 +10,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:travel_app_ytb/core/constants/color_palatte.dart';
 import 'package:travel_app_ytb/core/constants/dismention_constants.dart';
-import 'package:travel_app_ytb/core/utils/navigation_utils.dart';
 import 'package:travel_app_ytb/core/utils/user_preferences.dart';
 import 'package:travel_app_ytb/helpers/http/base_client.dart';
 import 'package:travel_app_ytb/helpers/local_storage_helper.dart';
@@ -18,7 +17,6 @@ import 'package:travel_app_ytb/helpers/loginManager/login_manager.dart';
 import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
 import 'package:travel_app_ytb/representation/controllers/user_controller.dart';
 import 'package:travel_app_ytb/representation/models/user_model.dart';
-import 'package:travel_app_ytb/representation/screens/main_screen.dart';
 import 'package:travel_app_ytb/representation/screens/profile_screen.dart';
 import 'package:travel_app_ytb/representation/screens/upload_image_screen.dart';
 import 'package:travel_app_ytb/representation/widgets/app_bar_container.dart';
@@ -27,7 +25,6 @@ import 'package:travel_app_ytb/representation/widgets/button_widget.dart';
 import 'package:travel_app_ytb/representation/widgets/loading/loading.dart';
 import 'package:travel_app_ytb/representation/widgets/profile_widget.dart';
 import 'package:travel_app_ytb/representation/widgets/textfield_widget.dart';
-
 // import 'package:user_profile_ii_example/model/user.dart';
 // import 'package:user_profile_ii_example/utils/user_preferences.dart';
 // import 'package:user_profile_ii_example/widget/appbar_widget.dart';
@@ -43,10 +40,8 @@ import 'package:path/path.dart';
 
 class EditProfilePage extends StatefulWidget {
   EditProfilePage({super.key});
-
   static const routeName = 'edit_profile_screen';
   late LoginManager log = LoginManager();
-
   @override
   _EditProfilePageState createState() => _EditProfilePageState();
 }
@@ -63,7 +58,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
   String image = "";
   XFile? imageFileUpdate;
   BaseClient a = BaseClient(LocalStorageHelper.getValue("userToken"));
-
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
         context: context,
@@ -123,44 +117,52 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   ),
                 ),
                 const SizedBox(height: 24),
-                TextFieldWidget(
-                  label: LocalizationText.firstname,
-                  text: firstName,
-                  onChanged: (name) {
-                    setState(() {
-                      firstName = name;
-                    });
-                  },
+                StatefulBuilder(
+                  builder: (context, setState) => TextFieldWidget(
+                    label: LocalizationText.firstname,
+                    text: firstName,
+                    onChanged: (name) {
+                      setState(() {
+                        firstName = name;
+                      });
+                    },
+                  ),
                 ),
                 const SizedBox(height: 24),
-                TextFieldWidget(
-                  label: LocalizationText.lastname,
-                  text: lastName,
-                  onChanged: (name) {
-                    setState(() {
-                      lastName = name;
-                    });
-                  },
+                StatefulBuilder(
+                  builder: (context, setState) => TextFieldWidget(
+                    label: LocalizationText.lastname,
+                    text: lastName,
+                    onChanged: (name) {
+                      setState(() {
+                        lastName = name;
+                      });
+                    },
+                  ),
                 ),
                 const SizedBox(height: 24),
-                TextFieldWidget(
-                  label: LocalizationText.email,
-                  text: email,
-                  onChanged: (email) {
-                    setState(() {
-                      this.email = email;
-                    });
-                  },
+                StatefulBuilder(
+                  builder: (context, setState) => TextFieldWidget(
+                    label: LocalizationText.email,
+                    text: email,
+                    onChanged: (email) {
+                      setState(() {
+                        this.email = email;
+                      });
+                    },
+                  ),
                 ),
                 const SizedBox(height: 24),
-                TextFieldWidget(
-                  label: LocalizationText.phoneNumber,
-                  text: phone_number,
-                  onChanged: (phone_numbe) {
-                    setState(() {
-                      phone_number = phone_numbe;
-                    });
-                  },
+                StatefulBuilder(
+                  builder: (context, setState) => TextFieldWidget(
+                    label: LocalizationText.phoneNumber,
+                    text: phone_number,
+                    onChanged: (phone_numbe) {
+                      setState(() {
+                        phone_number = phone_numbe;
+                      });
+                    },
+                  ),
                 ),
                 const SizedBox(height: 24),
                 // StatefulBuilder(
@@ -189,7 +191,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   child: StatefulBuilder(builder: (context, setState) {
                     return BookingHotelTab(
                       icon: FontAwesomeIcons.calendarDay,
-                      title: LocalizationText.dateofbirth,
+                      title: LocalizationText.selectDate,
                       description: "${date_of_birth.toLocal()}".split(' ')[0],
                       sizeItem: kDefaultIconSize,
                       sizeText: kDefaultIconSize / 1.2,
@@ -217,6 +219,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         userModel.lastName = lastName;
                         userModel.phoneNumber = phone_number;
                         userModel.dateOfBirth = date_of_birth.toString();
+                        debugPrint('phone_number: ${phone_number}');
                         try {
                           ///[1] CREATING INSTANCE
                           var dioRequest = dio.Dio();
@@ -258,7 +261,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           );
                           Loading.dismiss(context);
                           if (response != null) {
-                            if (response.data['success'] == true) {
+                            if (response?.data['success'] == true) {
                               showDialog(
                                 context: context,
                                 builder: (BuildContext context) => AlertDialog(
@@ -277,20 +280,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   actions: <Widget>[
                                     TextButton(
                                       onPressed: () => {
-                                        Navigator.pushAndRemoveUntil(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const MainScreen(currentIndex: 3,)),
-                                          (Route<dynamic> route) => false,
-                                        ),
+                                        Navigator.popAndPushNamed(
+                                            context, ProfilePage.routeName)
                                       },
                                       child: Text(LocalizationText.ok),
                                     ),
                                   ],
                                 ),
                               );
-                            } else if (response.data['success'] == false) {
+                            } else if (response?.data['success'] == false) {
                               showDialog(
                                 context: context,
                                 builder: (BuildContext context) => AlertDialog(
