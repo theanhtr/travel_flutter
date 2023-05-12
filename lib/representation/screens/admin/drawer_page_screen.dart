@@ -46,6 +46,7 @@ class _DrawerPageState extends State<DrawerPage> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      backgroundColor: ColorPalette.primaryColor,
       elevation: 0,
       child: SingleChildScrollView(
         child: Padding(
@@ -55,9 +56,7 @@ class _DrawerPageState extends State<DrawerPage> {
               ListTile(
                   title: Text(
                     "Admin Menu",
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
+                    style: TextStyle(color: Colors.white, fontSize: 25),
                   ),
                   trailing: IconButton(
                     onPressed: () {
@@ -65,6 +64,7 @@ class _DrawerPageState extends State<DrawerPage> {
                     },
                     icon: Icon(Icons.close, color: Colors.white),
                   )),
+              const SizedBox(height: 24),
               ...List.generate(
                 _buttonNames.length,
                 (index) => Column(
