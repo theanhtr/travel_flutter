@@ -152,7 +152,6 @@ class _HotelBookingScreenState extends State<HotelBookingScreen> {
                     btnOkOnPress: () {},
                   ).show();
                 } else {
-                  print(_selectedDistrictValue?['id']);
                   _controller
                       ?.getSearchHotels(
                           _selectedProvinceValue?['id'].toString() ?? "0",

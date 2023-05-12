@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 
 class DateHelper {
@@ -23,13 +24,12 @@ class DateHelper {
   String convertDateString(
       {required String dateString,
       String inputFormat = 'dd MMM yyyy',
-      String outputFormat = 'dd/MM/yyyy'}) {
+      String outputFormat = 'MM/dd/yyyy'}) {
     DateFormat inputDateFormat = DateFormat(inputFormat);
     DateFormat outputDateFormat = DateFormat(outputFormat);
 
     DateTime date = inputDateFormat.parse(dateString);
     String formattedDateString = outputDateFormat.format(date);
-
     return formattedDateString;
   }
 

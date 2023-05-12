@@ -55,13 +55,14 @@ class LoginManager {
   var _isRemember = true;
 
   Future<dynamic> signInWithEmailPassword(String email, String password) async {
-    email = email.trim();
-    password = password.trim();
+    email = email.replaceAll(' ', '');
+    password = password.replaceAll(' ', '');
     var response = await BaseClient("")
         .post('/auth/login', {'email': email, 'password': password}).catchError(
             (err) {
       return err;
     });
+    debugPrint("65 $response");
     if (response == null) return false;
     if (response.runtimeType == int) {
       return response;
@@ -69,7 +70,6 @@ class LoginManager {
     if (response.runtimeType == String) {
       Map dataResponse = await json.decode(response);
       var token = await dataResponse['data']['token'];
-      debugPrint(token);
       if (_isRemember == true) {
         final userToken =
             await LocalStorageHelper.getValue('userToken') as String?;

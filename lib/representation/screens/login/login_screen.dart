@@ -178,24 +178,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 }
                 Loading.show(context);
                 _controller?.loginByPassWord(email, password).then((value) => {
-                      if (value['success'] == true)
-                        {
-                          LocalStorageHelper.setValue(
-                              "roleId", value['data']['role_id']),
-                          Loading.dismiss(context),
-                          if (value['data']['role_id'] == 1)
-                            Navigator.popAndPushNamed(
-                                context, MainScreen.routeName)
-                          else if (value['data']['role_id'] == 3)
-                            Navigator.popAndPushNamed(
-                                context, AdminScreen.routeName)
-                          else
-                            {
-                              Navigator.popAndPushNamed(
-                                  context, MainScreen.routeName)
-                            }
-                        }
-                      else
+                      if (value.runtimeType == int)
                         {
                           Loading.dismiss(context),
                           showDialog(
@@ -217,8 +200,24 @@ class _LoginScreenState extends State<LoginScreen> {
                               ],
                             ),
                           )
-                        },
-                      Loading.dismiss(context)
+                        }
+                      else if (value['success'] == true)
+                        {
+                          LocalStorageHelper.setValue(
+                              "roleId", value['data']['role_id']),
+                          Loading.dismiss(context),
+                          if (value['data']['role_id'] == 1)
+                            Navigator.popAndPushNamed(
+                                context, MainScreen.routeName)
+                          else if (value['data']['role_id'] == 3)
+                            Navigator.popAndPushNamed(
+                                context, AdminScreen.routeName)
+                          else
+                            {
+                              Navigator.popAndPushNamed(
+                                  context, MainScreen.routeName)
+                            }
+                        }
                     });
               },
             ),

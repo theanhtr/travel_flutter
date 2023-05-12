@@ -12,18 +12,21 @@ import 'package:travel_app_ytb/helpers/image_helper.dart';
 import '../../core/constants/textstyle_constants.dart';
 
 class AppBarContainer extends StatelessWidget {
-  AppBarContainer(
-      {super.key,
-      required this.child,
-      this.title,
-      this.titleString,
-      this.implementLeading = false,
-      this.implementTrailing = false,
-      this.widget,
-      this.drawer,
-      this.backGroundColor,
-      this.onPressTrailing,
-      this.useFilter = false});
+  AppBarContainer({
+    super.key,
+    required this.child,
+    this.title,
+    this.titleString,
+    this.implementLeading = false,
+    this.implementTrailing = false,
+    this.widget,
+    this.drawer,
+    this.backGroundColor,
+    this.onPressTrailing,
+    this.useFilter = false,
+    this.resizeToAvoidBottomInset = true,
+  });
+
   final Widget? title;
   final String? titleString;
   final Widget child;
@@ -34,12 +37,15 @@ class AppBarContainer extends StatelessWidget {
   final Widget? drawer;
   final Color? backGroundColor;
   final Function()? onPressTrailing;
+  final bool? resizeToAvoidBottomInset;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
       drawer: drawer,
+      resizeToAvoidBottomInset: resizeToAvoidBottomInset,
       backgroundColor: backGroundColor,
       body: Stack(
         children: [

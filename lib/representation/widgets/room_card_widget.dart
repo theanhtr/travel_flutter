@@ -6,6 +6,7 @@ import 'package:travel_app_ytb/core/constants/dismention_constants.dart';
 import 'package:travel_app_ytb/core/constants/textstyle_constants.dart';
 import 'package:travel_app_ytb/helpers/image_helper.dart';
 import 'package:travel_app_ytb/helpers/service_load_helper.dart';
+import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
 import 'package:travel_app_ytb/representation/widgets/button_widget.dart';
 
 class RoomCardWidget extends StatelessWidget {
@@ -19,6 +20,7 @@ class RoomCardWidget extends StatelessWidget {
     required this.services,
     required this.ontap,
     this.roomCount = 0,
+    this.numberOfBed = 0,
   });
 
   final double widthContainer;
@@ -28,6 +30,7 @@ class RoomCardWidget extends StatelessWidget {
   final int priceInfo;
   final List<String> services;
   final int roomCount;
+  final int numberOfBed;
 
   final Function() ontap;
 
@@ -61,6 +64,12 @@ class RoomCardWidget extends StatelessWidget {
                   'Room Size: $roomSize m2',
                   style: TextStyles.defaultStyle.light.blackTextColor
                       .setTextSize(kDefaultTextSize / 1.2),
+                ),
+                Text(
+                  roomCount <= 1 ? '$roomCount ${LocalizationText.roomAvailable}' : '$roomCount ${LocalizationText.roomsAvailable}',
+                  style: TextStyles.defaultStyle.light.blackTextColor
+                      .setTextSize(kDefaultTextSize),
+                  textAlign: TextAlign.center,
                 ),
               ],
             ),
@@ -112,17 +121,17 @@ class RoomCardWidget extends StatelessWidget {
             ),
             Expanded(
               flex: 6,
-              child: roomCount == 0
+              child: numberOfBed == 0
                   ? ButtonWidget(
                       title: 'Choose',
                       ontap: ontap,
                     )
                   : Text(
-                      '$roomCount room',
-                      style: TextStyles.defaultStyle.light.blackTextColor
-                          .setTextSize(kDefaultTextSize),
-                      textAlign: TextAlign.center,
-                    ),
+                     numberOfBed<= 1 ? '$numberOfBed ${LocalizationText.bedRoom}' : '$numberOfBed ${LocalizationText.bedsRoom}',
+                    style: TextStyles.defaultStyle.light.blackTextColor
+                        .setTextSize(kDefaultTextSize),
+                    textAlign: TextAlign.center,
+                  ),
             )
           ],
         )
