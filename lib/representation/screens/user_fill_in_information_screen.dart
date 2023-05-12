@@ -20,6 +20,7 @@ import 'package:travel_app_ytb/representation/screens/login/login_screen.dart';
 import 'package:travel_app_ytb/representation/screens/profile_screen.dart';
 import 'package:travel_app_ytb/representation/screens/upload_image_screen.dart';
 import 'package:travel_app_ytb/representation/widgets/app_bar_container.dart';
+import 'package:travel_app_ytb/representation/widgets/booking_hotel_tab_container.dart';
 import 'package:travel_app_ytb/representation/widgets/button_icon_widget.dart';
 import 'package:travel_app_ytb/representation/widgets/button_widget.dart';
 import 'package:travel_app_ytb/representation/widgets/input_card.dart';
@@ -90,6 +91,24 @@ class _FillInforScreenState extends State<FillInforScreen> {
             const SizedBox(
               height: kDefaultPadding * 5,
             ),
+            Container(
+              height: kMediumPadding * 7,
+              child: UploadIamge(
+                isEdit: image != null ? true : false,
+                imagePath: image?.path ??
+                    'https://www.searchenginejournal.com/wp-content/uploads/2022/06/image-search-1600-x-840-px-62c6dc4ff1eee-sej.png',
+                onchange: (XFile file) => {
+                  setState(
+                    () {
+                      image = file;
+                    },
+                  )
+                },
+              ),
+            ),
+            const SizedBox(
+              height: kDefaultPadding * 3,
+            ),
             StatefulBuilder(
               builder: (context, setState) => InputCard(
                 style: TypeInputCard.firstName,
@@ -126,42 +145,23 @@ class _FillInforScreenState extends State<FillInforScreen> {
             const SizedBox(
               height: kDefaultPadding * 2,
             ),
-            Row(
-              children: [
-                StatefulBuilder(
-                  builder: (context, setState) => Container(
-                    child: ElevatedButton(
-                      onPressed: () => _selectDate(context),
-                      child: Text(LocalizationText.dateofbirth),
-                    ),
-                  ),
-                ),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: kDefaultPadding * 1.4,
-                      vertical: kDefaultPadding / 1.5),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(kDefaultPadding),
-                    color: ColorPalette.cardBackgroundColor,
-                  ),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: kDefaultPadding / 1.5),
-                    child: Text(
-                      "$date_of_birth",
-                      style: const TextStyle(
-                        fontSize: 18,
-                        color: ColorPalette.primaryColor, //font color
-                        backgroundColor: Color.fromARGB(
-                            252, 252, 247, 247), //background color
-                        //text decoration 'underline' color
-                        decorationThickness:
-                            1.5, //decoration 'underline' thickness
-                      ),
-                    ),
-                  ),
-                )
-              ],
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: kDefaultPadding),
+              child: StatefulBuilder(builder: (context, setState) {
+                return BookingHotelTab(
+                  icon: FontAwesomeIcons.calendarDay,
+                  title: LocalizationText.dateofbirth,
+                  description: "${date_of_birth.toLocal()}".split(' ')[0],
+                  sizeItem: kDefaultIconSize,
+                  sizeText: kDefaultIconSize / 1.2,
+                  primaryColor: const Color(0xffF77777),
+                  secondaryColor: const Color(0xffF77777).withOpacity(0.2),
+                  implementSetting: true,
+                  ontap: () => _selectDate(context),
+                  //         child: Text(LocalizationText.selectDate),
+                  iconString: '',
+                );
+              }),
             ),
 
             // const SizedBox(
@@ -180,23 +180,9 @@ class _FillInforScreenState extends State<FillInforScreen> {
                 },
               ),
             ),
-            Container(
-              height: kMediumPadding * 7,
-              child: UploadIamge(
-                isEdit: image != null ? true : false,
-                imagePath: image?.path ??
-                    'https://www.searchenginejournal.com/wp-content/uploads/2022/06/image-search-1600-x-840-px-62c6dc4ff1eee-sej.png',
-                onchange: (XFile file) => {
-                  setState(
-                    () {
-                      image = file;
-                    },
-                  )
-                },
-              ),
-            ),
+
             const SizedBox(
-              height: kDefaultPadding * 2,
+              height: kDefaultPadding * 3,
             ),
             ButtonWidget(
                 title: LocalizationText.createInformationUser,
