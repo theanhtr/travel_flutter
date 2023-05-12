@@ -8,12 +8,14 @@ import 'login/login_screen.dart';
 
 class UserScreen extends StatefulWidget {
   const UserScreen({super.key});
+
   @override
   State<UserScreen> createState() => _UserScreenState();
 }
 
 class _UserScreenState extends State<UserScreen> {
   bool _isLogOut = false;
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -28,11 +30,16 @@ class _UserScreenState extends State<UserScreen> {
                 }
             });
         FirebaseAuth.instance.signOut().then((value) => {
-              if (_isLogOut == false)
-                {
-                  Navigator.popAndPushNamed(context, LoginScreen.routeName),
-                  _isLogOut = true,
+              FirebaseAuth.instance.authStateChanges().listen((User? user) {
+                if (user == null) {
+
+                } else {
+                  if (_isLogOut == false) {
+                    Navigator.popAndPushNamed(context, LoginScreen.routeName);
+                    _isLogOut = true;
+                  }
                 }
+              }),
             });
       },
     ));

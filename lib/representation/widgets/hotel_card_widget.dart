@@ -36,123 +36,127 @@ class HotelCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(
-        horizontal: kDefaultPadding / 2.5,
-        vertical: kDefaultPadding / 2.5,
-      ),
-      alignment: Alignment.center,
-      padding: const EdgeInsets.all(kDefaultPadding / 2.5),
-      width: widthContainer,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(kDefaultPadding),
-        color: const Color.fromARGB(255, 231, 234, 244),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ImageHelper.loadFromNetwork(
-            imageFilePath,
-            width: widthContainer,
-            fit: BoxFit.fitWidth,
-            radius: BorderRadius.circular(kDefaultPadding),
+    return Column(
+      children: [
+        Container(
+          margin: const EdgeInsets.symmetric(horizontal: kDefaultPadding / 2.5),
+          alignment: Alignment.center,
+          padding: const EdgeInsets.all(kDefaultPadding / 2.5),
+          width: widthContainer,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(kDefaultPadding),
+            color: const Color.fromARGB(255, 231, 234, 244),
           ),
-          Container(
-              margin: const EdgeInsets.all(kDefaultPadding),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    name,
-                    style: TextStyles.defaultStyle.bold.blackTextColor
-                        .setTextSize(kDefaultTextSize * 1.4),
-                  ),
-                  const SizedBox(
-                    height: kItemPadding,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        margin:
-                            const EdgeInsets.only(right: kDefaultPadding / 6),
-                        child: const Icon(
-                          FontAwesomeIcons.locationDot,
-                          color: Color(0xFFF77777),
-                          size: kDefaultIconSize / 1.2,
-                        ),
-                      ),
-                      Text(
-                        locationInfo,
-                        style: TextStyles.defaultStyle.blackTextColor.medium
-                            .setTextSize(kDefaultTextSize / 1.4),
-                      ),
-                      Text(
-                        ' -- $distanceInfo from destination',
-                        style: TextStyles.defaultStyle.blackTextColor.light
-                            .setTextSize(kDefaultTextSize / 2.0),
-                      )
-                    ],
-                  ),
-                  const SizedBox(
-                    height: kItemPadding,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        margin:
-                            const EdgeInsets.only(right: kDefaultPadding / 5),
-                        child: const Icon(
-                          FontAwesomeIcons.solidStar,
-                          color: Color(0xFFFFC107),
-                          size: kDefaultIconSize / 1.2,
-                        ),
-                      ),
-                      Text(
-                        starInfo.toString(),
-                        style: TextStyles.defaultStyle.blackTextColor.medium
-                            .setTextSize(kDefaultTextSize / 1.2),
-                      ),
-                      Text(
-                        ' ($countReviews reviews)',
-                        style: TextStyles.defaultStyle.blackTextColor.light
-                            .setTextSize(kDefaultTextSize / 1.2),
-                      )
-                    ],
-                  ),
-                  const SizedBox(
-                    height: kItemPadding,
-                  ),
-                  const Divider(
-                    color: Color.fromARGB(255, 123, 22, 22),
-                  ),
-                  const SizedBox(
-                    height: kItemPadding,
-                  ),
-                  Row(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ImageHelper.loadFromNetwork(
+                imageFilePath,
+                width: widthContainer,
+                fit: BoxFit.fitWidth,
+                radius: BorderRadius.circular(kDefaultPadding),
+              ),
+              Container(
+                  margin: const EdgeInsets.all(kDefaultPadding),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '\$ $priceInfo',
+                        name,
                         style: TextStyles.defaultStyle.bold.blackTextColor
-                            .setTextSize(kDefaultTextSize * 1.6),
+                            .setTextSize(kDefaultTextSize * 1.4),
                       ),
-                      Text(
-                        '/night',
-                        style: TextStyles
-                            .defaultStyle.medium.medium.blackTextColor
-                            .setTextSize(kDefaultTextSize / 1.5),
+                      const SizedBox(
+                        height: kItemPadding,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.only(
+                                right: kDefaultPadding / 6),
+                            child: const Icon(
+                              FontAwesomeIcons.locationDot,
+                              color: Color(0xFFF77777),
+                              size: kDefaultIconSize / 1.2,
+                            ),
+                          ),
+                          Text(
+                            locationInfo,
+                            style: TextStyles.defaultStyle.blackTextColor.medium
+                                .setTextSize(kDefaultTextSize / 1.4),
+                          ),
+                          Text(
+                            ' -- $distanceInfo from destination',
+                            style: TextStyles.defaultStyle.blackTextColor.light
+                                .setTextSize(kDefaultTextSize / 2.0),
+                          )
+                        ],
+                      ),
+                      const SizedBox(
+                        height: kItemPadding,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.only(
+                                right: kDefaultPadding / 5),
+                            child: const Icon(
+                              FontAwesomeIcons.solidStar,
+                              color: Color(0xFFFFC107),
+                              size: kDefaultIconSize / 1.2,
+                            ),
+                          ),
+                          Text(
+                            starInfo.toString(),
+                            style: TextStyles.defaultStyle.blackTextColor.medium
+                                .setTextSize(kDefaultTextSize / 1.2),
+                          ),
+                          Text(
+                            ' ($countReviews reviews)',
+                            style: TextStyles.defaultStyle.blackTextColor.light
+                                .setTextSize(kDefaultTextSize / 1.2),
+                          )
+                        ],
+                      ),
+                      const SizedBox(
+                        height: kItemPadding,
+                      ),
+                      const Divider(
+                        color: Color.fromARGB(255, 123, 22, 22),
+                      ),
+                      const SizedBox(
+                        height: kItemPadding,
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            '\$ $priceInfo',
+                            style: TextStyles.defaultStyle.bold.blackTextColor
+                                .setTextSize(kDefaultTextSize * 1.6),
+                          ),
+                          Text(
+                            '/night',
+                            style: TextStyles
+                                .defaultStyle.medium.medium.blackTextColor
+                                .setTextSize(kDefaultTextSize / 1.5),
+                          ),
+                        ],
+                      ),
+                      ButtonWidget(
+                        title: 'Book a room',
+                        ontap: ontap,
                       ),
                     ],
-                  ),
-                  ButtonWidget(
-                    title: 'Book a room',
-                    ontap: ontap,
-                  ),
-                ],
-              ))
-        ],
-      ),
+                  )),
+            ],
+          ),
+        ),
+        const SizedBox(
+          height: 25,
+        ),
+      ],
     );
   }
 }

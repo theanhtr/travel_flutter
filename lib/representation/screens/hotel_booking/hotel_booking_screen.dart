@@ -1,6 +1,8 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:flutter/foundation.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travel_app_ytb/core/constants/dismention_constants.dart';
+import 'package:travel_app_ytb/helpers/location/location_helper.dart';
 import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
 import 'package:travel_app_ytb/representation/controllers/hotel_booking_screen_controller.dart';
 import 'package:travel_app_ytb/representation/screens/hotel_booking/search_your_destination_screen.dart';
@@ -25,18 +27,19 @@ class HotelBookingScreen extends StatefulWidget {
 }
 
 class _HotelBookingScreenState extends State<HotelBookingScreen> {
-  String? dateSelected;
-  int? guestCount = 1;
-  int? roomCount = 1;
-  Map<String, dynamic>? selectedProvinceValue;
-  Map<String, dynamic>? selectedDistrictValue;
-  Map<String, dynamic>? selectedSubDistrictValue;
+  String? _dateSelected;
+  int? _guestCount = 1;
+  int? _roomCount = 1;
+  Map<String, dynamic>? _selectedProvinceValue;
+  Map<String, dynamic>? _selectedDistrictValue;
+  Map<String, dynamic>? _selectedSubDistrictValue;
   HotelBookingScreenController? _controller;
 
   @override
   void initState() {
     super.initState();
     _controller = HotelBookingScreenController();
+    LocationHelper().requestPermission();
   }
 
   @override
@@ -56,8 +59,8 @@ class _HotelBookingScreenState extends State<HotelBookingScreen> {
           BookingHotelTab(
             icon: FontAwesomeIcons.locationDot,
             title: LocalizationText.destination,
-            description: selectedDistrictValue?.isEmpty == false
-                ? "${selectedProvinceValue?['name'] ?? ""}, ${selectedDistrictValue?['name'] ?? ""}, ${selectedSubDistrictValue?['name'] ?? ""}"
+            description: _selectedDistrictValue?.isEmpty == false
+                ? "${_selectedProvinceValue?['name'] ?? ""}, ${_selectedDistrictValue?['name'] ?? ""}, ${_selectedSubDistrictValue?['name'] ?? ""}"
                 : "",
             sizeItem: kDefaultIconSize,
             sizeText: kDefaultIconSize / 1.2,
@@ -68,15 +71,15 @@ class _HotelBookingScreenState extends State<HotelBookingScreen> {
               final result = await Navigator.pushNamed(
                   context, SearchYourDestinationScreen.routeName,
                   arguments: {
-                    'selectedProvinceValue': selectedProvinceValue,
-                    'selectedDistrictValue': selectedDistrictValue,
-                    'selectedSubDistrictValue': selectedSubDistrictValue,
+                    'selectedProvinceValue': _selectedProvinceValue,
+                    'selectedDistrictValue': _selectedDistrictValue,
+                    'selectedSubDistrictValue': _selectedSubDistrictValue,
                   });
               if (!(result as List<Map<String, dynamic>?>)
                   .any((element) => element == null)) {
-                selectedProvinceValue = result[0];
-                selectedDistrictValue = result[1];
-                selectedSubDistrictValue = result[2];
+                _selectedProvinceValue = result[0];
+                _selectedDistrictValue = result[1];
+                _selectedSubDistrictValue = result[2];
                 setState(() {});
               }
             },
@@ -87,7 +90,7 @@ class _HotelBookingScreenState extends State<HotelBookingScreen> {
               return BookingHotelTab(
                 icon: FontAwesomeIcons.calendarDay,
                 title: LocalizationText.selectDate,
-                description: dateSelected ?? LocalizationText.pleaseSelectDate,
+                description: _dateSelected ?? LocalizationText.pleaseSelectDate,
                 sizeItem: kDefaultIconSize,
                 sizeText: kDefaultIconSize / 1.2,
                 primaryColor: const Color(0xffF77777),
@@ -96,10 +99,10 @@ class _HotelBookingScreenState extends State<HotelBookingScreen> {
                 ontap: () async {
                   final result = await Navigator.pushNamed(
                       context, SelectDateScreen.routeName,
-                      arguments: {'oldDate': dateSelected});
+                      arguments: {'oldDate': _dateSelected});
                   if (!(result as List<DateTime?>)
                       .any((element) => element == null)) {
-                    dateSelected =
+                    _dateSelected =
                         '${result[0]?.getStartDate} - ${result[1]?.getEndDate}';
                     setState(() {});
                   }
@@ -112,7 +115,7 @@ class _HotelBookingScreenState extends State<HotelBookingScreen> {
             icon: FontAwesomeIcons.bed,
             title: LocalizationText.guestAndRoom,
             description:
-                '$guestCount ${LocalizationText.guest}, $roomCount ${LocalizationText.room}',
+                '$_guestCount ${LocalizationText.guest}, $_roomCount ${LocalizationText.room}',
             sizeItem: kDefaultIconSize,
             sizeText: kDefaultIconSize / 1.2,
             primaryColor: const Color(0xff3EC8BC),
@@ -122,13 +125,13 @@ class _HotelBookingScreenState extends State<HotelBookingScreen> {
               final result = await Navigator.pushNamed(
                   context, SelectGuestRoomScreen.routeName,
                   arguments: {
-                    'guestCount': guestCount,
-                    'roomCount': roomCount,
+                    'guestCount': _guestCount,
+                    'roomCount': _roomCount,
                   });
 
               if (!(result as List<int?>).any((element) => element == null)) {
-                guestCount = result[0];
-                roomCount = result[1];
+                _guestCount = result[0];
+                _roomCount = result[1];
                 setState(() {});
               }
             },
@@ -139,7 +142,7 @@ class _HotelBookingScreenState extends State<HotelBookingScreen> {
             child: ButtonWidget(
               title: LocalizationText.search,
               ontap: () {
-                if (dateSelected == null) {
+                if (_dateSelected == null) {
                   AwesomeDialog(
                     context: context,
                     dialogType: DialogType.warning,
@@ -149,29 +152,28 @@ class _HotelBookingScreenState extends State<HotelBookingScreen> {
                     btnOkOnPress: () {},
                   ).show();
                 } else {
-                  print(selectedDistrictValue?['id']);
+                  print(_selectedDistrictValue?['id']);
                   _controller
                       ?.getSearchHotels(
-                          selectedProvinceValue?['id'].toString() ?? "0",
-                          selectedDistrictValue?['id'].toString() ?? "0",
-                          selectedSubDistrictValue?['id'].toString() ?? "0")
+                          _selectedProvinceValue?['id'].toString() ?? "0",
+                          _selectedDistrictValue?['id'].toString() ?? "0",
+                          _selectedSubDistrictValue?['id'].toString() ?? "0")
                       .then((value) => {
-                            debugPrint(value.toString()),
                             if (value.runtimeType != int)
                               {
                                 Navigator.pushNamed(
                                     context, SearchHotelsScreen.routeName,
                                     arguments: {
                                       'listHotels': value,
-                                      'dateSelected': dateSelected,
-                                      'guestCount': guestCount,
-                                      'roomCount': roomCount,
+                                      'dateSelected': _dateSelected,
+                                      'guestCount': _guestCount,
+                                      'roomCount': _roomCount,
                                       'selectedProvinceValue':
-                                          selectedProvinceValue,
+                                          _selectedProvinceValue,
                                       'selectedDistrictValue':
-                                          selectedDistrictValue,
+                                          _selectedDistrictValue,
                                       'selectedSubDistrictValue':
-                                          selectedSubDistrictValue,
+                                          _selectedSubDistrictValue,
                                     })
                               }
                           });

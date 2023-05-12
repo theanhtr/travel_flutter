@@ -19,8 +19,8 @@ import 'package:travel_app_ytb/representation/screens/result_flight_screen.dart'
 import 'package:travel_app_ytb/representation/screens/hotel_booking/search_hotels_screen.dart';
 import 'package:travel_app_ytb/representation/screens/hotel_booking/select_date_screen.dart';
 import 'package:travel_app_ytb/representation/screens/hotel_booking/select_guest_room_screen.dart';
+import 'package:travel_app_ytb/representation/screens/room_booking/select_room_screen.dart';
 import 'package:travel_app_ytb/representation/screens/see_all_destinations_screen.dart';
-import 'package:travel_app_ytb/representation/screens/select_room_screen.dart';
 import 'package:travel_app_ytb/representation/screens/sign_up_screen.dart';
 import 'package:travel_app_ytb/representation/screens/sort_by_filght_screen.dart';
 import 'package:travel_app_ytb/representation/screens/sort_by_hotel_screen.dart';

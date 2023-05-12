@@ -11,44 +11,44 @@ class ServiceLoadHelper {
       'primaryColor': const Color(0xff6155CC),
       'secondaryColor': const Color(0xff6155CC).withOpacity(0.2),
     },
-    'Free Wifi': {
+    'Free wifi': {
       'icon': FontAwesomeIcons.wifi,
       'name': 'Free\nWifi',
       'primaryColor': const Color.fromARGB(255, 254, 94, 243),
       'secondaryColor':
           const Color.fromARGB(255, 254, 94, 243).withOpacity(0.2),
     },
-    'Currency Exchange': {
+    'Currency exchange': {
       'icon': FontAwesomeIcons.moneyBillTransfer,
       'name': 'Currency\nExchange',
       'primaryColor': const Color(0xffF97674),
       'secondaryColor': const Color(0xffF97674).withOpacity(0.2)
     },
-    '24-hour Font Desk': {
+    '24-hour font desk': {
       'icon': FontAwesomeIcons.check,
       'name': '24-hour\nFont Desk',
       'primaryColor': const Color(0xff34C9BD),
       'secondaryColor': const Color(0xff34C9BD).withOpacity(0.2)
     },
-    'Private Pool': {
+    'Private pool': {
       'icon': FontAwesomeIcons.personSwimming,
       'name': 'Private\nPool',
       'primaryColor': const Color.fromARGB(255, 52, 74, 201),
       'secondaryColor': const Color.fromARGB(255, 52, 74, 201).withOpacity(0.2),
     },
-    'Non Refundable': {
+    'Non refundable': {
       'icon': FontAwesomeIcons.creativeCommonsNcEu,
       'name': 'Non\nRefundable',
       'primaryColor': const Color(0xffFE9C5E),
       'secondaryColor': const Color(0xffFE9C5E).withOpacity(0.2)
     },
-    'Non Smoking': {
+    'Non smoking': {
       'icon': FontAwesomeIcons.banSmoking,
       'name': 'Non\nSmoking',
       'primaryColor': const Color(0xff3EC8BC),
       'secondaryColor': const Color(0xff3EC8BC).withOpacity(0.2)
     },
-    'Free Breakfast': {
+    'Free breakfast': {
       'icon': FontAwesomeIcons.utensils,
       'name': 'Free\nBreakfast',
       'primaryColor': const Color(0xffF77777),
@@ -66,6 +66,18 @@ class ServiceLoadHelper {
       'primaryColor': const Color(0xff2D3143),
       'secondaryColor': const Color(0xff2D3143).withOpacity(0.2)
     },
+    'Non refunable': {
+      'icon': FontAwesomeIcons.exclamation,
+      'name': 'Error',
+      'primaryColor': const Color(0xff2D3143),
+      'secondaryColor': const Color(0xff2D3143).withOpacity(0.2)
+    },
+    'Baggage': {
+      'icon': FontAwesomeIcons.exclamation,
+      'name': 'Error',
+      'primaryColor': const Color(0xff2D3143),
+      'secondaryColor': const Color(0xff2D3143).withOpacity(0.2)
+    }
   };
 
   static Widget serviceWidget(String nameService) {

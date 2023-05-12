@@ -1,14 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:travel_app_ytb/core/constants/color_palatte.dart';
 import 'package:travel_app_ytb/representation/screens/admin/drawer_page_screen.dart';
-import 'package:travel_app_ytb/representation/screens/admin/delete_user_screen.dart';
 import 'package:travel_app_ytb/representation/screens/admin/hotel_management_screen.dart';
 import 'package:travel_app_ytb/representation/screens/admin/panelCenter_screen.dart';
 import 'package:travel_app_ytb/representation/screens/admin/user_screen.dart';
-
-import 'package:travel_app_ytb/representation/screens/test_screen.dart';
 import 'package:travel_app_ytb/representation/widgets/app_bar_container.dart';
 
 class AdminScreen extends StatefulWidget {

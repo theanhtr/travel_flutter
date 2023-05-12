@@ -64,10 +64,12 @@ class RoomCardWidget extends StatelessWidget {
                 ),
               ],
             ),
-            ImageHelper.loadFromAsset(
+            ImageHelper.loadFromNetwork(
               imageFilePath,
               fit: BoxFit.contain,
               radius: BorderRadius.circular(kDefaultPadding),
+              width: 60,
+              height: 60,
             ),
           ],
         ),
@@ -75,7 +77,7 @@ class RoomCardWidget extends StatelessWidget {
           height: kDefaultPadding,
         ),
         Row(
-          children: List.generate(4, (index) {
+          children: List.generate(services.length, (index) {
             return ServiceLoadHelper.serviceWidget(services[index]);
           }),
         ),

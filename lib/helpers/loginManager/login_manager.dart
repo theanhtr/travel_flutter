@@ -1,16 +1,14 @@
-// ignore_for_file: unnecessary_new
 
 import 'dart:convert';
-import 'dart:ffi';
-import 'dart:io';
-import 'package:http_parser/http_parser.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart';
 import 'package:travel_app_ytb/helpers/local_storage_helper.dart';
 import 'package:travel_app_ytb/representation/models/user_model.dart';
-import 'package:path/path.dart';
+
 import '../http/base_client.dart';
 
 const String baseUrl =
@@ -169,6 +167,7 @@ class LoginManager {
         debugPrint(err);
       });
       if (response == null) return false;
+      debugPrint("logout $response");
       Map dataResponse = json.decode(response);
       if (dataResponse['success'] == true) {
         LocalStorageHelper.deleteValue("userToken");

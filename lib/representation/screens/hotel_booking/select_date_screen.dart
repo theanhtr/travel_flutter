@@ -22,10 +22,10 @@ class SelectDateScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Map<String, dynamic> argss =
+    final Map<String, dynamic> args =
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
 
-    String? oldDate = argss['oldDate'];
+    String? oldDate = args['oldDate'];
     DateHelper dateHelper = DateHelper();
     dateHelper.convertSelectDateOnHotelBookingScreenToDateTime(oldDate);
     oldRangeStartDate = dateHelper.getStartDate() ?? DateTime.now();
