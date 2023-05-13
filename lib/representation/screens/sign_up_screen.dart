@@ -92,31 +92,38 @@ class _SignUpScreenState extends State<SignUpScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Column(
-                  children: [
-                    Text(
-                      LocalizationText.tapSignUp1,
-                      style: TextStyles.defaultStyle.blackTextColor
-                          .setTextSize(kDefaultTextSize / 1.1),
-                    ),
-                    const SizedBox(
-                      height: kDefaultPadding / 2,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        print(LocalizationText.tapSignUp2);
-                      },
-                      child: Container(
-                        height: 22,
+                Expanded(
+                  child: Column(
+                    children: [
+                      Center(
                         child: Text(
-                          LocalizationText.tapSignUp2,
-                          style: TextStyles.defaultStyle.primaryTextColor.bold
-                              .setTextSize(kDefaultTextSize / 1.1),
+                          LocalizationText.tapSignUp1,
+                          style: TextStyles.defaultStyle.blackTextColor
+                              .setTextSize(kDefaultTextSize / 1.2),
                         ),
                       ),
-                    )
-                  ],
-                ),
+                      const SizedBox(
+                        height: kDefaultPadding / 2,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          print(LocalizationText.tapSignUp2);
+                        },
+                        child: Container(
+                          height: 22,
+                          child: Center(
+                            child: Text(
+                              LocalizationText.tapSignUp2,
+                              style: TextStyles
+                                  .defaultStyle.primaryTextColor.bold
+                                  .setTextSize(kDefaultTextSize / 1.2),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                )
               ],
             ),
             const SizedBox(

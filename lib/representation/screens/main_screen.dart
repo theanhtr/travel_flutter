@@ -22,11 +22,16 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
+  Widget? home;
+  Widget? favorite;
+  Widget? hotel;
+  Widget? profile;
 
   @override
   void initState() {
     super.initState();
     _currentIndex = widget.currentIndex;
+    home = HomeScreen();
   }
 
   @override
@@ -36,20 +41,29 @@ class _MainScreenState extends State<MainScreen> {
       body: IndexedStack(
         index: _currentIndex,
         children: [
-          HomeScreen(),
-          FavoriteScreen(),
-          HotelBookingScreen(
-            useImplementLeading: false,
-          ),
-          ProfilePage(),
+          home ?? Container(),
+          favorite ?? Container(),
+          hotel ?? Container(),
+          profile ?? Container(),
         ],
       ),
       bottomNavigationBar: SalomonBottomBar(
         currentIndex: _currentIndex,
         onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
+          if (_currentIndex != index) {
+            if (index == 1) {
+              favorite = FavoriteScreen();
+            } else if (index == 2 && hotel == null) {
+              hotel = HotelBookingScreen(
+                useImplementLeading: false,
+              );
+            } else if (index == 3 && profile == null) {
+              profile = ProfilePage();
+            }
+            setState(() {
+              _currentIndex = index;
+            });
+          }
         },
         selectedItemColor: ColorPalette.primaryColor,
         unselectedItemColor: ColorPalette.opacityColor,

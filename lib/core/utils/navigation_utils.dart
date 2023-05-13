@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:travel_app_ytb/routes.dart';
 
 class NavigationUtils {
-  static void navigate(
+  static Future navigate(
       BuildContext context,
       String screenName, {
         Object? arguments,
       }) {
-    Navigator.of(context).pushNamed(
+    return Navigator.of(context).pushNamed(
       screenName,
       arguments: arguments,
     );

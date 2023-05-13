@@ -46,7 +46,8 @@ class HotelDetailController {
   }
 
   Future<dynamic> likeHotel(int hotelId) async {
-    var response = await BaseClient(LoginManager().userModel.token ?? "").post("/likes/hotel/$hotelId", {})
+    final token = await LoginManager().userModel.token;
+    var response = await BaseClient(token ?? "").post("/likes/hotel/$hotelId", {})
         .catchError((err) {
       return false;
     });

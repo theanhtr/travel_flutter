@@ -56,6 +56,7 @@ class LocationHelper {
     }, onError: (error) {
       debugPrint("error $error");
     });
+    print('LLLLL $address');
     final List<Location> locations = await locationFromAddress(address);
     if (locations.isNotEmpty) {
       final Location location = locations.first;

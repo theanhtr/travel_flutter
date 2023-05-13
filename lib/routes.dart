@@ -4,6 +4,7 @@ import 'package:travel_app_ytb/representation/screens/admin/drawer_page_screen.d
 import 'package:travel_app_ytb/representation/screens/admin_screen.dart';
 import 'package:travel_app_ytb/representation/screens/booking_flights_screen.dart';
 import 'package:travel_app_ytb/representation/screens/checkout_screen.dart';
+import 'package:travel_app_ytb/representation/screens/favorite_booking_screen.dart';
 import 'package:travel_app_ytb/representation/screens/flight_filter_screen.dart';
 import 'package:travel_app_ytb/representation/screens/flight_filter_screen.dart';
 import 'package:travel_app_ytb/representation/screens/forgot_password/forgot_password_screen.dart';
@@ -37,6 +38,7 @@ final Map<String, WidgetBuilder> routes = {
   IntroScreen.routeName: (context) => const IntroScreen(),
   MainScreen.routeName: (context) => const MainScreen(),
   HotelBookingScreen.routeName: (context) => const HotelBookingScreen(),
+  FavoriteBookingScreen.routeName: (context) => const FavoriteBookingScreen(),
   SelectDateScreen.routeName: (context) => SelectDateScreen(),
   SelectGuestRoomScreen.routeName: (context) => const SelectGuestRoomScreen(),
   SearchHotelsScreen.routeName: (context) => const SearchHotelsScreen(),

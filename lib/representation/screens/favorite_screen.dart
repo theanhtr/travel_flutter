@@ -7,9 +7,11 @@ import 'package:travel_app_ytb/representation/screens/hotel_detail/hotel_detail_
 import 'package:travel_app_ytb/representation/widgets/app_bar_container.dart';
 
 import '../../core/utils/const_utils.dart';
+import '../../core/utils/navigation_utils.dart';
 import '../controllers/search_hotels_screen_controller.dart';
 import '../models/hotel_model.dart';
 import '../widgets/hotel_card_widget.dart';
+import 'favorite_booking_screen.dart';
 
 class FavoriteScreen extends StatefulWidget {
   const FavoriteScreen({super.key});
@@ -28,6 +30,9 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   bool _isLoading = false;
   bool _canLoadCardView = false;
   int isDone = 0;
+  String _dateSelected = "";
+  int _guestCount = 1;
+  int _roomCount = 1;
 
   @override
   void initState() {
@@ -35,10 +40,83 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     _controller = SearchHotelsScreenController();
   }
 
+  Future<void> _setCardList() async {
+    for (var element in listHotel) {
+      await _controller?.getDistanceInformation(element.address ?? "").then(
+          (value) => {
+                listHotelCardWidget.add(HotelCardWidget(
+                  widthContainer: MediaQuery.of(context).size.width * 0.9,
+                  imageFilePath: element.imageFilePath ?? "",
+                  name: element.name ?? "",
+                  locationInfo: element.locationInfo ?? "",
+                  distanceInfo: "$value km" ?? "",
+                  starInfo: element.starInfo ?? 0.0,
+                  countReviews: element.countReviews ?? 0,
+                  priceInfo: element.priceInfo ?? "",
+                  ontap: () async {
+                    await NavigationUtils.navigate(
+                        context, FavoriteBookingScreen.routeName,
+                        arguments: {
+                          "hotelId": element.id,
+                          "distanceInfo": "$value km" ?? "",
+                          'dateSelected': _dateSelected,
+                          'guestCount': _guestCount,
+                          'roomCount': _roomCount,
+                        });
+                    setState(() {});
+                    // NavigationUtils.navigate(
+                    //     context, HotelDetailScreen.routeName,
+                    //     arguments: {
+                    //       "hotelId": element.id,
+                    //       "distanceInfo": "$value km" ?? "",
+                    //       'dateSelected': _dateSelected,
+                    //       'guestCount': _guestCount,
+                    //       'roomCount': _roomCount,
+                    //     });
+                  },
+                )),
+              },
+          onError: (error) => {
+                listHotelCardWidget.add(HotelCardWidget(
+                  widthContainer: MediaQuery.of(context).size.width * 0.9,
+                  imageFilePath: element.imageFilePath ?? "",
+                  name: element.name ?? "",
+                  locationInfo: element.locationInfo ?? "",
+                  distanceInfo: element.distanceInfo ?? "",
+                  starInfo: element.starInfo ?? 0.0,
+                  countReviews: element.countReviews ?? 0,
+                  priceInfo: element.priceInfo ?? "",
+                  ontap: () async {
+                    await NavigationUtils.navigate(
+                        context, FavoriteBookingScreen.routeName,
+                        arguments: {
+                          "hotelId": element.id,
+                          "distanceInfo": "0",
+                          'dateSelected': _dateSelected,
+                          'guestCount': _guestCount,
+                          'roomCount': _roomCount,
+                        });
+                    setState(() {});
+                    // NavigationUtils.navigate(
+                    //     context, HotelDetailScreen.routeName,
+                    //     arguments: {
+                    //       "hotelId": element.id,
+                    //       "distanceInfo": "0",
+                    //       'dateSelected': _dateSelected,
+                    //       'guestCount': _guestCount,
+                    //       'roomCount': _roomCount,
+                    //     });
+                  },
+                )),
+              });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     print('KKKK $isFirst');
     if (isFirst) {
+      isFirst = false;
       FavoriteScreenController().getAllHotelsLike().then((value) => {
             if (value.runtimeType == List<dynamic>)
               {
@@ -73,66 +151,23 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                       listHotel.add(hotel);
                     }),
                   },
-                listHotel.forEach((element) {
-                  _controller
-                      ?.getDistanceInformation(element.address ?? "")
-                      .then((value) => {
-                            element.distanceInfo = value.toString(),
-                          });
-                }),
                 _canLoadCardView = true,
                 if (_canLoadCardView == true)
                   {
                     _canLoadCardView = false,
                     listHotelCardWidget = [],
-                    listHotel.forEach((element) {
-                      listHotelCardWidget.add(HotelCardWidget(
-                        widthContainer: MediaQuery.of(context).size.width * 0.9,
-                        imageFilePath: element.imageFilePath ?? "",
-                        name: element.name ?? "",
-                        locationInfo: element.locationInfo ?? "",
-                        distanceInfo: element.distanceInfo ?? "",
-                        starInfo: element.starInfo ?? 0.0,
-                        countReviews: element.countReviews ?? 0,
-                        priceInfo: element.priceInfo ?? "",
-                        ontap: () async {
-                          await Navigator.pushNamed(
-                              context, HotelDetailScreen.routeName,
-                              arguments: {
-                                'id': element.id,
-                                'name': element.name ?? "",
-                                'priceInfo': element.priceInfo ?? "",
-                                'locationInfo': element.locationInfo ?? "",
-                                'distanceInfo': element.distanceInfo ?? "",
-                                'starInfo': element.starInfo ?? 0.0,
-                                'countReviews': element.countReviews ?? 0,
-                                'description':
-                                    'You will find every comfort because many of the services that the hotel offers for travellers and of course the hotel is very comfortable.',
-                                'locationSpecial':
-                                    'Located in the famous neighborhood of Seoul, Grand Luxury is set in a building built in the 2010s.',
-                                'services': <String>[
-                                  'Restaurant',
-                                  'Free Wifi',
-                                  'Currency Exchange',
-                                  'Private Pool',
-                                  '24-hour Font Desk'
-                                ],
-                                'isLike': true,
-                              });
-                          setState(() {});
-                        },
-                      ));
-                    }),
+                    print('PPPPPPP ${listHotel.length}'),
+                    _setCardList()
+                        .then((value) => {isDone = 1, setState(() {})}),
                   },
-                isFirst = false,
-                isDone = 1,
-                setState(() {}),
               },
           });
     }
-    isFirst = true;
-    _isLoading = false;
-    _canLoadCardView = false;
+    if (isDone == 1) {
+      isFirst = true;
+      _isLoading = false;
+      _canLoadCardView = false;
+    }
     print('length ${listHotelCardWidget.length}');
     return AppBarContainer(
       titleString: 'Favorite',
