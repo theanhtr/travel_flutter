@@ -111,26 +111,26 @@ class _RowDetailFacilityHotelState extends State<RowDetailFacilityHotel> {
           //     : SizedBox(
           //         height: 0,
           //       ),
-          TextButton(
-            onPressed: () => showDialog<String>(
-              context: context,
-              builder: (BuildContext context) => AlertDialog(
-                title: const Text('Select role to change'),
-                content: DropdownButtonCustom(),
-                actions: <Widget>[
-                  TextButton(
-                    onPressed: () => Navigator.pop(context, 'Cancel'),
-                    child: const Text('Change role'),
-                  ),
-                  TextButton(
-                    onPressed: () => Navigator.pop(context, 'OK'),
-                    child: const Text('Cancel'),
-                  ),
-                ],
-              ),
-            ),
-            child: const Text('Change role'),
-          ),
+          // TextButton(
+          //   onPressed: () => showDialog<String>(
+          //     context: context,
+          //     builder: (BuildContext context) => AlertDialog(
+          //       title: const Text('Select role to change'),
+          //       content: DropdownButtonCustom(),
+          //       actions: <Widget>[
+          //         TextButton(
+          //           onPressed: () => Navigator.pop(context, 'Cancel'),
+          //           child: const Text('Change role'),
+          //         ),
+          //         TextButton(
+          //           onPressed: () => Navigator.pop(context, 'OK'),
+          //           child: const Text('Cancel'),
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          //   child: const Text('Change role'),
+          // ),
           Container(
             padding: EdgeInsets.all(10.0),
             child:

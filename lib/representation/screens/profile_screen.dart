@@ -30,11 +30,14 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   bool _isLogOut = false;
+
   @override
   Widget build(BuildContext context) {
     widget.log = LoginManager();
-    widget.log.setUserProfileModel();
     UserModel userProfile = UserModel();
+    widget.log.setUserProfileModel();
+    final user = LoginManager().userModel;
+
     Future<String> setUpUserModelAndMakeSureItHasInfor() async {
       await widget.log.setUserProfileModel();
       print(widget.log.userModelProfile.photoUrl.toString());
@@ -46,7 +49,6 @@ class _ProfilePageState extends State<ProfilePage> {
       setUpUserModelAndMakeSureItHasInfor();
     }
 
-    final user = LoginManager().userModel;
     return FutureBuilder<String>(
       future: setUpUserModelAndMakeSureItHasInfor(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
