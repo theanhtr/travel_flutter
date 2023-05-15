@@ -11,6 +11,7 @@ import '../../helpers/translations/localization_text.dart';
 enum TypeInputCard {
   firstName,
   lastName,
+  name,
   email,
   password,
   passwordConfirm,
@@ -65,6 +66,23 @@ class _InputCardState extends State<InputCard> {
           controller: _textController,
           decoration: InputDecoration(
             labelText: LocalizationText.firstname,
+            border: InputBorder.none,
+            labelStyle: TextStyles.defaultStyle.blackTextColor.light
+                .setTextSize(kDefaultTextSize / 1.1),
+          ),
+          style: TextStyles.defaultStyle.blackTextColor.bold
+              .setTextSize(kDefaultTextSize * 1.2),
+          onChanged: (String query) {
+            value = _textController?.text;
+            widget.onchange(value);
+          },
+        );
+        break;
+      case TypeInputCard.name:
+        widgetToDisplay = TextField(
+          controller: _textController,
+          decoration: InputDecoration(
+            labelText: LocalizationText.name,
             border: InputBorder.none,
             labelStyle: TextStyles.defaultStyle.blackTextColor.light
                 .setTextSize(kDefaultTextSize / 1.1),

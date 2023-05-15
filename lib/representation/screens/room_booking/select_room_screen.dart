@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travel_app_ytb/core/utils/const_utils.dart';
 import 'package:travel_app_ytb/core/utils/navigation_utils.dart';
-import 'package:travel_app_ytb/helpers/asset_helper.dart';
 import 'package:travel_app_ytb/helpers/date_helper.dart';
 import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
 import 'package:travel_app_ytb/representation/models/room_model.dart';
-import 'package:travel_app_ytb/representation/screens/checkout_screen.dart';
+import 'package:travel_app_ytb/representation/screens/checkout/checkout_screen.dart';
 import 'package:travel_app_ytb/representation/screens/room_booking/select_room_controller.dart';
 import 'package:travel_app_ytb/representation/widgets/app_bar_container.dart';
-import 'package:travel_app_ytb/representation/widgets/hotel_card_widget.dart';
 import 'package:travel_app_ytb/representation/widgets/room_card_widget.dart';
 
 import '../../../core/constants/dismention_constants.dart';
@@ -27,6 +22,15 @@ class SelectRoomScreen extends StatefulWidget {
 }
 
 class _SelectRoomScreenState extends State<SelectRoomScreen> {
+  // List<RoomModel> listRooms = [
+  //   RoomModel(
+  //     name: "vip",
+  //     size: 21,
+  //     services: ['Free wifi'],
+  //     price: 10,
+  //     countAvailabilityRoom: 5,
+  //   )
+  // ];
   List<RoomModel> listRooms = [];
 
   SelectRoomController? _controller;
@@ -40,10 +44,22 @@ class _SelectRoomScreenState extends State<SelectRoomScreen> {
     List<String> listDateString = _dateSelected.split(' - ');
     DateHelper dateHelper = DateHelper();
     dateHelper.convertSelectDateOnHotelBookingScreenToDateTime(_dateSelected);
+    var dateTime = DateTime.now();
+    dateTime = dateTime.add(
+      const Duration(
+        minutes: 15,
+      ),
+    );
     var startDate = dateHelper.convertDateString(
+        inputFormat: 'HH mm dd MMM yyyy',
+        outputFormat: 'HH:mm MM/dd/yy',
         dateString:
-            "${listDateString[0]} ${(dateHelper.getEndDate()?.year.toString() ?? "2023")}");
-    var endDate = dateHelper.convertDateString(dateString: listDateString[1]);
+            "${dateTime.hour} ${dateTime.minute} ${listDateString[0]} ${(dateHelper.getEndDate()?.year.toString() ?? "2023")}");
+    var endDate = dateHelper.convertDateString(
+      inputFormat: 'HH mm dd MMM yyyy',
+      outputFormat: 'HH:mm MM/dd/yy',
+      dateString: "23 59 ${listDateString[1]}",
+    );
     if (_isLoaded == false) {
       _controller
           ?.getRoomFromHotel(
@@ -94,11 +110,18 @@ class _SelectRoomScreenState extends State<SelectRoomScreen> {
                             roomSize: listRooms[index].size ?? 21,
                             services: listRooms[index].services ?? [],
                             priceInfo: listRooms[index].price ?? 10,
+                            roomCount:
+                                listRooms[index].countAvailabilityRoom ?? 0,
                             ontap: () {
                               Navigator.pushNamed(
                                 context,
                                 CheckoutScreen.routeName,
-                                arguments: listRooms[index],
+                                arguments: {
+                                  "room_selected": listRooms[index],
+                                  "date_selected": _dateSelected,
+                                  "guest_count": _guestCount,
+                                  "room_count": _roomCount,
+                                },
                               );
                             },
                           ),

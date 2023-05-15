@@ -30,68 +30,70 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       titleString: 'Reset Password',
       implementLeading: true,
       // ignore: prefer_const_literals_to_create_immutables
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const SizedBox(
-            height: kDefaultPadding * 3,
-          ),
-          StatefulBuilder(
-            builder: (context, setState) => InputCard(
-              style: TypeInputCard.password,
-              onchange: (String value) {
-                password = value;
-                setState(() {});
-              },
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const SizedBox(
+              height: kDefaultPadding * 3,
             ),
-          ),
-          const SizedBox(
-            height: kDefaultPadding * 3,
-          ),
-          StatefulBuilder(
-            builder: (context, setState) => InputCard(
-              style: TypeInputCard.passwordConfirm,
-              onchange: (String value) {
-                passwordConfirm = value;
-                setState(() {});
-              },
+            StatefulBuilder(
+              builder: (context, setState) => InputCard(
+                style: TypeInputCard.password,
+                onchange: (String value) {
+                  password = value;
+                  setState(() {});
+                },
+              ),
             ),
-          ),
-          const SizedBox(
-            height: kDefaultPadding * 3,
-          ),
-          ButtonWidget(
-            title: "Send",
-            ontap: () {
-              Loading.show(context);
-              LoginManager().resetPassword(widget.email ?? "", password, passwordConfirm, widget.verificationCode ?? "").then((value) => {
-                Loading.dismiss(context),
-                print(value),
-                if (value == true) {
-                  Navigator.popAndPushNamed(context, LoginScreen.routeName)
-                } else {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) => AlertDialog(
-                      title: const Text('Cannot reset your password'),
-                      content: const Text('Please check your new password and your confirm password'),
-                      actions: <Widget>[
-                        TextButton(
-                          onPressed: () => Navigator.pop(context, 'Cancel'),
-                          child: const Text('Cancel'),
-                        ),
-                        TextButton(
-                          onPressed: () => Navigator.pop(context, 'OK'),
-                          child: const Text('OK'),
-                        ),
-                      ],
-                    ),
-                  )
-                }
-              });
-            },
-          )
-        ],
+            const SizedBox(
+              height: kDefaultPadding * 3,
+            ),
+            StatefulBuilder(
+              builder: (context, setState) => InputCard(
+                style: TypeInputCard.passwordConfirm,
+                onchange: (String value) {
+                  passwordConfirm = value;
+                  setState(() {});
+                },
+              ),
+            ),
+            const SizedBox(
+              height: kDefaultPadding * 3,
+            ),
+            ButtonWidget(
+              title: "Send",
+              ontap: () {
+                Loading.show(context);
+                LoginManager().resetPassword(widget.email ?? "", password, passwordConfirm, widget.verificationCode ?? "").then((value) => {
+                  Loading.dismiss(context),
+                  print(value),
+                  if (value == true) {
+                    Navigator.popAndPushNamed(context, LoginScreen.routeName)
+                  } else {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                        title: const Text('Cannot reset your password'),
+                        content: const Text('Please check your new password and your confirm password'),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () => Navigator.pop(context, 'Cancel'),
+                            child: const Text('Cancel'),
+                          ),
+                          TextButton(
+                            onPressed: () => Navigator.pop(context, 'OK'),
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      ),
+                    )
+                  }
+                });
+              },
+            )
+          ],
+        ),
       ),
     );
   }

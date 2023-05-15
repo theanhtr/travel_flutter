@@ -15,15 +15,15 @@ class LocalStorageHelper {
     _shared.hiveBox = await Hive.openBox('TravelApp');
   }
 
-  static void deleteValue(String key) {
-    _shared.hiveBox?.delete(key);
+  static Future<void> deleteValue(String key) async {
+    await _shared.hiveBox?.delete(key);
   }
 
   static dynamic getValue(String key) {
     return _shared.hiveBox?.get(key);
   }
 
-  static void setValue(String key, dynamic value) {
-    _shared.hiveBox?.put(key, value);
+  static Future<void> setValue(String key, dynamic value) async {
+    await _shared.hiveBox?.put(key, value);
   }
 }

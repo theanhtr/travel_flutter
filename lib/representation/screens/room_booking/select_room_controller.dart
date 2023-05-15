@@ -3,9 +3,8 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:travel_app_ytb/core/utils/const_utils.dart';
 import 'package:travel_app_ytb/representation/models/room_model.dart';
-
-import '../../../helpers/http/base_client.dart';
-import '../../../helpers/loginManager/login_manager.dart';
+import 'package:travel_app_ytb/helpers/http/base_client.dart';
+import 'package:travel_app_ytb/helpers/loginManager/login_manager.dart';
 
 class SelectRoomController {
   Future<List<RoomModel>> getRoomFromHotel(
@@ -30,7 +29,7 @@ class SelectRoomController {
     if (response.runtimeType == int) {
       debugPrintStack(
           label:
-              "error post to /searches/type-rooms $response $checkInDate $guestQuantity, $roomQuantity, $hotelId");
+              "error post to /searches/type-rooms $response $checkInDate $checkOutDate $guestQuantity, $roomQuantity, $hotelId");
       return [];
     }
     Map dataResponse = await json.decode(response);

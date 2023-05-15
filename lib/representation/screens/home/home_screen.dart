@@ -54,8 +54,8 @@ class _HomeScreenState extends State<HomeScreen> {
     if (_isLoaded == false) {
       _isLoaded = true;
       _controller?.getPopularDestination().then((destinations) => {
-            if (destinations != false)
-              {
+            setState(() {
+              if (destinations != false) {
                 destinations.forEach((element) {
                   listItem.add(
                     _DestinationEntity(
@@ -66,9 +66,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       id: element['id'],
                     ),
                   );
-                })
-              },
-            setState(() {}),
+                });
+              }
+            }),
           });
     }
     debugPrint('${listItem.length}');

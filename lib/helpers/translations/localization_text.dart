@@ -136,4 +136,12 @@ class LocalizationText {
   static String user = "user".tr();
   static String night = "night".tr();
   static String nearestDistance = "nearestDistance".tr();
+  static String roomAvailable = "roomAvailable".tr();
+  static String roomsAvailable = "roomsAvailable".tr();
+  static String bedRoom = "bedRoom".tr();
+  static String bedsRoom = "bedsRoom".tr();
+  static String name = "name".tr();
+  static String continueText = "continue".tr();
+  static String creditDebitCard = "credit_debit_card".tr();
+  static String contactDetails = "contact_details".tr();
 }

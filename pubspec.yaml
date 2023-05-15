@@ -65,6 +65,7 @@ dependencies:
   dio: ^5.1.1
   image_picker: ^0.8.7+3
   google_maps_flutter_platform_interface: ^2.2.6
+  flutter_stripe: ^9.2.0
 
 dev_dependencies:
   flutter_test:
