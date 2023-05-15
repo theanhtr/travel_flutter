@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:dio/dio.dart' as dio;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
@@ -38,7 +37,7 @@ class LoginManager {
     }
   }
 
-  Future<dynamic> setUserProfileModel() async {
+  Future<void> setUserProfileModel() async {
     await getCurrentUser().then((value) async => {
           userModelProfile.firstName = value?.firstName,
           userModelProfile.lastName = value?.lastName,
@@ -60,7 +59,6 @@ class LoginManager {
             (err) {
       return err;
     });
-    debugPrint("65 $response");
     if (response == null) return false;
     if (response.runtimeType == int) {
       return response;
@@ -74,8 +72,8 @@ class LoginManager {
         await LocalStorageHelper.setValue("userToken", token);
         await LocalStorageHelper.setValue("userEmail", email);
         await setUserModel();
+        await setUserProfileModel();
       }
-      debugPrint("77 $userToken");
     }
     return dataResponse;
   }
@@ -85,11 +83,11 @@ class LoginManager {
   }
 
   Future<bool> isLogin() async {
-    debugPrint("89 ${await LocalStorageHelper.getValue("userToken")}");
     if (await LocalStorageHelper.getValue("userToken") == null) {
       return false;
     } else {
       await setUserModel();
+      await setUserProfileModel();
       return true;
     }
   }
@@ -100,7 +98,6 @@ class LoginManager {
         .catchError((err) {
       debugPrint(err);
     });
-    // debugPrint('108 login manager: ${response}');
     if (response == null)
       return "https://cdn.mos.cms.futurecdn.net/JarKa4TVZxSCuN8x8WNPSN.jpg";
     Map dataResponse = json.decode(response);
@@ -109,25 +106,6 @@ class LoginManager {
     }
     return dataResponse['data']['path'];
   }
-
-  // Future<UserModel?> getCurrentUser() async {
-  //   var response = await BaseClient(userModel.token ?? "")
-  //       .get('/my-information')
-  //       .catchError((err) {
-  //     debugPrint("response get currentuser err $err");
-  //   });
-  //   if (response == null) return null;
-  //   Map dataResponse = json.decode(response);
-  //   return UserModel(
-  //     name: dataResponse['data']['last_name'],
-  //     id: dataResponse['data']['id'],
-  //     firstName: dataResponse['data']['first_name'],
-  //     lastName: dataResponse['data']['last_name'],
-  //     phoneNumber: dataResponse['data']['phone_number'],
-  //     photoUrl: dataResponse['data']['avatar'],
-  //     dateOfBirth: dataResponse['data']['date_of_birth'],
-  //   );
-  // }
 
   Future<UserModel?> getCurrentUser() async {
     final userToken = userModel.token;
@@ -156,7 +134,6 @@ class LoginManager {
 
   Future<bool> signOut() async {
     final token = userModel.token;
-    debugPrint("159 $token");
     if (token != null) {
       var response = await BaseClient(token).post('/auth/logout', {
         'allDevice': false,
@@ -164,7 +141,6 @@ class LoginManager {
         debugPrint(err);
       });
       if (response == null) return false;
-      debugPrint("logout $response");
       Map dataResponse = json.decode(response);
       if (dataResponse['success'] == true) {
         await LocalStorageHelper.deleteValue("userToken");

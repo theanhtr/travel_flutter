@@ -9,14 +9,18 @@ import 'package:travel_app_ytb/core/utils/navigation_utils.dart';
 import 'package:travel_app_ytb/helpers/loginManager/login_manager.dart';
 import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
 import 'package:travel_app_ytb/representation/models/room_model.dart';
+import 'package:travel_app_ytb/representation/screens/checkout/contact_details_screen.dart';
 import 'package:travel_app_ytb/representation/screens/checkout/payment_screen.dart';
 import 'package:travel_app_ytb/representation/widgets/app_bar_container.dart';
 import 'package:travel_app_ytb/representation/widgets/button_widget.dart';
 import 'package:travel_app_ytb/representation/widgets/info_card.dart';
 import 'package:travel_app_ytb/representation/widgets/item_text_container.dart';
 import 'package:travel_app_ytb/representation/widgets/room_card_widget.dart';
+import 'package:travel_app_ytb/representation/widgets/tapable_widget.dart';
+import 'package:travel_app_ytb/routes.dart';
 
 import '../main_screen.dart';
+import 'contact_details_screen.dart';
 
 class CheckoutScreen extends StatefulWidget {
   const CheckoutScreen({super.key});
@@ -31,11 +35,18 @@ class _CheckoutScreenState extends State<CheckoutScreen>
     with TickerProviderStateMixin {
   late final TabController _tabController;
 
+  String name = "";
+  String phoneNumber = "";
+  String email = "";
+
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
     _tabController.addListener(_handleTabSelection);
+    name = LoginManager().userModel.name ?? "";
+    phoneNumber = LoginManager().userModelProfile.phoneNumber ?? "";
+    email = LoginManager().userModel.email ?? "";
   }
 
   @override
@@ -155,8 +166,9 @@ class _CheckoutScreenState extends State<CheckoutScreen>
                           InfoCard(
                               title: '${LocalizationText.signInAs}: ',
                               infoList: <String>[
-                                '${LocalizationText.name} ${LoginManager().userModel.name}',
-                                '${LocalizationText.phoneNumber}: ${LoginManager().userModelProfile.phoneNumber}',
+                                name.isNotEmpty ? '${LocalizationText.name}: $name' : "",
+                                phoneNumber.isNotEmpty ? '${LocalizationText.phoneNumber}: $phoneNumber' : "",
+                                email.isNotEmpty ? '${LocalizationText.email}: $email' : "",
                               ]),
                           const SizedBox(
                             height: kDefaultPadding,
@@ -196,12 +208,30 @@ class _CheckoutScreenState extends State<CheckoutScreen>
                                     ),
                                   ],
                                 ),
-                                const ItemText(
-                                    icon: FontAwesomeIcons.plus,
-                                    sizeItem: kDefaultIconSize / 1.2,
-                                    primaryColor: ColorPalette.primaryColor,
-                                    secondaryColor:
-                                        ColorPalette.noSelectbackgroundColor),
+                                ItemText(
+                                  icon: FontAwesomeIcons.plus,
+                                  sizeItem: kDefaultIconSize / 1.2,
+                                  primaryColor: ColorPalette.primaryColor,
+                                  secondaryColor:
+                                      ColorPalette.noSelectbackgroundColor,
+                                  ontap: () async {
+                                    Object? result = await Navigator.pushNamed(
+                                      context,
+                                      ContactDetailsScreen.routeName,
+                                      arguments: {
+                                        'name': name,
+                                        'phone_number': phoneNumber,
+                                        'email': email,
+                                      }
+                                    );
+                                    result as List<String>;
+                                    setState(() {
+                                      name = result[0];
+                                      phoneNumber = result[1];
+                                      email = result[2];
+                                    });
+                                  },
+                                ),
                               ],
                             ),
                           ),
@@ -236,9 +266,10 @@ class _CheckoutScreenState extends State<CheckoutScreen>
                           Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                const MainScreen(currentIndex: 0,)),
-                                (Route<dynamic> route) => false,
+                                builder: (context) => const MainScreen(
+                                      currentIndex: 0,
+                                    )),
+                            (Route<dynamic> route) => false,
                           );
                         },
                       ).show();

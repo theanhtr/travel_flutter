@@ -63,10 +63,8 @@
   "selectRoom": "Select Room",
   "addGuetsAndRoom": "Add guest and room",
   "done": "Done",
-  "": "",
   "select": "Select",
   "hotels": "Hotels",
-  "": "",
   "propertyType": "Property type",
   "resorts": "Resorts",
   "hostels": "Hostels",
@@ -131,5 +129,6 @@
   "roomsAvailable": "room available",
   "name": "Name",
   "continue": "Continue",
-  "credit_debit_card": "Credit / Debit Card"
+  "credit_debit_card": "Credit / Debit Card",
+  "contact_details": "Contact Details"
 }

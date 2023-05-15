@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:travel_app_ytb/representation/screens/admin_screen.dart';
 import 'package:travel_app_ytb/representation/screens/booking_flights_screen.dart';
 import 'package:travel_app_ytb/representation/screens/checkout/checkout_screen.dart';
-import 'package:travel_app_ytb/representation/screens/checkout/payment_screen.dart';
+import 'package:travel_app_ytb/representation/screens/checkout/contact_details_screen.dart';
 import 'package:travel_app_ytb/representation/screens/edit_profile_page.dart';
 import 'package:travel_app_ytb/representation/screens/facility_hotel_screen.dart';
 import 'package:travel_app_ytb/representation/screens/favorite_booking_screen.dart';
@@ -64,6 +64,6 @@ final Map<String, WidgetBuilder> routes = {
   FillInforScreen.routeName: (context) => const FillInforScreen(),
   // UploadIamge.routename: (context) => UploadIamge(),
   AdminScreen.routeName: (context) => const AdminScreen(),
-  SeeAllDestinationsScreen.routeName: (context) =>
-      const SeeAllDestinationsScreen(),
+  SeeAllDestinationsScreen.routeName: (context) => const SeeAllDestinationsScreen(),
+  ContactDetailsScreen.routeName: (context) => const ContactDetailsScreen(),
 };

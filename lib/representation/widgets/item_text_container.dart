@@ -5,15 +5,16 @@ import 'package:travel_app_ytb/core/constants/dismention_constants.dart';
 import 'package:travel_app_ytb/core/constants/textstyle_constants.dart';
 
 class ItemText extends StatelessWidget {
-  const ItemText(
-      {super.key,
-      required this.icon,
-      this.text = '',
-      required this.sizeItem,
-      this.sizeText = 0,
-      required this.primaryColor,
-      required this.secondaryColor,
-      this.ontap});
+  const ItemText({
+    super.key,
+    required this.icon,
+    this.text = '',
+    required this.sizeItem,
+    this.sizeText = 0,
+    required this.primaryColor,
+    required this.secondaryColor,
+    this.ontap,
+  });
 
   final IconData icon;
   final String text;
@@ -22,6 +23,7 @@ class ItemText extends StatelessWidget {
   final Color primaryColor;
   final Color secondaryColor;
   final Function()? ontap;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

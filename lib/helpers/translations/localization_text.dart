@@ -143,4 +143,5 @@ class LocalizationText {
   static String name = "name".tr();
   static String continueText = "continue".tr();
   static String creditDebitCard = "credit_debit_card".tr();
+  static String contactDetails = "contact_details".tr();
 }
