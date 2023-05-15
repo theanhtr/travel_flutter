@@ -168,7 +168,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             ButtonWidget(
               title: LocalizationText.login,
-              ontap: () {
+              ontap: () async {
                 if (rememberMe == true) {
                   LocalStorageHelper.setValue("email", email);
                   LocalStorageHelper.setValue("password", password);

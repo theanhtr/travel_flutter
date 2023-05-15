@@ -1,5 +1,5 @@
-
 import 'dart:convert';
+
 import 'package:dio/dio.dart' as dio;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,8 +11,6 @@ import 'package:travel_app_ytb/representation/models/user_model.dart';
 
 import '../http/base_client.dart';
 
-const String baseUrl =
-    "https://0f09-2405-4802-1d02-d2e0-3155-56ed-d9f4-fda9.ngrok-free.app/api";
 
 class LoginManager {
   static final LoginManager _shared = LoginManager._internal();
@@ -31,9 +29,9 @@ class LoginManager {
       userModel.email = await LocalStorageHelper.getValue("userEmail");
       userModel.token = await LocalStorageHelper.getValue("userToken");
       await getCurrentUser().then((value) async => {
-            if (await LocalStorageHelper.getValue("userName") == null)
-              {LocalStorageHelper.setValue("userName", value?.name)}
-          });
+        if (await LocalStorageHelper.getValue("userName") == null)
+          {await LocalStorageHelper.setValue("userName", value?.name)}
+      });
       await getCurrentUserAvatar()
           .then((value) => {userModel.photoUrl = value});
       userModel.name = await LocalStorageHelper.getValue("userName");
@@ -67,22 +65,19 @@ class LoginManager {
     if (response.runtimeType == int) {
       return response;
     }
-    if (response.runtimeType == String) {
-      Map dataResponse = await json.decode(response);
-      var token = await dataResponse['data']['token'];
-      if (_isRemember == true) {
-        final userToken =
-            await LocalStorageHelper.getValue('userToken') as String?;
-        if (userToken == null) {
-          LocalStorageHelper.setValue("userToken", token);
-          LocalStorageHelper.setValue("userEmail", email);
-        }
+    Map dataResponse = await json.decode(response);
+    var token = await dataResponse['data']['token'];
+    if (_isRemember == true) {
+      final userToken =
+      await LocalStorageHelper.getValue('userToken');
+      if (userToken == null) {
+        await LocalStorageHelper.setValue("userToken", token);
+        await LocalStorageHelper.setValue("userEmail", email);
+        await setUserModel();
       }
-      await setUserModel();
-      debugPrint('${dataResponse['data']['role_id'].runtimeType}');
-      return dataResponse;
+      debugPrint("77 $userToken");
     }
-    return response;
+    return dataResponse;
   }
 
   void remember(bool isRemember) {
@@ -90,7 +85,8 @@ class LoginManager {
   }
 
   Future<bool> isLogin() async {
-    if (LocalStorageHelper.getValue("userToken") == null) {
+    debugPrint("89 ${await LocalStorageHelper.getValue("userToken")}");
+    if (await LocalStorageHelper.getValue("userToken") == null) {
       return false;
     } else {
       await setUserModel();
@@ -134,7 +130,7 @@ class LoginManager {
   // }
 
   Future<UserModel?> getCurrentUser() async {
-    final userToken = await LocalStorageHelper.getValue('userToken') as String?;
+    final userToken = userModel.token;
     var response = await BaseClient(userToken ?? "")
         .get('/my-information')
         .catchError((err) {
@@ -159,7 +155,8 @@ class LoginManager {
   }
 
   Future<bool> signOut() async {
-    final token = await LocalStorageHelper.getValue("userToken") as String?;
+    final token = userModel.token;
+    debugPrint("159 $token");
     if (token != null) {
       var response = await BaseClient(token).post('/auth/logout', {
         'allDevice': false,
@@ -170,10 +167,11 @@ class LoginManager {
       debugPrint("logout $response");
       Map dataResponse = json.decode(response);
       if (dataResponse['success'] == true) {
-        LocalStorageHelper.deleteValue("userToken");
-        LocalStorageHelper.deleteValue("userEmail");
-        LocalStorageHelper.deleteValue("userName");
-        LocalStorageHelper.deleteValue("photoUrl");
+        await LocalStorageHelper.deleteValue("userToken");
+        await LocalStorageHelper.deleteValue("userEmail");
+        await LocalStorageHelper.deleteValue("userName");
+        await LocalStorageHelper.deleteValue("photoUrl");
+        await setUserModel();
         return true;
       }
     }
@@ -279,7 +277,7 @@ class LoginManager {
 
   Future<Map> createUsetInformation(String email, String firstName,
       String lastName, String phone_number, DateTime date_of_birth) async {
-    final token = await LocalStorageHelper.getValue("userToken") as String?;
+    final token = userModel.token;
     final response =
         await BaseClient(token ?? "").postHaiAnhDung("/my-information", {
       "first_name": firstName,
@@ -298,7 +296,7 @@ class LoginManager {
 
   Future<Map> UpdateUserInformation(String email, String firstName,
       String lastName, String phone_number, DateTime date_of_birth) async {
-    final token = await LocalStorageHelper.getValue("userToken") as String?;
+    final token = userModel.token;
     final response = await BaseClient(token ?? "").put("/my-information", {
       "email": email,
       "first_name": firstName,
@@ -316,7 +314,7 @@ class LoginManager {
   }
 
   uploadFileFromDio(UserModel userProfile, XFile photoFile) async {
-    final token = await LocalStorageHelper.getValue("userToken") as String?;
+    final token = userModel.token;
     try {
       ///[1] CREATING INSTANCE
       var dioRequest = dio.Dio();
