@@ -1,7 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:travel_app_ytb/core/constants/color_palatte.dart';
 import 'package:travel_app_ytb/core/constants/dismention_constants.dart';
+import 'package:travel_app_ytb/helpers/loginManager/login_manager.dart';
+import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
+import 'package:travel_app_ytb/representation/screens/login/login_screen.dart';
 import 'package:travel_app_ytb/representation/widgets/app_bar_container.dart';
+import 'package:travel_app_ytb/representation/widgets/button_widget.dart';
 
 class ButtonsInfo {
   String title;
@@ -21,7 +26,7 @@ class Task {
 int _currentIndex = 0;
 
 List<ButtonsInfo> _buttonNames = [
-  ButtonsInfo(title: "Home", icon: Icons.home),
+  ButtonsInfo(title: LocalizationText.home, icon: Icons.home),
   // ButtonsInfo(title: "Setting", icon: Icons.settings),
   // ButtonsInfo(title: "Notifications", icon: Icons.notifications),
   // ButtonsInfo(title: "Contacts", icon: Icons.contact_phone_rounded),
@@ -29,8 +34,12 @@ List<ButtonsInfo> _buttonNames = [
   // ButtonsInfo(title: "Marketing", icon: Icons.mark_email_read),
   // ButtonsInfo(title: "Security", icon: Icons.verified_user),
   ButtonsInfo(
-      title: "Hotel Management", icon: Icons.supervised_user_circle_rounded),
-  ButtonsInfo(title: "User Management", icon: Icons.verified_user),
+      title: LocalizationText.hotelManager,
+      icon: Icons.supervised_user_circle_rounded),
+  ButtonsInfo(
+      title: LocalizationText.userManagement, icon: Icons.verified_user),
+  ButtonsInfo(title: LocalizationText.profile, icon: Icons.face),
+  ButtonsInfo(title: LocalizationText.addUser, icon: Icons.plus_one_rounded),
 ];
 
 class DrawerPage extends StatefulWidget {
@@ -43,9 +52,11 @@ class DrawerPage extends StatefulWidget {
 }
 
 class _DrawerPageState extends State<DrawerPage> {
+  bool _isLogOut = false;
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      backgroundColor: ColorPalette.primaryColor,
       elevation: 0,
       child: SingleChildScrollView(
         child: Padding(
@@ -54,10 +65,8 @@ class _DrawerPageState extends State<DrawerPage> {
             children: [
               ListTile(
                   title: Text(
-                    "Admin Menu",
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
+                    LocalizationText.adminMenu,
+                    style: TextStyle(color: Colors.white, fontSize: 25),
                   ),
                   trailing: IconButton(
                     onPressed: () {
@@ -65,6 +74,7 @@ class _DrawerPageState extends State<DrawerPage> {
                     },
                     icon: Icon(Icons.close, color: Colors.white),
                   )),
+              const SizedBox(height: 24),
               ...List.generate(
                 _buttonNames.length,
                 (index) => Column(
@@ -113,6 +123,27 @@ class _DrawerPageState extends State<DrawerPage> {
                   ],
                 ),
               ),
+              ButtonWidget(
+                title: LocalizationText.logout,
+                ontap: () {
+                  LoginManager().signOut().then((value) => {
+                        if (value == true && _isLogOut == false)
+                          {
+                            Navigator.popAndPushNamed(
+                                context, LoginScreen.routeName),
+                            _isLogOut = true,
+                          }
+                      });
+                  FirebaseAuth.instance.signOut().then((value) => {
+                        if (_isLogOut == false)
+                          {
+                            Navigator.popAndPushNamed(
+                                context, LoginScreen.routeName),
+                            _isLogOut = true,
+                          }
+                      });
+                },
+              )
             ],
           ),
         ),

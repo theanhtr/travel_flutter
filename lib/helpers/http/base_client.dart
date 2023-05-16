@@ -4,7 +4,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-const String baseUrl = "https://351c-113-190-143-99.ngrok-free.app/api";
+const String baseUrl =
+    "https://5674-2405-4802-1d4e-e150-c8f4-5ef7-2e71-d5c1.ngrok-free.app/api";
 
 class BaseClient {
   String baseUrlForImport = baseUrl;
@@ -68,9 +69,10 @@ class BaseClient {
 
   Future<dynamic> get(String api) async {
     var url = Uri.parse(baseUrl + api);
-
+    // print("header day: ${_header}");
+    // print("header day:  ${url}");
     var response = await client.get(url, headers: _header);
-
+    debugPrint('get dong 73: ${response.statusCode}');
     if (response.statusCode == 200) {
       return response.body;
     } else {}
@@ -125,7 +127,41 @@ class BaseClient {
     }
   }
 
-  Future<dynamic> patch(String api) async {}
+  Future<dynamic> postRoleId(
+      String api, dynamic object, dynamic object1) async {
+    var url = Uri.parse(baseUrl + api);
+    var payload = json.encode({'email': object, 'role_id': object1});
+
+    var response = await client.patch(url, body: payload, headers: _header);
+    debugPrint(response.body.toString());
+    // debugPrint("dong 122 base client");
+    // print(response.body.runtimeType);
+    if (response.statusCode == 201 ||
+        response.statusCode == 204 ||
+        response.statusCode == 200) {
+      return response.body.toString();
+    } else {
+      return response.body.toString();
+    }
+  }
+
+  Future<dynamic> postNewUser(
+      String api, dynamic object, dynamic object1) async {
+    var url = Uri.parse(baseUrl + api);
+    var payload = json.encode({'email': object, 'role_id': object1});
+
+    var response = await client.post(url, body: payload, headers: _header);
+    debugPrint(response.body.toString());
+    // debugPrint("dong 122 base client");
+    // print(response.body.runtimeType);
+    if (response.statusCode == 201 ||
+        response.statusCode == 204 ||
+        response.statusCode == 200) {
+      return response.body.toString();
+    } else {
+      return response.body.toString();
+    }
+  }
 
   Future<dynamic> delete(String api, String id) async {
     var url = Uri.parse(baseUrl + api + '/${id}');
@@ -137,6 +173,32 @@ class BaseClient {
         response.statusCode == 200) {
       return response.body;
     } else {
+      return response.statusCode;
+    }
+  }
+
+  Future<dynamic> deleteUser(String api, String email) async {
+    var _headerDelete = {
+      'Accept': 'application/json',
+      // 'Content-Type': 'application/json',
+      'Authorization': 'Bearer $tokenAuth',
+    };
+    print(_headerDelete);
+    var url = Uri.parse(baseUrl + api);
+    var body = jsonEncode({"email": email});
+
+    final Object;
+    Object = {'email': 'email'};
+    print(jsonEncode(Object));
+    var response = await client.delete(url,
+        body: {"email": email}, headers: _headerDelete);
+
+    if (response.statusCode == 201 ||
+        response.statusCode == 204 ||
+        response.statusCode == 200) {
+      return response.body;
+    } else {
+      print(response.body);
       return response.statusCode;
     }
   }

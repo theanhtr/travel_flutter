@@ -137,6 +137,8 @@ class LoginManager {
 
   Future<bool> signOut() async {
     final token = userModel.token;
+    // final token =
+    //     "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5OGQ4OTBlMy1jYmZlLTQ5M2YtOTQ3OS03YzE1ODkwZTMwMTAiLCJqdGkiOiI5MzAyNGJjNWNmZGJhZDM5OTBlN2RkNTAxZjg2NDg0ZmFkMTk2YmMwMjMxNzFjODNhNWY1MWMyZWE1M2Q4NDdmMDgzMWQ5Y2VlY2QxNDQxMCIsImlhdCI6MTY4NDI1NzUzNy42MzY2MywibmJmIjoxNjg0MjU3NTM3LjYzNjYzNCwiZXhwIjoxNjg2ODQ5NTM3LjYyMTkzNSwic3ViIjoiMSIsInNjb3BlcyI6W119.QXs8dwgUn1v7_1Q5X6Z3dmDBHLc5KVAXMM-oqU9dmDQUXHPp3sQ32urWihu_CPEEbrGNvZD4cH30U_GzrLLoTiIZ5d9DW46x0imflm26RjmF1h1Nw6FlzgLIUSBK98FogXEy2yscWv81tT_UBwcnhvsTRRZEuOiQLoOciSDrXibza77gS5MjxHqp3KT8Ft82Lk4vJWmkLEgUJQ6Qs1-slmnsknUkF0yW4GDNd2JUOcelRuvl8KaPkd_QW70B4Y3wBsL8-CF4TFzecmJHZiD5CX6OyOerBN3uaAKP-smQ8U03ykmd8zfELR-NsY1-zXPstub88rS76hiBh6jugWSczw7yBT1gnrfrwBk8Ojx2pEmiQkBwdQUD3jEqGSliz1Vw7QMr-4Ir7Np01kl7wOs0jpZVZNrwu-oXvDmvN9t6DkuDC7EbsiMO_jpgZkEJepKAKUb4BzYkMuKlcCnUtmZ1l7Kc0ovEaLvkjn08tW1M0XmTqwOGp7bCTJWo_qVMjv6NHYk6Ukv8l8yP3PYHTGHkEFP9tW7Lez7zT60emZONEfiKubsJn13u3-4O2mHFS2pWG-_YG34EIO5nZHrpuqHbcKpTFLnTTzXZC3QhFPyQ5zFwh1DXwQwh1NZatT9jUT8r1hTL-5lEPUDRmWS7CpdT0-gxLK5cmzjdkpZagBYHWrM";
     if (token != null) {
       var response = await BaseClient(token).post('/auth/logout', {
         'allDevice': false,
@@ -271,6 +273,7 @@ class LoginManager {
       debugPrint("hwc hce");
       return false;
     });
+
     Map dataResponse = Map<String, String>();
     dataResponse = json.decode(response);
 

@@ -6,6 +6,7 @@ import 'package:travel_app_ytb/helpers/http/base_client.dart';
 import 'package:travel_app_ytb/helpers/image_helper.dart';
 import 'package:travel_app_ytb/helpers/local_storage_helper.dart';
 import 'package:travel_app_ytb/helpers/loginManager/login_manager.dart';
+import 'package:travel_app_ytb/representation/screens/admin_screen.dart';
 import 'package:travel_app_ytb/representation/screens/checkout/payment_screen.dart';
 import 'package:travel_app_ytb/representation/screens/intro_screen.dart';
 import 'package:travel_app_ytb/representation/screens/login/login_screen.dart';
@@ -30,16 +31,17 @@ class _SplashScreenState extends State<SplashScreen> {
       LoginManager().isLogin().then((value) => {
             if (value == true)
               {
-                Navigator.popAndPushNamed(context, MainScreen.routeName)
+                if (LocalStorageHelper.getValue("roleId") == 1)
+                  {Navigator.popAndPushNamed(context, AdminScreen.routeName)}
+                else
+                  {Navigator.popAndPushNamed(context, MainScreen.routeName)}
               }
             else if (FirebaseAuth.instance.currentUser == null)
               {
                 Navigator.popAndPushNamed(context, LoginScreen.routeName),
               }
             else
-              {
-                Navigator.popAndPushNamed(context, MainScreen.routeName)
-              }
+              {Navigator.popAndPushNamed(context, MainScreen.routeName)}
           });
     } else {
       LocalStorageHelper.setValue('ignoreIntroScreen', true);

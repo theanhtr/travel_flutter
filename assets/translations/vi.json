@@ -129,5 +129,36 @@
   "name": "Tên",
   "continue": "Tiếp tục",
   "credit_debit_card": "Credit / Debit Card",
-  "contact_details": "Thông tin liên lạc"
+  "contact_details": "Thông tin liên lạc",
+  "errorWhenCallApi":"Lỗi khi gọi API",
+  "createUserSuccess": "Tạo tài khoản thành công",
+
+  "editProfileSuccess": "Cập nhật thông tin thành công",
+  "haveToFillInforFirst": "Cập nhật thông tin trước đi",
+  "signUpSuccess": "Đăng ký thông tin trước đi",
+  "changeRoleSuccess": "Thay vị trí thành công",
+  "selectRole": "Chọn vai trò",
+  "createUser": "Tạo người dùng",
+  "hotelManagement": "QL khách sạn",
+  "userManagement": "QL người dùng",
+  
+  "addUser": "Tạo tài khoản",
+  "adminMenu": "Chức năng quản trị",
+  "noHotel": "Không có khách sạn nào",
+  "noUser": "Không có người dùng",
+  "admin": "Quản trị viên",
+  "customer": "Khách hàng",
+  "hotelManager": "Chủ khách sạn",
+  "airlineManager": "Điều phối viên",
+  "deleteUser":"Xóa người dùng",
+  "deleteUserSuccess":"Xóa thành công",
+  "changeRoleComplete":"Thay role thành công",
+  "changeRole":"Đổi role",
+  "selectRow":"Chọn role để đổi",
+  "viewDetail": "Xem chi tiết",
+  "bookRoom": "Đặt phòng",
+  "": "",
+  "": ""
+
+  
 }

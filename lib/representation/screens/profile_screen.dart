@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:travel_app_ytb/core/utils/user_preferences.dart';
+import 'package:travel_app_ytb/helpers/local_storage_helper.dart';
 import 'package:travel_app_ytb/helpers/loginManager/login_manager.dart';
 import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
 import 'package:travel_app_ytb/representation/models/user_model.dart';
@@ -57,54 +58,118 @@ class _ProfilePageState extends State<ProfilePage> {
         }
         if (snapshot.hasData) {
           return Scaffold(
-            body: AppBarContainer(
-              titleString: LocalizationText.profile,
-              child: ListView(
-                physics: BouncingScrollPhysics(),
-                children: [
-                  ProfileWidget(
-                    imagePath: widget.log.userModelProfile.photoUrl.toString(),
-                    onClicked: () async {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                            builder: (context) => EditProfilePage()),
-                      );
-                    },
-                    isEdit: false,
-                  ),
-                  const SizedBox(height: 24),
-                  buildName(widget.log.userModelProfile),
-                  const SizedBox(height: 32),
-                  NumbersWidget(),
-                  const SizedBox(height: 32),
-                  ButtonWidget(
-                    title: LocalizationText.logout,
-                    ontap: () async {
-                      Loading.show(context);
-                      await LoginManager().signOut().then((value) => {
-                        Loading.dismiss(context),
-                            if (value == true && _isLogOut == false)
-                              {
-                                Navigator.popAndPushNamed(
-                                    context, LoginScreen.routeName),
-                                _isLogOut = true,
-                              }
-                          });
-                      await FirebaseAuth.instance.signOut().then((value) => {
-                        Loading.dismiss(context),
-                            if (_isLogOut == false)
-                              {
-                                Navigator.popAndPushNamed(
-                                    context, LoginScreen.routeName),
-                                _isLogOut = true,
-                              }
-                          });
-                    },
+            body: LocalStorageHelper.getValue("roleId") == 1
+                ? ListView(
+                    physics: BouncingScrollPhysics(),
+                    children: [
+                      ProfileWidget(
+                        imagePath: widget.log.userModelProfile.photoUrl
+                                    .toString() !=
+                                null
+                            ? widget.log.userModelProfile.photoUrl.toString()
+                            : "https://cdn.mos.cms.futurecdn.net/JarKa4TVZxSCuN8x8WNPSN.jpg",
+                        onClicked: () async {
+                          Navigator.of(context).pushNamed(
+                              // MaterialPageRoute(
+                              //   builder: (context) => EditProfilePage(),
+                              // ),
+                              EditProfilePage.routeName,
+                              arguments: {
+                                "reloadProfile": () {
+                                  setState(() {});
+                                }
+                              });
+                        },
+                        isEdit: false,
+                      ),
+                      const SizedBox(height: 24),
+                      buildName(widget.log.userModelProfile),
+                      const SizedBox(height: 32),
+                      NumbersWidget(),
+                      const SizedBox(height: 32),
+                      ButtonWidget(
+                        title: LocalizationText.logout,
+                        ontap: () async {
+                          Loading.show(context);
+                          await LoginManager().signOut().then((value) => {
+                                Loading.dismiss(context),
+                                if (value == true && _isLogOut == false)
+                                  {
+                                    Navigator.popAndPushNamed(
+                                        context, LoginScreen.routeName),
+                                    _isLogOut = true,
+                                  }
+                              });
+                          await FirebaseAuth.instance
+                              .signOut()
+                              .then((value) => {
+                                    Loading.dismiss(context),
+                                    if (_isLogOut == false)
+                                      {
+                                        Navigator.popAndPushNamed(
+                                            context, LoginScreen.routeName),
+                                        _isLogOut = true,
+                                      }
+                                  });
+                        },
+                      )
+                      // buildAbout(widget.log.userModelProfile)
+                    ],
                   )
-                  // buildAbout(widget.log.userModelProfile)
-                ],
-              ),
-            ),
+                : AppBarContainer(
+                    titleString: LocalizationText.profile,
+                    child: ListView(
+                      physics: BouncingScrollPhysics(),
+                      children: [
+                        ProfileWidget(
+                          imagePath: widget.log.userModelProfile.photoUrl
+                                      .toString() !=
+                                  null
+                              ? widget.log.userModelProfile.photoUrl.toString()
+                              : "https://cdn.mos.cms.futurecdn.net/JarKa4TVZxSCuN8x8WNPSN.jpg",
+                          onClicked: () async {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                  builder: (context) => EditProfilePage()),
+                            );
+                          },
+                          isEdit: false,
+                        ),
+                        const SizedBox(height: 24),
+                        buildName(widget.log.userModelProfile),
+                        const SizedBox(height: 32),
+                        NumbersWidget(),
+                        const SizedBox(height: 32),
+                        ButtonWidget(
+                          title: LocalizationText.logout,
+                          ontap: () async {
+                            Loading.show(context);
+                            await LoginManager().signOut().then((value) => {
+                                  Loading.dismiss(context),
+                                  if (value == true && _isLogOut == false)
+                                    {
+                                      Navigator.popAndPushNamed(
+                                          context, LoginScreen.routeName),
+                                      _isLogOut = true,
+                                    }
+                                });
+                            await FirebaseAuth.instance
+                                .signOut()
+                                .then((value) => {
+                                      Loading.dismiss(context),
+                                      if (_isLogOut == false)
+                                        {
+                                          Navigator.popAndPushNamed(
+                                              context, LoginScreen.routeName),
+                                          _isLogOut = true,
+                                        }
+                                    });
+                          },
+                        )
+                        // buildAbout(widget.log.userModelProfile)
+                      ],
+                    ),
+                  ),
           );
         }
         return Container();

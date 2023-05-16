@@ -5,7 +5,10 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:travel_app_ytb/core/utils/const_utils.dart';
 import 'package:travel_app_ytb/helpers/local_storage_helper.dart';
+import 'package:travel_app_ytb/representation/screens/admin/user_management_screen.dart';
+import 'package:travel_app_ytb/representation/screens/admin_screen.dart';
 import 'package:travel_app_ytb/representation/screens/splash_screen.dart';
+import 'package:travel_app_ytb/representation/screens/user_fill_in_information_screen.dart';
 import 'package:travel_app_ytb/routes.dart';
 import './core/constants/color_palatte.dart';
 
@@ -41,6 +44,7 @@ class MyApp extends StatelessWidget {
           dividerColor: Color.fromARGB(255, 0, 0, 0)),
       routes: routes,
       debugShowCheckedModeBanner: false,
+      // home: DeleteUserAccount(),
       home: SplashScreen(),
     );
   }

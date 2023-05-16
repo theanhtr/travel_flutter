@@ -130,5 +130,35 @@
   "name": "Name",
   "continue": "Continue",
   "credit_debit_card": "Credit / Debit Card",
-  "contact_details": "Contact Details"
+  "contact_details": "Contact Details",
+  "errorWhenCallApi":"Error when call api",
+  "createUserSuccess": "Create account success",
+  "editProfileSuccess": "Update infor success",
+  "haveToFillInforFirst": "You have to fill this form first",
+  "signUpSuccess": "Sign up success",
+  "changeRoleSuccess": "Change role success",
+  "selectRole": "Select role",
+  "createUser": "Create user",
+  "hotelManagement": "Hotel Management",
+  "userManagement": "User Management",
+  
+  "addUser": "Add user",
+  "adminMenu": "Admin Menu",
+  "noHotel": "No hotels to display",
+  "noUser": "No user to display",
+  "admin": "Admin",
+  "customer": "Customer",
+  "hotelManager": "Hotel Manager",
+  "airlineManager": "Airline Manager",
+  "": "",
+  "": ""  ,
+  "deleteUser":"Delete user",
+  "changeRoleComplete":"Change role complete",
+  "changeRole":"Change role",
+  "selectRow":"Select role to change",
+  "viewDetail": "View hotel's detail",
+  "bookRoom": "Book a room",
+  "deleteUserSuccess":"Delete success"
+  
+  
 }
