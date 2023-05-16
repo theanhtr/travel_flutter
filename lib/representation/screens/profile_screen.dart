@@ -79,8 +79,10 @@ class _ProfilePageState extends State<ProfilePage> {
                   const SizedBox(height: 32),
                   ButtonWidget(
                     title: LocalizationText.logout,
-                    ontap: () {
-                      LoginManager().signOut().then((value) => {
+                    ontap: () async {
+                      Loading.show(context);
+                      await LoginManager().signOut().then((value) => {
+                        Loading.dismiss(context),
                             if (value == true && _isLogOut == false)
                               {
                                 Navigator.popAndPushNamed(
@@ -88,7 +90,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                 _isLogOut = true,
                               }
                           });
-                      FirebaseAuth.instance.signOut().then((value) => {
+                      await FirebaseAuth.instance.signOut().then((value) => {
+                        Loading.dismiss(context),
                             if (_isLogOut == false)
                               {
                                 Navigator.popAndPushNamed(
