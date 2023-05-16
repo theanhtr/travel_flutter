@@ -172,4 +172,9 @@ class LocalizationText {
   static String bookRoom = "bookRoom".tr();
   static String deleteUserSuccess = "deleteUserSuccess".tr();
   static String dontHaveBirthDate = "dontHaveBirthDate".tr();
+  static String warning = 'warning'.tr();
+  static String pleaseFillInYourFullNameEmailPhoneNumber = 'pleaseFillInYourFullNameEmailPhoneNumber'.tr();
+  static String congratulations = "Congratulations".tr();
+  static String thankYouForUsingOurService = "thanhYouForUsingOurService".tr();
+  static String passwordHasBeenSentToYourEmail = "passwordHasBeenSentToYourEmail".tr();
 }

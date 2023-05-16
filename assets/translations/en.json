@@ -150,8 +150,6 @@
   "customer": "Customer",
   "hotelManager": "Hotel Manager",
   "airlineManager": "Airline Manager",
-  "": "",
-  "": ""  ,
   "deleteUser":"Delete user",
   "changeRoleComplete":"Change role complete",
   "changeRole":"Change role",
@@ -159,7 +157,10 @@
   "viewDetail": "View hotel's detail",
   "bookRoom": "Book a room",
   "deleteUserSuccess":"Delete success",
-  "dontHaveBirthDate": "Not selected yet"
-  
-  
+  "dontHaveBirthDate": "Not selected yet",
+  "warning": "warning",
+  "pleaseFillInYourFullNameEmailPhoneNumber": "Please fill in your full name, email, phone number",
+  "Congratulations": "Congratulations",
+  "thanhYouForUsingOurService": "Thank you for using our service",
+  "passwordHasBeenSentToYourEmail": "Password has been sent to your email"
 }

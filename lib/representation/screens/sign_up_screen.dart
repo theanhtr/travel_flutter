@@ -142,33 +142,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           Loading.dismiss(context),
                           if (value['success'] == true)
                             {
-                              LoginManager()
-                                  .getToken(email, password)
-                                  .then((value1) {
-                                print("dong 148: $value1");
-                                LoginManager().token = value1;
-                                AwesomeDialog(
-                                  context: context,
-                                  dialogType: DialogType.success,
-                                  animType: AnimType.topSlide,
-                                  title: LocalizationText.signUpSuccess,
-                                  desc: value['message'],
-                                  btnOkOnPress: () {
-                                    Navigator.popAndPushNamed(
-                                        context, LoginScreen.routeName);
-                                    // Navigator.of(context).pushNamed(
-                                    //     // MaterialPageRoute(
-                                    //     //   builder: (context) => EditProfilePage(),
-                                    //     // ),
-                                    //     FillInforScreen.routeName);
-                                    // arguments: {
-                                    //   "reloadProfile": () {
-                                    //     setState(() {});
-                                    //   }
-                                    // });
-                                  },
-                                ).show();
-                              })
+                              AwesomeDialog(
+                                context: context,
+                                dialogType: DialogType.success,
+                                animType: AnimType.topSlide,
+                                title: LocalizationText.signUpSuccess,
+                                desc: value['message'],
+                                btnOkOnPress: () {
+                                  Navigator.popAndPushNamed(
+                                      context, LoginScreen.routeName);
+                                },
+                              ).show()
                             }
                           else if (value['result'] == 'false')
                             {

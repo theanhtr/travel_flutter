@@ -11,6 +11,7 @@ import 'package:travel_app_ytb/helpers/image_helper.dart';
 import 'package:travel_app_ytb/helpers/local_storage_helper.dart';
 import 'package:travel_app_ytb/representation/widgets/button_widget.dart';
 import 'package:travel_app_ytb/representation/widgets/dropdown_button_widget.dart';
+import 'package:travel_app_ytb/representation/widgets/loading/loading.dart';
 
 import '../../helpers/translations/localization_text.dart';
 
@@ -97,9 +98,11 @@ class _UserCardWidgetState extends State<UserCardWidget> {
                         ButtonWidget(
                           title: LocalizationText.deleteUser,
                           ontap: () async {
+                            Loading.show(context);
                             await _controller
                                 .deleteUser(widget.email.toString())
                                 .then((value) => {
+                                  Loading.dismiss(context),
                                       if (value['success'] == true)
                                         {
                                           AwesomeDialog(

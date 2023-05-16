@@ -52,6 +52,7 @@ class LoginManager {
           userModelProfile.photoUrl = value?.photoUrl,
           userModelProfile.email = value?.email,
         });
+    await setUserModel();
   }
 
   //private

@@ -23,7 +23,6 @@ class _DropdownButtonCustomState extends State<DropdownButtonCustom> {
         LocalizationText.admin,
         LocalizationText.user,
         LocalizationText.hotelManager,
-        LocalizationText.airlineManager
       ].map((String value) {
         return DropdownMenuItem<String>(
           value: value,

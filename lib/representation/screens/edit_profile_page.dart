@@ -428,17 +428,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                       : ' ${e.response?.data['message'][0]}',
                                   btnOkOnPress: () {
                                     Navigator.of(context).pushNamed(
-                                        // MaterialPageRoute(
-                                        //   builder: (context) => EditProfilePage(),
-                                        // ),
                                         FillInforScreen.routeName,
                                         arguments: {
                                           "reloadProfile": () {
                                             setState(() {});
                                           }
                                         });
-                                    // Navigator.popAndPushNamed(
-                                    //     context, FillInforScreen.routeName);
                                   },
                                 ).show();
                               } else {

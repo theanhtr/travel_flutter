@@ -98,7 +98,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
                                 dialogType: DialogType.success,
                                 animType: AnimType.topSlide,
                                 title: LocalizationText.createUserSuccess,
-                                desc: value['message'],
+                                desc: LocalizationText.passwordHasBeenSentToYourEmail,
                                 btnOkOnPress: () {},
                               ).show()
                             }

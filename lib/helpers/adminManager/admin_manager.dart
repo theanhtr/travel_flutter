@@ -154,9 +154,6 @@ class AdminManager {
       case 3:
         roleString = LocalizationText.hotelManager;
         break;
-      case 4:
-        roleString = LocalizationText.airlineManager;
-        break;
     }
 
     return roleString;

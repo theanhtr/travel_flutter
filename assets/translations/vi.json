@@ -158,7 +158,9 @@
   "viewDetail": "Xem chi tiết",
   "bookRoom": "Đặt phòng",
   "dontHaveBirthDate": "Chưa chọn ngày",
-  "": ""
-
-  
+  "warning": "Cảnh báo",
+  "pleaseFillInYourFullNameEmailPhoneNumber": "Vui lòng điền đẩy đủ họ tên , email, số điện thoại",
+  "Congratulations": "Chúc mừng",
+  "thanhYouForUsingOurService": "Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi",
+  "passwordHasBeenSentToYourEmail": "Mật khẩu đã được gửi đến email của bạn"
 }

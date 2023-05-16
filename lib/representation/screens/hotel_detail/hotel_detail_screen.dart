@@ -76,6 +76,7 @@ class _HotelDetailScreenState extends State<HotelDetailScreen> {
                 LocationHelper()
                     .getGeoPointFromAddress(_hotelModel?.address ?? "")
                     .then((position) => {
+                      debugPrint("79 hotel detail $position"),
                           setState(() {
                             _hotelModel?.position =
                                 LatLng(position.latitude, position.longitude);

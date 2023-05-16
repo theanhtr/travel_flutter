@@ -1,35 +1,49 @@
 import 'dart:convert';
+
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
-import 'package:travel_app_ytb/core/constants/color_palatte.dart';
 import 'package:travel_app_ytb/core/constants/dismention_constants.dart';
 import 'package:travel_app_ytb/core/constants/textstyle_constants.dart';
 import 'package:travel_app_ytb/core/utils/const_utils.dart';
 import 'package:travel_app_ytb/helpers/asset_helper.dart';
 import 'package:travel_app_ytb/helpers/date_helper.dart';
-import 'package:travel_app_ytb/helpers/loginManager/login_manager.dart';
+import 'package:travel_app_ytb/helpers/paymentManager/paymentManager.dart';
 import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
 import 'package:travel_app_ytb/representation/models/room_model.dart';
 import 'package:travel_app_ytb/representation/widgets/button_widget.dart';
-import 'package:travel_app_ytb/representation/widgets/info_card.dart';
-import 'package:travel_app_ytb/representation/widgets/item_text_container.dart';
 
 import '../../../helpers/image_helper.dart';
-import '../../widgets/booking_hotel_tab_container.dart';
-import '../../widgets/room_card_widget.dart';
-import 'checkout_screen.dart';
 
 class PaymentScreen extends StatefulWidget {
-  const PaymentScreen(
-      {Key? key, required this.roomSelect, required this.dateSelected, this.isPaymentSuccess, required this.roomCount})
-      : super(key: key);
+  const PaymentScreen({
+    Key? key,
+    required this.roomSelect,
+    required this.dateSelected,
+    this.isPaymentSuccess,
+    this.validateInformation,
+    required this.roomCount,
+    required this.guestCount,
+    this.name,
+    this.email,
+    this.phoneNumber,
+    required this.startDate,
+    required this.endDate,
+    required this.hotelId,
+  }) : super(key: key);
   final RoomModel roomSelect;
   final String dateSelected;
   final int roomCount;
+  final int guestCount;
+  final String? name;
+  final String? email;
+  final String? phoneNumber;
+  final String startDate;
+  final String endDate;
+  final int hotelId;
   final Function(bool?)? isPaymentSuccess;
+  final Function()? validateInformation;
 
   @override
   State<PaymentScreen> createState() => _PaymentScreenState();
@@ -37,6 +51,7 @@ class PaymentScreen extends StatefulWidget {
 
 class _PaymentScreenState extends State<PaymentScreen> {
   Map<String, dynamic>? paymentIntent;
+  //int orderId = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -79,14 +94,18 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 Column(
                   children: [
                     Text(
-                      countNight <= 1 ? "$countNight night" : "$countNight nights",
+                      countNight <= 1
+                          ? "$countNight night"
+                          : "$countNight nights",
                       style: TextStyles.defaultStyle.copyWith(
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
                       ),
                     ),
                     Text(
-                      widget.roomCount <= 1 ? "${widget.roomCount} room" : "${widget.roomCount} rooms",
+                      widget.roomCount <= 1
+                          ? "${widget.roomCount} room"
+                          : "${widget.roomCount} rooms",
                       style: TextStyles.defaultStyle.copyWith(
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
@@ -133,10 +152,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
   Future<void> makePayment(String total) async {
     try {
-      paymentIntent = await createPaymentIntent(total, 'usd');
+      paymentIntent = await createPaymentIntent(total, 'USD');
 
       var gpay = const PaymentSheetGooglePay(
-          merchantCountryCode: "US", currencyCode: "usd", testEnv: true);
+          merchantCountryCode: "USD", currencyCode: "USD", testEnv: true);
 
       //STEP 2: Initialize Payment Sheet
       await Stripe.instance
@@ -151,19 +170,58 @@ class _PaymentScreenState extends State<PaymentScreen> {
           )
           .then((value) {});
 
-      //STEP 3: Display Payment sheet
-      displayPaymentSheet();
+      PaymentManager()
+          .createHotelOrder(
+              widget.name ?? "",
+              widget.email ?? "",
+              widget.phoneNumber ?? "",
+              "",
+              widget.guestCount,
+              widget.roomCount,
+              widget.startDate,
+              widget.endDate,
+              widget.roomSelect.id ?? 0,
+              widget.hotelId)
+          .then((value) => {
+                if (value.success == true)
+                  {
+                    //orderId = value.data?.id ?? 0,
+                    displayPaymentSheet(value.data?.id ?? 0),
+                  }
+                else if (value.success == false)
+                  {
+                    AwesomeDialog(
+                      context: context,
+                      dialogType: DialogType.warning,
+                      animType: AnimType.topSlide,
+                      title: LocalizationText.warning,
+                      desc: LocalizationText.pleaseFillInYourFullNameEmailPhoneNumber,
+                      btnOkOnPress: widget.validateInformation,
+                    ).show(),
+                  }
+              });
     } catch (err) {
       debugPrint("$err");
     }
   }
 
-  Future<void> displayPaymentSheet() async {
+  Future<void> displayPaymentSheet(int orderId) async {
     try {
       await Stripe.instance.presentPaymentSheet().then((value) {
-        widget.isPaymentSuccess?.call(true);
-        // todo Call api backend save success payment
-        //
+        PaymentManager().paymentClient(orderId).then((value) => {
+          if (value.success == true) {
+            widget.isPaymentSuccess?.call(true),
+          } else {
+            AwesomeDialog(
+              context: context,
+              dialogType: DialogType.warning,
+              animType: AnimType.topSlide,
+              title: LocalizationText.warning,
+              desc: "Error when call api",
+              btnOkOnPress: widget.validateInformation,
+            ).show(),
+          }
+        });
       });
     } catch (e) {
       debugPrint('$e');

@@ -5,9 +5,9 @@ class LocalStorageHelper {
 
   static final LocalStorageHelper _shared = LocalStorageHelper._internal();
 
-  // factory LocalStorageHelper() {
-  //   return _shared;
-  // }
+  factory LocalStorageHelper() {
+    return _shared;
+  }
 
   Box<dynamic>? hiveBox;
 
