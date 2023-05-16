@@ -162,18 +162,18 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   ),
                 ),
                 const SizedBox(height: 24),
-                StatefulBuilder(
-                  builder: (context, setState) => TextFieldWidget(
-                    label: LocalizationText.email,
-                    text: email,
-                    onChanged: (email) {
-                      setState(() {
-                        this.email = email;
-                      });
-                    },
-                  ),
-                ),
-                const SizedBox(height: 24),
+                // StatefulBuilder(
+                //   builder: (context, setState) => TextFieldWidget(
+                //     label: LocalizationText.email,
+                //     text: email,
+                //     onChanged: (email) {
+                //       setState(() {
+                //         this.email = email;
+                //       });
+                //     },
+                //   ),
+                // ),
+                // const SizedBox(height: 24),
                 StatefulBuilder(
                   builder: (context, setState) => TextFieldWidget(
                     label: LocalizationText.phoneNumber,

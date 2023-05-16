@@ -17,12 +17,16 @@ class _DropdownButtonCustomState extends State<DropdownButtonCustom> {
   @override
   Widget build(BuildContext context) {
     return DropdownButton(
+      isExpanded: true,
+      iconSize: 30,
+      // style: TextStyle(fontSize: ),
       value: _selectedLocation,
       dropdownColor: ColorPalette.noSelectbackgroundColor,
       items: <String>[
         LocalizationText.admin,
         LocalizationText.user,
         LocalizationText.hotelManager,
+        // LocalizationText.airlineManager
       ].map((String value) {
         return DropdownMenuItem<String>(
           value: value,

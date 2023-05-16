@@ -68,5 +68,6 @@ final Map<String, WidgetBuilder> routes = {
   SeeAllDestinationsScreen.routeName: (context) =>
       const SeeAllDestinationsScreen(),
   ContactDetailsScreen.routeName: (context) => const ContactDetailsScreen(),
+  // FillInforScreen.routeName: (context) => const FillInforScreen()
   ReviewsScreen.routeName: (context) => const ReviewsScreen(),
 };

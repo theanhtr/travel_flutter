@@ -89,7 +89,7 @@ class AdminManager {
   }
 
   Future<Map> getAllUser() async {
-    // print("token day: ${LocalStorageHelper.getValue("userToken")}");
+    print("token day: ${LocalStorageHelper.getValue("userToken")}");
     final token = await LocalStorageHelper.getValue("userToken") as String?;
     final response = await BaseClient(token!).get("/users").catchError((err) {
       debugPrint(err);

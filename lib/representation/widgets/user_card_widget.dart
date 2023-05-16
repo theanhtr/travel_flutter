@@ -98,39 +98,46 @@ class _UserCardWidgetState extends State<UserCardWidget> {
                         ButtonWidget(
                           title: LocalizationText.deleteUser,
                           ontap: () async {
-                            Loading.show(context);
-                            await _controller
-                                .deleteUser(widget.email.toString())
-                                .then((value) => {
-                                  Loading.dismiss(context),
-                                      if (value['success'] == true)
-                                        {
-                                          AwesomeDialog(
-                                            context: context,
-                                            dialogType: DialogType.success,
-                                            animType: AnimType.topSlide,
-                                            title: LocalizationText
-                                                .deleteUserSuccess,
-                                            desc: LocalizationText.ok,
-                                            btnOkOnPress: () {
-                                              widget.callback();
+                            AwesomeDialog(
+                              context: context,
+                              dialogType: DialogType.error,
+                              animType: AnimType.topSlide,
+                              title: LocalizationText.aboutTodelete,
+                              desc: LocalizationText.confirmDeleteAccount,
+                              btnOkOnPress: () async {
+                                await _controller
+                                    .deleteUser(widget.email.toString())
+                                    .then((value) => {
+                                          if (value['success'] == true)
+                                            {
+                                              AwesomeDialog(
+                                                context: context,
+                                                dialogType: DialogType.success,
+                                                animType: AnimType.topSlide,
+                                                title: LocalizationText
+                                                    .deleteUserSuccess,
+                                                desc: LocalizationText.ok,
+                                                btnOkOnPress: () {
+                                                  widget.callback();
+                                                },
+                                              ).show()
+                                            }
+                                          else
+                                            {
+                                              // Loading.dismiss(context),
+                                              AwesomeDialog(
+                                                context: context,
+                                                dialogType: DialogType.error,
+                                                animType: AnimType.topSlide,
+                                                title: LocalizationText
+                                                    .errorWhenCallApi,
+                                                desc: value['message'],
+                                                btnOkOnPress: () {},
+                                              ).show()
                                             },
-                                          ).show()
-                                        }
-                                      else
-                                        {
-                                          // Loading.dismiss(context),
-                                          AwesomeDialog(
-                                            context: context,
-                                            dialogType: DialogType.error,
-                                            animType: AnimType.topSlide,
-                                            title: LocalizationText
-                                                .errorWhenCallApi,
-                                            desc: value['message'],
-                                            btnOkOnPress: () {},
-                                          ).show()
-                                        },
-                                    });
+                                        });
+                              },
+                            ).show();
                           },
                         ),
                         ButtonWidget(
@@ -150,45 +157,66 @@ class _UserCardWidgetState extends State<UserCardWidget> {
                                       Navigator.pop(context, 'Cancel'),
                                   child: TextButton(
                                       onPressed: () async {
-                                        await _controller
-                                            .changeRole(widget.email.toString(),
-                                                idRoleNameChange)
-                                            .then((value) => {
-                                                  if (value['success'] == true)
-                                                    {
-                                                      AwesomeDialog(
-                                                        context: context,
-                                                        dialogType:
-                                                            DialogType.success,
-                                                        animType:
-                                                            AnimType.topSlide,
-                                                        title: LocalizationText
-                                                            .checkAll,
-                                                        desc: LocalizationText
-                                                            .changeRoleSuccess,
-                                                        btnOkOnPress: () {
-                                                          widget.callback();
-                                                          Navigator.pop(
-                                                              context);
-                                                        },
-                                                      ).show()
-                                                    }
-                                                  else
-                                                    {
-                                                      // Loading.dismiss(context),
-                                                      AwesomeDialog(
-                                                        context: context,
-                                                        dialogType:
-                                                            DialogType.error,
-                                                        animType:
-                                                            AnimType.topSlide,
-                                                        title: LocalizationText
-                                                            .checkAll,
-                                                        desc: value['message'],
-                                                        btnOkOnPress: () {},
-                                                      ).show()
-                                                    },
-                                                });
+                                        if (widget.email.toString().isEmpty ==
+                                                true ||
+                                            idRoleNameChange == null) {
+                                          Loading.dismiss(context);
+                                          AwesomeDialog(
+                                            context: context,
+                                            dialogType: DialogType.error,
+                                            animType: AnimType.topSlide,
+                                            title:
+                                                LocalizationText.missingInfor,
+                                            desc: LocalizationText
+                                                .selectRoleFirst,
+                                            btnOkOnPress: () {},
+                                          ).show();
+                                        } else {
+                                          await _controller
+                                              .changeRole(
+                                                  widget.email.toString(),
+                                                  idRoleNameChange)
+                                              .then((value) => {
+                                                    if (value['success'] ==
+                                                        true)
+                                                      {
+                                                        AwesomeDialog(
+                                                          context: context,
+                                                          dialogType: DialogType
+                                                              .success,
+                                                          animType:
+                                                              AnimType.topSlide,
+                                                          title:
+                                                              LocalizationText
+                                                                  .success,
+                                                          desc: LocalizationText
+                                                              .changeRoleSuccess,
+                                                          btnOkOnPress: () {
+                                                            widget.callback();
+                                                            Navigator.pop(
+                                                                context);
+                                                          },
+                                                        ).show()
+                                                      }
+                                                    else
+                                                      {
+                                                        // Loading.dismiss(context),
+                                                        AwesomeDialog(
+                                                          context: context,
+                                                          dialogType:
+                                                              DialogType.error,
+                                                          animType:
+                                                              AnimType.topSlide,
+                                                          title:
+                                                              LocalizationText
+                                                                  .checkAll,
+                                                          desc:
+                                                              value['message'],
+                                                          btnOkOnPress: () {},
+                                                        ).show()
+                                                      },
+                                                  });
+                                        }
                                       },
                                       child: Text(LocalizationText.changeRole)),
                                 ),

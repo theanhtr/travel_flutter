@@ -7,6 +7,7 @@ import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
 import 'package:travel_app_ytb/representation/screens/login/login_screen.dart';
 import 'package:travel_app_ytb/representation/widgets/app_bar_container.dart';
 import 'package:travel_app_ytb/representation/widgets/button_widget.dart';
+import 'package:travel_app_ytb/representation/widgets/loading/loading.dart';
 
 class ButtonsInfo {
   String title;
@@ -125,8 +126,10 @@ class _DrawerPageState extends State<DrawerPage> {
               ),
               ButtonWidget(
                 title: LocalizationText.logout,
-                ontap: () {
-                  LoginManager().signOut().then((value) => {
+                ontap: () async {
+                  Loading.show(context);
+                  await LoginManager().signOut().then((value) => {
+                        Loading.dismiss(context),
                         if (value == true && _isLogOut == false)
                           {
                             Navigator.popAndPushNamed(
@@ -134,7 +137,8 @@ class _DrawerPageState extends State<DrawerPage> {
                             _isLogOut = true,
                           }
                       });
-                  FirebaseAuth.instance.signOut().then((value) => {
+                  await FirebaseAuth.instance.signOut().then((value) => {
+                        Loading.dismiss(context),
                         if (_isLogOut == false)
                           {
                             Navigator.popAndPushNamed(
