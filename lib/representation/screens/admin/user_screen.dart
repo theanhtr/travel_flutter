@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
 import 'package:travel_app_ytb/representation/screens/admin/add_user_screen.dart';
-import 'package:travel_app_ytb/representation/screens/admin/delete_user_screen.dart';
+import 'package:travel_app_ytb/representation/screens/admin/user_management_screen.dart';
 
 class AdminManageUser extends StatefulWidget {
+  List<dynamic> usersList;
+  AdminManageUser({super.key, required this.usersList});
   @override
   _AdminManageUserState createState() => _AdminManageUserState();
 }
 
 class _AdminManageUserState extends State<AdminManageUser> {
   int _selectedIndex = 0;
-  static const List<Widget> _widgetOptions = <Widget>[
-    DeleteUserAccount(),
+  static List<Widget> _widgetOptions = <Widget>[
+    Container(),
     AddUserScreen(),
-    Text('Profile Page',
+    Text(LocalizationText.profile,
         style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
   ];
 

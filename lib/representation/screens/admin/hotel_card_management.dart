@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -6,34 +7,38 @@ import 'package:travel_app_ytb/core/constants/dismention_constants.dart';
 import 'package:travel_app_ytb/core/constants/textstyle_constants.dart';
 import 'package:travel_app_ytb/helpers/image_helper.dart';
 import 'package:travel_app_ytb/helpers/local_storage_helper.dart';
-import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
 import 'package:travel_app_ytb/representation/widgets/button_widget.dart';
 
-class HotelCardWidget extends StatelessWidget {
-  const HotelCardWidget({
+class HotelListManagement extends StatelessWidget {
+  const HotelListManagement({
     super.key,
     required this.widthContainer,
-    required this.imageFilePath,
     required this.name,
-    required this.locationInfo,
-    required this.distanceInfo,
     required this.starInfo,
-    required this.countReviews,
-    required this.priceInfo,
+    required this.priceInfoLow,
+    required this.priceInfohigh,
     required this.ontap,
+    required this.createAt,
+    required this.id,
     this.description,
   });
 
   final double widthContainer;
-  final String imageFilePath;
+
   final String name;
-  final String locationInfo;
-  final String distanceInfo;
   final double starInfo;
-  final int countReviews;
-  final String priceInfo;
+  final String priceInfoLow;
+  final String priceInfohigh;
+  final String createAt;
   final String? description;
   final Function() ontap;
+  final int id;
+  String getFormatedDate(_date) {
+    var inputFormat = DateFormat('yyyy-MM-dd');
+    var inputDate = inputFormat.parse(_date);
+    var outputFormat = DateFormat('dd/MM/yyyy');
+    return outputFormat.format(inputDate);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,12 +56,6 @@ class HotelCardWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ImageHelper.loadFromNetwork(
-                imageFilePath,
-                width: widthContainer,
-                fit: BoxFit.fitWidth,
-                radius: BorderRadius.circular(kDefaultPadding),
-              ),
               Container(
                   margin: const EdgeInsets.all(kDefaultPadding),
                   child: Column(
@@ -71,32 +70,43 @@ class HotelCardWidget extends StatelessWidget {
                         height: kItemPadding,
                       ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Container(
                             margin: const EdgeInsets.only(
-                                right: kDefaultPadding / 6),
+                                right: kDefaultPadding / 5),
                             child: const Icon(
-                              FontAwesomeIcons.locationDot,
-                              color: Color(0xFFF77777),
+                              FontAwesomeIcons.solidCalendar,
+                              color: Color.fromARGB(255, 182, 49, 129),
                               size: kDefaultIconSize / 1.2,
                             ),
                           ),
                           Text(
-                            locationInfo,
-                            style: TextStyles.defaultStyle.blackTextColor.medium
-                                .setTextSize(kDefaultTextSize / 1.4),
+                            getFormatedDate(createAt),
+                            style: TextStyles.defaultStyle.bold.blackTextColor
+                                .setTextSize(kDefaultTextSize / 1.2),
                           ),
-                          Text(
-                            ' -- $distanceInfo from destination',
-                            style: TextStyles.defaultStyle.blackTextColor.light
-                                .setTextSize(kDefaultTextSize / 2.0),
-                          )
                         ],
                       ),
                       const SizedBox(
                         height: kItemPadding,
                       ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.start,
+                      //   children: [
+                      //     Container(
+                      //       margin: const EdgeInsets.only(
+                      //           right: kDefaultPadding / 6),
+                      //       child: const Icon(
+                      //         FontAwesomeIcons.locationDot,
+                      //         color: Color(0xFFF77777),
+                      //         size: kDefaultIconSize / 1.2,
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+                      // const SizedBox(
+                      //   height: kItemPadding,
+                      // ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -114,11 +124,6 @@ class HotelCardWidget extends StatelessWidget {
                             style: TextStyles.defaultStyle.blackTextColor.medium
                                 .setTextSize(kDefaultTextSize / 1.2),
                           ),
-                          Text(
-                            ' ($countReviews reviews)',
-                            style: TextStyles.defaultStyle.blackTextColor.light
-                                .setTextSize(kDefaultTextSize / 1.2),
-                          )
                         ],
                       ),
                       const SizedBox(
@@ -133,7 +138,7 @@ class HotelCardWidget extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            '\$ $priceInfo',
+                            '\$ $priceInfoLow - $priceInfohigh',
                             style: TextStyles.defaultStyle.bold.blackTextColor
                                 .setTextSize(kDefaultTextSize * 1.6),
                           ),
@@ -145,10 +150,11 @@ class HotelCardWidget extends StatelessWidget {
                           ),
                         ],
                       ),
+                      const SizedBox(
+                        height: kItemPadding,
+                      ),
                       ButtonWidget(
-                        title: LocalStorageHelper.getValue("roleId") == 1
-                            ? LocalizationText.viewDetail
-                            : LocalizationText.bookRoom,
+                        title: 'Delete hotel',
                         ontap: ontap,
                       ),
                     ],

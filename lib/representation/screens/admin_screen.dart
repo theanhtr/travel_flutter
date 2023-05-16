@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:travel_app_ytb/helpers/adminManager/admin_manager.dart';
+import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
+import 'package:travel_app_ytb/representation/screens/admin/add_user_screen.dart';
 import 'package:travel_app_ytb/representation/screens/admin/drawer_page_screen.dart';
 import 'package:travel_app_ytb/representation/screens/admin/hotel_management_screen.dart';
 import 'package:travel_app_ytb/representation/screens/admin/panelCenter_screen.dart';
+import 'package:travel_app_ytb/representation/screens/admin/user_management_screen.dart';
 import 'package:travel_app_ytb/representation/screens/admin/user_screen.dart';
+import 'package:travel_app_ytb/representation/screens/profile_screen.dart';
 import 'package:travel_app_ytb/representation/widgets/app_bar_container.dart';
+import 'package:travel_app_ytb/representation/widgets/loading/loading.dart';
 
 class AdminScreen extends StatefulWidget {
-  const AdminScreen({super.key});
+  AdminScreen({super.key});
   static const String routeName = '/admin_screen';
+  var adminManager = AdminManager();
   @override
   State<AdminScreen> createState() => _AdminScreenState();
 }
@@ -16,11 +23,41 @@ enum Section { HOME, ALL_HOTELS, ALL_USER }
 
 class _AdminScreenState extends State<AdminScreen> {
   int section = 0;
+  bool isFirst = true;
+  bool _isLoading = false;
+  bool _canLoadCardView = false;
+  int isDone = 0;
+  int isDone2 = 0;
+  // AdminManager adminManager;
+  //   @override
+  // void initState() {
+  //   super.initState();
+  //   adminManager = AdminManager();
+  // }
   @override
   Widget build(BuildContext context) {
+    // print("isFirst dong 36 $isFirst");
+    if (isFirst) {
+      isFirst = false;
+      widget.adminManager.getAllUser().then((value) => {
+            // print("value1 day $value"),
+            widget.adminManager.viewAllHotel().then((value) => {
+                  // print("value2 day $value"),
+                  isDone = 1,
+                  isDone2 = 1,
+                }),
+          });
+      // setState(() {});
+    }
+    if (isDone == 1 && isDone2 == 1) {
+      // isFirst = true;
+      _isLoading = false;
+      _canLoadCardView = false;
+    }
+    // widget.adminManager.viewAllHotel();
     debugPrint('${section}');
     Widget body = Scaffold(
-      body: Text("body of admin"),
+      body: Text(LocalizationText.home),
     );
 
     switch (section) {
@@ -30,15 +67,41 @@ class _AdminScreenState extends State<AdminScreen> {
         break;
 
       case 1:
-        body = AdminManageHotel();
+        if (isDone-- > 0) {
+          // print("admin hotel ${widget.adminManager.getListHotel}");
+          isFirst = false;
+          body = AdminManageHotel(
+            hotelsList: widget.adminManager.getListHotel,
+          );
+          isDone = 1;
+        } else {
+          isFirst = false;
+          body = Loading();
+        }
+
         break;
 
       case 2:
-        body = AdminManageUser();
+        if (isDone2-- > 0) {
+          // print("user hotel ${widget.adminManager.getUserList}");
+          isFirst = false;
+          body = ManageUser(usersList: widget.adminManager.getUserList);
+          isDone2 = 1;
+        } else {
+          isFirst = false;
+          body = Loading();
+        }
+        break;
+      case 3:
+        body = ProfilePage();
+        break;
+      case 4:
+        body = AddUserScreen();
         break;
     }
+    // print("isdone1: $isDone va isDOne2: $isDone2");
     return AppBarContainer(
-      titleString: 'Admin',
+      titleString: LocalizationText.admin,
       implementTrailing: true,
       child: Center(
         child: body,
@@ -47,29 +110,10 @@ class _AdminScreenState extends State<AdminScreen> {
         setPage: (index) {
           setState(() {
             section = index;
+            isFirst = false;
           });
         },
       ),
     );
   }
 }
-
-
-
-
-// Scaffold(
-//       backgroundColor: ColorPalette.purpleDark,
-//       appBar: AppBar(
-//         title: Text("im admin"),
-//       ),
-//       body: Center(
-//         child: body,
-//       ),
-//       drawer: DrawerPage(
-//         setPage: (index) {
-//           setState(() {
-//             section = index;
-//           });
-//         },
-//       ),
-//     );

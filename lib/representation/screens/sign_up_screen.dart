@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -9,9 +10,11 @@ import 'package:travel_app_ytb/core/constants/dismention_constants.dart';
 import 'package:travel_app_ytb/core/constants/textstyle_constants.dart';
 import 'package:travel_app_ytb/helpers/asset_helper.dart';
 import 'package:travel_app_ytb/helpers/image_helper.dart';
+import 'package:travel_app_ytb/helpers/loginManager/login_manager.dart';
 import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
 import 'package:travel_app_ytb/representation/controllers/login_screen_controller.dart';
 import 'package:travel_app_ytb/representation/screens/login/login_screen.dart';
+import 'package:travel_app_ytb/representation/screens/user_fill_in_information_screen.dart';
 import 'package:travel_app_ytb/representation/widgets/app_bar_container.dart';
 import 'package:travel_app_ytb/representation/widgets/button_icon_widget.dart';
 import 'package:travel_app_ytb/representation/widgets/button_widget.dart';
@@ -139,72 +142,101 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           Loading.dismiss(context),
                           if (value['success'] == true)
                             {
-                              Navigator.popAndPushNamed(
-                                  context, LoginScreen.routeName)
+                              LoginManager()
+                                  .getToken(email, password)
+                                  .then((value1) {
+                                print("dong 148: $value1");
+                                LoginManager().token = value1;
+                                AwesomeDialog(
+                                  context: context,
+                                  dialogType: DialogType.success,
+                                  animType: AnimType.topSlide,
+                                  title: LocalizationText.signUpSuccess,
+                                  desc: value['message'],
+                                  btnOkOnPress: () {
+                                    Navigator.popAndPushNamed(
+                                        context, LoginScreen.routeName);
+                                    // Navigator.of(context).pushNamed(
+                                    //     // MaterialPageRoute(
+                                    //     //   builder: (context) => EditProfilePage(),
+                                    //     // ),
+                                    //     FillInforScreen.routeName);
+                                    // arguments: {
+                                    //   "reloadProfile": () {
+                                    //     setState(() {});
+                                    //   }
+                                    // });
+                                  },
+                                ).show();
+                              })
                             }
                           else if (value['result'] == 'false')
                             {
-                              showDialog(
+                              Loading.dismiss(context),
+                              AwesomeDialog(
                                 context: context,
-                                builder: (BuildContext context) => AlertDialog(
-                                  title: Text(LocalizationText.errPassOrEmail),
-                                  content: Container(
-                                    height: 120.0,
-                                    color: Colors.yellow,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        value['data']['email'] != null
-                                            ? Text(
-                                                '${LocalizationText.email}: ${value['data']['email']}')
-                                            : SizedBox(
-                                                height: kDefaultPadding,
-                                              ),
-                                        value['data']['email'] != null
-                                            ? Text(
-                                                '${LocalizationText.password}: ${value['data']['password']}')
-                                            : SizedBox(
-                                                height: 0,
-                                              )
-                                      ],
-                                    ),
-                                  ),
-                                  actions: <Widget>[
-                                    TextButton(
-                                      onPressed: () => Navigator.pop(
-                                          context, LocalizationText.cancel),
-                                      child: Text(LocalizationText.ok),
-                                    ),
-                                    TextButton(
-                                      onPressed: () => Navigator.pop(
-                                          context, LocalizationText.ok),
-                                      child: Text(LocalizationText.ok),
-                                    ),
-                                  ],
-                                ),
-                              )
+                                dialogType: DialogType.warning,
+                                animType: AnimType.topSlide,
+                                title: LocalizationText.errPassOrEmail,
+                                desc: value['data']['email'] != null
+                                    ? '${LocalizationText.email}: ${value['data']['email']}'
+                                    : value['data']['password'] != null
+                                        ? '${value['data']['password']}'
+                                        : "",
+                                btnOkOnPress: () {},
+                              ).show(),
+                              // showDialog(
+                              //   context: context,
+                              //   builder: (BuildContext context) => AlertDialog(
+                              //     title: Text(LocalizationText.errPassOrEmail),
+                              //     content: Container(
+                              //       height: 120.0,
+                              //       color: Colors.yellow,
+                              //       child: Column(
+                              //         crossAxisAlignment:
+                              //             CrossAxisAlignment.start,
+                              //         children: [
+                              //           value['data']['email'] != null
+                              //               ? Text(
+                              //                   '${LocalizationText.email}: ${value['data']['email']}')
+                              //               : SizedBox(
+                              //                   height: kDefaultPadding,
+                              //                 ),
+                              //           value['data']['email'] != null
+                              //               ? Text(
+                              //                   '${LocalizationText.password}: ${value['data']['password']}')
+                              //               : SizedBox(
+                              //                   height: 0,
+                              //                 )
+                              //         ],
+                              //       ),
+                              //     ),
+                              //     actions: <Widget>[
+                              //       TextButton(
+                              //         onPressed: () => Navigator.pop(
+                              //             context, LocalizationText.cancel),
+                              //         child: Text(LocalizationText.ok),
+                              //       ),
+                              //       TextButton(
+                              //         onPressed: () => Navigator.pop(
+                              //             context, LocalizationText.ok),
+                              //         child: Text(LocalizationText.ok),
+                              //       ),
+                              //     ],
+                              //   ),
+                              // )
                             }
                           else
                             {
-                              showDialog(
+                              Loading.dismiss(context),
+                              AwesomeDialog(
                                 context: context,
-                                builder: (BuildContext context) => AlertDialog(
-                                  title: Text(LocalizationText.nullResponse),
-                                  actions: <Widget>[
-                                    TextButton(
-                                      onPressed: () =>
-                                          Navigator.pop(context, 'Cancel'),
-                                      child: Text(LocalizationText.cancel),
-                                    ),
-                                    TextButton(
-                                      onPressed: () =>
-                                          Navigator.pop(context, 'OK'),
-                                      child: Text(LocalizationText.ok),
-                                    ),
-                                  ],
-                                ),
-                              )
+                                dialogType: DialogType.warning,
+                                animType: AnimType.topSlide,
+                                title: LocalizationText.nullResponse,
+                                desc: value['message'],
+                                btnOkOnPress: () {},
+                              ).show()
                             },
                         });
               },
