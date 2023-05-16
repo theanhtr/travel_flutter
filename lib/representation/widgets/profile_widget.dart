@@ -34,9 +34,10 @@ class ProfileWidget extends StatelessWidget {
   }
 
   Widget buildImage() {
-    final image = NetworkImage(imagePath);
-    debugPrint('iamgePath: ${imagePath}');
-    if (isEdit == true && imagePath != 'null') {
+    final image;
+
+    debugPrint('iamgePath: ${imagePath} va ${imagePath.runtimeType} ');
+    if (isEdit == true && imagePath != "null") {
       return GestureDetector(
         onTap: onClicked,
         child: ClipOval(
@@ -56,6 +57,12 @@ class ProfileWidget extends StatelessWidget {
           ),
         ),
       );
+    }
+    if (imagePath == "null") {
+      image = NetworkImage(
+          "https://cdn.mos.cms.futurecdn.net/JarKa4TVZxSCuN8x8WNPSN.jpg");
+    } else {
+      image = NetworkImage(imagePath);
     }
     return ClipOval(
       child: Material(

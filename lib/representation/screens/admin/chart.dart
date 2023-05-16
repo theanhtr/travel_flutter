@@ -393,7 +393,7 @@
 //             fontSize: 15,
 //           ),
 //           getTitles: (value) {
-//             switch (value.toInt()) {
+//              (value.toInt()) {
 //               case 1:
 //                 return '10k';
 //               case 3:

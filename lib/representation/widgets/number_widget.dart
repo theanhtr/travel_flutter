@@ -17,7 +17,7 @@ class _NumbersWidgetState extends State<NumbersWidget> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           buildButton(context, 'Birthday',
-              widget.log.userModelProfile.dateOfBirth.toString()),
+              widget.log.userModelProfile.dateOfBirth.toString().split(' ')[0]),
           buildDivider(),
           buildButton(context, 'Phone number',
               widget.log.userModelProfile.phoneNumber.toString()),

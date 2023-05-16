@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -139,72 +140,85 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           Loading.dismiss(context),
                           if (value['success'] == true)
                             {
-                              Navigator.popAndPushNamed(
-                                  context, LoginScreen.routeName)
+                              AwesomeDialog(
+                                context: context,
+                                dialogType: DialogType.success,
+                                animType: AnimType.topSlide,
+                                title: LocalizationText.signUpSuccess,
+                                desc: value['message'],
+                                btnOkOnPress: () {
+                                  Navigator.popAndPushNamed(
+                                      context, LoginScreen.routeName);
+                                },
+                              ).show()
                             }
                           else if (value['result'] == 'false')
                             {
-                              showDialog(
+                              Loading.dismiss(context),
+                              AwesomeDialog(
                                 context: context,
-                                builder: (BuildContext context) => AlertDialog(
-                                  title: Text(LocalizationText.errPassOrEmail),
-                                  content: Container(
-                                    height: 120.0,
-                                    color: Colors.yellow,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        value['data']['email'] != null
-                                            ? Text(
-                                                '${LocalizationText.email}: ${value['data']['email']}')
-                                            : SizedBox(
-                                                height: kDefaultPadding,
-                                              ),
-                                        value['data']['email'] != null
-                                            ? Text(
-                                                '${LocalizationText.password}: ${value['data']['password']}')
-                                            : SizedBox(
-                                                height: 0,
-                                              )
-                                      ],
-                                    ),
-                                  ),
-                                  actions: <Widget>[
-                                    TextButton(
-                                      onPressed: () => Navigator.pop(
-                                          context, LocalizationText.cancel),
-                                      child: Text(LocalizationText.ok),
-                                    ),
-                                    TextButton(
-                                      onPressed: () => Navigator.pop(
-                                          context, LocalizationText.ok),
-                                      child: Text(LocalizationText.ok),
-                                    ),
-                                  ],
-                                ),
-                              )
+                                dialogType: DialogType.warning,
+                                animType: AnimType.topSlide,
+                                title: LocalizationText.errPassOrEmail,
+                                desc: value['data']['email'] != null
+                                    ? '${LocalizationText.email}: ${value['data']['email']}'
+                                    : value['data']['password'] != null
+                                        ? '${value['data']['password']}'
+                                        : "",
+                                btnOkOnPress: () {},
+                              ).show(),
+                              // showDialog(
+                              //   context: context,
+                              //   builder: (BuildContext context) => AlertDialog(
+                              //     title: Text(LocalizationText.errPassOrEmail),
+                              //     content: Container(
+                              //       height: 120.0,
+                              //       color: Colors.yellow,
+                              //       child: Column(
+                              //         crossAxisAlignment:
+                              //             CrossAxisAlignment.start,
+                              //         children: [
+                              //           value['data']['email'] != null
+                              //               ? Text(
+                              //                   '${LocalizationText.email}: ${value['data']['email']}')
+                              //               : SizedBox(
+                              //                   height: kDefaultPadding,
+                              //                 ),
+                              //           value['data']['email'] != null
+                              //               ? Text(
+                              //                   '${LocalizationText.password}: ${value['data']['password']}')
+                              //               : SizedBox(
+                              //                   height: 0,
+                              //                 )
+                              //         ],
+                              //       ),
+                              //     ),
+                              //     actions: <Widget>[
+                              //       TextButton(
+                              //         onPressed: () => Navigator.pop(
+                              //             context, LocalizationText.cancel),
+                              //         child: Text(LocalizationText.ok),
+                              //       ),
+                              //       TextButton(
+                              //         onPressed: () => Navigator.pop(
+                              //             context, LocalizationText.ok),
+                              //         child: Text(LocalizationText.ok),
+                              //       ),
+                              //     ],
+                              //   ),
+                              // )
                             }
                           else
                             {
-                              showDialog(
+                              Loading.dismiss(context),
+                              AwesomeDialog(
                                 context: context,
-                                builder: (BuildContext context) => AlertDialog(
-                                  title: Text(LocalizationText.nullResponse),
-                                  actions: <Widget>[
-                                    TextButton(
-                                      onPressed: () =>
-                                          Navigator.pop(context, 'Cancel'),
-                                      child: Text(LocalizationText.cancel),
-                                    ),
-                                    TextButton(
-                                      onPressed: () =>
-                                          Navigator.pop(context, 'OK'),
-                                      child: Text(LocalizationText.ok),
-                                    ),
-                                  ],
-                                ),
-                              )
+                                dialogType: DialogType.warning,
+                                animType: AnimType.topSlide,
+                                title: LocalizationText.nullResponse,
+                                desc: value['message'],
+                                btnOkOnPress: () {},
+                              ).show()
                             },
                         });
               },

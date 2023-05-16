@@ -36,7 +36,7 @@ class ServiceLoadHelper {
       'primaryColor': const Color.fromARGB(255, 52, 74, 201),
       'secondaryColor': const Color.fromARGB(255, 52, 74, 201).withOpacity(0.2),
     },
-    'Non refundable': {
+    'Non refunable': {
       'icon': FontAwesomeIcons.creativeCommonsNcEu,
       'name': 'Non\nRefundable',
       'primaryColor': const Color(0xffFE9C5E),
@@ -54,6 +54,30 @@ class ServiceLoadHelper {
       'primaryColor': const Color(0xffF77777),
       'secondaryColor': const Color(0xffF77777).withOpacity(0.2)
     },
+    'Digital TV': {
+      'icon': FontAwesomeIcons.tv,
+      'name': 'Digital\nTV',
+      'primaryColor': const Color(0xffF77777),
+      'secondaryColor': const Color(0xffF77777).withOpacity(0.2)
+    },
+    'Parking Area': {
+      'icon': FontAwesomeIcons.squareParking,
+      'name': 'Parking\nArea',
+      'primaryColor': const Color(0xffF77777),
+      'secondaryColor': const Color(0xffF77777).withOpacity(0.2)
+    },
+    'Swimming Pool': {
+      'icon': FontAwesomeIcons.waterLadder,
+      'name': 'Swimming\nPool',
+      'primaryColor': const Color(0xffF77777),
+      'secondaryColor': const Color(0xffF77777).withOpacity(0.2)
+    },
+    'Car Rental': {
+      'icon': FontAwesomeIcons.carSide,
+      'name': 'Car\nRental',
+      'primaryColor': const Color(0xffF77777),
+      'secondaryColor': const Color(0xffF77777).withOpacity(0.2)
+    },
     'More': {
       'icon': FontAwesomeIcons.ellipsis,
       'name': 'More',
@@ -66,7 +90,7 @@ class ServiceLoadHelper {
       'primaryColor': const Color(0xff2D3143),
       'secondaryColor': const Color(0xff2D3143).withOpacity(0.2)
     },
-    'Non refunable': {
+    'Non refundable': {
       'icon': FontAwesomeIcons.exclamation,
       'name': 'Error',
       'primaryColor': const Color(0xff2D3143),

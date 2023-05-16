@@ -44,7 +44,7 @@ class _MainScreenState extends State<MainScreen> {
           home ?? Container(),
           favorite ?? Container(),
           hotel ?? Container(),
-          profile ?? Container(),
+          profile ?? ProfilePage(),
         ],
       ),
       bottomNavigationBar: SalomonBottomBar(

@@ -206,10 +206,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           LocalStorageHelper.setValue(
                               "roleId", value['data']['role_id']),
                           Loading.dismiss(context),
-                          if (value['data']['role_id'] == 1)
+                          if (value['data']['role_id'] == 2)
                             Navigator.popAndPushNamed(
                                 context, MainScreen.routeName)
-                          else if (value['data']['role_id'] == 3)
+                          else if (value['data']['role_id'] == 1)
                             Navigator.popAndPushNamed(
                                 context, AdminScreen.routeName)
                           else
