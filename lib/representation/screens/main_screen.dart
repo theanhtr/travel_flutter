@@ -52,7 +52,7 @@ class _MainScreenState extends State<MainScreen> {
         onTap: (index) {
           if (_currentIndex != index) {
             if (index == 1) {
-              favorite = FavoriteScreen();
+              favorite = new FavoriteScreen();
             } else if (index == 2 && hotel == null) {
               hotel = HotelBookingScreen(
                 useImplementLeading: false,

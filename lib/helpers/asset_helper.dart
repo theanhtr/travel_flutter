@@ -30,6 +30,7 @@ class AssetHelper {
   static const String freeBreakfast = 'assets/icons/free_breakfast.png';
   static const String noSmoking = 'assets/icons/no_smoking.png';
   static const String nonRefundable = 'assets/icons/non_refundable.png';
+  static const String dottedLine = 'assets/images/dotted_line.png';
   //facility hotel
   static const String wifiIcon = 'assets/icons/wifi.png';
   static const String digitalTv = 'assets/icons/digital_tivi.png';
@@ -45,4 +46,7 @@ class AssetHelper {
   static const String bedIcon = 'assets/icons/bed_icon.png';
   static const String checkInIcon = 'assets/icons/check_in_icon.png';
   static const String checkOutIcon = 'assets/icons/check_out_icon.png';
+  static const String dislikeIcon = 'assets/icons/dislike_icon.png';
+  static const String likeIcon = 'assets/icons/like_icon.png';
+  static const String threeDotIcon = 'assets/icons/three_dot_icon.png';
 }
