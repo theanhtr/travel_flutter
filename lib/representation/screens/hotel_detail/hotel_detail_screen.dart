@@ -23,6 +23,9 @@ import 'package:travel_app_ytb/representation/screens/room_booking/select_room_s
 import 'package:travel_app_ytb/representation/widgets/button_widget.dart';
 import 'package:travel_app_ytb/representation/widgets/loading/loading.dart';
 
+import '../../widgets/tapable_widget.dart';
+import '../reviews/reviews_screen.dart';
+
 class HotelDetailScreen extends StatefulWidget {
   const HotelDetailScreen({super.key});
 
@@ -367,12 +370,23 @@ class _HotelDetailScreenState extends State<HotelDetailScreen> {
                                                     )
                                                   ],
                                                 ),
-                                                Text(
-                                                  'See All',
-                                                  style: TextStyles.defaultStyle
-                                                      .bold.primaryTextColor
-                                                      .setTextSize(
-                                                          kDefaultTextSize),
+                                                TapableWidget(
+                                                  child: Text(
+                                                    'See All',
+                                                    style: TextStyles
+                                                        .defaultStyle
+                                                        .bold
+                                                        .primaryTextColor
+                                                        .setTextSize(
+                                                            kDefaultTextSize),
+                                                  ),
+                                                  onTap: () {
+                                                    Navigator.pushNamed(context,
+                                                        ReviewsScreen.routeName,
+                                                        arguments: {
+                                                          'id': id,
+                                                        });
+                                                  },
                                                 )
                                               ],
                                             ),
@@ -450,7 +464,7 @@ class _HotelDetailScreenState extends State<HotelDetailScreen> {
                                                 height: MediaQuery.of(context)
                                                         .size
                                                         .height *
-                                                    0.3,
+                                                    0.2,
                                                 width: MediaQuery.of(context)
                                                         .size
                                                         .width *

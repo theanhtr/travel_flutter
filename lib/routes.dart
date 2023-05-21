@@ -29,6 +29,7 @@ import 'package:travel_app_ytb/representation/screens/splash_screen.dart';
 import 'package:travel_app_ytb/representation/screens/user_fill_in_information_screen.dart';
 
 import 'representation/screens/property_type_screen.dart';
+import 'representation/screens/reviews/reviews_screen.dart';
 
 final Map<String, WidgetBuilder> routes = {
   SplashScreen.routeName: (context) => const SplashScreen(),
@@ -67,5 +68,5 @@ final Map<String, WidgetBuilder> routes = {
   SeeAllDestinationsScreen.routeName: (context) =>
       const SeeAllDestinationsScreen(),
   ContactDetailsScreen.routeName: (context) => const ContactDetailsScreen(),
-  // FillInforScreen.routeName: (context) => const FillInforScreen()
+  ReviewsScreen.routeName: (context) => const ReviewsScreen(),
 };
