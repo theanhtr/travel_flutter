@@ -1,24 +1,17 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:travel_app_ytb/core/utils/animation_utils.dart';
 import 'package:travel_app_ytb/core/utils/navigation_utils.dart';
 import 'package:travel_app_ytb/helpers/asset_helper.dart';
-import 'package:travel_app_ytb/helpers/location/location_helper.dart';
+import 'package:travel_app_ytb/helpers/filterManager/filter_manager.dart';
 import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
-import 'package:travel_app_ytb/representation/screens/facility_hotel_screen.dart';
-import 'package:travel_app_ytb/representation/screens/hotel_detail/hotel_detail_screen.dart';
-import 'package:travel_app_ytb/representation/screens/property_type_screen.dart';
-import 'package:travel_app_ytb/representation/screens/room_booking/select_room_screen.dart';
-import 'package:travel_app_ytb/representation/screens/sort_by_hotel_screen.dart';
 import 'package:travel_app_ytb/representation/controllers/search_hotels_screen_controller.dart';
 import 'package:travel_app_ytb/representation/models/hotel_model.dart';
+import 'package:travel_app_ytb/representation/screens/facility_hotel_screen.dart';
+import 'package:travel_app_ytb/representation/screens/hotel_detail/hotel_detail_screen.dart';
+import 'package:travel_app_ytb/representation/screens/sort_by_hotel_screen.dart';
 import 'package:travel_app_ytb/representation/widgets/app_bar_container.dart';
 import 'package:travel_app_ytb/representation/widgets/hotel_card_widget.dart';
-import 'package:travel_app_ytb/helpers/filterManager/filter_manager.dart';
 
 import '../../../core/constants/color_palatte.dart';
 import '../../../core/constants/dismention_constants.dart';
@@ -29,7 +22,6 @@ import '../../widgets/booking_hotel_tab_container.dart';
 import '../../widgets/button_widget.dart';
 import '../../widgets/loading/loading.dart';
 import '../../widgets/slider.dart';
-import '../hotel_detail/hotel_detail_screen.dart';
 
 class SearchHotelsScreen extends StatefulWidget {
   const SearchHotelsScreen({super.key});

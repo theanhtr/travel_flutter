@@ -56,8 +56,10 @@ class LocationHelper {
     }, onError: (error) {
       debugPrint("error $error");
     });
-    print('LLLLL $address');
-    final List<Location> locations = await locationFromAddress(address);
+    final List<Location> locations = await locationFromAddress(address).catchError( (err) {
+      debugPrint("60 location helper $err");
+      return Future.value([Location(latitude: 10.8231, longitude: 106.6297, timestamp: DateTime.now())]);
+    });
     if (locations.isNotEmpty) {
       final Location location = locations.first;
       return location;

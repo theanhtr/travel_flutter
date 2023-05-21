@@ -16,11 +16,9 @@ import 'package:travel_app_ytb/representation/widgets/button_widget.dart';
 import 'package:travel_app_ytb/representation/widgets/info_card.dart';
 import 'package:travel_app_ytb/representation/widgets/item_text_container.dart';
 import 'package:travel_app_ytb/representation/widgets/room_card_widget.dart';
-import 'package:travel_app_ytb/representation/widgets/tapable_widget.dart';
-import 'package:travel_app_ytb/routes.dart';
 
+import '../../../helpers/date_helper.dart';
 import '../main_screen.dart';
-import 'contact_details_screen.dart';
 
 class CheckoutScreen extends StatefulWidget {
   const CheckoutScreen({super.key});
@@ -38,6 +36,7 @@ class _CheckoutScreenState extends State<CheckoutScreen>
   String name = "";
   String phoneNumber = "";
   String email = "";
+  int hotelId = 0;
 
   @override
   void initState() {
@@ -89,6 +88,27 @@ class _CheckoutScreenState extends State<CheckoutScreen>
     final String dateSelected = args['date_selected'];
     final int guestCount = args['guest_count'];
     final int roomCount = args['room_count'];
+    final int hotelId = args['hotel_id'];
+
+    List<String> listDateString = dateSelected.split(' - ');
+    DateHelper dateHelper = DateHelper();
+    dateHelper.convertSelectDateOnHotelBookingScreenToDateTime(dateSelected);
+    var dateTime = DateTime.now();
+    dateTime = dateTime.add(
+      const Duration(
+        minutes: 15,
+      ),
+    );
+    var startDate = dateHelper.convertDateString(
+        inputFormat: 'HH mm dd MMM yyyy',
+        outputFormat: 'HH:mm MM/dd/yy',
+        dateString:
+        "${dateTime.hour} ${dateTime.minute} ${listDateString[0]} ${(dateHelper.getEndDate()?.year.toString() ?? "2023")}");
+    var endDate = dateHelper.convertDateString(
+      inputFormat: 'HH mm dd MMM yyyy',
+      outputFormat: 'HH:mm MM/dd/yy',
+      dateString: "23 59 ${listDateString[1]}",
+    );
 
     return AppBarContainer(
       // ignore: sort_child_properties_last
@@ -255,24 +275,36 @@ class _CheckoutScreenState extends State<CheckoutScreen>
                     roomSelect: roomSelect,
                     dateSelected: dateSelected,
                     roomCount: roomCount,
+                    guestCount: guestCount,
+                    name: name,
+                    email: email,
+                    hotelId: hotelId,
+                    startDate: startDate,
+                    endDate: endDate,
+                    phoneNumber: phoneNumber,
+                    validateInformation: () {
+                      _tabController.animateTo(0);
+                    },
                     isPaymentSuccess: (value) {
-                      AwesomeDialog(
-                        context: context,
-                        dialogType: DialogType.success,
-                        animType: AnimType.topSlide,
-                        title: "congratulations",
-                        desc: "Thank you for using our service",
-                        btnOkOnPress: () {
-                          Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const MainScreen(
-                                      currentIndex: 0,
-                                    )),
-                            (Route<dynamic> route) => false,
-                          );
-                        },
-                      ).show();
+                      if (value == true) {
+                        AwesomeDialog(
+                          context: context,
+                          dialogType: DialogType.success,
+                          animType: AnimType.topSlide,
+                          title: LocalizationText.congratulations,
+                          desc: LocalizationText.thankYouForUsingOurService,
+                          btnOkOnPress: () {
+                            Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const MainScreen(
+                                    currentIndex: 0,
+                                  )),
+                                  (Route<dynamic> route) => false,
+                            );
+                          },
+                        ).show();
+                      }
                     },
                   ),
                 ],

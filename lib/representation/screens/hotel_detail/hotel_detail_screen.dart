@@ -9,8 +9,10 @@ import 'package:travel_app_ytb/core/constants/color_palatte.dart';
 import 'package:travel_app_ytb/core/constants/dismention_constants.dart';
 import 'package:travel_app_ytb/core/constants/textstyle_constants.dart';
 import 'package:travel_app_ytb/core/utils/navigation_utils.dart';
+import 'package:travel_app_ytb/helpers/adminManager/admin_manager.dart';
 import 'package:travel_app_ytb/helpers/asset_helper.dart';
 import 'package:travel_app_ytb/helpers/image_helper.dart';
+import 'package:travel_app_ytb/helpers/local_storage_helper.dart';
 import 'package:travel_app_ytb/helpers/location/location_helper.dart';
 import 'package:travel_app_ytb/helpers/service_load_helper.dart';
 import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
@@ -52,7 +54,7 @@ class _HotelDetailScreenState extends State<HotelDetailScreen> {
 
   final PageController _pageController = PageController();
   int pageCount = 1;
-
+  final AdminManager _adminManager = AdminManager();
   final StreamController<double> _pageStreamController =
       StreamController<double>.broadcast();
 
@@ -67,11 +69,14 @@ class _HotelDetailScreenState extends State<HotelDetailScreen> {
     if (_isLoading == true) {
       _controller?.getHotelDetail(id).then(
             (value) => {
+              print(
+                  "Lenght ow hotel detail screen: ${value.listImageDetailPath} "),
               setState(() {
                 _hotelModel = value;
                 LocationHelper()
                     .getGeoPointFromAddress(_hotelModel?.address ?? "")
                     .then((position) => {
+                      debugPrint("79 hotel detail $position"),
                           setState(() {
                             _hotelModel?.position =
                                 LatLng(position.latitude, position.longitude);
@@ -489,18 +494,29 @@ class _HotelDetailScreenState extends State<HotelDetailScreen> {
                   child: SizedBox(
                     height: 50,
                     width: 200,
-                    child: ButtonWidget(
-                      title: LocalizationText.selectRoom,
-                      ontap: () {
-                        Navigator.pushNamed(context, SelectRoomScreen.routeName,
-                            arguments: {
-                              'hotelId': _hotelModel?.id,
-                              'dateSelected': _dateSelected,
-                              'guestCount': _guestCount,
-                              'roomCount': _roomCount,
-                            });
-                      },
-                    ),
+                    child: LocalStorageHelper.getValue("roleId") != 1
+                        ? ButtonWidget(
+                            title: LocalizationText.selectRoom,
+                            ontap: () {
+                              if (LocalStorageHelper.getValue("roleId") == 1) {
+                                // _adminManager.deleteHotel(id);
+
+                                print("cbi delete hotel day");
+                              } else {
+                                Navigator.pushNamed(
+                                    context, SelectRoomScreen.routeName,
+                                    arguments: {
+                                      'hotelId': _hotelModel?.id,
+                                      'dateSelected': _dateSelected,
+                                      'guestCount': _guestCount,
+                                      'roomCount': _roomCount,
+                                    });
+                              }
+                            },
+                          )
+                        : SizedBox(
+                            height: 0,
+                          ),
                   ),
                 ),
               ],

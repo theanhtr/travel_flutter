@@ -26,35 +26,6 @@ class RowDetailFacilityHotel extends StatefulWidget {
 
 class _RowDetailFacilityHotelState extends State<RowDetailFacilityHotel> {
   // ignore: unused_field
-
-  Future<void> _showMyDialog() async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('AlertDialog Title'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: const <Widget>[
-                Text('This is a demo alert dialog.'),
-                Text('Would you like to approve of this message?'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Approve'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     print(widget.checkBoxValue);
@@ -81,56 +52,6 @@ class _RowDetailFacilityHotelState extends State<RowDetailFacilityHotel> {
               ],
             ),
           ),
-          // Container(
-          //   padding: EdgeInsets.all(24),
-          //   decoration: BoxDecoration(
-          //       color: Colors.black,
-          //       borderRadius: BorderRadius.circular(kDefaultPadding)),
-          // ),
-          // LocalStorageHelper.getValue("roleId") == 1
-          //     ? TextButton(
-          //         onPressed: () => showDialog<String>(
-          //           context: context,
-          //           builder: (BuildContext context) => AlertDialog(
-          //             title: const Text('AlertDialog Title'),
-          //             content: const Text('AlertDialog description'),
-          //             actions: <Widget>[
-          //               TextButton(
-          //                 onPressed: () => Navigator.pop(context, 'Cancel'),
-          //                 child: const Text('Cancel'),
-          //               ),
-          //               TextButton(
-          //                 onPressed: () => Navigator.pop(context, 'OK'),
-          //                 child: const Text('OK'),
-          //               ),
-          //             ],
-          //           ),
-          //         ),
-          //         child: const Text('Show Dialog'),
-          //       )
-          //     : SizedBox(
-          //         height: 0,
-          //       ),
-          // TextButton(
-          //   onPressed: () => showDialog<String>(
-          //     context: context,
-          //     builder: (BuildContext context) => AlertDialog(
-          //       title: const Text('Select role to change'),
-          //       content: DropdownButtonCustom(),
-          //       actions: <Widget>[
-          //         TextButton(
-          //           onPressed: () => Navigator.pop(context, 'Cancel'),
-          //           child: const Text('Change role'),
-          //         ),
-          //         TextButton(
-          //           onPressed: () => Navigator.pop(context, 'OK'),
-          //           child: const Text('Cancel'),
-          //         ),
-          //       ],
-          //     ),
-          //   ),
-          //   child: const Text('Change role'),
-          // ),
           Container(
             padding: EdgeInsets.all(10.0),
             child:

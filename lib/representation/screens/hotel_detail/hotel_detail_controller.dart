@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:travel_app_ytb/core/utils/const_utils.dart';
+import 'package:travel_app_ytb/helpers/local_storage_helper.dart';
 import 'package:travel_app_ytb/representation/models/hotel_model.dart';
 
 import '../../../helpers/http/base_client.dart';
@@ -8,13 +9,16 @@ import '../../../helpers/loginManager/login_manager.dart';
 
 class HotelDetailController {
   Future<HotelModel> getHotelDetail(int id) async {
-    var response = await BaseClient(LoginManager().userModel.token ?? "").get('/searches/hotels/$id')
+    final token = await LocalStorageHelper.getValue("userToken") as String?;
+    var response = await BaseClient(token ?? "")
+        .get('/searches/hotels/$id')
         .catchError((onError) {
       return onError;
     });
     if (response == null) {
       return HotelModel();
     }
+    print("response dong 19: $response");
     Map dataResponse = await json.decode(response);
     final listImage = dataResponse['data']['images'] as List;
     List<String> listImageString = [];
@@ -29,17 +33,22 @@ class HotelDetailController {
     amenities.forEach((element) {
       listService.add(element['name']);
     });
-    final startInfo = dataResponse['data']['rating_average'].runtimeType == int ? dataResponse['data']['rating_average'] as int : dataResponse['data']['rating_average'] as double;
+    final startInfo = dataResponse['data']['rating_average'].runtimeType == int
+        ? dataResponse['data']['rating_average'] as int
+        : dataResponse['data']['rating_average'] as double;
     return HotelModel(
       id: dataResponse['data']['id'],
       listImageDetailPath: listImageString,
       name: dataResponse['data']['name'],
-      locationInfo: "${dataResponse['data']['address']['specific_address']}, ${dataResponse['data']['address']['sub_district']}, ${dataResponse['data']['address']['district']}, ${dataResponse['data']['address']['province']}",
+      locationInfo:
+          "${dataResponse['data']['address']['specific_address']}, ${dataResponse['data']['address']['sub_district']}, ${dataResponse['data']['address']['district']}, ${dataResponse['data']['address']['province']}",
       starInfo: startInfo.toDouble(),
       countReviews: dataResponse['data']['count_review'] as int,
-      priceInfo: "${dataResponse['data']['min_price']} - ${dataResponse['data']['max_price']}",
+      priceInfo:
+          "${dataResponse['data']['min_price']} - ${dataResponse['data']['max_price']}",
       description: dataResponse['data']['description'],
-      address: "${dataResponse['data']['address']['specific_address']}, ${dataResponse['data']['address']['sub_district']}, ${dataResponse['data']['address']['district']}, ${dataResponse['data']['address']['province']}",
+      address:
+          "${dataResponse['data']['address']['specific_address']}, ${dataResponse['data']['address']['sub_district']}, ${dataResponse['data']['address']['district']}, ${dataResponse['data']['address']['province']}",
       services: listService,
       isLike: dataResponse['data']['is_like'],
     );
@@ -47,8 +56,8 @@ class HotelDetailController {
 
   Future<dynamic> likeHotel(int hotelId) async {
     final token = await LoginManager().userModel.token;
-    var response = await BaseClient(token ?? "").post("/likes/hotel/$hotelId", {})
-        .catchError((err) {
+    var response = await BaseClient(token ?? "")
+        .post("/likes/hotel/$hotelId", {}).catchError((err) {
       return false;
     });
 
@@ -60,5 +69,4 @@ class HotelDetailController {
       return dataResponse['data']['is_like'];
     }
   }
-
 }

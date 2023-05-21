@@ -63,7 +63,9 @@ final Map<String, WidgetBuilder> routes = {
   EditProfilePage.routeName: (context) => EditProfilePage(),
   FillInforScreen.routeName: (context) => const FillInforScreen(),
   // UploadIamge.routename: (context) => UploadIamge(),
-  AdminScreen.routeName: (context) => const AdminScreen(),
-  SeeAllDestinationsScreen.routeName: (context) => const SeeAllDestinationsScreen(),
+  AdminScreen.routeName: (context) => AdminScreen(),
+  SeeAllDestinationsScreen.routeName: (context) =>
+      const SeeAllDestinationsScreen(),
   ContactDetailsScreen.routeName: (context) => const ContactDetailsScreen(),
+  // FillInforScreen.routeName: (context) => const FillInforScreen()
 };

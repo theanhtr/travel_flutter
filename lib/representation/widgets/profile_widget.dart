@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:travel_app_ytb/core/constants/color_palatte.dart';
+import 'package:travel_app_ytb/core/utils/const_utils.dart';
 
 class ProfileWidget extends StatelessWidget {
   final String imagePath;
@@ -34,9 +35,10 @@ class ProfileWidget extends StatelessWidget {
   }
 
   Widget buildImage() {
-    final image = NetworkImage(imagePath);
-    debugPrint('iamgePath: ${imagePath}');
-    if (isEdit == true && imagePath != 'null') {
+    final image;
+
+    debugPrint('iamgePath: ${imagePath} va ${imagePath.runtimeType} ');
+    if (isEdit == true && imagePath != "null") {
       return GestureDetector(
         onTap: onClicked,
         child: ClipOval(
@@ -56,6 +58,11 @@ class ProfileWidget extends StatelessWidget {
           ),
         ),
       );
+    }
+    if (imagePath == "") {
+      image = NetworkImage(ConstUtils.defaultImageAvatar);
+    } else {
+      image = NetworkImage(imagePath);
     }
     return ClipOval(
       child: Material(

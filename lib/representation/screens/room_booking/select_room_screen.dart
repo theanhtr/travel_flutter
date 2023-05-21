@@ -118,6 +118,7 @@ class _SelectRoomScreenState extends State<SelectRoomScreen> {
                                 CheckoutScreen.routeName,
                                 arguments: {
                                   "room_selected": listRooms[index],
+                                  "hotel_id": _hotelId,
                                   "date_selected": _dateSelected,
                                   "guest_count": _guestCount,
                                   "room_count": _roomCount,

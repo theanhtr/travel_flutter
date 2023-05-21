@@ -32,7 +32,7 @@ class _ContactDetailsScreenState extends State<ContactDetailsScreen> {
           child: Column(
             children: [
               InputCard(
-                  style: TypeInputCard.firstName,
+                  style: TypeInputCard.name,
                   value: name,
                   onchange: (value) {
                     name = value;
