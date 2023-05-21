@@ -44,13 +44,15 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     double ratio = 0.5;
-    if (isFirst) {
-      isFirst = false;
-      setState(() {
-        userName = _controller?.getUser()?.name;
-        photoUrl = _controller?.getUser()?.photoUrl;
-      });
-    }
+    // if (isFirst) {
+    //   isFirst = false;
+    //   setState(() {
+    //
+    //   });
+    // }
+    debugPrint("54 homr screen ");
+    userName = _controller?.getUser()?.name;
+    photoUrl = _controller?.getUser()?.photoUrl;
     if (_isLoaded == false) {
       _isLoaded = true;
       _controller?.getPopularDestination().then((destinations) => {

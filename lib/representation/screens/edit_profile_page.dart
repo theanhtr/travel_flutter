@@ -269,6 +269,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             debugPrint(
                                 "succeess update response: ${response.data}");
                             if (response.data['success'] == true) {
+                              LoginManager().setUserProfileModel();
                               AwesomeDialog(
                                 context: context,
                                 dialogType: DialogType.success,

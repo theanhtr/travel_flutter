@@ -28,16 +28,10 @@ class LoginManager {
     userModel.email = await LocalStorageHelper.getValue("userEmail");
     userModel.token = await LocalStorageHelper.getValue("userToken");
     await getCurrentUser().then((value) async => {
-          if (await LocalStorageHelper.getValue("userName") == null)
-            {
-              await LocalStorageHelper.setValue("userName", value?.name),
-            }
+          await LocalStorageHelper.setValue("userName", value?.name),
         });
     await getCurrentUserAvatar().then((value) async => {
-          if (await LocalStorageHelper.getValue("photoUrl") == null)
-            {
-              await LocalStorageHelper.setValue("photoUrl", value),
-            }
+          await LocalStorageHelper.setValue("photoUrl", value),
         });
     userModel.name = await LocalStorageHelper.getValue("userName");
     userModel.photoUrl = await LocalStorageHelper.getValue("photoUrl");

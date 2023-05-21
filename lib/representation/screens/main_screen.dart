@@ -31,7 +31,7 @@ class _MainScreenState extends State<MainScreen> {
   void initState() {
     super.initState();
     _currentIndex = widget.currentIndex;
-    home = HomeScreen();
+    // home = HomeScreen();
   }
 
   @override
@@ -41,7 +41,7 @@ class _MainScreenState extends State<MainScreen> {
       body: IndexedStack(
         index: _currentIndex,
         children: [
-          home ?? Container(),
+          home ?? HomeScreen(),
           favorite ?? Container(),
           hotel ?? Container(),
           profile ?? ProfilePage(),
@@ -51,7 +51,10 @@ class _MainScreenState extends State<MainScreen> {
         currentIndex: _currentIndex,
         onTap: (index) {
           if (_currentIndex != index) {
-            if (index == 1) {
+            if (index == 0) {
+              home = new HomeScreen();
+            }
+            else if (index == 1) {
               favorite = new FavoriteScreen();
             } else if (index == 2 && hotel == null) {
               hotel = HotelBookingScreen(
