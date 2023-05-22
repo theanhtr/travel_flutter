@@ -76,9 +76,9 @@ class PaymentManager {
 
   Future<HotelOrderResponseModel> paymentClient(int orderId) async {
     final token = await LocalStorageHelper.getValue("userToken") as String?;
-    final response = await BaseClient(token ?? "")
-        .postHaiAnhDung("/orders/payment-client", {
-        'order_id': orderId,
+    final response =
+        await BaseClient(token ?? "").postHaiAnhDung("/orders/payment-client", {
+      'order_id': orderId,
     }).catchError((err) {
       debugPrint("error $err");
       return HotelOrderResponseModel();

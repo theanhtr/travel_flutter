@@ -172,9 +172,45 @@ class LocalizationText {
   static String bookRoom = "bookRoom".tr();
   static String deleteUserSuccess = "deleteUserSuccess".tr();
   static String dontHaveBirthDate = "dontHaveBirthDate".tr();
+
+  static String selectRoleFirst = "selectRoleFirst".tr();
+  static String missingInfor = "missingInfor".tr();
+  static String success = "success".tr();
+  static String confirmDeleteAccount = "confirmDeleteAccount".tr();
+  static String aboutTodelete = "aboutTodelete".tr();
+  // static String errorWhenCallApi = "errorWhenCallApi".tr();
+
+  // static String createUserSuccess = "createUserSuccess".tr();
+  // static String editProfileSuccess = "editProfileSuccess".tr();
+  // static String haveToFillInforFirst = "haveToFillInforFirst".tr();
+  // static String signUpSuccess = "signUpSuccess".tr();
+  // static String changeRoleSuccess = "changeRoleSuccess".tr();
+  // static String selectRole = "selectRole".tr();
+  // static String createUser = "createUser".tr();
+  // static String hotelManagement = "hotelManagement".tr();
+  // static String userManagement = "userManagement".tr();
+  // static String addUser = "addUser".tr();
+  // static String adminMenu = "adminMenu".tr();
+
+  // static String noHotel = "noHotel".tr();
+  // static String noUser = "noUser".tr();
+  // static String admin = "admin".tr();
+  // static String customer = "customer".tr();
+  // static String hotelManager = "hotelManager".tr();
+  // static String airlineManager = "airlineManager".tr();
+  // static String deleteUser = "deleteUser".tr();
+  // static String changeRoleComplete = "changeRoleComplete".tr();
+  // static String changeRole = "changeRole".tr();
+  // static String selectRow = "selectRow".tr();
+  // static String viewDetail = "viewDetail".tr();
+  // static String bookRoom = "bookRoom".tr();
+  // static String deleteUserSuccess = "deleteUserSuccess".tr();
+  // static String dontHaveBirthDate = "dontHaveBirthDate".tr();
   static String warning = 'warning'.tr();
-  static String pleaseFillInYourFullNameEmailPhoneNumber = 'pleaseFillInYourFullNameEmailPhoneNumber'.tr();
+  static String pleaseFillInYourFullNameEmailPhoneNumber =
+      'pleaseFillInYourFullNameEmailPhoneNumber'.tr();
   static String congratulations = "Congratulations".tr();
   static String thankYouForUsingOurService = "thanhYouForUsingOurService".tr();
-  static String passwordHasBeenSentToYourEmail = "passwordHasBeenSentToYourEmail".tr();
+  static String passwordHasBeenSentToYourEmail =
+      "passwordHasBeenSentToYourEmail".tr();
 }

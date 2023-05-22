@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:travel_app_ytb/core/constants/color_palatte.dart';
 import 'package:travel_app_ytb/core/constants/dismention_constants.dart';
+import 'package:travel_app_ytb/core/constants/textstyle_constants.dart';
 import 'package:travel_app_ytb/helpers/adminManager/admin_manager.dart';
 import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
 import 'package:travel_app_ytb/representation/widgets/button_widget.dart';
@@ -38,14 +39,23 @@ class _AddUserScreenState extends State<AddUserScreen> {
           ),
         ),
         const SizedBox(
-          height: kDefaultPadding,
+          height: kDefaultPadding * 2,
+        ),
+        Row(
+          children: [
+            Text(
+              "${LocalizationText.selectRole}",
+              style: TextStyles.defaultStyle.blackTextColor
+                  .setTextSize(kDefaultTextSize),
+            ),
+          ],
         ),
         SizedBox(
-          height: 100,
+          height: 80,
           child: Container(
-            margin: EdgeInsets.all(10),
-            padding: EdgeInsets.all(30),
-            alignment: Alignment.center,
+            height: 25,
+            margin: const EdgeInsets.only(bottom: 20),
+            alignment: Alignment.topRight,
             decoration: BoxDecoration(
               color: ColorPalette.secondColor,
               border: Border.all(
@@ -54,27 +64,25 @@ class _AddUserScreenState extends State<AddUserScreen> {
               borderRadius: BorderRadius.all(
                   Radius.circular(10.0)), // Set rounded corner radius
             ),
-            child: Row(children: [
+            child: Column(children: [
               // crossAxisAlignment: CrossAxisAlignment.start,
               // mainAxisAlignment: MainAxisAlignment.start,
 
-              Text("${LocalizationText.selectRole}"),
               const SizedBox(
                 width: kDefaultPadding * 2,
               ),
-              StatefulBuilder(
-                  builder: (context, setState) => DropdownButtonCustom(
-                        onchange: (int? value) {
-                          roleId = value;
-                        },
-                      )
-                  // InputCard(
-                  //     style: TypeInputCard.roleId,
-                  //     onchange: (String value) {
-                  //       roleId = value;
-                  //     },
-                  //     value: roleId),
-                  ),
+
+              DropdownButtonCustom(
+                onchange: (int? value) {
+                  roleId = value;
+                },
+              )
+              // InputCard(
+              //     style: TypeInputCard.roleId,
+              //     onchange: (String value) {
+              //       roleId = value;
+              //     },
+              //     value: roleId),
             ]),
           ),
         ),
@@ -84,38 +92,50 @@ class _AddUserScreenState extends State<AddUserScreen> {
         ButtonWidget(
           title: '${LocalizationText.createUser}',
           ontap: () async {
-            Loading.show(context);
-            await _controller
-                .createUser(email.toString(), roleId)
-                .then((value) => {
-                      Loading.dismiss(context),
-                      if (value.runtimeType != int)
-                        {
-                          if (value['success'] == true)
-                            {
-                              AwesomeDialog(
-                                context: context,
-                                dialogType: DialogType.success,
-                                animType: AnimType.topSlide,
-                                title: LocalizationText.createUserSuccess,
-                                desc: LocalizationText.passwordHasBeenSentToYourEmail,
-                                btnOkOnPress: () {},
-                              ).show()
-                            }
-                          else
-                            {
-                              Loading.dismiss(context),
-                              AwesomeDialog(
-                                context: context,
-                                dialogType: DialogType.warning,
-                                animType: AnimType.topSlide,
-                                title: LocalizationText.errorWhenCallApi,
-                                desc: value['message'],
-                                btnOkOnPress: () {},
-                              ).show()
-                            }
-                        }
-                    });
+            if (email.isEmpty == true || roleId == null) {
+              Loading.dismiss(context);
+              AwesomeDialog(
+                context: context,
+                dialogType: DialogType.error,
+                animType: AnimType.topSlide,
+                title: LocalizationText.missingInfor,
+                desc: LocalizationText.haveToFillInforFirst,
+                btnOkOnPress: () {},
+              ).show();
+            } else {
+              Loading.show(context);
+              await _controller
+                  .createUser(email.toString(), roleId)
+                  .then((value) => {
+                        Loading.dismiss(context),
+                        if (value.runtimeType != int)
+                          {
+                            if (value['success'] == true)
+                              {
+                                AwesomeDialog(
+                                  context: context,
+                                  dialogType: DialogType.success,
+                                  animType: AnimType.topSlide,
+                                  title: LocalizationText.createUserSuccess,
+                                  desc: value['message'],
+                                  btnOkOnPress: () {},
+                                ).show()
+                              }
+                            else
+                              {
+                                Loading.dismiss(context),
+                                AwesomeDialog(
+                                  context: context,
+                                  dialogType: DialogType.warning,
+                                  animType: AnimType.topSlide,
+                                  title: LocalizationText.checkAll,
+                                  desc: value['message'],
+                                  btnOkOnPress: () {},
+                                ).show()
+                              }
+                          }
+                      });
+            }
           },
         ),
       ]),
