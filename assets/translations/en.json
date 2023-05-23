@@ -199,5 +199,6 @@
   "pleaseFillInYourFullNameEmailPhoneNumber": "Please fill in your full name, email, phone number",
   "Congratulations": "Congratulations",
   "thanhYouForUsingOurService": "Thank you for using our service",
-  "passwordHasBeenSentToYourEmail": "Password has been sent to your email"
+  "passwordHasBeenSentToYourEmail": "Password has been sent to your email",
+  "amenitiesManagement":"Amenities Management"
 }

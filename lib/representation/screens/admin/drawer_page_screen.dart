@@ -26,30 +26,30 @@ class Task {
 
 int _currentIndex = 0;
 
-List<ButtonsInfo> _buttonNames = [
-  ButtonsInfo(title: LocalizationText.home, icon: Icons.home),
-  // ButtonsInfo(title: "Setting", icon: Icons.settings),
-  // ButtonsInfo(title: "Notifications", icon: Icons.notifications),
-  // ButtonsInfo(title: "Contacts", icon: Icons.contact_phone_rounded),
-  // ButtonsInfo(title: "Sales", icon: Icons.sell),
-  // ButtonsInfo(title: "Marketing", icon: Icons.mark_email_read),
-  // ButtonsInfo(title: "Security", icon: Icons.verified_user),
-  ButtonsInfo(
-      title: LocalizationText.hotelManager,
-      icon: Icons.supervised_user_circle_rounded),
-  ButtonsInfo(
-      title: LocalizationText.userManagement, icon: Icons.verified_user),
-  ButtonsInfo(title: LocalizationText.profile, icon: Icons.face),
-  ButtonsInfo(title: LocalizationText.addUser, icon: Icons.plus_one_rounded),
-];
+// List<ButtonsInfo> buttonNames = [
+//   ButtonsInfo(title: LocalizationText.home, icon: Icons.home),
+//   // ButtonsInfo(title: "Setting", icon: Icons.settings),
+//   // ButtonsInfo(title: "Notifications", icon: Icons.notifications),
+//   // ButtonsInfo(title: "Contacts", icon: Icons.contact_phone_rounded),
+//   // ButtonsInfo(title: "Sales", icon: Icons.sell),
+//   // ButtonsInfo(title: "Marketing", icon: Icons.mark_email_read),
+//   // ButtonsInfo(title: "Security", icon: Icons.verified_user),
+//   ButtonsInfo(
+//       title: LocalizationText.hotelManager,
+//       icon: Icons.supervised_user_circle_rounded),
+//   ButtonsInfo(
+//       title: LocalizationText.userManagement, icon: Icons.verified_user),
+//   ButtonsInfo(title: LocalizationText.profile, icon: Icons.face),
+//   ButtonsInfo(title: LocalizationText.addUser, icon: Icons.plus_one_rounded),
+// ];
 
 class DrawerPage extends StatefulWidget {
   static const String routeName = '/drawer_admin_screen';
   Function(int index) setPage;
-
+  List<ButtonsInfo> buttonNames;
   @override
   _DrawerPageState createState() => _DrawerPageState();
-  DrawerPage({required this.setPage});
+  DrawerPage({super.key, required this.setPage, required this.buttonNames});
 }
 
 class _DrawerPageState extends State<DrawerPage> {
@@ -77,7 +77,7 @@ class _DrawerPageState extends State<DrawerPage> {
                   )),
               const SizedBox(height: 24),
               ...List.generate(
-                _buttonNames.length,
+                widget.buttonNames.length,
                 (index) => Column(
                   children: [
                     Container(
@@ -94,7 +94,7 @@ class _DrawerPageState extends State<DrawerPage> {
                           : null,
                       child: ListTile(
                         title: Text(
-                          _buttonNames[index].title,
+                          widget.buttonNames[index].title,
                           style: TextStyle(
                             color: Colors.white,
                           ),
@@ -102,7 +102,7 @@ class _DrawerPageState extends State<DrawerPage> {
                         leading: Padding(
                           padding: const EdgeInsets.all(kMinPadding),
                           child: Icon(
-                            _buttonNames[index].icon,
+                            widget.buttonNames[index].icon,
                             color: Colors.white,
                           ),
                         ),
