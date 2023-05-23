@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:travel_app_ytb/helpers/loginManager/login_manager.dart';
 import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
@@ -28,18 +27,6 @@ class _UserScreenState extends State<UserScreen> {
                   Navigator.popAndPushNamed(context, LoginScreen.routeName),
                   _isLogOut = true,
                 }
-            });
-        FirebaseAuth.instance.signOut().then((value) => {
-              FirebaseAuth.instance.authStateChanges().listen((User? user) {
-                if (user == null) {
-
-                } else {
-                  if (_isLogOut == false) {
-                    Navigator.popAndPushNamed(context, LoginScreen.routeName);
-                    _isLogOut = true;
-                  }
-                }
-              }),
             });
       },
     ));

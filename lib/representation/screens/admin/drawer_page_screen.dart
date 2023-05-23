@@ -1,11 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:travel_app_ytb/core/constants/color_palatte.dart';
 import 'package:travel_app_ytb/core/constants/dismention_constants.dart';
 import 'package:travel_app_ytb/helpers/loginManager/login_manager.dart';
 import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
 import 'package:travel_app_ytb/representation/screens/login/login_screen.dart';
-import 'package:travel_app_ytb/representation/widgets/app_bar_container.dart';
 import 'package:travel_app_ytb/representation/widgets/button_widget.dart';
 import 'package:travel_app_ytb/representation/widgets/loading/loading.dart';
 
@@ -131,15 +129,6 @@ class _DrawerPageState extends State<DrawerPage> {
                   await LoginManager().signOut().then((value) => {
                         Loading.dismiss(context),
                         if (value == true && _isLogOut == false)
-                          {
-                            Navigator.popAndPushNamed(
-                                context, LoginScreen.routeName),
-                            _isLogOut = true,
-                          }
-                      });
-                  await FirebaseAuth.instance.signOut().then((value) => {
-                        Loading.dismiss(context),
-                        if (_isLogOut == false)
                           {
                             Navigator.popAndPushNamed(
                                 context, LoginScreen.routeName),

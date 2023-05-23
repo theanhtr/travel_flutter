@@ -1,8 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:travel_app_ytb/core/utils/const_utils.dart';
-import 'package:travel_app_ytb/core/utils/user_preferences.dart';
 import 'package:travel_app_ytb/helpers/local_storage_helper.dart';
 import 'package:travel_app_ytb/helpers/loginManager/login_manager.dart';
 import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
@@ -101,17 +98,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                     _isLogOut = true,
                                   }
                               });
-                          await FirebaseAuth.instance
-                              .signOut()
-                              .then((value) => {
-                                    Loading.dismiss(context),
-                                    if (_isLogOut == false)
-                                      {
-                                        Navigator.popAndPushNamed(
-                                            context, LoginScreen.routeName),
-                                        _isLogOut = true,
-                                      }
-                                  });
                         },
                       )
                       // buildAbout(widget.log.userModelProfile)
@@ -172,17 +158,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                       _isLogOut = true,
                                     }
                                 });
-                            await FirebaseAuth.instance
-                                .signOut()
-                                .then((value) => {
-                                      Loading.dismiss(context),
-                                      if (_isLogOut == false)
-                                        {
-                                          Navigator.popAndPushNamed(
-                                              context, LoginScreen.routeName),
-                                          _isLogOut = true,
-                                        }
-                                    });
                           },
                         )
                         // buildAbout(widget.log.userModelProfile)
