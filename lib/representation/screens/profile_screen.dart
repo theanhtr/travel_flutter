@@ -61,7 +61,8 @@ class _ProfilePageState extends State<ProfilePage> {
         if (snapshot.hasData) {
           print("dong 62: ${widget.log.userModelProfile.photoUrl}");
           return Scaffold(
-            body: LocalStorageHelper.getValue("roleId") == 1
+            body: LocalStorageHelper.getValue("roleId") == 1 ||
+                    LocalStorageHelper.getValue("roleId") == 3
                 ? ListView(
                     physics: BouncingScrollPhysics(),
                     children: [

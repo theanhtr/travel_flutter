@@ -6,7 +6,9 @@ import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:travel_app_ytb/core/utils/const_utils.dart';
+import 'package:travel_app_ytb/helpers/hotelOwnerManager/hotel_owner_manager.dart';
 import 'package:travel_app_ytb/helpers/local_storage_helper.dart';
+import 'package:travel_app_ytb/representation/models/hotel_model.dart';
 import 'package:travel_app_ytb/representation/models/user_model.dart';
 
 import '../http/base_client.dart';
@@ -22,6 +24,10 @@ class LoginManager {
 
   final UserModel userModel = UserModel();
   late UserModel userModelProfile = UserModel();
+  //   List<dynamic> _amenityList = [];
+  // List<dynamic> _typeRoomList = [];
+  // List<dynamic> _myHotelList = [];
+  HotelOwnerManager _hotelOwnerManager = new HotelOwnerManager();
   var token = '';
 
   Future<void> setUserModel() async {
@@ -175,6 +181,10 @@ class LoginManager {
         userModel.email = null;
         userModel.name = null;
         userModel.photoUrl = null;
+        _hotelOwnerManager.setListAmenities([]);
+        _hotelOwnerManager.setMyHotelList([]);
+        _hotelOwnerManager.setMyhotelModel(new HotelModel());
+        _hotelOwnerManager.setTypeRoomList([]);
         return true;
       }
     }

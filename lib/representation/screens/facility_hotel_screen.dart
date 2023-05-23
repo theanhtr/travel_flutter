@@ -20,14 +20,14 @@ class _FacilityHotelState extends State<FacilityHotel> {
   bool isSelectedAll = true;
   List<_CheckBoxState> listCheckbox = [
     _CheckBoxState(
-      facility: "Wifi",
+      facility: "Free wifi",
       icon: ImageHelper.loadFromAsset(AssetHelper.wifiIcon,
           fit: BoxFit.contain, width: kDefaultPadding * 1.5),
       checkBoxValue: false,
       index: 1,
     ),
     _CheckBoxState(
-      facility: "Free Breakfast",
+      facility: "Free breakfast",
       icon: ImageHelper.loadFromAsset(AssetHelper.freeBreakfast,
           fit: BoxFit.contain,
           width: kDefaultPadding * 1.5,
@@ -36,7 +36,7 @@ class _FacilityHotelState extends State<FacilityHotel> {
       index: 2,
     ),
     _CheckBoxState(
-      facility: "Non Smoking",
+      facility: "Non smoking",
       icon: ImageHelper.loadFromAsset(AssetHelper.noSmoking,
           fit: BoxFit.contain,
           width: kDefaultPadding * 1.5,
@@ -45,7 +45,7 @@ class _FacilityHotelState extends State<FacilityHotel> {
       index: 3,
     ),
     _CheckBoxState(
-      facility: "Non Refundable",
+      facility: "Non refundable",
       icon: ImageHelper.loadFromAsset(AssetHelper.nonRefundable,
           fit: BoxFit.contain,
           width: kDefaultPadding * 1.5,
@@ -59,42 +59,42 @@ class _FacilityHotelState extends State<FacilityHotel> {
     //         fit: BoxFit.contain, width: kDefaultPadding * 1.5),
     //     checkBoxValue: false,
     //     index: 4),
-    // _CheckBoxState(
-    //     facility: "Car rental",
-    //     icon: ImageHelper.loadFromAsset(AssetHelper.carRentalIcon,
-    //         fit: BoxFit.contain, width: kDefaultPadding * 1.5),
-    //     checkBoxValue: false,
-    //     index: 6),
+    _CheckBoxState(
+        facility: "Car rental",
+        icon: ImageHelper.loadFromAsset(AssetHelper.carRentalIcon,
+            fit: BoxFit.contain, width: kDefaultPadding * 1.5),
+        checkBoxValue: false,
+        index: 8),
     _CheckBoxState(
         facility: "Digital TV",
         icon: ImageHelper.loadFromAsset(AssetHelper.digitalTv,
             fit: BoxFit.contain, width: kDefaultPadding * 1.5),
         checkBoxValue: false,
-        index: 6),
+        index: 5),
     _CheckBoxState(
         facility: "Parking Area",
         icon: ImageHelper.loadFromAsset(AssetHelper.parkingAreaIcon,
             fit: BoxFit.contain, width: kDefaultPadding * 1.5),
         checkBoxValue: false,
-        index: 7),
+        index: 6),
     _CheckBoxState(
         facility: "Swimming Pool",
         icon: ImageHelper.loadFromAsset(AssetHelper.swimingPoolIcon,
             fit: BoxFit.contain, width: kDefaultPadding * 1.5),
         checkBoxValue: false,
-        index: 8),
-    _CheckBoxState(
-        facility: "Restaurant",
-        icon: ImageHelper.loadFromAsset(AssetHelper.restaurantIcon,
-            fit: BoxFit.contain, width: kDefaultPadding * 1.5),
-        checkBoxValue: false,
-        index: 9),
-    _CheckBoxState(
-        facility: "24-hour Front Desk",
-        icon: ImageHelper.loadFromAsset(AssetHelper.receptionIcon,
-            fit: BoxFit.contain, width: kDefaultPadding * 1.5),
-        checkBoxValue: false,
-        index: 10),
+        index: 7),
+    // _CheckBoxState(
+    //     facility: "Restaurant",
+    //     icon: ImageHelper.loadFromAsset(AssetHelper.restaurantIcon,
+    //         fit: BoxFit.contain, width: kDefaultPadding * 1.5),
+    //     checkBoxValue: false,
+    //     index: 9),
+    // _CheckBoxState(
+    //     facility: "24-hour Front Desk",
+    //     icon: ImageHelper.loadFromAsset(AssetHelper.receptionIcon,
+    //         fit: BoxFit.contain, width: kDefaultPadding * 1.5),
+    //     checkBoxValue: false,
+    //     index: 10),
   ];
 
   @override

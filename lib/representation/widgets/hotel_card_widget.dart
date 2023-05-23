@@ -146,7 +146,8 @@ class HotelCardWidget extends StatelessWidget {
                         ],
                       ),
                       ButtonWidget(
-                        title: LocalStorageHelper.getValue("roleId") == 1
+                        title: LocalStorageHelper.getValue("roleId") == 1 ||
+                                LocalStorageHelper.getValue("roleId") == 3
                             ? LocalizationText.viewDetail
                             : LocalizationText.bookRoom,
                         ontap: ontap,

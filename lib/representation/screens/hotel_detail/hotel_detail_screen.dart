@@ -11,12 +11,14 @@ import 'package:travel_app_ytb/core/constants/textstyle_constants.dart';
 import 'package:travel_app_ytb/core/utils/navigation_utils.dart';
 import 'package:travel_app_ytb/helpers/adminManager/admin_manager.dart';
 import 'package:travel_app_ytb/helpers/asset_helper.dart';
+import 'package:travel_app_ytb/helpers/hotelOwnerManager/hotel_owner_manager.dart';
 import 'package:travel_app_ytb/helpers/image_helper.dart';
 import 'package:travel_app_ytb/helpers/local_storage_helper.dart';
 import 'package:travel_app_ytb/helpers/location/location_helper.dart';
 import 'package:travel_app_ytb/helpers/service_load_helper.dart';
 import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
 import 'package:travel_app_ytb/representation/models/hotel_model.dart';
+import 'package:travel_app_ytb/representation/screens/hotelOwnerManager/update_hotel_screen.dart';
 import 'package:travel_app_ytb/representation/widgets/google/google_map_widget.dart';
 import 'package:travel_app_ytb/representation/screens/hotel_detail/hotel_detail_controller.dart';
 import 'package:travel_app_ytb/representation/screens/room_booking/select_room_screen.dart';
@@ -58,6 +60,7 @@ class _HotelDetailScreenState extends State<HotelDetailScreen> {
   final PageController _pageController = PageController();
   int pageCount = 1;
   final AdminManager _adminManager = AdminManager();
+  final HotelOwnerManager _hotelManager = HotelOwnerManager();
   final StreamController<double> _pageStreamController =
       StreamController<double>.broadcast();
 
@@ -79,7 +82,7 @@ class _HotelDetailScreenState extends State<HotelDetailScreen> {
                 LocationHelper()
                     .getGeoPointFromAddress(_hotelModel?.address ?? "")
                     .then((position) => {
-                      debugPrint("79 hotel detail $position"),
+                          debugPrint("79 hotel detail $position"),
                           setState(() {
                             _hotelModel?.position =
                                 LatLng(position.latitude, position.longitude);
@@ -111,6 +114,7 @@ class _HotelDetailScreenState extends State<HotelDetailScreen> {
     _guestCount = args['guestCount'];
     _roomCount = args['roomCount'];
     _hotelModel?.distanceInfo = args['distanceInfo'];
+    debugPrint("dong 117: ${args['setSectiond']}");
     _initData(id);
     return Scaffold(
       body: _isLoading == false
@@ -506,32 +510,54 @@ class _HotelDetailScreenState extends State<HotelDetailScreen> {
                 Positioned(
                   bottom: 20,
                   child: SizedBox(
-                    height: 50,
-                    width: 200,
-                    child: LocalStorageHelper.getValue("roleId") != 1
-                        ? ButtonWidget(
-                            title: LocalizationText.selectRoom,
-                            ontap: () {
-                              if (LocalStorageHelper.getValue("roleId") == 1) {
-                                // _adminManager.deleteHotel(id);
+                      height: 50,
+                      width: 200,
+                      child: LocalStorageHelper.getValue("roleId") == 2
+                          ? ButtonWidget(
+                              title: LocalStorageHelper.getValue("roleId") == 2
+                                  ? LocalizationText.selectRoom
+                                  : LocalizationText.deleteMyhotel,
+                              ontap: () {
+                                if (LocalStorageHelper.getValue("roleId") ==
+                                    1) {
+                                  // _adminManager.deleteHotel(id);
 
-                                print("cbi delete hotel day");
-                              } else {
-                                Navigator.pushNamed(
-                                    context, SelectRoomScreen.routeName,
-                                    arguments: {
-                                      'hotelId': _hotelModel?.id,
-                                      'dateSelected': _dateSelected,
-                                      'guestCount': _guestCount,
-                                      'roomCount': _roomCount,
-                                    });
-                              }
-                            },
-                          )
-                        : SizedBox(
-                            height: 0,
-                          ),
-                  ),
+                                  print("cbi delete hotel day");
+                                } else if (LocalStorageHelper.getValue(
+                                        "roleId") ==
+                                    3) {
+                                  // _hotelManager.deleteHotel();
+                                  print("cbi delete hotel day");
+                                } else {
+                                  Navigator.pushNamed(
+                                      context, SelectRoomScreen.routeName,
+                                      arguments: {
+                                        'hotelId': _hotelModel?.id,
+                                        'dateSelected': _dateSelected,
+                                        'guestCount': _guestCount,
+                                        'roomCount': _roomCount,
+                                      });
+                                }
+                              },
+                            )
+                          : LocalStorageHelper.getValue("roleId") == 3
+                              ? ButtonWidget(
+                                  title: LocalizationText.update,
+                                  ontap: () {
+                                    Navigator.pushNamed(
+                                        context, UpdateHotelScreen.routeName,
+                                        arguments: {
+                                          'hotelId': _hotelModel?.id,
+                                          'dateSelected': _dateSelected,
+                                          'guestCount': _guestCount,
+                                          'roomCount': _roomCount,
+                                          'setSectiond': args['setSectiond'],
+                                        });
+                                  },
+                                )
+                              : SizedBox(
+                                  height: 0,
+                                )),
                 ),
               ],
             )

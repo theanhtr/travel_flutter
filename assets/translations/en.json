@@ -133,6 +133,7 @@
   "contact_details": "Contact Details",
   "errorWhenCallApi":"Error when call api",
   "createUserSuccess": "Create account success",
+  "createAmenitySuccess": "Create amenity success",
   "editProfileSuccess": "Update infor success",
   "haveToFillInforFirst": "You have to fill this form first",
   "signUpSuccess": "Sign up success",
@@ -161,6 +162,7 @@
   "deleteUserSuccess":"Delete success",
   "dontHaveBirthDate": "Not selected yet",
   "selectRoleFirst": "Let's select changed role",
+  "selectAmenityFirst": "Let's select amenities",
   "missingInfor": "Infor missing",
   "success": "Success!"  ,
   "confirmDeleteAccount": "You really want to delete?",
@@ -199,5 +201,24 @@
   "pleaseFillInYourFullNameEmailPhoneNumber": "Please fill in your full name, email, phone number",
   "Congratulations": "Congratulations",
   "thanhYouForUsingOurService": "Thank you for using our service",
-  "passwordHasBeenSentToYourEmail": "Password has been sent to your email"
+  "passwordHasBeenSentToYourEmail": "Password has been sent to your email",
+  "amenitiesManagement":"Amenities Management",
+  "amenitiesAdd":"Amenities Add",
+  "amenitiesDelete":"Amenities Delete",
+  "amenitiesDeleteSuccess":"Amenities Delete Success",
+  "amenitiesList":"Amenities",
+
+  "showMyHotel":"My hotel",
+  "createMyHotel":"Create hotel",
+  "createMyHotelSuccess":"Create hotel success",
+  "updateMyhotel":"Update hotel",
+  "updateMyhotelSuccess":"Update hotel Success",
+  "deleteMyhotel":"Delete hotel",
+  "deleteMyhotelSuccess":"Delete hotel Success",
+  "hotelName":"Hotel name",
+  "hotelDescription":"Hotel description",
+  "hotelSpecificAddress":"Hotel address",
+
+  "addHotelImage":"Add hotel image",
+"hotelManagerExist":"Hotel of manager is existHotel of manager is exist"
 }

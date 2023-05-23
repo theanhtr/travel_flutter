@@ -107,12 +107,31 @@ class _AdminScreenState extends State<AdminScreen> {
         child: body,
       ),
       drawer: DrawerPage(
+        callback: () {},
         setPage: (index) {
           setState(() {
             section = index;
             isFirst = false;
           });
         },
+        buttonNames: [
+          ButtonsInfo(title: LocalizationText.home, icon: Icons.home),
+          // ButtonsInfo(title: "Setting", icon: Icons.settings),
+          // ButtonsInfo(title: "Notifications", icon: Icons.notifications),
+          // ButtonsInfo(title: "Contacts", icon: Icons.contact_phone_rounded),
+          // ButtonsInfo(title: "Sales", icon: Icons.sell),
+          // ButtonsInfo(title: "Marketing", icon: Icons.mark_email_read),
+          // ButtonsInfo(title: "Security", icon: Icons.verified_user),
+          ButtonsInfo(
+              title: LocalizationText.hotelManager,
+              icon: Icons.supervised_user_circle_rounded),
+          ButtonsInfo(
+              title: LocalizationText.userManagement,
+              icon: Icons.verified_user),
+          ButtonsInfo(title: LocalizationText.profile, icon: Icons.face),
+          ButtonsInfo(
+              title: LocalizationText.addUser, icon: Icons.plus_one_rounded),
+        ],
       ),
     );
   }

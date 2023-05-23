@@ -9,6 +9,8 @@ import 'package:travel_app_ytb/representation/screens/favorite_booking_screen.da
 import 'package:travel_app_ytb/representation/screens/flight_filter_screen.dart';
 import 'package:travel_app_ytb/representation/screens/forgot_password/forgot_password_screen.dart';
 import 'package:travel_app_ytb/representation/screens/forgot_password/reset_password_screen.dart';
+import 'package:travel_app_ytb/representation/screens/hotelOwnerManager/create_hotel_screen.dart';
+import 'package:travel_app_ytb/representation/screens/hotelOwnerManager/owner_screen.dart';
 import 'package:travel_app_ytb/representation/screens/hotel_booking/hotel_booking_screen.dart';
 import 'package:travel_app_ytb/representation/screens/hotel_booking/search_hotels_screen.dart';
 import 'package:travel_app_ytb/representation/screens/hotel_booking/search_your_destination_screen.dart';
@@ -28,6 +30,7 @@ import 'package:travel_app_ytb/representation/screens/sort_by_hotel_screen.dart'
 import 'package:travel_app_ytb/representation/screens/splash_screen.dart';
 import 'package:travel_app_ytb/representation/screens/user_fill_in_information_screen.dart';
 
+import 'representation/screens/hotelOwnerManager/update_hotel_screen.dart';
 import 'representation/screens/property_type_screen.dart';
 import 'representation/screens/reviews/reviews_screen.dart';
 
@@ -70,4 +73,7 @@ final Map<String, WidgetBuilder> routes = {
   ContactDetailsScreen.routeName: (context) => const ContactDetailsScreen(),
   // FillInforScreen.routeName: (context) => const FillInforScreen()
   ReviewsScreen.routeName: (context) => const ReviewsScreen(),
+  HotelOwnerScreen.routeName: (context) => HotelOwnerScreen(),
+  CreateHotelScreen.routeName: (context) => CreateHotelScreen(),
+  UpdateHotelScreen.routeName: (context) => UpdateHotelScreen(),
 };

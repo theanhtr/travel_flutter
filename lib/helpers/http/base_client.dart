@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 const String baseUrl =
-    "https://7fff-2405-4802-1ce9-90e0-c46f-7f21-1ae2-e586.ngrok-free.app/api";
+    "https://d419-2405-4802-1d97-9b00-68ac-cfde-b6ed-dbc3.ngrok-free.app/api";
 
 class BaseClient {
   String baseUrlForImport = baseUrl;
@@ -177,6 +177,22 @@ class BaseClient {
     }
   }
 
+  Future<dynamic> deleteMyhotel(
+    String api,
+  ) async {
+    var url = Uri.parse(baseUrl + api);
+
+    var response = await client.delete(url, body: {}, headers: _header);
+
+    if (response.statusCode == 201 ||
+        response.statusCode == 204 ||
+        response.statusCode == 200) {
+      return response.body;
+    } else {
+      return response.statusCode;
+    }
+  }
+
   Future<dynamic> deleteUser(String api, String email) async {
     var _headerDelete = {
       'Accept': 'application/json',
@@ -192,6 +208,58 @@ class BaseClient {
     print(jsonEncode(Object));
     var response = await client.delete(url,
         body: {"email": email}, headers: _headerDelete);
+
+    if (response.statusCode == 201 ||
+        response.statusCode == 204 ||
+        response.statusCode == 200) {
+      return response.body;
+    } else {
+      print(response.body);
+      return response.statusCode;
+    }
+  }
+
+  Future<dynamic> deleteAmenities(String api, String amenities) async {
+    var _headerDelete = {
+      'Accept': 'application/json',
+      // 'Content-Type': 'application/json',
+      'Authorization': 'Bearer $tokenAuth',
+    };
+    print("amnities: $amenities");
+    var url = Uri.parse(baseUrl + api);
+    var body = jsonEncode({"amenities": amenities});
+
+    final Object;
+    Object = {'amenities': 'amenities'};
+    print(jsonEncode(Object));
+    var response = await client.delete(url,
+        body: {"amenities": amenities}, headers: _headerDelete);
+
+    if (response.statusCode == 201 ||
+        response.statusCode == 204 ||
+        response.statusCode == 200) {
+      return response.body;
+    } else {
+      print(response.body);
+      return response.statusCode;
+    }
+  }
+
+  Future<dynamic> deleteHotelIamge(String api, String images_id) async {
+    var _headerDelete = {
+      'Accept': 'application/json',
+      // 'Content-Type': 'application/json',
+      'Authorization': 'Bearer $tokenAuth',
+    };
+    print("images_id: $images_id");
+    var url = Uri.parse(baseUrl + api);
+    var body = jsonEncode({"images_id": images_id});
+
+    final Object;
+    Object = {'images_id': 'images_id'};
+    print(jsonEncode(Object));
+    var response = await client.delete(url,
+        body: {"images_id": images_id}, headers: _headerDelete);
 
     if (response.statusCode == 201 ||
         response.statusCode == 204 ||
