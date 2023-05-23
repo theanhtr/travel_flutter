@@ -272,11 +272,16 @@ class _LoginScreenState extends State<LoginScreen> {
                       Loading.show(context);
                       LoginGoogleManager().signInWithGoogle().then((value) {
                         if (value != null) {
-                          Loading.dismiss(context);
-                          Navigator.popAndPushNamed(
-                              context, MainScreen.routeName);
-                        } else {
-                          Loading.dismiss(context);
+                          LoginManager()
+                              .signInWithGoogle(value)
+                              .then((result) => {
+                                    Loading.dismiss(context),
+                                    if (result != null)
+                                      {
+                                        Navigator.popAndPushNamed(
+                                            context, MainScreen.routeName),
+                                      }
+                                  });
                         }
                       });
                       // Navigator.of(context).pushNamed(MainScreen.routeName);
@@ -297,12 +302,18 @@ class _LoginScreenState extends State<LoginScreen> {
                     ontap: () async {
                       Loading.show(context);
                       LoginFacebookManager().signInWithFacebook().then((value) {
+                        debugPrint("305 login screen $value");
                         if (value != null) {
-                          Loading.dismiss(context);
-                          Navigator.popAndPushNamed(
-                              context, MainScreen.routeName);
-                        } else {
-                          Loading.dismiss(context);
+                          LoginManager()
+                              .signInWithFacebook(value)
+                              .then((result) => {
+                                    Loading.dismiss(context),
+                                    if (result != null)
+                                      {
+                                        Navigator.popAndPushNamed(
+                                            context, MainScreen.routeName),
+                                      }
+                                  });
                         }
                       });
                     },
