@@ -178,9 +178,10 @@ class LocalizationText {
   static String success = "success".tr();
   static String confirmDeleteAccount = "confirmDeleteAccount".tr();
   static String aboutTodelete = "aboutTodelete".tr();
-  // static String errorWhenCallApi = "errorWhenCallApi".tr();
+  static String selectAmenityFirst = "selectAmenityFirst".tr();
 
-  // static String createUserSuccess = "createUserSuccess".tr();
+  static String createAmenitySuccess = "createAmenitySuccess".tr();
+
   // static String editProfileSuccess = "editProfileSuccess".tr();
   // static String haveToFillInforFirst = "haveToFillInforFirst".tr();
   // static String signUpSuccess = "signUpSuccess".tr();
@@ -192,20 +193,21 @@ class LocalizationText {
   // static String addUser = "addUser".tr();
   // static String adminMenu = "adminMenu".tr();
 
-  // static String noHotel = "noHotel".tr();
-  // static String noUser = "noUser".tr();
-  // static String admin = "admin".tr();
-  // static String customer = "customer".tr();
-  // static String hotelManager = "hotelManager".tr();
-  // static String airlineManager = "airlineManager".tr();
-  // static String deleteUser = "deleteUser".tr();
-  // static String changeRoleComplete = "changeRoleComplete".tr();
-  // static String changeRole = "changeRole".tr();
-  // static String selectRow = "selectRow".tr();
-  // static String viewDetail = "viewDetail".tr();
-  // static String bookRoom = "bookRoom".tr();
-  // static String deleteUserSuccess = "deleteUserSuccess".tr();
-  // static String dontHaveBirthDate = "dontHaveBirthDate".tr();
+  static String hotelManagerExist = "hotelManagerExist".tr();
+  static String addHotelImage = "addHotelImage".tr();
+  static String hotelName = "hotelName".tr();
+  static String hotelDescription = "hotelDescription".tr();
+  static String hotelSpecificAddress = "hotelSpecificAddress".tr();
+
+  static String showMyHotel = "showMyHotel".tr();
+
+  static String createMyHotel = "createMyHotel".tr();
+  static String createMyHotelSucces = "createMyHotelSucces".tr();
+  static String updateMyhotel = "updateMyhotel".tr();
+  static String updateMyhotelSuccess = "updateMyhotelSuccess".tr();
+  static String deleteMyhotel = "bookRoom".tr();
+  static String deleteMyhotelSuccess = "deleteUserSuccess".tr();
+  static String amenitiesDeleteSuccess = "amenitiesDeleteSuccess".tr();
   static String warning = 'warning'.tr();
   static String pleaseFillInYourFullNameEmailPhoneNumber =
       'pleaseFillInYourFullNameEmailPhoneNumber'.tr();
@@ -213,10 +215,50 @@ class LocalizationText {
   static String thankYouForUsingOurService = "thanhYouForUsingOurService".tr();
   static String passwordHasBeenSentToYourEmail =
       "passwordHasBeenSentToYourEmail".tr();
+  static String amenitiesManagement = "amenitiesManagement".tr();
+  static String amenitiesAdd = "amenitiesAdd".tr();
+  static String amenitiesDelete = "amenitiesDelete".tr();
+  static String seeRoomType = "seeRoomType".tr();
+  static String roomHotelListIsEmpty = "roomHotelListIsEmpty".tr();
+  static String addTypeRoom = "addTypeRoom".tr();
+  static String roomName = "roomName".tr();
+  static String description = "description".tr();
+  static String price = "price".tr();
+  static String occupancy = "occupancy".tr();
+  static String numberOfBeds = "numberOfBeds".tr();
+  static String roomSize = "roomSize".tr();
+  static String err = "err".tr();
+  static String updateTypeRoom = "updateTypeRoom".tr();
+  static String deleteTypeRoom = "deleteTypeRoom".tr();
+  static String maximum = "maximum".tr();
+  static String peopleRoom = "peopleRoom".tr();
+  static String add = "add".tr();
+  static String all = "all".tr();
+  static String withComment = "withComment".tr();
+  static String withPhotos = "withPhotos".tr();
+  static String numberOfRooms = "numberOfRooms".tr();
+  static String changeImage = "changeImage".tr();
+  static String freeWifi = "freeWifi".tr();
+  static String freeBreakfast = "freeBreakfast".tr();
+  static String nonSmoking = "nonSmoking".tr();
+  static String nonRefunable = "nonRefunable".tr();
+  static String digitalTV = "digitalTV".tr();
+  static String parkingArea = "parkingArea".tr();
+  static String swimmingPool = "swimmingPool".tr();
+  static String carRental = "carRental".tr();
+  static String type = "type".tr();
+  static String rating = "rating".tr();
+  static String highToLowScore = "highToLowScore".tr();
+  static String lowToHighScore = "lowToHighScore".tr();
+  static String budget = "budget".tr();
+  static String hotelClass = "hotelClass".tr();
+
+  static String amenitiesList = "amenitiesList".tr();
   static String history = "history".tr();
   static String deleteAll = "deleteAll".tr();
   static String clearAllSearches = "clearAllSearches".tr();
-  static String clearAllSearchesDescription = "clearAllSearchesDescription".tr();
+  static String clearAllSearchesDescription =
+      "clearAllSearchesDescription".tr();
   static String orderHistory = "orderHistory".tr();
   static String reOrder = "re_order".tr();
 }

@@ -65,7 +65,8 @@ class _ProfilePageState extends State<ProfilePage> {
         }
         if (snapshot.hasData) {
           return Scaffold(
-            body: LocalStorageHelper.getValue("roleId") == 1
+            body: LocalStorageHelper.getValue("roleId") == 1 ||
+                    LocalStorageHelper.getValue("roleId") == 3
                 ? ListView(
                     physics: const BouncingScrollPhysics(),
                     children: [
