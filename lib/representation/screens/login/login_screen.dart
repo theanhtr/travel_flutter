@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travel_app_ytb/core/constants/color_palatte.dart';
 import 'package:travel_app_ytb/core/constants/dismention_constants.dart';
 import 'package:travel_app_ytb/core/constants/textstyle_constants.dart';
 import 'package:travel_app_ytb/helpers/asset_helper.dart';
-import 'package:travel_app_ytb/helpers/http/base_client.dart';
 import 'package:travel_app_ytb/helpers/image_helper.dart';
 import 'package:travel_app_ytb/helpers/local_storage_helper.dart';
 import 'package:travel_app_ytb/helpers/loginManager/login_facebook_manager.dart';
@@ -15,17 +12,14 @@ import 'package:travel_app_ytb/helpers/loginManager/login_manager.dart';
 import 'package:travel_app_ytb/representation/controllers/login_screen_controller.dart';
 import 'package:travel_app_ytb/representation/screens/admin_screen.dart';
 import 'package:travel_app_ytb/representation/screens/forgot_password/forgot_password_screen.dart';
-import 'package:travel_app_ytb/representation/screens/home/home_screen.dart';
 import 'package:travel_app_ytb/representation/screens/main_screen.dart';
 import 'package:travel_app_ytb/representation/screens/sign_up_screen.dart';
 import 'package:travel_app_ytb/representation/widgets/app_bar_container.dart';
 import 'package:travel_app_ytb/representation/widgets/button_icon_widget.dart';
 import 'package:travel_app_ytb/representation/widgets/button_widget.dart';
 import 'package:travel_app_ytb/representation/widgets/input_card.dart';
-import 'package:travel_app_ytb/representation/widgets/line_widget.dart';
 import 'package:travel_app_ytb/representation/widgets/loading/loading.dart';
 
-import '../../../core/utils/animation_utils.dart';
 import '../../../helpers/translations/localization_text.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -152,7 +146,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     Navigator.pushNamed(
                         context, ForgotPasswordScreen.routeName);
                   },
-                  child: Container(
+                  child: SizedBox(
                     height: 22,
                     child: Text(
                       LocalizationText.forgotPassword,
@@ -272,37 +266,122 @@ class _LoginScreenState extends State<LoginScreen> {
                       Loading.show(context);
                       LoginGoogleManager().signInWithGoogle().then((value) {
                         if (value != null) {
-                          Loading.dismiss(context);
-                          Navigator.popAndPushNamed(
-                              context, MainScreen.routeName);
-                        } else {
-                          Loading.dismiss(context);
+                          LoginManager()
+                              .signInWithGoogle(value)
+                              .then((result) => {
+                                    Loading.dismiss(context),
+                                    if (result.runtimeType == int)
+                                      {
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) =>
+                                              AlertDialog(
+                                            title: const Text(
+                                                'ERROR YOUR PASSWORD'),
+                                            content: const Text(
+                                                'Your password or email is wrong, please re-enter'),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    context, 'Cancel'),
+                                                child: const Text('Cancel'),
+                                              ),
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    context, 'OK'),
+                                                child: const Text('OK'),
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                      }
+                                    else if (result['success'] == true)
+                                      {
+                                        LocalStorageHelper.setValue("roleId",
+                                            result['data']['role_id']),
+                                        Loading.dismiss(context),
+                                        if (result['data']['role_id'] == 2)
+                                          Navigator.popAndPushNamed(
+                                              context, MainScreen.routeName)
+                                        else if (result['data']['role_id'] == 1)
+                                          Navigator.popAndPushNamed(
+                                              context, AdminScreen.routeName)
+                                        else
+                                          {
+                                            Navigator.popAndPushNamed(
+                                                context, MainScreen.routeName)
+                                          }
+                                      }
+                                  });
                         }
                       });
                       // Navigator.of(context).pushNamed(MainScreen.routeName);
                     },
                   ),
                 ),
-                SizedBox(width: kDefaultPadding / 2),
+                const SizedBox(width: kDefaultPadding / 2),
                 Expanded(
                   flex: 1,
                   child: ButtonIconWidget(
                     title: 'Facebook',
-                    backgroundColor: Color(0xff3C5A9A),
-                    textColor: Color(0xffffffff),
-                    icon: Icon(
+                    backgroundColor: const Color(0xff3C5A9A),
+                    textColor: const Color(0xffffffff),
+                    icon: const Icon(
                       FontAwesomeIcons.facebookF,
                       color: Colors.white,
                     ),
                     ontap: () async {
                       Loading.show(context);
                       LoginFacebookManager().signInWithFacebook().then((value) {
+                        debugPrint("305 login screen $value");
                         if (value != null) {
-                          Loading.dismiss(context);
-                          Navigator.popAndPushNamed(
-                              context, MainScreen.routeName);
-                        } else {
-                          Loading.dismiss(context);
+                          LoginManager()
+                              .signInWithFacebook(value)
+                              .then((result) => {
+                                    Loading.dismiss(context),
+                                    if (result.runtimeType == int)
+                                      {
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) =>
+                                              AlertDialog(
+                                            title: const Text(
+                                                'ERROR YOUR PASSWORD'),
+                                            content: const Text(
+                                                'Your password or email is wrong, please re-enter'),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    context, 'Cancel'),
+                                                child: const Text('Cancel'),
+                                              ),
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    context, 'OK'),
+                                                child: const Text('OK'),
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                      }
+                                    else if (result['success'] == true)
+                                      {
+                                        LocalStorageHelper.setValue("roleId",
+                                            result['data']['role_id']),
+                                        Loading.dismiss(context),
+                                        if (result['data']['role_id'] == 2)
+                                          Navigator.popAndPushNamed(
+                                              context, MainScreen.routeName)
+                                        else if (result['data']['role_id'] == 1)
+                                          Navigator.popAndPushNamed(
+                                              context, AdminScreen.routeName)
+                                        else
+                                          {
+                                            Navigator.popAndPushNamed(
+                                                context, MainScreen.routeName)
+                                          }
+                                      }
+                                  });
                         }
                       });
                     },
@@ -325,10 +404,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        print('ok');
                         Navigator.pushNamed(context, SignUpScreen.routeName);
                       },
-                      child: Container(
+                      child: SizedBox(
                         height: 22,
                         child: Text(
                           LocalizationText.signUp,

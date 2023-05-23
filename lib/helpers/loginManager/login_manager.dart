@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:dio/dio.dart' as dio;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
@@ -66,6 +67,65 @@ class LoginManager {
     }
     Map dataResponse = await json.decode(response);
     var token = await dataResponse['data']['token'];
+    if (_isRemember == true) {
+      final userToken = await LocalStorageHelper.getValue('userToken');
+      if (userToken == null) {
+        await LocalStorageHelper.setValue("userToken", token);
+        await LocalStorageHelper.setValue("userEmail", email);
+        await setUserModel();
+        await setUserProfileModel();
+      }
+    }
+    return dataResponse;
+  }
+
+  Future<dynamic> signInWithGoogle(String accessToken) async {
+    //String accessToken = await userCredential.user?.getIdToken() ?? "";
+    debugPrint("token 95 google auth login manager $accessToken");
+    var response = await BaseClient("").post('/auth/login/google', {
+      'access_token': accessToken
+    }).catchError((err) {
+      debugPrint(err);
+      return err;
+    });
+    debugPrint("token 95 google auth login manager ${response}");
+    if (response == null) return false;
+    if (response.runtimeType == int) {
+      return response;
+    }
+    Map dataResponse = await json.decode(response);
+    var token = dataResponse['data']['token'];
+    String email = dataResponse['data']['email'];
+    if (_isRemember == true) {
+      final userToken = await LocalStorageHelper.getValue('userToken');
+      if (userToken == null) {
+        await LocalStorageHelper.setValue("userToken", token);
+        await LocalStorageHelper.setValue("userEmail", email);
+        await setUserModel();
+        await setUserProfileModel();
+      }
+    }
+    return dataResponse;
+  }
+
+
+  Future<dynamic> signInWithFacebook(String accessToken) async {
+    //String accessToken = await userCredential.user?.getIdToken() ?? "";
+    debugPrint("token 113 google auth login manager $accessToken");
+    var response = await BaseClient("").post('/auth/login/facebook', {
+      'access_token': accessToken
+    }).catchError((err) {
+      debugPrint(err);
+      return err;
+    });
+    debugPrint("token 120 google auth login manager ${response}");
+    if (response == null) return false;
+    if (response.runtimeType == int) {
+      return response;
+    }
+    Map dataResponse = await json.decode(response);
+    var token = await dataResponse['data']['token'];
+    String email = dataResponse['data']['email'];
     if (_isRemember == true) {
       final userToken = await LocalStorageHelper.getValue('userToken');
       if (userToken == null) {
