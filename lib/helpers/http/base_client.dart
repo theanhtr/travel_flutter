@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 const String baseUrl =
-    "https://7fff-2405-4802-1ce9-90e0-c46f-7f21-1ae2-e586.ngrok-free.app/api";
+    "https://473a-2405-4802-1ce9-90e0-f5cc-6307-716f-18be.ngrok-free.app/api";
 
 class BaseClient {
   String baseUrlForImport = baseUrl;
@@ -192,6 +192,32 @@ class BaseClient {
     print(jsonEncode(Object));
     var response = await client.delete(url,
         body: {"email": email}, headers: _headerDelete);
+
+    if (response.statusCode == 201 ||
+        response.statusCode == 204 ||
+        response.statusCode == 200) {
+      return response.body;
+    } else {
+      print(response.body);
+      return response.statusCode;
+    }
+  }
+
+  Future<dynamic> deleteAmenities(String api, String amenities) async {
+    var _headerDelete = {
+      'Accept': 'application/json',
+      // 'Content-Type': 'application/json',
+      'Authorization': 'Bearer $tokenAuth',
+    };
+    print("amnities: $amenities");
+    var url = Uri.parse(baseUrl + api);
+    var body = jsonEncode({"amenities": amenities});
+
+    final Object;
+    Object = {'amenities': 'amenities'};
+    print(jsonEncode(Object));
+    var response = await client.delete(url,
+        body: {"amenities": amenities}, headers: _headerDelete);
 
     if (response.statusCode == 201 ||
         response.statusCode == 204 ||

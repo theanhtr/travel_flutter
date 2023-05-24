@@ -47,28 +47,27 @@ class HotelOwnerManager {
   //   return dataResponse;
   // }
 
-  // Future<Map> deleteUser(String email) async {
-  //   print('email delete: $email');
-  //   final token = await LocalStorageHelper.getValue("userToken") as String?;
-  //   final response = await BaseClient(token!)
-  //       .deleteUser("/users/delete-user", email)
-  //       .catchError((err) {
-  //     debugPrint("loi delete user: $err");
-  //     return false;
-  //   });
-  //   debugPrint("loi 58: $response");
-  //   Map resultmap = Map<String, String>();
-  //   if (response.runtimeType == int) {
-  //     resultmap['result'] = 'statuscode $response';
-  //     return resultmap;
-  //   }
-  //   if (response == null) {
-  //     resultmap['result'] = 'null response';
-  //     return resultmap;
-  //   }
-  //   Map dataResponse = json.decode(response);
-  //   return dataResponse;
-  // }
+  Future<Map> deleteAmenities(String amenities) async {
+    final token = await LocalStorageHelper.getValue("userToken") as String?;
+    final response = await BaseClient(token!)
+        .deleteAmenities("/my-hotel/amenities", amenities)
+        .catchError((err) {
+      debugPrint("loi delete user: $err");
+      return false;
+    });
+    debugPrint("loi 58: $response");
+    Map resultmap = Map<String, String>();
+    if (response.runtimeType == int) {
+      resultmap['result'] = 'statuscode $response';
+      return resultmap;
+    }
+    if (response == null) {
+      resultmap['result'] = 'null response';
+      return resultmap;
+    }
+    Map dataResponse = json.decode(response);
+    return dataResponse;
+  }
 
   Future<Map> viewAllAmenities() async {
     // print("token day: ${LocalStorageHelper.getValue("userToken")}");
@@ -127,22 +126,22 @@ class HotelOwnerManager {
   //   return dataResponse;
   // }
 
-  // Future<Map> getOneUser(String email) async {
-  //   final token = await LocalStorageHelper.getValue("userToken") as String?;
-  //   final response = await BaseClient(token!)
-  //       .post("/users/get-by-email", {"email": email}).catchError((err) {
-  //     debugPrint(err);
-  //     return false;
-  //   });
-  //   Map resultmap = Map<String, String>();
-  //   if (response == null) {
-  //     resultmap['result'] = 'null response';
-  //     return resultmap;
-  //   }
-  //   Map dataResponse = json.decode(response);
+  Future<Map> addAmenities(String amenities) async {
+    final token = await LocalStorageHelper.getValue("userToken") as String?;
+    final response = await BaseClient(token!).post(
+        "/my-hotel/amenities", {"amenities": amenities}).catchError((err) {
+      debugPrint(err);
+      return false;
+    });
+    Map resultmap = Map<String, String>();
+    if (response == null) {
+      resultmap['result'] = 'null response';
+      return resultmap;
+    }
+    Map dataResponse = json.decode(response);
 
-  //   return dataResponse;
-  // }
+    return dataResponse;
+  }
 
   // Future<Map> createUser(String email, int? id) async {
   //   final token = await LocalStorageHelper.getValue("userToken") as String?;

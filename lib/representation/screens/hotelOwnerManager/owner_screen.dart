@@ -25,6 +25,8 @@ class HotelOwnerScreen extends StatefulWidget {
 enum Section { HOME, ALL_HOTELS, ALL_USER }
 
 class _HotelOwnerScreenState extends State<HotelOwnerScreen> {
+  String amenities = "";
+  List<int> amenitiesResults = [];
   int section = 0;
   bool isFirst = true;
   bool _isLoading = false;
@@ -40,6 +42,9 @@ class _HotelOwnerScreenState extends State<HotelOwnerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Function callback = () {
+      setState(() {});
+    };
     // print("isFirst dong 36 $isFirst");
     if (isFirst) {
       isFirst = false;
@@ -77,8 +82,14 @@ class _HotelOwnerScreenState extends State<HotelOwnerScreen> {
         if (isDone-- > 0) {
           // print("admin hotel ${widget.hotelManager.getListHotel}");
           isFirst = false;
-          body =
-              AmenityHotel(amenityList: widget.hotelManager.getListAmenities);
+          body = AmenityHotel(
+              isdelete: false,
+              amenityList: widget.hotelManager.getListAmenities,
+              getData: (listCheckboxPosition, amenitiesT) {
+                amenities = amenitiesT;
+                amenitiesResults = listCheckboxPosition;
+              },
+              callback: callback);
           isDone = 1;
         } else {
           isFirst = false;
@@ -87,12 +98,29 @@ class _HotelOwnerScreenState extends State<HotelOwnerScreen> {
 
         break;
 
+      // case 2:
+      //   if (isDone2-- > 0) {
+      //     // print("user hotel ${widget.hotelManager.getUserList}");
+      //     isFirst = false;
+      //     body = ManageUser(usersList: widget.hotelManager.getTypeRoomList);
+      //     isDone2 = 1;
+      //   } else {
+      //     isFirst = false;
+      //     body = Loading();
+      //   }
+      //   break;
       case 2:
-        if (isDone2-- > 0) {
-          // print("user hotel ${widget.hotelManager.getUserList}");
+        if (isDone-- > 0) {
           isFirst = false;
-          body = ManageUser(usersList: widget.hotelManager.getTypeRoomList);
-          isDone2 = 1;
+          body = AmenityHotel(
+              isdelete: true,
+              amenityList: widget.hotelManager.getListAmenities,
+              getData: (listCheckboxPosition, amenitiesT) {
+                amenities = amenitiesT;
+                amenitiesResults = listCheckboxPosition;
+              },
+              callback: callback);
+          isDone = 1;
         } else {
           isFirst = false;
           body = Loading();
@@ -121,9 +149,9 @@ class _HotelOwnerScreenState extends State<HotelOwnerScreen> {
         },
         buttonNames: [
           ButtonsInfo(title: LocalizationText.home, icon: Icons.home),
+          ButtonsInfo(title: LocalizationText.amenitiesAdd, icon: Icons.add),
           ButtonsInfo(
-              title: LocalizationText.amenitiesManagement,
-              icon: Icons.settings),
+              title: LocalizationText.amenitiesDelete, icon: Icons.delete),
           // ButtonsInfo(title: "Notifications", icon: Icons.notifications),
           // ButtonsInfo(title: "Contacts", icon: Icons.contact_phone_rounded),
           // ButtonsInfo(title: "Sales", icon: Icons.sell),

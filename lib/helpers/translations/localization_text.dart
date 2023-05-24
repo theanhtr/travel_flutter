@@ -178,9 +178,9 @@ class LocalizationText {
   static String success = "success".tr();
   static String confirmDeleteAccount = "confirmDeleteAccount".tr();
   static String aboutTodelete = "aboutTodelete".tr();
-  // static String errorWhenCallApi = "errorWhenCallApi".tr();
+  static String selectAmenityFirst = "selectAmenityFirst".tr();
 
-  // static String createUserSuccess = "createUserSuccess".tr();
+  static String createAmenitySuccess = "createAmenitySuccess".tr();
   // static String editProfileSuccess = "editProfileSuccess".tr();
   // static String haveToFillInforFirst = "haveToFillInforFirst".tr();
   // static String signUpSuccess = "signUpSuccess".tr();
@@ -205,7 +205,7 @@ class LocalizationText {
   // static String viewDetail = "viewDetail".tr();
   // static String bookRoom = "bookRoom".tr();
   // static String deleteUserSuccess = "deleteUserSuccess".tr();
-  // static String dontHaveBirthDate = "dontHaveBirthDate".tr();
+  static String amenitiesDeleteSuccess = "amenitiesDeleteSuccess".tr();
   static String warning = 'warning'.tr();
   static String pleaseFillInYourFullNameEmailPhoneNumber =
       'pleaseFillInYourFullNameEmailPhoneNumber'.tr();
@@ -214,4 +214,6 @@ class LocalizationText {
   static String passwordHasBeenSentToYourEmail =
       "passwordHasBeenSentToYourEmail".tr();
   static String amenitiesManagement = "amenitiesManagement".tr();
+  static String amenitiesAdd = "amenitiesAdd".tr();
+  static String amenitiesDelete = "amenitiesDelete".tr();
 }
