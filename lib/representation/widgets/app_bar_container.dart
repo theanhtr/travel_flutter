@@ -23,6 +23,7 @@ class AppBarContainer extends StatelessWidget {
     this.drawer,
     this.backGroundColor,
     this.onPressTrailing,
+    this.onPressLeading,
     this.useFilter = false,
     this.resizeToAvoidBottomInset = true,
   });
@@ -37,6 +38,7 @@ class AppBarContainer extends StatelessWidget {
   final Widget? drawer;
   final Color? backGroundColor;
   final Function()? onPressTrailing;
+  final Function()? onPressLeading;
   final bool? resizeToAvoidBottomInset;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -63,7 +65,11 @@ class AppBarContainer extends StatelessWidget {
                       if (implementLeading)
                         GestureDetector(
                           onTap: () {
-                            Navigator.of(context).pop([null]);
+                            if (onPressLeading != null) {
+                              onPressLeading?.call();
+                            } else {
+                              Navigator.of(context).pop([null]);
+                            }
                           },
                           child: Container(
                             padding: EdgeInsets.all(kItemPadding),

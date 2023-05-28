@@ -9,6 +9,8 @@ import 'package:travel_app_ytb/representation/screens/favorite_booking_screen.da
 import 'package:travel_app_ytb/representation/screens/flight_filter_screen.dart';
 import 'package:travel_app_ytb/representation/screens/forgot_password/forgot_password_screen.dart';
 import 'package:travel_app_ytb/representation/screens/forgot_password/reset_password_screen.dart';
+import 'package:travel_app_ytb/representation/screens/home/result_search_text_hotel_screen.dart';
+import 'package:travel_app_ytb/representation/screens/home/search_in_home_screen.dart';
 import 'package:travel_app_ytb/representation/screens/hotel_booking/hotel_booking_screen.dart';
 import 'package:travel_app_ytb/representation/screens/hotel_booking/search_hotels_screen.dart';
 import 'package:travel_app_ytb/representation/screens/hotel_booking/search_your_destination_screen.dart';
@@ -56,7 +58,7 @@ final Map<String, WidgetBuilder> routes = {
   FlightFilterScreen.routeName: (context) => const FlightFilterScreen(),
   ResetPasswordScreen.routeName: (context) => const ResetPasswordScreen(),
   SearchYourDestinationScreen.routeName: (context) =>
-      const SearchYourDestinationScreen(),
+  const SearchYourDestinationScreen(),
 
   // HotelFilterScreen.routeName: (context) => const HotelFilterScreen(),
   //ResetPasswordScreen.routeName: (context) => const ResetPasswordScreen(),
@@ -66,8 +68,11 @@ final Map<String, WidgetBuilder> routes = {
   // UploadIamge.routename: (context) => UploadIamge(),
   AdminScreen.routeName: (context) => AdminScreen(),
   SeeAllDestinationsScreen.routeName: (context) =>
-      const SeeAllDestinationsScreen(),
+  const SeeAllDestinationsScreen(),
   ContactDetailsScreen.routeName: (context) => const ContactDetailsScreen(),
   // FillInforScreen.routeName: (context) => const FillInforScreen()
   ReviewsScreen.routeName: (context) => const ReviewsScreen(),
+  SearchInHomeScreen.routeName: (context) => const SearchInHomeScreen(),
+  ResultSearchTextHotelScreen.routeName: (
+      context) => const ResultSearchTextHotelScreen()
 };

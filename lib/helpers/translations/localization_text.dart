@@ -213,4 +213,9 @@ class LocalizationText {
   static String thankYouForUsingOurService = "thanhYouForUsingOurService".tr();
   static String passwordHasBeenSentToYourEmail =
       "passwordHasBeenSentToYourEmail".tr();
+  static String history = "history".tr();
+  static String deleteAll = "deleteAll".tr();
+  static String clearAllSearches = "clearAllSearches".tr();
+  static String clearAllSearchesDescription = "clearAllSearchesDescription".tr();
+  static String orderHistory = "orderHistory".tr();
 }

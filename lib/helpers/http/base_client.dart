@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-const String baseUrl = "https://9898-2405-4802-1ce9-90e0-c50f-f13a-ae29-f55.ngrok-free.app/api";
+const String baseUrl = "https://350e-2405-4802-1c8f-5b0-85e5-44d3-9484-610a.ngrok-free.app/api";
 
 class BaseClient {
   String baseUrlForImport = baseUrl;

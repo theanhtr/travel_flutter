@@ -6,10 +6,12 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travel_app_ytb/core/constants/color_palatte.dart';
 import 'package:travel_app_ytb/core/constants/dismention_constants.dart';
+import 'package:travel_app_ytb/core/utils/navigation_utils.dart';
 import 'package:travel_app_ytb/helpers/asset_helper.dart';
 import 'package:travel_app_ytb/helpers/image_helper.dart';
 import 'package:travel_app_ytb/representation/controllers/home_screen_controller.dart';
 import 'package:travel_app_ytb/representation/screens/booking_flights_screen.dart';
+import 'package:travel_app_ytb/representation/screens/home/search_in_home_screen.dart';
 import 'package:travel_app_ytb/representation/screens/see_all_destinations_screen.dart';
 import 'package:travel_app_ytb/representation/widgets/app_bar_container.dart';
 import 'package:travel_app_ytb/representation/widgets/custom_checkbox_icon.dart';
@@ -34,6 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<_DestinationEntity> listItem = [];
   bool _isLoaded = false;
   bool isFirst = true;
+  String? searchString;
 
   @override
   void initState() {
@@ -44,13 +47,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     double ratio = 0.5;
-    // if (isFirst) {
-    //   isFirst = false;
-    //   setState(() {
-    //
-    //   });
-    // }
-    debugPrint("54 homr screen ");
     userName = _controller?.getUser()?.name;
     photoUrl = _controller?.getUser()?.photoUrl;
     if (_isLoaded == false) {
@@ -146,24 +142,50 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           // ignore: prefer_const_literals_to_create_immutables
           children: [
-            TextField(
-              decoration: InputDecoration(
-                  hintText: 'Search your destination',
-                  prefixIcon: Padding(
-                    padding: EdgeInsets.all(kTopPadding),
-                    child: Icon(
-                      FontAwesomeIcons.magnifyingGlass,
-                      color: Colors.black,
-                      size: kDefaultIconSize,
-                    ),
+            GestureDetector(
+              onTap: () async {
+                final result = await Navigator.push(
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation, secondaryAnimation) {
+                      return SlideTransition(
+                        position: Tween<Offset>(
+                          begin: Offset(0.0, 1.0),
+                          end: Offset.zero,
+                        ).animate(animation),
+                        child: SearchInHomeScreen(
+                          searchString: searchString,
+                        ),
+                      );
+                    },
                   ),
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                    borderRadius:
-                        BorderRadius.all(Radius.circular(kDefaultPadding)),
-                  )),
+                );
+                if (result != null){
+                  searchString = result;
+                  setState(() {});
+                }
+              },
+              child: TextField(
+                enabled: false,
+                decoration: InputDecoration(
+                    labelText: searchString?.isEmpty == true ? 'Search your destination': searchString,
+                    hintText: 'Search your destination',
+                    prefixIcon: Padding(
+                      padding: EdgeInsets.all(kTopPadding),
+                      child: Icon(
+                        FontAwesomeIcons.magnifyingGlass,
+                        color: Colors.black,
+                        size: kDefaultIconSize,
+                      ),
+                    ),
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius:
+                          BorderRadius.all(Radius.circular(kDefaultPadding)),
+                    )),
+              ),
             ),
             Container(
               margin: EdgeInsets.all(kDefaultPadding),

@@ -263,13 +263,80 @@ class _LoginScreenState extends State<LoginScreen> {
                     icon: ImageHelper.loadFromAsset(AssetHelper.googleIcon,
                         fit: BoxFit.contain, width: kDefaultPadding * 1.5),
                     ontap: () {
-                      Loading.show(context);
                       LoginGoogleManager().signInWithGoogle().then((value) {
+                        Loading.show(context);
                         if (value != null) {
                           LoginManager()
                               .signInWithGoogle(value)
                               .then((result) => {
-                                    Loading.dismiss(context),
+                                    if (result.runtimeType == int)
+                                      {
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) =>
+                                              AlertDialog(
+                                            title: const Text(
+                                                'ERROR YOUR PASSWORD'),
+                                            content: const Text(
+                                                'Your password or email is wrong, please re-enter'),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    context, 'Cancel'),
+                                                child: const Text('Cancel'),
+                                              ),
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    context, 'OK'),
+                                                child: const Text('OK'),
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                      }
+                                    else if (result['success'] == true)
+                                      {
+                                        LocalStorageHelper.setValue("roleId",
+                                            result['data']['role_id']),
+                                        if (result['data']['role_id'] == 2)
+                                          Navigator.popAndPushNamed(
+                                              context, MainScreen.routeName)
+                                        else if (result['data']['role_id'] == 1)
+                                          Navigator.popAndPushNamed(
+                                              context, AdminScreen.routeName)
+                                        else
+                                          {
+                                            Navigator.popAndPushNamed(
+                                                context, MainScreen.routeName)
+                                          }
+                                      }
+                                  });
+                        } else {
+                          Loading.dismiss(context);
+                        }
+                      });
+                      // Navigator.of(context).pushNamed(MainScreen.routeName);
+                    },
+                  ),
+                ),
+                const SizedBox(width: kDefaultPadding / 2),
+                Expanded(
+                  flex: 1,
+                  child: ButtonIconWidget(
+                    title: 'Facebook',
+                    backgroundColor: const Color(0xff3C5A9A),
+                    textColor: const Color(0xffffffff),
+                    icon: const Icon(
+                      FontAwesomeIcons.facebookF,
+                      color: Colors.white,
+                    ),
+                    ontap: () async {
+                      LoginFacebookManager().signInWithFacebook().then((value) {
+                        Loading.show(context);
+                        if (value != null) {
+                          LoginManager()
+                              .signInWithFacebook(value)
+                              .then((result) => {
                                     if (result.runtimeType == int)
                                       {
                                         showDialog(
@@ -314,74 +381,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                       }
                                   });
                         }
-                      });
-                      // Navigator.of(context).pushNamed(MainScreen.routeName);
-                    },
-                  ),
-                ),
-                const SizedBox(width: kDefaultPadding / 2),
-                Expanded(
-                  flex: 1,
-                  child: ButtonIconWidget(
-                    title: 'Facebook',
-                    backgroundColor: const Color(0xff3C5A9A),
-                    textColor: const Color(0xffffffff),
-                    icon: const Icon(
-                      FontAwesomeIcons.facebookF,
-                      color: Colors.white,
-                    ),
-                    ontap: () async {
-                      Loading.show(context);
-                      LoginFacebookManager().signInWithFacebook().then((value) {
-                        debugPrint("305 login screen $value");
-                        if (value != null) {
-                          LoginManager()
-                              .signInWithFacebook(value)
-                              .then((result) => {
-                                    Loading.dismiss(context),
-                                    if (result.runtimeType == int)
-                                      {
-                                        showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) =>
-                                              AlertDialog(
-                                            title: const Text(
-                                                'ERROR YOUR PASSWORD'),
-                                            content: const Text(
-                                                'Your password or email is wrong, please re-enter'),
-                                            actions: <Widget>[
-                                              TextButton(
-                                                onPressed: () => Navigator.pop(
-                                                    context, 'Cancel'),
-                                                child: const Text('Cancel'),
-                                              ),
-                                              TextButton(
-                                                onPressed: () => Navigator.pop(
-                                                    context, 'OK'),
-                                                child: const Text('OK'),
-                                              ),
-                                            ],
-                                          ),
-                                        )
-                                      }
-                                    else if (result['success'] == true)
-                                      {
-                                        LocalStorageHelper.setValue("roleId",
-                                            result['data']['role_id']),
-                                        Loading.dismiss(context),
-                                        if (result['data']['role_id'] == 2)
-                                          Navigator.popAndPushNamed(
-                                              context, MainScreen.routeName)
-                                        else if (result['data']['role_id'] == 1)
-                                          Navigator.popAndPushNamed(
-                                              context, AdminScreen.routeName)
-                                        else
-                                          {
-                                            Navigator.popAndPushNamed(
-                                                context, MainScreen.routeName)
-                                          }
-                                      }
-                                  });
+                        else {
+                          Loading.dismiss(context);
                         }
                       });
                     },
