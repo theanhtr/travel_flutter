@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-const String baseUrl = "https://350e-2405-4802-1c8f-5b0-85e5-44d3-9484-610a.ngrok-free.app/api";
+const String baseUrl = "https://f073-2405-4802-1ca7-8980-1dbe-db55-b3ea-2f49.ngrok-free.app/api";
 
 class BaseClient {
   String baseUrlForImport = baseUrl;
@@ -71,7 +71,6 @@ class BaseClient {
     // print("header day: ${_header}");
     // print("header day:  ${url}");
     var response = await client.get(url, headers: _header);
-    debugPrint('get dong 73: ${response.statusCode}');
     if (response.statusCode == 200) {
       return response.body;
     } else {}

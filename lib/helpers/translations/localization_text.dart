@@ -218,4 +218,5 @@ class LocalizationText {
   static String clearAllSearches = "clearAllSearches".tr();
   static String clearAllSearchesDescription = "clearAllSearchesDescription".tr();
   static String orderHistory = "orderHistory".tr();
+  static String reOrder = "re_order".tr();
 }

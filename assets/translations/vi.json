@@ -172,5 +172,6 @@
   "deleteAll": "Xoá tất cả",
   "clearAllSearches": "Xoá tất cả lượt tìm kiếm",
   "clearAllSearchesDescription": "Hành động này sẽ gỡ bỏ toàn bộ lịch sử tìm kiềm trên máy này.",
-  "orderHistory": "Lịch sử đơn hàng"
+  "orderHistory": "Lịch sử đơn hàng",
+  "re_order": "Đặt lại"
 }

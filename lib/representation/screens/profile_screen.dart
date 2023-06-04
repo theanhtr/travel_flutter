@@ -6,7 +6,9 @@ import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
 import 'package:travel_app_ytb/representation/models/user_model.dart';
 import 'package:travel_app_ytb/representation/screens/Edit_profile_page.dart';
 import 'package:travel_app_ytb/representation/screens/login/login_screen.dart';
+import 'package:travel_app_ytb/representation/screens/order/order_history_screen.dart';
 import 'package:travel_app_ytb/representation/screens/user_fill_in_information_screen.dart';
+import 'package:travel_app_ytb/representation/widgets/animation/alarm_animation.dart';
 import 'package:travel_app_ytb/representation/widgets/app_bar_container.dart';
 import 'package:travel_app_ytb/representation/widgets/button_icon_widget.dart';
 import 'package:travel_app_ytb/representation/widgets/button_widget.dart';
@@ -15,6 +17,7 @@ import 'package:travel_app_ytb/representation/widgets/number_widget.dart';
 import 'package:travel_app_ytb/representation/widgets/profile_widget.dart';
 
 import '../../core/constants/color_palatte.dart';
+import '../../routes.dart';
 
 // import 'package:user_profile_example/model/user.dart';
 // import 'package:user_profile_example/utils/user_preferences.dart';
@@ -165,9 +168,21 @@ class _ProfilePageState extends State<ProfilePage> {
                           },
                         ),
                         const SizedBox(height: 32),
-                        ButtonWidget(
-                          title: LocalizationText.orderHistory,
-                          ontap: (){},
+                        Stack(
+                          children: [
+                            ButtonWidget(
+                              title: LocalizationText.orderHistory,
+                              ontap: () {
+                                Navigator.pushNamed(
+                                    context, OrderHistoryScreen.routeName);
+                              },
+                            ),
+                            const Positioned(
+                              right: 10,
+                              // TODO remove fake data
+                              child: AlarmAnimation(),
+                            ),
+                          ],
                         ),
                       ],
                     ),

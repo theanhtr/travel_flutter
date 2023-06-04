@@ -171,5 +171,6 @@
   "deleteAll": "Delete All",
   "clearAllSearches": "Clear all searches",
   "clearAllSearchesDescription": "This action will remove the entire alkaline history on this machine.",
-  "orderHistory": "Order History"
+  "orderHistory": "Order History",
+  "re_order": "Re Order"
 }
