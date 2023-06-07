@@ -10,9 +10,14 @@ import 'package:travel_app_ytb/representation/screens/admin/user_management_scre
 import 'package:travel_app_ytb/representation/screens/admin/user_screen.dart';
 import 'package:travel_app_ytb/representation/screens/hotelOwnerManager/amenity_manager.dart';
 import 'package:travel_app_ytb/representation/screens/hotelOwnerManager/home_owner_page.dart';
+import 'package:travel_app_ytb/representation/screens/hotelOwnerManager/type_room_screen.dart';
 import 'package:travel_app_ytb/representation/screens/profile_screen.dart';
+import 'package:travel_app_ytb/representation/screens/sign_up_screen.dart';
 import 'package:travel_app_ytb/representation/widgets/app_bar_container.dart';
 import 'package:travel_app_ytb/representation/widgets/loading/loading.dart';
+
+import '../room_booking/select_room_screen.dart';
+import 'add_type_room_screen.dart';
 
 class HotelOwnerScreen extends StatefulWidget {
   HotelOwnerScreen({super.key});
@@ -127,15 +132,29 @@ class _HotelOwnerScreenState extends State<HotelOwnerScreen> {
         }
         break;
       case 3:
-        body = ProfilePage();
+        if (isDone-- > 0) {
+          isFirst = false;
+          body = TypeRoomScreen();
+          isDone = 1;
+        } else {
+          isFirst = false;
+          body = Loading();
+        }
         break;
       case 4:
-        body = AddUserScreen();
+        if (isDone-- > 0) {
+          isFirst = false;
+          body = AddTypeRoomScreen();
+          isDone = 1;
+        } else {
+          isFirst = false;
+          body = Loading();
+        }
         break;
     }
     // print("isdone1: $isDone va isDOne2: $isDone2");
     return AppBarContainer(
-      titleString: LocalizationText.admin,
+      titleString: LocalizationText.hotelManager,
       implementTrailing: true,
       child: Center(
         child: body,
@@ -152,6 +171,10 @@ class _HotelOwnerScreenState extends State<HotelOwnerScreen> {
           ButtonsInfo(title: LocalizationText.amenitiesAdd, icon: Icons.add),
           ButtonsInfo(
               title: LocalizationText.amenitiesDelete, icon: Icons.delete),
+          ButtonsInfo(
+              title: LocalizationText.seeRoomType, icon: Icons.view_array),
+          ButtonsInfo(
+              title: LocalizationText.addTypeRoom, icon: Icons.add),
           // ButtonsInfo(title: "Notifications", icon: Icons.notifications),
           // ButtonsInfo(title: "Contacts", icon: Icons.contact_phone_rounded),
           // ButtonsInfo(title: "Sales", icon: Icons.sell),

@@ -372,7 +372,7 @@ class _HotelDetailScreenState extends State<HotelDetailScreen> {
                                                 ),
                                                 TapableWidget(
                                                   child: Text(
-                                                    'See All',
+                                                    LocalizationText.seeAll,
                                                     style: TextStyles
                                                         .defaultStyle
                                                         .bold

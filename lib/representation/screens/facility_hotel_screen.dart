@@ -18,16 +18,17 @@ class FacilityHotel extends StatefulWidget {
 
 class _FacilityHotelState extends State<FacilityHotel> {
   bool isSelectedAll = true;
+  bool isFirst = true;
   List<_CheckBoxState> listCheckbox = [
     _CheckBoxState(
-      facility: "Free wifi",
+      facility: LocalizationText.freeWifi,
       icon: ImageHelper.loadFromAsset(AssetHelper.wifiIcon,
           fit: BoxFit.contain, width: kDefaultPadding * 1.5),
       checkBoxValue: false,
       index: 1,
     ),
     _CheckBoxState(
-      facility: "Free breakfast",
+      facility: LocalizationText.freeBreakfast,
       icon: ImageHelper.loadFromAsset(AssetHelper.freeBreakfast,
           fit: BoxFit.contain,
           width: kDefaultPadding * 1.5,
@@ -36,7 +37,7 @@ class _FacilityHotelState extends State<FacilityHotel> {
       index: 2,
     ),
     _CheckBoxState(
-      facility: "Non smoking",
+      facility: LocalizationText.nonSmoking,
       icon: ImageHelper.loadFromAsset(AssetHelper.noSmoking,
           fit: BoxFit.contain,
           width: kDefaultPadding * 1.5,
@@ -45,7 +46,7 @@ class _FacilityHotelState extends State<FacilityHotel> {
       index: 3,
     ),
     _CheckBoxState(
-      facility: "Non refundable",
+      facility: LocalizationText.nonRefunable,
       icon: ImageHelper.loadFromAsset(AssetHelper.nonRefundable,
           fit: BoxFit.contain,
           width: kDefaultPadding * 1.5,
@@ -60,29 +61,29 @@ class _FacilityHotelState extends State<FacilityHotel> {
     //     checkBoxValue: false,
     //     index: 4),
     _CheckBoxState(
-        facility: "Car rental",
-        icon: ImageHelper.loadFromAsset(AssetHelper.carRentalIcon,
-            fit: BoxFit.contain, width: kDefaultPadding * 1.5),
-        checkBoxValue: false,
-        index: 8),
-    _CheckBoxState(
-        facility: "Digital TV",
+        facility: LocalizationText.digitalTV,
         icon: ImageHelper.loadFromAsset(AssetHelper.digitalTv,
             fit: BoxFit.contain, width: kDefaultPadding * 1.5),
         checkBoxValue: false,
         index: 5),
     _CheckBoxState(
-        facility: "Parking Area",
+        facility: LocalizationText.parkingArea,
         icon: ImageHelper.loadFromAsset(AssetHelper.parkingAreaIcon,
             fit: BoxFit.contain, width: kDefaultPadding * 1.5),
         checkBoxValue: false,
         index: 6),
     _CheckBoxState(
-        facility: "Swimming Pool",
+        facility: LocalizationText.swimmingPool,
         icon: ImageHelper.loadFromAsset(AssetHelper.swimingPoolIcon,
             fit: BoxFit.contain, width: kDefaultPadding * 1.5),
         checkBoxValue: false,
         index: 7),
+    _CheckBoxState(
+        facility: LocalizationText.carRental,
+        icon: ImageHelper.loadFromAsset(AssetHelper.carRentalIcon,
+            fit: BoxFit.contain, width: kDefaultPadding * 1.5),
+        checkBoxValue: false,
+        index: 8),
     // _CheckBoxState(
     //     facility: "Restaurant",
     //     icon: ImageHelper.loadFromAsset(AssetHelper.restaurantIcon,
@@ -101,9 +102,11 @@ class _FacilityHotelState extends State<FacilityHotel> {
   Widget build(BuildContext context) {
     final Map<String, dynamic> args =
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
-
-    for (var i = 0; i < args['oldAmenities'].length; i++) {
-      listCheckbox[args['oldAmenities'][i]].checkBoxValue = true;
+    if (isFirst) {
+      isFirst = false;
+      for (var i = 0; i < args['oldAmenities'].length; i++) {
+        listCheckbox[args['oldAmenities'][i]].checkBoxValue = true;
+      }
     }
 
     return AppBarContainer(
@@ -123,10 +126,20 @@ class _FacilityHotelState extends State<FacilityHotel> {
                     GestureDetector(
                       onTap: () {
                         this.setState(() {
+                          int count = 0;
+                          for (var i = 0; i < listCheckbox.length; i++) {
+                            if (listCheckbox[i].checkBoxValue) {
+                              count++;
+                            }
+                          }
+                          if (count == listCheckbox.length) {
+                            isSelectedAll = false;
+                          } else {
+                            isSelectedAll = true;
+                          }
                           for (var i = 0; i < listCheckbox.length; i++) {
                             listCheckbox[i].checkBoxValue = isSelectedAll;
                           }
-                          isSelectedAll = !isSelectedAll;
                         });
                       },
                       child: RichText(

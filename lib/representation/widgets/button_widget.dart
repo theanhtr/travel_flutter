@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../core/constants/color_palatte.dart';
 import '../../core/constants/dismention_constants.dart';
 import '../../core/constants/textstyle_constants.dart';
+import '../../helpers/translations/localization_text.dart';
 
 class ButtonWidget extends StatefulWidget {
   final double scaleUp = 0.7;
@@ -46,13 +47,13 @@ class ButtonWidgetState extends State<ButtonWidget>
             padding: const EdgeInsets.all(kDefaultPadding),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(kMediumPadding),
-              gradient: widget.title != "Reset"
+              gradient: widget.title != LocalizationText.reset
                   ? Gradients.defaultGradientBackground
                   : Gradients.defaultBackGroundButton,
             ),
             alignment: Alignment.center,
             child: Text(widget.title,
-                style: widget.title != "Reset"
+                style: widget.title != LocalizationText.reset
                     ? TextStyles.defaultStyle.bold.whiteTextColor
                     : TextStyles.defaultStyle.bold.primaryTextColor)),
       ),

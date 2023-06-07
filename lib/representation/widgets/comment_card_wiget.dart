@@ -202,76 +202,10 @@ class _CommentCardWidgetState extends State<CommentCardWidget> {
         i < (widget.commentModel.listImageDetailPath?.length ?? 0 / 3).ceil();
         i++) {
       List<Widget> listWidget = [];
-      for (int j = i * 3;
-          j < (widget.commentModel.listImageDetailPath?.length ?? 0);
-          j++) {
+      for (int j = i * 3; j < i * 3 + 3; j++) {
         if (j < i * 3 + 2) {
-          listWidget.add(Expanded(
-            flex: 1,
-            child: TapableWidget(
-              onTap: () {
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return Scaffold(
-                        body: Container(
-                          child: Center(
-                              child: ClipRRect(
-                            borderRadius: BorderRadius.circular(kMinPadding),
-                            child: Image.network(
-                              widget.commentModel.listImageDetailPath![j],
-                              fit: BoxFit.cover,
-                              loadingBuilder: (BuildContext context,
-                                  Widget child,
-                                  ImageChunkEvent? loadingProgress) {
-                                if (loadingProgress == null) {
-                                  return child;
-                                }
-                                return Center(
-                                  child: const SpinKitCircle(
-                                    color: Colors.black,
-                                    size: 20.0,
-                                  ),
-                                );
-                              },
-                            ),
-                          )),
-                        ),
-                      );
-                    });
-              },
-              child: Container(
-                  child: ClipRRect(
-                borderRadius: BorderRadius.circular(kMinPadding),
-                child: Image.network(
-                  widget.commentModel.listImageDetailPath![j],
-                  width: 100,
-                  height: 100,
-                  fit: BoxFit.cover,
-                  loadingBuilder: (BuildContext context, Widget child,
-                      ImageChunkEvent? loadingProgress) {
-                    if (loadingProgress == null) {
-                      return child;
-                    }
-                    return Center(
-                      child: const SpinKitCircle(
-                        color: Colors.black,
-                        size: 20.0,
-                      ),
-                    );
-                  },
-                ),
-              )),
-            ),
-          ));
-          listWidget.add(
-            SizedBox(
-              width: kDefaultPadding,
-            ),
-          );
-        } else if (j == i * 3 + 2) {
-          listWidget.add(
-            Expanded(
+          if (j < (widget.commentModel.listImageDetailPath?.length ?? 0)) {
+            listWidget.add(Expanded(
               flex: 1,
               child: TapableWidget(
                 onTap: () {
@@ -281,30 +215,26 @@ class _CommentCardWidgetState extends State<CommentCardWidget> {
                         return Scaffold(
                           body: Container(
                             child: Center(
-                              child: ClipRRect(
-                                borderRadius:
-                                    BorderRadius.circular(kMinPadding),
-                                child: Image.network(
-                                  widget.commentModel.listImageDetailPath![j],
-                                  // width: kDefaultIconSize * 2.5,
-                                  // height: kDefaultIconSize * 2.5,
-                                  fit: BoxFit.cover,
-                                  loadingBuilder: (BuildContext context,
-                                      Widget child,
-                                      ImageChunkEvent? loadingProgress) {
-                                    if (loadingProgress == null) {
-                                      return child;
-                                    }
-                                    return Center(
-                                      child: const SpinKitCircle(
-                                        color: Colors.black,
-                                        size: 20.0,
-                                      ),
-                                    );
-                                  },
-                                ),
+                                child: ClipRRect(
+                              borderRadius: BorderRadius.circular(kMinPadding),
+                              child: Image.network(
+                                widget.commentModel.listImageDetailPath![j],
+                                fit: BoxFit.cover,
+                                loadingBuilder: (BuildContext context,
+                                    Widget child,
+                                    ImageChunkEvent? loadingProgress) {
+                                  if (loadingProgress == null) {
+                                    return child;
+                                  }
+                                  return Center(
+                                    child: const SpinKitCircle(
+                                      color: Colors.black,
+                                      size: 20.0,
+                                    ),
+                                  );
+                                },
                               ),
-                            ),
+                            )),
                           ),
                         );
                       });
@@ -332,8 +262,88 @@ class _CommentCardWidgetState extends State<CommentCardWidget> {
                   ),
                 )),
               ),
+            ));
+          } else {
+            listWidget.add(
+              Expanded(flex: 1, child: Container()),
+            );
+          }
+          listWidget.add(
+            SizedBox(
+              width: kDefaultPadding,
             ),
           );
+        } else if (j == i * 3 + 2) {
+          if (j < (widget.commentModel.listImageDetailPath?.length ?? 0)) {
+            listWidget.add(
+              Expanded(
+                flex: 1,
+                child: TapableWidget(
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Scaffold(
+                            body: Container(
+                              child: Center(
+                                child: ClipRRect(
+                                  borderRadius:
+                                      BorderRadius.circular(kMinPadding),
+                                  child: Image.network(
+                                    widget.commentModel.listImageDetailPath![j],
+                                    // width: kDefaultIconSize * 2.5,
+                                    // height: kDefaultIconSize * 2.5,
+                                    fit: BoxFit.cover,
+                                    loadingBuilder: (BuildContext context,
+                                        Widget child,
+                                        ImageChunkEvent? loadingProgress) {
+                                      if (loadingProgress == null) {
+                                        return child;
+                                      }
+                                      return Center(
+                                        child: const SpinKitCircle(
+                                          color: Colors.black,
+                                          size: 20.0,
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        });
+                  },
+                  child: Container(
+                      child: ClipRRect(
+                    borderRadius: BorderRadius.circular(kMinPadding),
+                    child: Image.network(
+                      widget.commentModel.listImageDetailPath![j],
+                      width: 100,
+                      height: 100,
+                      fit: BoxFit.cover,
+                      loadingBuilder: (BuildContext context, Widget child,
+                          ImageChunkEvent? loadingProgress) {
+                        if (loadingProgress == null) {
+                          return child;
+                        }
+                        return Center(
+                          child: const SpinKitCircle(
+                            color: Colors.black,
+                            size: 20.0,
+                          ),
+                        );
+                      },
+                    ),
+                  )),
+                ),
+              ),
+            );
+          } else {
+            listWidget.add(
+              Expanded(flex: 1, child: Container()),
+            );
+          }
           break;
         }
       }
@@ -645,8 +655,7 @@ class _CommentCardWidgetState extends State<CommentCardWidget> {
                       dialogType: DialogType.warning,
                       animType: AnimType.topSlide,
                       title: "Bạn đã báo cáo nội dung này rồi!",
-                      btnOkOnPress: () {
-                      },
+                      btnOkOnPress: () {},
                     ).show();
                   }
                 },
