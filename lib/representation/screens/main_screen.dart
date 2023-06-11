@@ -8,6 +8,7 @@ import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
 import 'package:travel_app_ytb/representation/screens/favorite_screen.dart';
 import 'package:travel_app_ytb/representation/screens/home/home_screen.dart';
 import 'package:travel_app_ytb/representation/screens/profile_screen.dart';
+import 'package:travel_app_ytb/representation/widgets/animation/alarm_animation.dart';
 import 'hotel_booking/hotel_booking_screen.dart';
 
 class MainScreen extends StatefulWidget {
@@ -99,6 +100,8 @@ class _MainScreenState extends State<MainScreen> {
               FontAwesomeIcons.solidUser,
               size: kDefaultIconSize,
             ),
+            // TODO remove fake data
+            activeIcon: const AlarmAnimation(),
             title: Text(LocalizationText.user),
           ),
         ],

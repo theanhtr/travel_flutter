@@ -49,4 +49,5 @@ class AssetHelper {
   static const String dislikeIcon = 'assets/icons/dislike_icon.png';
   static const String likeIcon = 'assets/icons/like_icon.png';
   static const String threeDotIcon = 'assets/icons/three_dot_icon.png';
+  static const String notFound = 'assets/images/404_not_found.jpg';
 }
