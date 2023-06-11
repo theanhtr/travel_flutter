@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:travel_app_ytb/core/constants/dismention_constants.dart';
-import 'package:travel_app_ytb/helpers/location/location_helper.dart';
 import 'package:travel_app_ytb/representation/controllers/favorite_screen_controller.dart';
-import 'package:travel_app_ytb/representation/screens/hotel_detail/hotel_detail_screen.dart';
 import 'package:travel_app_ytb/representation/widgets/app_bar_container.dart';
 
 import '../../core/utils/const_utils.dart';

@@ -1,19 +1,16 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travel_app_ytb/core/constants/dismention_constants.dart';
+import 'package:travel_app_ytb/core/extensions/date_ext.dart';
 import 'package:travel_app_ytb/helpers/location/location_helper.dart';
 import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
 import 'package:travel_app_ytb/representation/controllers/hotel_booking_screen_controller.dart';
-import 'package:travel_app_ytb/representation/screens/hotel_booking/search_your_destination_screen.dart';
-import 'package:travel_app_ytb/representation/screens/hotel_booking/search_hotels_screen.dart';
 import 'package:travel_app_ytb/representation/screens/hotel_booking/select_date_screen.dart';
 import 'package:travel_app_ytb/representation/screens/hotel_booking/select_guest_room_screen.dart';
 import 'package:travel_app_ytb/representation/widgets/app_bar_container.dart';
-import 'package:flutter/material.dart';
 import 'package:travel_app_ytb/representation/widgets/booking_hotel_tab_container.dart';
 import 'package:travel_app_ytb/representation/widgets/button_widget.dart';
-import 'package:travel_app_ytb/core/extensions/date_ext.dart';
 
 import '../../core/utils/navigation_utils.dart';
 import 'hotel_detail/hotel_detail_screen.dart';

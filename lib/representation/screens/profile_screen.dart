@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:travel_app_ytb/core/utils/const_utils.dart';
 import 'package:travel_app_ytb/helpers/local_storage_helper.dart';
@@ -6,12 +8,20 @@ import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
 import 'package:travel_app_ytb/representation/models/user_model.dart';
 import 'package:travel_app_ytb/representation/screens/Edit_profile_page.dart';
 import 'package:travel_app_ytb/representation/screens/login/login_screen.dart';
+import 'package:travel_app_ytb/representation/screens/order/order_history_screen.dart';
 import 'package:travel_app_ytb/representation/screens/user_fill_in_information_screen.dart';
+import 'package:travel_app_ytb/representation/widgets/animation/alarm_animation.dart';
 import 'package:travel_app_ytb/representation/widgets/app_bar_container.dart';
+import 'package:travel_app_ytb/representation/widgets/button_icon_widget.dart';
 import 'package:travel_app_ytb/representation/widgets/button_widget.dart';
 import 'package:travel_app_ytb/representation/widgets/loading/loading.dart';
 import 'package:travel_app_ytb/representation/widgets/number_widget.dart';
 import 'package:travel_app_ytb/representation/widgets/profile_widget.dart';
+
+import '../../core/constants/color_palatte.dart';
+import '../../helpers/http/base_client.dart';
+import '../../routes.dart';
+
 // import 'package:user_profile_example/model/user.dart';
 // import 'package:user_profile_example/utils/user_preferences.dart';
 // import 'package:user_profile_example/widget/appbar_widget.dart';
@@ -21,46 +31,68 @@ import 'package:travel_app_ytb/representation/widgets/profile_widget.dart';
 
 class ProfilePage extends StatefulWidget {
   ProfilePage({super.key});
+
   static const routeName = 'profile_screen';
+
   // final UserModel userModelProfile = LoginManager().userModelProfile;
   late LoginManager log = LoginManager();
+
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
   bool _isLogOut = false;
+  bool _isNeedReview = false;
+
+  Future<String> setUpUserModelAndMakeSureItHasInfor() async {
+    await widget.log.setUserProfileModel();
+    print(widget.log.userModelProfile.photoUrl.toString());
+    await checkNeedReview().then((value) => {
+      debugPrint("52askljf $value"),
+      _isNeedReview = value,
+    });
+    return "hello";
+  }
+
+  Future<bool> checkNeedReview() async {
+    var response = await BaseClient(LoginManager().userModel.token ?? "")
+        .get('/orders/check-need-review')
+        .catchError((onError) {
+      return onError;
+    });
+    debugPrint("64 alskdfj $response");
+    if (response == null) {
+      return false;
+    }
+    if (response.runtimeType == int) {
+      return false;
+    }
+    Map dataResponse = await json.decode(response);
+    return dataResponse['data'];
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    setUpUserModelAndMakeSureItHasInfor();
+  }
 
   @override
   Widget build(BuildContext context) {
     widget.log = LoginManager();
-    UserModel userProfile = UserModel();
     widget.log.setUserProfileModel();
-    final user = LoginManager().userModel;
-
-    Future<String> setUpUserModelAndMakeSureItHasInfor() async {
-      await widget.log.setUserProfileModel();
-      print(widget.log.userModelProfile.photoUrl.toString());
-      return "hello";
-    }
-
-    void initState() {
-      super.initState();
-      setUpUserModelAndMakeSureItHasInfor();
-    }
-
     return FutureBuilder<String>(
       future: setUpUserModelAndMakeSureItHasInfor(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Loading();
+          return const Loading();
         }
         if (snapshot.hasData) {
-          print("dong 62: ${widget.log.userModelProfile.photoUrl}");
           return Scaffold(
             body: LocalStorageHelper.getValue("roleId") == 1
                 ? ListView(
-                    physics: BouncingScrollPhysics(),
+                    physics: const BouncingScrollPhysics(),
                     children: [
                       ProfileWidget(
                         imagePath: widget.log.userModelProfile.photoUrl != null
@@ -106,7 +138,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 : AppBarContainer(
                     titleString: LocalizationText.profile,
                     child: ListView(
-                      physics: BouncingScrollPhysics(),
+                      physics: const BouncingScrollPhysics(),
                       children: [
                         ProfileWidget(
                           imagePath: widget.log.userModelProfile.photoUrl
@@ -159,8 +191,25 @@ class _ProfilePageState extends State<ProfilePage> {
                                     }
                                 });
                           },
-                        )
-                        // buildAbout(widget.log.userModelProfile)
+                        ),
+                        const SizedBox(height: 32),
+                        Stack(
+                          children: [
+                            ButtonWidget(
+                              title: LocalizationText.orderHistory,
+                              ontap: () {
+                                Navigator.pushNamed(
+                                    context, OrderHistoryScreen.routeName);
+                              },
+                            ),
+                            Positioned(
+                              right: 10,
+                              child: _isNeedReview == true
+                                  ? const AlarmAnimation()
+                                  : const SizedBox(),
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   ),

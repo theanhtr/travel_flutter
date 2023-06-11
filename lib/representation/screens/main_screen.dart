@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -8,10 +11,14 @@ import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
 import 'package:travel_app_ytb/representation/screens/favorite_screen.dart';
 import 'package:travel_app_ytb/representation/screens/home/home_screen.dart';
 import 'package:travel_app_ytb/representation/screens/profile_screen.dart';
+import 'package:travel_app_ytb/representation/widgets/animation/alarm_animation.dart';
+import '../../helpers/http/base_client.dart';
+import '../../helpers/loginManager/login_manager.dart';
 import 'hotel_booking/hotel_booking_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key, this.currentIndex = 0});
+
   final int currentIndex;
 
   static String routeName = 'main_screen';
@@ -22,6 +29,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
+  bool _isNeedReview = false;
   Widget? home;
   Widget? favorite;
   Widget? hotel;
@@ -34,8 +42,29 @@ class _MainScreenState extends State<MainScreen> {
     // home = HomeScreen();
   }
 
+  Future<bool> checkNeedReview() async {
+    var response = await BaseClient(LoginManager().userModel.token ?? "")
+        .get('/orders/check-need-review')
+        .catchError((onError) {
+      return onError;
+    });
+    debugPrint("64 alskdfj $response");
+    if (response == null) {
+      return false;
+    }
+    if (response.runtimeType == int) {
+      return false;
+    }
+    Map dataResponse = await json.decode(response);
+    return dataResponse['data'];
+  }
+
   @override
   Widget build(BuildContext context) {
+    // checkNeedReview().then((value) => {
+    //   _isNeedReview = value,
+    //   setState((){}),
+    // });
     return Scaffold(
       backgroundColor: Colors.white,
       body: IndexedStack(
@@ -53,8 +82,7 @@ class _MainScreenState extends State<MainScreen> {
           if (_currentIndex != index) {
             if (index == 0) {
               home = new HomeScreen();
-            }
-            else if (index == 1) {
+            } else if (index == 1) {
               favorite = new FavoriteScreen();
             } else if (index == 2 && hotel == null) {
               hotel = HotelBookingScreen(
@@ -99,6 +127,7 @@ class _MainScreenState extends State<MainScreen> {
               FontAwesomeIcons.solidUser,
               size: kDefaultIconSize,
             ),
+            activeIcon: _isNeedReview == true ? const AlarmAnimation() : null,
             title: Text(LocalizationText.user),
           ),
         ],

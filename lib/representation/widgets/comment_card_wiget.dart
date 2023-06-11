@@ -1,7 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:travel_app_ytb/representation/models/comment_model.dart';
 import 'package:travel_app_ytb/representation/widgets/tapable_widget.dart';
@@ -9,7 +7,6 @@ import 'package:travel_app_ytb/representation/widgets/tapable_widget.dart';
 import '../../core/constants/dismention_constants.dart';
 import '../../helpers/asset_helper.dart';
 import '../../helpers/image_helper.dart';
-import '../../helpers/translations/localization_text.dart';
 import '../screens/reviews/reviews_controller.dart';
 import 'loading/loading.dart';
 
@@ -69,6 +66,18 @@ class _CommentCardWidgetState extends State<CommentCardWidget> {
                     context: context,
                     builder: (BuildContext context) {
                       return Scaffold(
+                        appBar: AppBar(
+                          backgroundColor: Colors.white,
+                          leading: IconButton(
+                            icon: const Icon(
+                              Icons.arrow_back_ios,
+                              color: Colors.black,
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ),
                         body: Center(
                             child: ClipRRect(
                           borderRadius: BorderRadius.circular(kMinPadding),
@@ -645,8 +654,7 @@ class _CommentCardWidgetState extends State<CommentCardWidget> {
                       dialogType: DialogType.warning,
                       animType: AnimType.topSlide,
                       title: "Bạn đã báo cáo nội dung này rồi!",
-                      btnOkOnPress: () {
-                      },
+                      btnOkOnPress: () {},
                     ).show();
                   }
                 },

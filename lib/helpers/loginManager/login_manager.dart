@@ -178,7 +178,7 @@ class LoginManager {
     var response = await BaseClient(userModel.token ?? "")
         .get('/my-information/avatar')
         .catchError((err) {
-      debugPrint(err);
+      debugPrint("$err");
     });
     if (response == null) return ConstUtils.defaultImageAvatar;
     Map dataResponse = json.decode(response);

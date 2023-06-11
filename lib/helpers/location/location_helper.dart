@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'dart:io' show Platform;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:geocoding/geocoding.dart';
@@ -47,6 +47,17 @@ class LocationHelper {
     Position currentPosition = await _determinePosition();
     double distanceInMeters = Geolocator.distanceBetween(currentPosition.latitude, currentPosition.longitude, geoPointFromAddress.latitude, geoPointFromAddress.longitude);
     return (distanceInMeters/1000).toStringAsFixed(2);
+  }
+
+  Future<String?> getStringAddressCurrent() async {
+    Position currentPosition = await _determinePosition();
+    List<Placemark> placemarks = await placemarkFromCoordinates(currentPosition.latitude, currentPosition.longitude);
+    debugPrint("55 ${placemarks.first}");
+    if (Platform.isIOS) {
+      return placemarks.first.locality;
+    } else if (Platform.isAndroid) {
+      return placemarks.first.administrativeArea;
+    }
   }
 
   Future<Location> getGeoPointFromAddress(String address) async {

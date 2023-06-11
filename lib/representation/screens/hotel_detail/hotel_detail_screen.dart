@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:travel_app_ytb/core/constants/color_palatte.dart';
 import 'package:travel_app_ytb/core/constants/dismention_constants.dart';
@@ -79,7 +80,7 @@ class _HotelDetailScreenState extends State<HotelDetailScreen> {
                 LocationHelper()
                     .getGeoPointFromAddress(_hotelModel?.address ?? "")
                     .then((position) => {
-                      debugPrint("79 hotel detail $position"),
+                          debugPrint("79 hotel detail $position"),
                           setState(() {
                             _hotelModel?.position =
                                 LatLng(position.latitude, position.longitude);
@@ -245,17 +246,15 @@ class _HotelDetailScreenState extends State<HotelDetailScreen> {
                                                   MainAxisAlignment
                                                       .spaceBetween,
                                               children: [
-                                                Text(
-                                                  _hotelModel?.name ?? '',
-                                                  style: TextStyles.defaultStyle
-                                                      .bold.blackTextColor
-                                                      .setTextSize(
-                                                          kDefaultTextSize *
-                                                              1.1),
-                                                ),
-                                                Row(children: [
-                                                  Text(
-                                                    '\$${_hotelModel?.priceInfo}',
+                                                ConstrainedBox(
+                                                  constraints: BoxConstraints(
+                                                      maxWidth:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.6),
+                                                  child: Text(
+                                                    _hotelModel?.name ?? '',
                                                     style: TextStyles
                                                         .defaultStyle
                                                         .bold
@@ -264,18 +263,33 @@ class _HotelDetailScreenState extends State<HotelDetailScreen> {
                                                             kDefaultTextSize *
                                                                 1.1),
                                                   ),
-                                                  Text(
-                                                    '/night',
-                                                    style: TextStyles
-                                                        .defaultStyle
-                                                        .medium
-                                                        .medium
-                                                        .blackTextColor
-                                                        .setTextSize(
-                                                            kDefaultTextSize /
-                                                                2),
-                                                  ),
-                                                ])
+                                                ),
+                                                Wrap(
+                                                  direction: Axis.vertical,
+                                                  children: [
+                                                    Text(
+                                                      '\$${_hotelModel?.priceInfo}',
+                                                      style: TextStyles
+                                                          .defaultStyle
+                                                          .bold
+                                                          .blackTextColor
+                                                          .setTextSize(
+                                                              kDefaultTextSize *
+                                                                  1.1),
+                                                    ),
+                                                    Text(
+                                                      '/night',
+                                                      style: TextStyles
+                                                          .defaultStyle
+                                                          .medium
+                                                          .medium
+                                                          .blackTextColor
+                                                          .setTextSize(
+                                                              kDefaultTextSize /
+                                                                  2),
+                                                    ),
+                                                  ],
+                                                ),
                                               ],
                                             ),
                                             const SizedBox(
