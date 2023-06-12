@@ -12,6 +12,8 @@ import 'package:travel_app_ytb/helpers/loginManager/login_manager.dart';
 import 'package:travel_app_ytb/representation/controllers/login_screen_controller.dart';
 import 'package:travel_app_ytb/representation/screens/admin_screen.dart';
 import 'package:travel_app_ytb/representation/screens/forgot_password/forgot_password_screen.dart';
+import 'package:travel_app_ytb/representation/screens/home/home_screen.dart';
+import 'package:travel_app_ytb/representation/screens/hotelOwnerManager/owner_screen.dart';
 import 'package:travel_app_ytb/representation/screens/main_screen.dart';
 import 'package:travel_app_ytb/representation/screens/sign_up_screen.dart';
 import 'package:travel_app_ytb/representation/widgets/app_bar_container.dart';
@@ -206,6 +208,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           else if (value['data']['role_id'] == 1)
                             Navigator.popAndPushNamed(
                                 context, AdminScreen.routeName)
+                          else if (value['data']['role_id'] == 3)
+                            Navigator.popAndPushNamed(
+                                context, HotelOwnerScreen.routeName)
                           else
                             {
                               Navigator.popAndPushNamed(
@@ -380,8 +385,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           }
                                       }
                                   });
-                        }
-                        else {
+                        } else {
                           Loading.dismiss(context);
                         }
                       });

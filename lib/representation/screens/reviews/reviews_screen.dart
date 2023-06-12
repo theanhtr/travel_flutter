@@ -11,6 +11,7 @@ import 'package:travel_app_ytb/representation/screens/hotel_booking/search_hotel
 import 'package:travel_app_ytb/representation/screens/hotel_booking/select_date_screen.dart';
 import 'package:travel_app_ytb/representation/screens/hotel_booking/select_guest_room_screen.dart';
 import 'package:travel_app_ytb/representation/screens/reviews/reviews_controller.dart';
+import 'package:travel_app_ytb/representation/screens/reviews/reviews_filter_screen.dart';
 import 'package:travel_app_ytb/representation/widgets/app_bar_container.dart';
 import 'package:flutter/material.dart';
 import 'package:travel_app_ytb/representation/widgets/booking_hotel_tab_container.dart';
@@ -83,9 +84,30 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
     _initData(id);
 
     return AppBarContainer(
-      titleString: "Reviews",
+      titleString: LocalizationText.reviews,
       implementLeading: true,
       implementTrailing: true,
+      useFilter: true,
+      widget: ReviewsFilterScreen(
+        args: args,
+        getData: (data) {
+          _reviewsModel = data;
+          listCommentCardWidgets = [];
+          for (int i = 0; i < (_reviewsModel?.reviews?.length ?? 0); i++) {
+            listCommentCardWidgets.add(CommentCardWidget(
+                commentModel: _reviewsModel?.reviews![i] ?? CommentModel()));
+            if (i < (_reviewsModel?.reviews?.length ?? 0) - 1) {
+              listCommentCardWidgets.add(
+                SizedBox(
+                  height: kMediumPadding,
+                ),
+              );
+            }
+          }
+          ;
+          setState(() {});
+        },
+      ),
       child: _isLoading == false
           ? SingleChildScrollView(
               child: Column(children: [
@@ -108,11 +130,11 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                                 color: Colors.orange),
                           ),
                           Text(
-                            "of 5",
+                            "/5",
                             style: TextStyle(fontSize: 15),
                           ),
                           Text(
-                            "(${_reviewsModel?.countRating} Reviews)",
+                            "(${_reviewsModel?.countRating} ${LocalizationText.reviews})",
                             style: TextStyle(fontSize: 15),
                           ),
                         ],
@@ -155,7 +177,7 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                                   constraints: BoxConstraints(
                                       minWidth: 100, maxWidth: 100),
                                   child: Text(
-                                    "${_reviewsModel?.fiveStarRating} Reviews (${((_reviewsModel?.fiveStarRating ?? 0 / (_reviewsModel?.countRating == 0 ? 1 : (_reviewsModel?.countRating ?? 1))) * 100).toStringAsFixed(0)}%)",
+                                    "${_reviewsModel?.fiveStarRating} ${LocalizationText.reviews} (${((_reviewsModel?.fiveStarRating ?? 0 / (_reviewsModel?.countRating == 0 ? 1 : (_reviewsModel?.countRating ?? 1))) * 100).toStringAsFixed(0)}%)",
                                     style: TextStyle(fontSize: 11),
                                   ),
                                 ),
@@ -219,7 +241,7 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                                   constraints: BoxConstraints(
                                       minWidth: 100, maxWidth: 100),
                                   child: Text(
-                                    "${_reviewsModel?.fourStarRating} Reviews (${((_reviewsModel?.fourStarRating ?? 0 / (_reviewsModel?.countRating == 0 ? 1 : (_reviewsModel?.countRating ?? 1))) * 100).toStringAsFixed(0)}%)",
+                                    "${_reviewsModel?.fourStarRating} ${LocalizationText.reviews} (${((_reviewsModel?.fourStarRating ?? 0 / (_reviewsModel?.countRating == 0 ? 1 : (_reviewsModel?.countRating ?? 1))) * 100).toStringAsFixed(0)}%)",
                                     style: TextStyle(fontSize: 11),
                                   ),
                                 ),
@@ -286,7 +308,7 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                                   constraints: BoxConstraints(
                                       minWidth: 100, maxWidth: 100),
                                   child: Text(
-                                    "${_reviewsModel?.threeStarRating} Reviews (${((_reviewsModel?.threeStarRating ?? 0 / (_reviewsModel?.countRating == 0 ? 1 : (_reviewsModel?.countRating ?? 1))) * 100).toStringAsFixed(0)}%)",
+                                    "${_reviewsModel?.threeStarRating} ${LocalizationText.reviews} (${((_reviewsModel?.threeStarRating ?? 0 / (_reviewsModel?.countRating == 0 ? 1 : (_reviewsModel?.countRating ?? 1))) * 100).toStringAsFixed(0)}%)",
                                     style: TextStyle(fontSize: 11),
                                   ),
                                 ),
@@ -356,7 +378,7 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                                   constraints: BoxConstraints(
                                       minWidth: 100, maxWidth: 100),
                                   child: Text(
-                                    "${_reviewsModel?.twoStarRating} Reviews (${((_reviewsModel?.twoStarRating ?? 0 / (_reviewsModel?.countRating == 0 ? 1 : (_reviewsModel?.countRating ?? 1))) * 100).toStringAsFixed(0)}%)",
+                                    "${_reviewsModel?.twoStarRating} ${LocalizationText.reviews} (${((_reviewsModel?.twoStarRating ?? 0 / (_reviewsModel?.countRating == 0 ? 1 : (_reviewsModel?.countRating ?? 1))) * 100).toStringAsFixed(0)}%)",
                                     style: TextStyle(fontSize: 11),
                                   ),
                                 ),
@@ -429,7 +451,7 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                                   constraints: BoxConstraints(
                                       minWidth: 100, maxWidth: 100),
                                   child: Text(
-                                    "${_reviewsModel?.oneStarRating} Reviews (${((_reviewsModel?.oneStarRating ?? 0 / (_reviewsModel?.countRating == 0 ? 1 : (_reviewsModel?.countRating ?? 1))) * 100).toStringAsFixed(0)}%)",
+                                    "${_reviewsModel?.oneStarRating} ${LocalizationText.reviews} (${((_reviewsModel?.oneStarRating ?? 0 / (_reviewsModel?.countRating == 0 ? 1 : (_reviewsModel?.countRating ?? 1))) * 100).toStringAsFixed(0)}%)",
                                     style: TextStyle(fontSize: 11),
                                   ),
                                 ),

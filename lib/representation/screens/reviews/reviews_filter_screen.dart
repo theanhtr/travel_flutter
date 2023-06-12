@@ -1,230 +1,66 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:travel_app_ytb/core/utils/navigation_utils.dart';
-import 'package:travel_app_ytb/helpers/asset_helper.dart';
-import 'package:travel_app_ytb/helpers/filterManager/filter_manager.dart';
-import 'package:travel_app_ytb/helpers/translations/localization_text.dart';
-import 'package:travel_app_ytb/representation/controllers/search_hotels_screen_controller.dart';
-import 'package:travel_app_ytb/representation/models/hotel_model.dart';
-import 'package:travel_app_ytb/representation/screens/facility_hotel_screen.dart';
-import 'package:travel_app_ytb/representation/screens/hotel_detail/hotel_detail_screen.dart';
-import 'package:travel_app_ytb/representation/screens/sort_by_hotel_screen.dart';
-import 'package:travel_app_ytb/representation/widgets/app_bar_container.dart';
-import 'package:travel_app_ytb/representation/widgets/hotel_card_widget.dart';
+import 'package:jiffy/jiffy.dart';
 
 import '../../../core/constants/color_palatte.dart';
 import '../../../core/constants/dismention_constants.dart';
 import '../../../core/constants/textstyle_constants.dart';
-import '../../../core/utils/const_utils.dart';
+import '../../../helpers/asset_helper.dart';
+import '../../../helpers/filterManager/filter_manager.dart';
 import '../../../helpers/image_helper.dart';
-import '../../widgets/booking_hotel_tab_container.dart';
+import '../../../helpers/translations/localization_text.dart';
+import '../../models/comment_model.dart';
+import '../../models/reviews_model.dart';
 import '../../widgets/button_widget.dart';
 import '../../widgets/loading/loading.dart';
-import '../../widgets/slider.dart';
 
-class SearchHotelsScreen extends StatefulWidget {
-  const SearchHotelsScreen({super.key});
-
-  static const String routeName = '/search_hotels_screen';
-
-  @override
-  State<SearchHotelsScreen> createState() => _SearchHotelsScreenState();
-}
-
-class _SearchHotelsScreenState extends State<SearchHotelsScreen> {
-  final filterKey = GlobalKey<ButtonInDialogState>();
-  List<HotelModel> listHotel = [];
-  List<HotelCardWidget> listHotelCardWidget = [];
-  bool _isLoading = false;
-  bool _canLoadCardView = true;
-  List<dynamic> _hotels = [];
-  String _dateSelected = "";
-  int _guestCount = 1;
-  int _roomCount = 1;
-  SearchHotelsScreenController? _controller;
-  Map<String, dynamic> args = <String, dynamic>{};
-  bool _isFirst = true;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _controller = null;
-  }
-
-  Future<void> _setCardList() async {
-    for (var element in listHotel) {
-      await _controller?.getDistanceInformation(element.address ?? "").then(
-          (value) => {
-                listHotelCardWidget.add(HotelCardWidget(
-                  widthContainer: MediaQuery.of(context).size.width * 0.9,
-                  imageFilePath: element.imageFilePath ?? "",
-                  name: element.name ?? "",
-                  locationInfo: element.locationInfo ?? "",
-                  distanceInfo: "$value km" ?? "",
-                  starInfo: element.starInfo ?? 0.0,
-                  countReviews: element.countReviews ?? 0,
-                  priceInfo: element.priceInfo ?? "",
-                  ontap: () {
-                    NavigationUtils.navigate(
-                        context, HotelDetailScreen.routeName,
-                        arguments: {
-                          "hotelId": element.id,
-                          "distanceInfo": "$value km" ?? "",
-                          'dateSelected': _dateSelected,
-                          'guestCount': _guestCount,
-                          'roomCount': _roomCount,
-                        });
-                  },
-                )),
-              },
-          onError: (error) => {
-                listHotelCardWidget.add(HotelCardWidget(
-                  widthContainer: MediaQuery.of(context).size.width * 0.9,
-                  imageFilePath: element.imageFilePath ?? "",
-                  name: element.name ?? "",
-                  locationInfo: element.locationInfo ?? "",
-                  distanceInfo: element.distanceInfo ?? "",
-                  starInfo: element.starInfo ?? 0.0,
-                  countReviews: element.countReviews ?? 0,
-                  priceInfo: element.priceInfo ?? "",
-                  ontap: () {
-                    NavigationUtils.navigate(
-                        context, HotelDetailScreen.routeName,
-                        arguments: {
-                          "hotelId": element.id,
-                          "distanceInfo": "0",
-                          'dateSelected': _dateSelected,
-                          'guestCount': _guestCount,
-                          'roomCount': _roomCount,
-                        });
-                  },
-                )),
-              });
-    }
-  }
-
-  @override
-  AppBarContainer build(BuildContext context) {
-    _controller = SearchHotelsScreenController();
-    if (_isFirst) {
-      _isFirst = false;
-      args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
-      _hotels = args['listHotels'];
-      _dateSelected = args['dateSelected'];
-      _guestCount = args['guestCount'];
-      _roomCount = args['roomCount'];
-    }
-    if (_isLoading == false) {
-      _hotels.forEach((element) {
-        List<dynamic> images = element['images'];
-        String imagePath = "";
-        if (images.isEmpty) {
-          imagePath = ConstUtils.imgHotelDefault;
-        } else {
-          imagePath = element['images'][0]['path'] ?? "";
-        }
-        String address =
-            "${element['address']['specific_address']}, ${element['address']['sub_district']}, ${element['address']['district']}, ${element['address']['province']}";
-        double distanceInfo = 0;
-        listHotel.add(HotelModel(
-          id: element['id'],
-          imageFilePath: imagePath,
-          name: element['name'],
-          address: address,
-          locationInfo: element['address_id'].toString(),
-          distanceInfo: distanceInfo.toString(),
-          starInfo: element['rating_average'] + 0.0,
-          countReviews: element['count_review'],
-          priceInfo: "${element['min_price']} - ${element['max_price']}",
-        ));
-      });
-      _isLoading = true;
-    }
-
-    if (_canLoadCardView == true) {
-      _setCardList().then((value) => {setState(() {})});
-      _canLoadCardView = false;
-      return AppBarContainer(
-        titleString: LocalizationText.hotels,
-        implementLeading: true,
-        implementTrailing: true,
-        useFilter: true,
-        widget: ButtonInDialog(
-          key: filterKey,
-          args: args,
-          getData: (data) {
-            _hotels = data;
-            listHotel = [];
-            listHotelCardWidget = [];
-            _isLoading = false;
-            _canLoadCardView = true;
-            setState(() {});
-          },
-        ),
-        child: const SpinKitCircle(
-          color: Colors.black,
-          size: 64.0,
-        ),
-      );
-    }
-
-    return AppBarContainer(
-      titleString: LocalizationText.hotels,
-      implementLeading: true,
-      implementTrailing: true,
-      useFilter: true,
-      widget: ButtonInDialog(
-        key: filterKey,
-        args: args,
-        getData: (data) {
-          _hotels = data;
-          listHotel = [];
-          listHotelCardWidget = [];
-          _isLoading = false;
-          _canLoadCardView = true;
-          setState(() {});
-        },
-      ),
-      child: SingleChildScrollView(
-        child: Column(children: listHotelCardWidget),
-      ),
-    );
-  }
-}
-
-class ButtonInDialog extends StatefulWidget {
-  const ButtonInDialog(
+class ReviewsFilterScreen extends StatefulWidget {
+  const ReviewsFilterScreen(
       {super.key,
       this.args = const <String, dynamic>{},
       required this.getData});
 
   final Map<String, dynamic> args;
-  final Function(List<dynamic>) getData;
+  final Function(ReviewsModel) getData;
 
   @override
-  State<ButtonInDialog> createState() => ButtonInDialogState();
+  State<ReviewsFilterScreen> createState() => ReviewsFilterScreenState();
 }
 
-class ButtonInDialogState extends State<ButtonInDialog> {
-  final sliderKey = GlobalKey<MySliderAppState>();
-  var isYellow1 = true;
+class ReviewsFilterScreenState extends State<ReviewsFilterScreen> {
+  var isYellow1 = false;
   var isYellow2 = false;
   var isYellow3 = false;
   var isYellow4 = false;
   var isYellow5 = false;
-  String budgetFrom = "0";
-  String budgetTo = "9999";
-  String ratingAverage = "1";
-  String amenities = "";
-  String sortById = "1";
-  List<int> amenitiesResults = [];
-  int sortByIdResult = 1;
+  String ratingAverage = "";
+  String sortById = "12";
+  String typeId = "1";
+  List<_CheckBoxState> listCheckbox = [
+    _CheckBoxState(
+      facility: LocalizationText.all,
+      index: 1,
+      checkBoxValue: true,
+    ),
+    _CheckBoxState(
+      facility: LocalizationText.withComment,
+      index: 2,
+    ),
+    _CheckBoxState(
+      facility: LocalizationText.withPhotos,
+      index: 3,
+    ),
+  ];
+  List<_CheckBoxState> sortByList = [
+    _CheckBoxState(
+      facility: LocalizationText.highToLowScore,
+      index: 12,
+      checkBoxValue: true,
+    ),
+    _CheckBoxState(
+      facility: LocalizationText.lowToHighScore,
+      index: 13,
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -278,41 +114,95 @@ class ButtonInDialogState extends State<ButtonInDialog> {
                                 height: kDefaultPadding,
                               ),
                               Text(
-                                LocalizationText.budget,
+                                LocalizationText.type,
                                 style: TextStyles
                                     .defaultStyle.bold.blackTextColor
                                     .setTextSize(kDefaultTextSize - 2),
                               ),
                               const SizedBox(
-                                height: kMediumPadding * 1.5,
+                                height: kDefaultPadding,
                               ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Material(
-                                      color: const Color.fromARGB(
-                                          255, 240, 242, 246),
-                                      child: MySliderApp(
-                                        key: sliderKey,
-                                        initialFontSize: 20,
-                                        start: 0,
-                                        end: 9999,
-                                        unit: "\$",
-                                        divisions: 1000,
-                                        getBudget: (budgetFromT, budgetToT) {
-                                          budgetFrom = budgetFromT;
-                                          budgetTo = budgetToT;
-                                        },
+                              Column(children: [
+                                Column(
+                                  children: List.generate(
+                                    listCheckbox.length,
+                                    (index) => CheckboxListTile(
+                                      controlAffinity:
+                                          ListTileControlAffinity.leading,
+                                      contentPadding: EdgeInsets.zero,
+                                      dense: true,
+                                      title: Text(
+                                        listCheckbox[index].facility,
+                                        style: const TextStyle(
+                                          fontSize: 16.0,
+                                          color: Colors.black,
+                                        ),
                                       ),
+                                      value: listCheckbox[index].checkBoxValue,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          for (var element in listCheckbox) {
+                                            element.checkBoxValue = false;
+                                          }
+                                          listCheckbox[index].checkBoxValue =
+                                              true;
+                                          typeId =
+                                              "${listCheckbox[index].index}";
+                                        });
+                                      },
                                     ),
                                   ),
-                                ],
-                              ),
+                                )
+                              ]),
                               const SizedBox(
                                 height: kDefaultPadding,
                               ),
                               Text(
-                                LocalizationText.hotelClass,
+                                LocalizationText.sortBy,
+                                style: TextStyles
+                                    .defaultStyle.bold.blackTextColor
+                                    .setTextSize(kDefaultTextSize - 2),
+                              ),
+                              const SizedBox(
+                                height: kDefaultPadding,
+                              ),
+                              Column(children: [
+                                Column(
+                                  children: List.generate(
+                                    sortByList.length,
+                                    (index) => CheckboxListTile(
+                                      controlAffinity:
+                                          ListTileControlAffinity.leading,
+                                      contentPadding: EdgeInsets.zero,
+                                      dense: true,
+                                      title: Text(
+                                        sortByList[index].facility,
+                                        style: const TextStyle(
+                                          fontSize: 16.0,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                      value: sortByList[index].checkBoxValue,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          for (var element in sortByList) {
+                                            element.checkBoxValue = false;
+                                          }
+                                          sortByList[index].checkBoxValue =
+                                              true;
+                                          sortById =
+                                              "${sortByList[index].index}";
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                )
+                              ]),
+                              const SizedBox(
+                                height: kDefaultPadding,
+                              ),
+                              Text(
+                                LocalizationText.rating,
                                 style: TextStyles
                                     .defaultStyle.bold.blackTextColor
                                     .setTextSize(kDefaultTextSize - 2),
@@ -445,79 +335,7 @@ class ButtonInDialogState extends State<ButtonInDialog> {
                                 height: kMediumPadding,
                               ),
                               Column(
-                                children: [
-                                  BookingHotelTab(
-                                    icon: FontAwesomeIcons.suitcaseMedical,
-                                    title: LocalizationText.facilities,
-                                    description: '',
-                                    sizeItem: kDefaultIconSize / 1.5,
-                                    sizeText: kDefaultIconSize / 1.2,
-                                    primaryColor: const Color(0xffFE9C5E),
-                                    secondaryColor: const Color(0xffFE9C5E)
-                                        .withOpacity(0.2),
-                                    iconString: AssetHelper.wifiIcon,
-                                    useIconString: '',
-                                    bordered: '',
-                                    ontap: () async {
-                                      await Navigator.pushNamed(
-                                          context, FacilityHotel.routeName,
-                                          arguments: {
-                                            'oldAmenities': amenitiesResults,
-                                            'getData': (listCheckboxPosition,
-                                                amenitiesT) {
-                                              amenities = amenitiesT;
-                                              amenitiesResults =
-                                                  listCheckboxPosition;
-                                            },
-                                          });
-                                    },
-                                  ),
-                                  // const SizedBox(
-                                  //   height: kDefaultPadding,
-                                  // ),
-                                  // BookingHotelTab(
-                                  //   icon: FontAwesomeIcons.sort,
-                                  //   title: 'Property Type',
-                                  //   description: "",
-                                  //   sizeItem: kDefaultIconSize / 1.5,
-                                  //   sizeText: kDefaultIconSize / 1.2,
-                                  //   primaryColor: const Color.fromARGB(
-                                  //       255, 113, 228, 155),
-                                  //   secondaryColor:
-                                  //       const Color.fromARGB(255, 126, 235, 193)
-                                  //           .withOpacity(0.2),
-                                  //   iconString: AssetHelper.skyscraperIcon,
-                                  //   useIconString: '',
-                                  //   bordered: '',
-                                  // ),
-                                  const SizedBox(
-                                    height: kDefaultPadding,
-                                  ),
-                                  BookingHotelTab(
-                                    icon: FontAwesomeIcons.sort,
-                                    title: LocalizationText.sortBy,
-                                    description: "",
-                                    sizeItem: kDefaultIconSize / 1.5,
-                                    sizeText: kDefaultIconSize / 1.2,
-                                    primaryColor: const Color.fromARGB(
-                                        255, 113, 228, 155),
-                                    secondaryColor:
-                                        const Color.fromARGB(255, 126, 235, 193)
-                                            .withOpacity(0.2),
-                                    iconString: 'id',
-                                    ontap: () async {
-                                      await Navigator.pushNamed(
-                                          context, SortByHotel.routeName,
-                                          arguments: {
-                                            'oldSortById': sortByIdResult,
-                                            'getData': (sortByIdT) {
-                                              sortById = '$sortByIdT';
-                                              sortByIdResult = sortByIdT;
-                                            },
-                                          });
-                                    },
-                                  ),
-                                ],
+                                children: [],
                               ),
                               const SizedBox(
                                 height: kMediumPadding,
@@ -526,29 +344,95 @@ class ButtonInDialogState extends State<ButtonInDialog> {
                                 title: LocalizationText.apply,
                                 ontap: () {
                                   Loading.show(context);
+                                  List listComment;
+                                  List<CommentModel> listCommentModel = [];
+                                  List<String> listImageDetailPath = [];
+                                  num startInfo;
                                   FilterManager()
-                                      .filterHotels(
-                                          widget.args['selectedProvinceValue']
-                                                  ['id']
-                                              .toString(),
-                                          widget.args['selectedDistrictValue']
-                                                  ['id']
-                                              .toString(),
-                                          widget
-                                              .args['selectedSubDistrictValue']
-                                                  ['id']
-                                              .toString(),
-                                          budgetFrom,
-                                          budgetTo,
-                                          ratingAverage,
-                                          amenities,
-                                          sortById)
+                                      .filterReviews(
+                                        "${widget.args['id']}",
+                                        typeId,
+                                        sortById,
+                                        ratingAverage,
+                                      )
                                       .then((value) => {
                                             Loading.dismiss(context),
                                             debugPrint("status $value"),
                                             if (value['success'] == true)
                                               {
-                                                widget.getData(value['data']),
+                                                listComment = value['data']
+                                                    ['reviews'] as List,
+                                                for (var element in listComment)
+                                                  {
+                                                    listImageDetailPath = [],
+                                                    for (var elementI
+                                                        in element['images'])
+                                                      {
+                                                        listImageDetailPath.add(
+                                                            elementI['path']),
+                                                      },
+                                                    listCommentModel
+                                                        .add(CommentModel(
+                                                      id: element['id'],
+                                                      comment:
+                                                          element['comment'],
+                                                      starRating: element[
+                                                          'star_rating'],
+                                                      countLike:
+                                                          element['count_like'],
+                                                      countDislike: element[
+                                                          'count_dislike'],
+                                                      userId:
+                                                          element['user_id'],
+                                                      hotelId:
+                                                          element['hotel_id'],
+                                                      typeRoomId: element[
+                                                          'type_room_id'],
+                                                      typeRoomName: element[
+                                                          'type_room_name'],
+                                                      userName:
+                                                          element['user_name'],
+                                                      userAvatar: element[
+                                                          'user_avatar'],
+                                                      listImageDetailPath:
+                                                          listImageDetailPath,
+                                                      updatedAt: Jiffy.parse(
+                                                              element[
+                                                                  'updated_at'])
+                                                          .fromNow(),
+                                                      isLike:
+                                                          element['is_like'],
+                                                      isReport:
+                                                          element['is_report'],
+                                                    )),
+                                                  },
+                                                startInfo = value['data'][
+                                                                'rating_average']
+                                                            .runtimeType ==
+                                                        int
+                                                    ? value['data']
+                                                            ['rating_average']
+                                                        as int
+                                                    : value['data']
+                                                            ['rating_average']
+                                                        as double,
+                                                widget.getData(ReviewsModel(
+                                                  ratingAverage:
+                                                      startInfo.toDouble(),
+                                                  countRating: value['data']
+                                                      ['count_rating'],
+                                                  oneStarRating: value['data']
+                                                      ['one_star_rating'],
+                                                  twoStarRating: value['data']
+                                                      ['two_star_rating'],
+                                                  threeStarRating: value['data']
+                                                      ['three_star_rating'],
+                                                  fourStarRating: value['data']
+                                                      ['four_star_rating'],
+                                                  fiveStarRating: value['data']
+                                                      ['five_star_rating'],
+                                                  reviews: listCommentModel,
+                                                )),
                                                 Navigator.pop(context),
                                               }
                                             else if (value['result'] ==
@@ -652,19 +536,22 @@ class ButtonInDialogState extends State<ButtonInDialog> {
                               ButtonWidget(
                                 title: LocalizationText.reset,
                                 ontap: () {
-                                  budgetFrom = "0";
-                                  budgetTo = "9999";
-                                  sliderKey.currentState?.reset();
-                                  ratingAverage = "1";
-                                  isYellow1 = true;
+                                  typeId = "1";
+                                  for (var element in listCheckbox) {
+                                    element.checkBoxValue = false;
+                                  }
+                                  listCheckbox[0].checkBoxValue = true;
+                                  sortById = "12";
+                                  for (var element in sortByList) {
+                                    element.checkBoxValue = false;
+                                  }
+                                  sortByList[0].checkBoxValue = true;
+                                  ratingAverage = "";
+                                  isYellow1 = false;
                                   isYellow2 = false;
                                   isYellow3 = false;
                                   isYellow4 = false;
                                   isYellow5 = false;
-                                  amenities = "";
-                                  sortById = "1";
-                                  amenitiesResults = [];
-                                  sortByIdResult = 1;
                                   setState(() {});
                                 },
                               ),
@@ -689,4 +576,15 @@ class ButtonInDialogState extends State<ButtonInDialog> {
       },
     );
   }
+}
+
+class _CheckBoxState {
+  final String facility;
+  final int index;
+  bool checkBoxValue;
+
+  _CheckBoxState(
+      {required this.facility,
+      required this.index,
+      this.checkBoxValue = false});
 }

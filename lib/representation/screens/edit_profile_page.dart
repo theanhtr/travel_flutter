@@ -126,7 +126,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   child: UploadIamge(
                     isEdit: imageFileUpdate != null ? true : false,
                     imagePath: imageFileUpdate?.path ??
-                        widget.log.userModelProfile.photoUrl.toString() ??
+                        widget.log.userModelProfile.photoUrl ??
                         ConstUtils.defaultImageAvatar,
                     onchange: (XFile file) => {
                       setState(
@@ -278,7 +278,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 desc: response.data['message'],
                                 btnOkOnPress: () {
                                   if (LocalStorageHelper.getValue("roleId") ==
-                                      1) {
+                                          1 ||
+                                      LocalStorageHelper.getValue("roleId") ==
+                                          3) {
                                     setState(() {});
                                     argss['reloadProfile']();
                                   } else {
@@ -294,40 +296,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   }
                                 },
                               ).show();
-
-                              // showDialog(
-                              //   context: context,
-                              //   builder: (BuildContext context) => AlertDialog(
-                              //     title: Text(LocalizationText.ok),
-                              //     content: Container(
-                              //       height: 120.0,
-                              //       color: Colors.yellow,
-                              //       child: Column(
-                              //         crossAxisAlignment:
-                              //             CrossAxisAlignment.start,
-                              //         children: [
-                              //           Text(response.data['message'])
-                              //         ],
-                              //       ),
-                              //     ),
-                              //     actions: <Widget>[
-                              //       TextButton(
-                              //         onPressed: () => {
-                              //           Navigator.pushAndRemoveUntil(
-                              //             context,
-                              //             MaterialPageRoute(
-                              //                 builder: (context) =>
-                              //                     const MainScreen(
-                              //                       currentIndex: 3,
-                              //                     )),
-                              //             (Route<dynamic> route) => false,
-                              //           ),
-                              //         },
-                              //         child: Text(LocalizationText.ok),
-                              //       ),
-                              //     ],
-                              //   ),
-                              // );
                             } else if (response.data['success'] == false) {
                               Loading.dismiss(context);
                               AwesomeDialog(
@@ -338,33 +306,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 desc: response.data['message'],
                                 btnOkOnPress: () {},
                               ).show();
-                              // showDialog(
-                              //   context: context,
-                              //   builder: (BuildContext context) => AlertDialog(
-                              //     title: Text(LocalizationText.errPassOrEmail),
-                              //     content: Container(
-                              //       height: 120.0,
-                              //       color: Colors.yellow,
-                              //       child: Column(
-                              //         crossAxisAlignment:
-                              //             CrossAxisAlignment.start,
-                              //         children: [
-                              //           response?.data['data'] != null
-                              //               ? Text(' ${response?.data['data']}')
-                              //               : Text(
-                              //                   '${LocalizationText.email}: ${response?.data['message']}'),
-                              //         ],
-                              //       ),
-                              //     ),
-                              //     actions: <Widget>[
-                              //       TextButton(
-                              //         onPressed: () => Navigator.pop(
-                              //             context, LocalizationText.cancel),
-                              //         child: Text(LocalizationText.ok),
-                              //       ),
-                              //     ],
-                              //   ),
-                              // );
                             }
                           }
                           Loading.dismiss(context);
@@ -376,33 +317,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               'response dong 322: ${e.type} ${e.response?.statusCode}');
                           if (e.response != null) {
                             if (e.response?.data['success'] == true) {
-                              // showDialog(
-                              //   context: context,
-                              //   builder: (BuildContext context) => AlertDialog(
-                              //     title: Text(LocalizationText.ok),
-                              //     content: Container(
-                              //       height: 120.0,
-                              //       color: Colors.yellow,
-                              //       child: Column(
-                              //         crossAxisAlignment:
-                              //             CrossAxisAlignment.start,
-                              //         children: [
-                              //           Text(e.response?.data['message'])
-                              //         ],
-                              //       ),
-                              //     ),
-                              //     actions: <Widget>[
-                              //       TextButton(
-                              //         onPressed: () => {
-                              //           Navigator.popAndPushNamed(
-                              //               context, ProfilePage.routeName)
-                              //         },
-                              //         child: Text(LocalizationText.ok),
-                              //       ),
-                              //     ],
-                              //   ),
-                              // );
-
                               AwesomeDialog(
                                 context: context,
                                 dialogType: DialogType.success,
@@ -452,38 +366,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   },
                                 ).show();
                               }
-
-                              // showDialog(
-                              //   context: context,
-                              //   builder: (BuildContext context) => AlertDialog(
-                              //     title: Text(LocalizationText.errPassOrEmail),
-                              //     content: Container(
-                              //       height: 120.0,
-                              //       color: Colors.yellow,
-                              //       child: Column(
-                              //         crossAxisAlignment:
-                              //             CrossAxisAlignment.start,
-                              //         children: [
-                              //           e.response?.data['data'] != null
-                              //               ? Text(
-                              //                   ' ${e.response?.data['data']}')
-                              //               : Text(
-                              //                   ' ${e.response?.data['message'][0]}'),
-                              //         ],
-                              //       ),
-                              //     ),
-                              //     actions: <Widget>[
-                              //       TextButton(
-                              //         onPressed: () => Navigator.pop(
-                              //             context, LocalizationText.cancel),
-                              //         child: Text(LocalizationText.ok),
-                              //       ),
-                              //     ],
-                              //   ),
-                              // );
                             }
                           } else {
-                            // Something happened in setting up or sending the request that triggered an Error
                             print(e.requestOptions);
                             print(e.message.runtimeType);
                           }

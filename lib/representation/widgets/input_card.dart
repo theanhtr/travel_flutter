@@ -18,7 +18,14 @@ enum TypeInputCard {
   phoneNumber,
   verificationCode,
   roleId,
-  dateOfBirth
+  dateOfBirth,
+  roomName,
+  description,
+  price,
+  occupancy,
+  numberOfBeds,
+  roomSize,
+  numberOfRooms,
 }
 
 class InputCard extends StatefulWidget {
@@ -258,6 +265,140 @@ class _InputCardState extends State<InputCard> {
           },
         );
         break;
+
+        case TypeInputCard.roomName:
+        widgetToDisplay = TextField(
+          keyboardType: TextInputType.text,
+          controller: _textController,
+          decoration: InputDecoration(
+            labelText: LocalizationText.roomName,
+            border: InputBorder.none,
+            labelStyle: TextStyles.defaultStyle.blackTextColor.light
+                .setTextSize(kDefaultTextSize / 1.1),
+          ),
+          style: TextStyles.defaultStyle.blackTextColor.bold
+              .setTextSize(kDefaultTextSize * 1.2),
+          onChanged: (String query) {
+            value = _textController?.text;
+            widget.onchange(value);
+          },
+        );
+        break;
+
+        case TypeInputCard.numberOfRooms:
+        widgetToDisplay = TextField(
+          keyboardType: TextInputType.number,
+          controller: _textController,
+          decoration: InputDecoration(
+            labelText: LocalizationText.numberOfRooms,
+            border: InputBorder.none,
+            labelStyle: TextStyles.defaultStyle.blackTextColor.light
+                .setTextSize(kDefaultTextSize / 1.1),
+          ),
+          style: TextStyles.defaultStyle.blackTextColor.bold
+              .setTextSize(kDefaultTextSize * 1.2),
+          onChanged: (String query) {
+            value = _textController?.text;
+            widget.onchange(value);
+          },
+        );
+        break;
+
+        case TypeInputCard.description:
+        widgetToDisplay = TextField(
+          keyboardType: TextInputType.text,
+          controller: _textController,
+          decoration: InputDecoration(
+            labelText: LocalizationText.description,
+            border: InputBorder.none,
+            labelStyle: TextStyles.defaultStyle.blackTextColor.light
+                .setTextSize(kDefaultTextSize / 1.1),
+          ),
+          style: TextStyles.defaultStyle.blackTextColor.bold
+              .setTextSize(kDefaultTextSize * 1.2),
+          onChanged: (String query) {
+            value = _textController?.text;
+            widget.onchange(value);
+          },
+        );
+        break;
+
+        case TypeInputCard.price:
+        widgetToDisplay = TextField(
+          keyboardType: TextInputType.number,
+          controller: _textController,
+          decoration: InputDecoration(
+            labelText: LocalizationText.price,
+            border: InputBorder.none,
+            labelStyle: TextStyles.defaultStyle.blackTextColor.light
+                .setTextSize(kDefaultTextSize / 1.1),
+          ),
+          style: TextStyles.defaultStyle.blackTextColor.bold
+              .setTextSize(kDefaultTextSize * 1.2),
+          onChanged: (String query) {
+            value = _textController?.text;
+            widget.onchange(value);
+          },
+        );
+        break;
+
+        case TypeInputCard.occupancy:
+        widgetToDisplay = TextField(
+          keyboardType: TextInputType.number,
+          controller: _textController,
+          decoration: InputDecoration(
+            labelText: LocalizationText.occupancy,
+            border: InputBorder.none,
+            labelStyle: TextStyles.defaultStyle.blackTextColor.light
+                .setTextSize(kDefaultTextSize / 1.1),
+          ),
+          style: TextStyles.defaultStyle.blackTextColor.bold
+              .setTextSize(kDefaultTextSize * 1.2),
+          onChanged: (String query) {
+            value = _textController?.text;
+            widget.onchange(value);
+          },
+        );
+        break;
+
+        case TypeInputCard.numberOfBeds:
+        widgetToDisplay = TextField(
+          keyboardType: TextInputType.number,
+          controller: _textController,
+          decoration: InputDecoration(
+            labelText: LocalizationText.numberOfBeds,
+            border: InputBorder.none,
+            labelStyle: TextStyles.defaultStyle.blackTextColor.light
+                .setTextSize(kDefaultTextSize / 1.1),
+          ),
+          style: TextStyles.defaultStyle.blackTextColor.bold
+              .setTextSize(kDefaultTextSize * 1.2),
+          onChanged: (String query) {
+            value = _textController?.text;
+            widget.onchange(value);
+          },
+        );
+        break;
+
+        case TypeInputCard.roomSize:
+        widgetToDisplay = TextField(
+          keyboardType: TextInputType.number,
+          controller: _textController,
+          decoration: InputDecoration(
+            labelText: LocalizationText.roomSize,
+            border: InputBorder.none,
+            labelStyle: TextStyles.defaultStyle.blackTextColor.light
+                .setTextSize(kDefaultTextSize / 1.1),
+          ),
+          style: TextStyles.defaultStyle.blackTextColor.bold
+              .setTextSize(kDefaultTextSize * 1.2),
+          onChanged: (String query) {
+            value = _textController?.text;
+            widget.onchange(value);
+          },
+        );
+        break;
+
       default:
         widgetToDisplay = Text('Other');
     }
