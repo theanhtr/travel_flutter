@@ -25,12 +25,11 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
   void initState() {
     super.initState();
     OrderHistoryController().getAllHotelOrder().then((value) => {
-          setState(() {
-            debugPrint("25 $value");
-            isLoaded = false;
-            listOrder = value;
-          }),
-        });
+      setState(() {
+        isLoaded = false;
+        listOrder = value;
+      }),
+    });
   }
 
   @override
@@ -41,37 +40,42 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
         child: isLoaded == true ? Loading.centerLoadingWidget : ListView(
             children: listOrder
                 .map((e) => Column(
-                      children: [
-                        OrderHistoryItem(
-                          onTap: () {
-                            Navigator.pushNamed(
-                                context, HotelDetailFromOrderHistoryScreen.routeName, arguments: {
-                              'hotelId': e.hotelId
-                            });
-                          },
-                          widthContainer:
-                              MediaQuery.of(context).size.width * 0.9,
-                          name: e.hotelName ?? "",
-                          typeRoomName: e.typeRoomName ?? "",
-                          roomSize: e.typeRoomSize ?? 0,
-                          priceInfo: e.totalPrice ?? 0,
-                          numberOfBed: e.typeRoomNumberOfBeds ?? 0,
-                          totalPrice: e.totalPrice ?? 0.0,
-                          roomCount: e.roomQuantity ?? 0,
-                          checkInDate: DateHelper().convertDateString(
-                                  dateString: e.checkInDate ?? "",
-                                  inputFormat: "yyyy-MM-dd HH:mm:ss") ??
-                              "",
-                          checkOutDate: DateHelper().convertDateString(
-                                  dateString: e.checkOUtDate ?? "",
-                                  inputFormat: "yyyy-MM-dd HH:mm:ss") ??
-                              "",
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        )
-                      ],
-                    ))
+              children: [
+                OrderHistoryItem(
+                  onTap: () {
+                    debugPrint("${e.orderStatusId}     ${e.orderStatusName}");
+                    Navigator.pushNamed(
+                        context, HotelDetailFromOrderHistoryScreen.routeName, arguments: {
+                      'hotelId': e.hotelId,
+                      'orderStatusId': e.orderStatusId,
+                    });
+                  },
+                  widthContainer:
+                  MediaQuery.of(context).size.width * 0.9,
+                  name: e.hotelName ?? "",
+                  orderStatusId: e.orderStatusId ?? 1,
+                  orderStatusName: e.orderStatusName ?? "",
+                  reviewed: e.reviewed ?? false,
+                  typeRoomName: e.typeRoomName ?? "",
+                  roomSize: e.typeRoomSize ?? 0,
+                  priceInfo: e.totalPrice ?? 0,
+                  numberOfBed: e.typeRoomNumberOfBeds ?? 0,
+                  totalPrice: e.totalPrice ?? 0.0,
+                  roomCount: e.roomQuantity ?? 0,
+                  checkInDate: DateHelper().convertDateString(
+                      dateString: e.checkInDate ?? "",
+                      inputFormat: "yyyy-MM-dd HH:mm:ss") ??
+                      "",
+                  checkOutDate: DateHelper().convertDateString(
+                      dateString: e.checkOUtDate ?? "",
+                      inputFormat: "yyyy-MM-dd HH:mm:ss") ??
+                      "",
+                ),
+                const SizedBox(
+                  height: 10,
+                )
+              ],
+            ))
                 .toList()));
   }
 }

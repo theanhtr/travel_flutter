@@ -122,6 +122,7 @@ class _HotelDetailFromOrderHistoryScreenState extends State<HotelDetailFromOrder
   Widget build(BuildContext context) {
     final Map<String, dynamic> args = NavigationUtils.getArguments(context);
     final id = args['hotelId'] as int;
+    final orderStatusId = args['orderStatusId'] as int;
     _initData(id);
     return Scaffold(
       body: _isLoading == false
@@ -402,6 +403,7 @@ class _HotelDetailFromOrderHistoryScreenState extends State<HotelDetailFromOrder
                                                   ReviewsScreen.routeName,
                                                   arguments: {
                                                     'id': id,
+                                                    'orderStatusId': orderStatusId
                                                   });
                                             },
                                           )

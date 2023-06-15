@@ -23,6 +23,9 @@ class OrderHistoryItem extends StatelessWidget {
     required this.typeRoomName,
     required this.totalPrice,
     required this.onTap,
+    required this.reviewed,
+    required this.orderStatusName,
+    required this.orderStatusId,
   });
 
   final double widthContainer;
@@ -36,6 +39,9 @@ class OrderHistoryItem extends StatelessWidget {
   final String checkOutDate;
   final double totalPrice;
   final Function() onTap;
+  final bool reviewed;
+  final String orderStatusName;
+  final int orderStatusId;
 
   int calculateNights() {
     String startDate = DateHelper().convertDateString(
@@ -52,9 +58,9 @@ class OrderHistoryItem extends StatelessWidget {
     debugPrint(
         "40 ${dateHelper.endDate?.difference(dateHelper.startDate ?? DateTime.now()).inDays}");
     return (dateHelper.endDate
-                ?.difference(dateHelper.startDate ?? DateTime.now())
-                .inDays ??
-            0) +
+        ?.difference(dateHelper.startDate ?? DateTime.now())
+        .inDays ??
+        0) +
         1;
   }
 
@@ -79,10 +85,15 @@ class OrderHistoryItem extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    name,
-                    style: TextStyles.defaultStyle.bold.blackTextColor
-                        .setTextSize(kDefaultTextSize * 1.2),
+                  ConstrainedBox(
+                    constraints: BoxConstraints(
+                      maxWidth: MediaQuery.of(context).size.width * 0.6,
+                    ),
+                    child: Text(
+                      name,
+                      style: TextStyles.defaultStyle.bold.blackTextColor
+                          .setTextSize(kDefaultTextSize * 1.2),
+                    ),
                   ),
                   Text(
                     typeRoomName,
@@ -119,8 +130,10 @@ class OrderHistoryItem extends StatelessWidget {
                   ),
                 ],
               ),
-              // TODO remove fake data
-              AlarmAnimation(size: 60,),
+              AlarmAnimation(
+                size: 60,
+                animated: reviewed == reviewed && orderStatusId == 8,
+              )
             ],
           ),
           const SizedBox(
@@ -212,7 +225,7 @@ class OrderHistoryItem extends StatelessWidget {
           ),
           Container(
             margin:
-                const EdgeInsets.symmetric(horizontal: kDefaultPadding / 2.5),
+            const EdgeInsets.symmetric(horizontal: kDefaultPadding / 2.5),
             alignment: Alignment.center,
             padding: const EdgeInsets.all(kDefaultPadding),
             width: MediaQuery.of(context).size.width * 0.9,
