@@ -128,10 +128,7 @@ class ReviewsController {
 
     // Đọc phản hồi
     var responseString = await response.stream.bytesToString();
-    if (response == null) {
-      return false;
-    }
-    debugPrint("128888 $responseString");
-    return true;
+    var dataResponse = jsonDecode(responseString);
+    return dataResponse['success'];
   }
 }

@@ -742,9 +742,22 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                           ButtonWidget(
                             title: "Submit",
                             ontap: () {
-                              _controller?.sendDataToServer(_textEditingController.text, listImageComment, ratingAverage, orderId).then((value) => {
-                                      debugPrint("$value"),
-                              });
+                              _controller
+                                  ?.sendDataToServer(
+                                      _textEditingController.text,
+                                      listImageComment,
+                                      ratingAverage,
+                                      orderId)
+                                  .then((value) => {
+                                        if (value == true)
+                                          {
+                                            // TODO check comment success
+                                          }
+                                        else
+                                          {
+// TODO check comment error
+                                          }
+                                      });
                             },
                           ),
                           const SizedBox(
