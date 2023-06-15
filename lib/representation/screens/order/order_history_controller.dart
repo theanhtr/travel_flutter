@@ -25,6 +25,7 @@ class OrderHistoryController {
 
 class OrderHotelModel {
   final int? id;
+  final int? orderId;
   final String? customerName;
   final String? emailContact;
   final int? phoneNumberContact;
@@ -41,6 +42,8 @@ class OrderHotelModel {
   final int? typeRoomSize;
   final int? typeRoomNumberOfBeds;
   final int? hotelId;
+  final bool? reviewed;
+  final String? orderStatusName;
 
   const OrderHotelModel({
     this.emailContact,
@@ -60,6 +63,9 @@ class OrderHotelModel {
     this.typeRoomSize,
     this.typeRoomNumberOfBeds,
     this.hotelId,
+    this.reviewed,
+    this.orderStatusName,
+    this.orderId,
   });
 
   static Future<List<OrderHotelModel>> convertJsonToOrderHotelModel(
@@ -73,6 +79,7 @@ class OrderHotelModel {
       dataResponse['data'].forEach((element) {
         listOrder.add(OrderHotelModel(
           id: element['id'],
+          orderId: element['order_id'],
           customerName: element['customer_name'],
           emailContact: element['email_contact'],
           phoneNumberContact: element['phone_number_contact'],
@@ -89,6 +96,8 @@ class OrderHotelModel {
           typeRoomSize: element['type_room_size'],
           typeRoomNumberOfBeds: element['type_room_number_of_beds'],
           hotelId: element['hotel_id'],
+          reviewed: element['reviewed'],
+          orderStatusName: element['order_status_name'],
         ));
       });
       return listOrder;
