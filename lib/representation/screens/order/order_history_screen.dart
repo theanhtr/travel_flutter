@@ -47,6 +47,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
                     Navigator.pushNamed(
                         context, HotelDetailFromOrderHistoryScreen.routeName, arguments: {
                       'hotelId': e.hotelId,
+                      'orderId': e.orderId,
                       'orderStatusId': e.orderStatusId,
                     });
                   },

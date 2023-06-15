@@ -106,6 +106,7 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
     final Map<String, dynamic> args =
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
     id = args['id'];
+    final orderId = args['orderId'];
     final orderStatusId = args['orderStatusId'] as int;
     _initData(id);
 
@@ -741,7 +742,7 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                           ButtonWidget(
                             title: "Submit",
                             ontap: () {
-                              _controller?.sendDataToServer(_textEditingController.text, listImageComment, ratingAverage, id).then((value) => {
+                              _controller?.sendDataToServer(_textEditingController.text, listImageComment, ratingAverage, orderId).then((value) => {
                                       debugPrint("$value"),
                               });
                             },
