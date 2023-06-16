@@ -248,11 +248,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           //[4] ADD IMAGE TO UPLOAD
                           // debugPrint('${formData.('last_name')}: lastname value');
                           if (imageFileUpdate != null) {
+                            String fileExtension = imageFileUpdate?.path.split('.').last ?? "jpg";
                             var file = await dio.MultipartFile.fromFile(
                                 imageFileUpdate!.path,
                                 filename: basename(imageFileUpdate!.path),
                                 contentType: MediaType(
-                                    "image", basename(imageFileUpdate!.path)));
+                                    "image", fileExtension));
 
                             formData.files.add(MapEntry('image', file));
                             debugPrint('${file}: lastnawe da');

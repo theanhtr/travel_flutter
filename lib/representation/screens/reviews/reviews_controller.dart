@@ -110,10 +110,11 @@ class ReviewsController {
 
     // Thêm các ảnh vào FormData
     for (var imagePath in listImageComment) {
+      String fileExtension = imagePath.path.split('.').last;
       var imageFile = await http.MultipartFile.fromPath(
         'images[]',
         imagePath.path,
-        contentType: MediaType('image', 'jpeg'), // Thay đổi MediaType tùy thuộc vào loại ảnh
+        contentType: MediaType('image', fileExtension),
       );
       request.files.add(imageFile);
     }
@@ -128,6 +129,10 @@ class ReviewsController {
 
     // Đọc phản hồi
     var responseString = await response.stream.bytesToString();
+    debugPrint(" 1311 $responseString");
+    if (response.statusCode != 200) {
+      return false;
+    }
     var dataResponse = jsonDecode(responseString);
     return dataResponse['success'];
   }

@@ -244,42 +244,54 @@ class _HotelDetailScreenState extends State<HotelDetailScreen> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
+                                            Column(
                                               children: [
-                                                Text(
-                                                  _hotelModel?.name ?? '',
-                                                  style: TextStyles.defaultStyle
-                                                      .bold.blackTextColor
-                                                      .setTextSize(
-                                                          kDefaultTextSize *
-                                                              1.1),
-                                                ),
-                                                Row(children: [
-                                                  Text(
-                                                    '\$${_hotelModel?.priceInfo}',
+                                                ConstrainedBox(
+                                                  constraints: BoxConstraints(
+                                                    maxWidth:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.8,
+                                                  ),
+                                                  child: Text(
+                                                    _hotelModel?.name ?? '',
                                                     style: TextStyles
                                                         .defaultStyle
                                                         .bold
                                                         .blackTextColor
                                                         .setTextSize(
                                                             kDefaultTextSize *
-                                                                1.1),
+                                                                1.5),
                                                   ),
-                                                  Text(
-                                                    '/night',
-                                                    style: TextStyles
-                                                        .defaultStyle
-                                                        .medium
-                                                        .medium
-                                                        .blackTextColor
-                                                        .setTextSize(
-                                                            kDefaultTextSize /
-                                                                2),
-                                                  ),
-                                                ])
+                                                ),
+                                                Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Text(
+                                                        '\$${_hotelModel?.priceInfo}',
+                                                        style: TextStyles
+                                                            .defaultStyle
+                                                            .bold
+                                                            .blackTextColor
+                                                            .setTextSize(
+                                                                kDefaultTextSize *
+                                                                    1.1),
+                                                      ),
+                                                      Text(
+                                                        '/night',
+                                                        style: TextStyles
+                                                            .defaultStyle
+                                                            .medium
+                                                            .medium
+                                                            .blackTextColor
+                                                            .setTextSize(
+                                                                kDefaultTextSize /
+                                                                    2),
+                                                      ),
+                                                    ])
                                               ],
                                             ),
                                             const SizedBox(

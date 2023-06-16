@@ -32,10 +32,12 @@ class HotelDetailFromOrderHistoryScreen extends StatefulWidget {
   static const String routeName = "/hotel_detail_from_order_history_screen";
 
   @override
-  State<HotelDetailFromOrderHistoryScreen> createState() => _HotelDetailFromOrderHistoryScreenState();
+  State<HotelDetailFromOrderHistoryScreen> createState() =>
+      _HotelDetailFromOrderHistoryScreenState();
 }
 
-class _HotelDetailFromOrderHistoryScreenState extends State<HotelDetailFromOrderHistoryScreen> {
+class _HotelDetailFromOrderHistoryScreenState
+    extends State<HotelDetailFromOrderHistoryScreen> {
   // late AnimationController controller;
   // late Animation<double> animation;
   String? name;
@@ -57,7 +59,7 @@ class _HotelDetailFromOrderHistoryScreenState extends State<HotelDetailFromOrder
   final PageController _pageController = PageController();
   int pageCount = 1;
   final StreamController<double> _pageStreamController =
-  StreamController<double>.broadcast();
+      StreamController<double>.broadcast();
 
   @override
   void initState() {
@@ -82,33 +84,35 @@ class _HotelDetailFromOrderHistoryScreenState extends State<HotelDetailFromOrder
     if (_isLoading == true) {
       await _controller?.getHotelDetail(id).then(
             (value) => {
-          print(
-              "Lenght ow hotel detail screen: ${value.listImageDetailPath} "),
-          setState(() {
-            _hotelModel = value;
-            LocationHelper()
-                .getGeoPointFromAddress(_hotelModel?.address ?? "")
-                .then((position) => {
-              debugPrint("79 hotel detail $position"),
+              print(
+                  "Lenght ow hotel detail screen: ${value.listImageDetailPath} "),
               setState(() {
-                _hotelModel?.position =
-                    LatLng(position.latitude, position.longitude);
-                isLike = _hotelModel?.isLike ?? true;
-              })
-            });
-            pageCount = value.listImageDetailPath?.length ?? 1;
-            _pageController.addListener(() {
-              _pageStreamController.add(_pageController.page!.toDouble());
-            });
-          }),
-          _isLoading = false,
-        },
-      );
-      SearchHotelsScreenController().getDistanceInformation(_hotelModel?.address ?? "").then((value) => {
-        setState((){
-          _hotelModel?.distanceInfo = value;
-        }),
-      });
+                _hotelModel = value;
+                LocationHelper()
+                    .getGeoPointFromAddress(_hotelModel?.address ?? "")
+                    .then((position) => {
+                          debugPrint("79 hotel detail $position"),
+                          setState(() {
+                            _hotelModel?.position =
+                                LatLng(position.latitude, position.longitude);
+                            isLike = _hotelModel?.isLike ?? true;
+                          })
+                        });
+                pageCount = value.listImageDetailPath?.length ?? 1;
+                _pageController.addListener(() {
+                  _pageStreamController.add(_pageController.page!.toDouble());
+                });
+              }),
+              _isLoading = false,
+            },
+          );
+      SearchHotelsScreenController()
+          .getDistanceInformation(_hotelModel?.address ?? "")
+          .then((value) => {
+                setState(() {
+                  _hotelModel?.distanceInfo = value;
+                }),
+              });
     }
   }
 
@@ -128,427 +132,436 @@ class _HotelDetailFromOrderHistoryScreenState extends State<HotelDetailFromOrder
     return Scaffold(
       body: _isLoading == false
           ? Stack(
-        alignment: Alignment.center,
-        children: [
-          PageView(
-            controller: _pageController,
-            children: [
-              for (String imagePath
-              in _hotelModel?.listImageDetailPath ?? [])
-                _buildItemHotelDetail(imagePath),
-            ],
-          ),
-          Container(
-            alignment: Alignment.topCenter,
-            padding: const EdgeInsets.symmetric(
-              vertical: kDefaultPadding * 4,
-              horizontal: kDefaultPadding * 2.5,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              alignment: Alignment.center,
               children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).pop([null]);
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(kItemPadding),
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(
-                          Radius.circular(kDefaultPadding)),
-                      color: Colors.white,
-                    ),
-                    child: const Icon(
-                      FontAwesomeIcons.arrowLeft,
-                      color: Colors.black,
-                      size: kDefaultIconSize,
-                    ),
+                PageView(
+                  controller: _pageController,
+                  children: [
+                    for (String imagePath
+                        in _hotelModel?.listImageDetailPath ?? [])
+                      _buildItemHotelDetail(imagePath),
+                  ],
+                ),
+                Container(
+                  alignment: Alignment.topCenter,
+                  padding: const EdgeInsets.symmetric(
+                    vertical: kDefaultPadding * 4,
+                    horizontal: kDefaultPadding * 2.5,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pop([null]);
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(kItemPadding),
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(kDefaultPadding)),
+                            color: Colors.white,
+                          ),
+                          child: const Icon(
+                            FontAwesomeIcons.arrowLeft,
+                            color: Colors.black,
+                            size: kDefaultIconSize,
+                          ),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          _controller?.likeHotel(id).then((value) => {
+                                if (value.runtimeType == bool)
+                                  {
+                                    isLike = value,
+                                    setState(() {}),
+                                  }
+                              });
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(kItemPadding),
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(kDefaultPadding)),
+                            color: Colors.white,
+                          ),
+                          child: Icon(
+                            FontAwesomeIcons.solidHeart,
+                            color:
+                                isLike ? Colors.red : const Color(0xffF5DCDC),
+                            size: kDefaultIconSize,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    _controller?.likeHotel(id).then((value) => {
-                      if (value.runtimeType == bool)
-                        {
-                          isLike = value,
-                          setState(() {}),
-                        }
-                    });
+                DraggableScrollableSheet(
+                  initialChildSize: 0.5,
+                  maxChildSize: 1,
+                  minChildSize: 0.25,
+                  builder: (context, scrollController) {
+                    return ListView(
+                      controller: scrollController,
+                      children: <Widget>[
+                        Container(
+                          alignment: Alignment.center,
+                          margin:
+                              const EdgeInsets.only(bottom: kDefaultPadding),
+                          child: SmoothPageIndicator(
+                              controller: _pageController,
+                              count: pageCount,
+                              effect: const ExpandingDotsEffect(
+                                dotWidth: kDefaultPadding / 2,
+                                dotHeight: kDefaultPadding / 2,
+                                activeDotColor: ColorPalette.primaryColor,
+                              )),
+                        ),
+                        Container(
+                          height: MediaQuery.of(context).size.height,
+                          padding: const EdgeInsets.all(kDefaultPadding),
+                          decoration: const BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(kDefaultPadding * 1.5),
+                                topRight:
+                                    Radius.circular(kDefaultPadding * 1.5),
+                              )),
+                          child: Column(
+                            children: [
+                              Container(
+                                alignment: Alignment.center,
+                                margin: const EdgeInsets.only(top: kMinPadding),
+                                child: Container(
+                                  height: 5,
+                                  width: 80,
+                                  decoration: BoxDecoration(
+                                    color: ColorPalette.primaryColor,
+                                    borderRadius:
+                                        BorderRadius.circular(kItemPadding),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: kDefaultPadding,
+                              ),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                        margin: const EdgeInsets.all(
+                                            kDefaultPadding),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Column(
+                                              children: [
+                                                ConstrainedBox(
+                                                  constraints: BoxConstraints(
+                                                    maxWidth: MediaQuery.of(context).size.width * 0.8,
+                                                  ),
+                                                  child: Text(
+                                                    _hotelModel?.name ?? '',
+                                                    style: TextStyles.defaultStyle
+                                                        .bold.blackTextColor
+                                                        .setTextSize(
+                                                            kDefaultTextSize *
+                                                                1.5),
+                                                  ),
+                                                ),
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: [
+                                                  Text(
+                                                    '\$${_hotelModel?.priceInfo}',
+                                                    style: TextStyles
+                                                        .defaultStyle
+                                                        .bold
+                                                        .blackTextColor
+                                                        .setTextSize(
+                                                            kDefaultTextSize *
+                                                                1.1),
+                                                  ),
+                                                  Text(
+                                                    '/night',
+                                                    style: TextStyles
+                                                        .defaultStyle
+                                                        .medium
+                                                        .medium
+                                                        .blackTextColor
+                                                        .setTextSize(
+                                                            kDefaultTextSize /
+                                                                2),
+                                                  ),
+                                                ])
+                                              ],
+                                            ),
+                                            const SizedBox(
+                                              height: kDefaultPadding,
+                                            ),
+                                            Wrap(
+                                              children: [
+                                                Container(
+                                                  margin: const EdgeInsets.only(
+                                                      right:
+                                                          kDefaultPadding / 6),
+                                                  child: const Icon(
+                                                    FontAwesomeIcons
+                                                        .locationDot,
+                                                    color: Color(0xFFF77777),
+                                                    size:
+                                                        kDefaultIconSize / 1.2,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  _hotelModel?.locationInfo ??
+                                                      '',
+                                                  style: TextStyles.defaultStyle
+                                                      .blackTextColor.medium
+                                                      .setTextSize(
+                                                          kDefaultTextSize /
+                                                              1.4),
+                                                ),
+                                                Text(
+                                                  ' -- ${_hotelModel?.distanceInfo} ${LocalizationText.fromDestination}',
+                                                  style: TextStyles.defaultStyle
+                                                      .blackTextColor.light
+                                                      .setTextSize(
+                                                          kDefaultTextSize /
+                                                              2.0),
+                                                )
+                                              ],
+                                            ),
+                                            const SizedBox(
+                                              height: kDefaultPadding,
+                                            ),
+                                            const Divider(
+                                              color: Color.fromARGB(
+                                                  255, 123, 22, 22),
+                                            ),
+                                            const SizedBox(
+                                              height: kDefaultPadding,
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  children: [
+                                                    Container(
+                                                      margin: const EdgeInsets
+                                                              .only(
+                                                          right:
+                                                              kDefaultPadding /
+                                                                  5),
+                                                      child: const Icon(
+                                                        FontAwesomeIcons
+                                                            .solidStar,
+                                                        color:
+                                                            Color(0xFFFFC107),
+                                                        size: kDefaultIconSize /
+                                                            1.2,
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      '${_hotelModel?.starInfo}/5',
+                                                      style: TextStyles
+                                                          .defaultStyle
+                                                          .blackTextColor
+                                                          .medium
+                                                          .setTextSize(
+                                                              kDefaultTextSize /
+                                                                  1.2),
+                                                    ),
+                                                    Text(
+                                                      ' (${_hotelModel?.countReviews} ${LocalizationText.reviews})',
+                                                      style: TextStyles
+                                                          .defaultStyle
+                                                          .blackTextColor
+                                                          .light
+                                                          .setTextSize(
+                                                              kDefaultTextSize /
+                                                                  1.2),
+                                                    )
+                                                  ],
+                                                ),
+                                                TapableWidget(
+                                                  child: Wrap(
+                                                    children: [
+                                                      Text(
+                                                        'See All',
+                                                        style: TextStyles
+                                                            .defaultStyle
+                                                            .bold
+                                                            .primaryTextColor
+                                                            .setTextSize(
+                                                                kDefaultTextSize),
+                                                      ),
+                                                      orderStatusId == 8
+                                                          ? const AlarmAnimation()
+                                                          : const SizedBox(),
+                                                    ],
+                                                  ),
+                                                  onTap: () {
+                                                    Navigator.pushNamed(context,
+                                                        ReviewsScreen.routeName,
+                                                        arguments: {
+                                                          'id': id,
+                                                          'orderId': orderId,
+                                                          'isCommented': false,
+                                                          'orderStatusId':
+                                                              orderStatusId
+                                                        });
+                                                  },
+                                                )
+                                              ],
+                                            ),
+                                            const SizedBox(
+                                              height: kDefaultPadding,
+                                            ),
+                                            const Divider(
+                                              color: Color.fromARGB(
+                                                  255, 123, 22, 22),
+                                            ),
+                                            const SizedBox(
+                                              height: kDefaultPadding,
+                                            ),
+                                            Text(
+                                              LocalizationText.information,
+                                              style: TextStyles.defaultStyle
+                                                  .bold.blackTextColor
+                                                  .setTextSize(
+                                                      kDefaultTextSize * 1),
+                                            ),
+                                            const SizedBox(
+                                              height: kDefaultPadding / 1.5,
+                                            ),
+                                            Text(
+                                              _hotelModel?.description ?? '',
+                                              softWrap: true,
+                                              textAlign: TextAlign.justify,
+                                              style: TextStyles.defaultStyle
+                                                  .regular.blackTextColor
+                                                  .setTextSize(
+                                                      kDefaultTextSize / 1.2),
+                                            ),
+                                            const SizedBox(
+                                              height: kDefaultPadding,
+                                            ),
+                                            Row(
+                                              children: List.generate(
+                                                  _hotelModel
+                                                          ?.services?.length ??
+                                                      0, (index) {
+                                                return ServiceLoadHelper
+                                                    .serviceWidget(
+                                                        _hotelModel?.services![
+                                                                index] ??
+                                                            "Error");
+                                              }),
+                                            ),
+                                            const SizedBox(
+                                              height: kDefaultPadding,
+                                            ),
+                                            Text(
+                                              LocalizationText.location,
+                                              style: TextStyles.defaultStyle
+                                                  .bold.blackTextColor
+                                                  .setTextSize(
+                                                      kDefaultTextSize * 1),
+                                            ),
+                                            const SizedBox(
+                                              height: kDefaultPadding / 1.5,
+                                            ),
+                                            Text(
+                                              _hotelModel?.locationSpecial ??
+                                                  '',
+                                              softWrap: true,
+                                              textAlign: TextAlign.justify,
+                                              style: TextStyles.defaultStyle
+                                                  .regular.blackTextColor
+                                                  .setTextSize(
+                                                      kDefaultTextSize / 1.2),
+                                            ),
+                                            const SizedBox(
+                                              height: kDefaultPadding,
+                                            ),
+                                            Container(
+                                                height: MediaQuery.of(context)
+                                                        .size
+                                                        .height *
+                                                    0.2,
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.9,
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(50),
+                                                ),
+                                                child: _hotelModel?.position !=
+                                                        null
+                                                    ? GoogleMapWidget(
+                                                        location: _hotelModel
+                                                                ?.position ??
+                                                            const LatLng(
+                                                                10.8231,
+                                                                106.6297),
+                                                      )
+                                                    : Builder(
+                                                        builder: (BuildContext
+                                                            loadGGContext) {
+                                                          return Container(
+                                                            child: Loading
+                                                                .centerLoadingWidget,
+                                                          );
+                                                        },
+                                                      )),
+                                          ],
+                                        ))
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
+                    );
                   },
-                  child: Container(
-                    padding: const EdgeInsets.all(kItemPadding),
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(
-                          Radius.circular(kDefaultPadding)),
-                      color: Colors.white,
-                    ),
-                    child: Icon(
-                      FontAwesomeIcons.solidHeart,
-                      color:
-                      isLike ? Colors.red : const Color(0xffF5DCDC),
-                      size: kDefaultIconSize,
-                    ),
+                ),
+                Positioned(
+                  bottom: 20,
+                  child: SizedBox(
+                    height: 50,
+                    width: 200,
+                    child: LocalStorageHelper.getValue("roleId") != 1
+                        ? ButtonWidget(
+                            title: LocalizationText.reOrder,
+                            ontap: () {
+                              NavigationUtils.navigate(
+                                  context, ReOrderScreen.routeName,
+                                  arguments: {
+                                    'hotelId': _hotelModel?.id,
+                                  });
+                            },
+                          )
+                        : SizedBox(
+                            height: 0,
+                          ),
                   ),
                 ),
               ],
-            ),
-          ),
-          DraggableScrollableSheet(
-            initialChildSize: 0.5,
-            maxChildSize: 1,
-            minChildSize: 0.25,
-            builder: (context, scrollController) {
-              return ListView(
-                controller: scrollController,
-                children: <Widget>[
-                  Container(
-                    alignment: Alignment.center,
-                    margin:
-                    const EdgeInsets.only(bottom: kDefaultPadding),
-                    child: SmoothPageIndicator(
-                        controller: _pageController,
-                        count: pageCount,
-                        effect: const ExpandingDotsEffect(
-                          dotWidth: kDefaultPadding / 2,
-                          dotHeight: kDefaultPadding / 2,
-                          activeDotColor: ColorPalette.primaryColor,
-                        )),
-                  ),
-                  Container(
-                    height: MediaQuery.of(context).size.height,
-                    padding: const EdgeInsets.all(kDefaultPadding),
-                    decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(kDefaultPadding * 1.5),
-                          topRight:
-                          Radius.circular(kDefaultPadding * 1.5),
-                        )),
-                    child: Column(
-                      children: [
-                        Container(
-                          alignment: Alignment.center,
-                          margin: const EdgeInsets.only(top: kMinPadding),
-                          child: Container(
-                            height: 5,
-                            width: 80,
-                            decoration: BoxDecoration(
-                              color: ColorPalette.primaryColor,
-                              borderRadius:
-                              BorderRadius.circular(kItemPadding),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: kDefaultPadding,
-                        ),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                  margin: const EdgeInsets.all(
-                                      kDefaultPadding),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment
-                                            .spaceBetween,
-                                        children: [
-                                          Text(
-                                            _hotelModel?.name ?? '',
-                                            style: TextStyles.defaultStyle
-                                                .bold.blackTextColor
-                                                .setTextSize(
-                                                kDefaultTextSize *
-                                                    1.1),
-                                          ),
-                                          Row(children: [
-                                            Text(
-                                              '\$${_hotelModel?.priceInfo}',
-                                              style: TextStyles
-                                                  .defaultStyle
-                                                  .bold
-                                                  .blackTextColor
-                                                  .setTextSize(
-                                                  kDefaultTextSize *
-                                                      1.1),
-                                            ),
-                                            Text(
-                                              '/night',
-                                              style: TextStyles
-                                                  .defaultStyle
-                                                  .medium
-                                                  .medium
-                                                  .blackTextColor
-                                                  .setTextSize(
-                                                  kDefaultTextSize /
-                                                      2),
-                                            ),
-                                          ])
-                                        ],
-                                      ),
-                                      const SizedBox(
-                                        height: kDefaultPadding,
-                                      ),
-                                      Wrap(
-                                        children: [
-                                          Container(
-                                            margin: const EdgeInsets.only(
-                                                right:
-                                                kDefaultPadding / 6),
-                                            child: const Icon(
-                                              FontAwesomeIcons
-                                                  .locationDot,
-                                              color: Color(0xFFF77777),
-                                              size:
-                                              kDefaultIconSize / 1.2,
-                                            ),
-                                          ),
-                                          Text(
-                                            _hotelModel?.locationInfo ??
-                                                '',
-                                            style: TextStyles.defaultStyle
-                                                .blackTextColor.medium
-                                                .setTextSize(
-                                                kDefaultTextSize /
-                                                    1.4),
-                                          ),
-                                          Text(
-                                            ' -- ${_hotelModel?.distanceInfo} ${LocalizationText.fromDestination}',
-                                            style: TextStyles.defaultStyle
-                                                .blackTextColor.light
-                                                .setTextSize(
-                                                kDefaultTextSize /
-                                                    2.0),
-                                          )
-                                        ],
-                                      ),
-                                      const SizedBox(
-                                        height: kDefaultPadding,
-                                      ),
-                                      const Divider(
-                                        color: Color.fromARGB(
-                                            255, 123, 22, 22),
-                                      ),
-                                      const SizedBox(
-                                        height: kDefaultPadding,
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment
-                                            .spaceBetween,
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                margin: const EdgeInsets
-                                                    .only(
-                                                    right:
-                                                    kDefaultPadding /
-                                                        5),
-                                                child: const Icon(
-                                                  FontAwesomeIcons
-                                                      .solidStar,
-                                                  color:
-                                                  Color(0xFFFFC107),
-                                                  size: kDefaultIconSize /
-                                                      1.2,
-                                                ),
-                                              ),
-                                              Text(
-                                                '${_hotelModel?.starInfo}/5',
-                                                style: TextStyles
-                                                    .defaultStyle
-                                                    .blackTextColor
-                                                    .medium
-                                                    .setTextSize(
-                                                    kDefaultTextSize /
-                                                        1.2),
-                                              ),
-                                              Text(
-                                                ' (${_hotelModel?.countReviews} ${LocalizationText.reviews})',
-                                                style: TextStyles
-                                                    .defaultStyle
-                                                    .blackTextColor
-                                                    .light
-                                                    .setTextSize(
-                                                    kDefaultTextSize /
-                                                        1.2),
-                                              )
-                                            ],
-                                          ),
-                                          TapableWidget(
-                                            child: Wrap(
-                                              children: [
-                                                Text(
-                                                  'See All',
-                                                  style: TextStyles
-                                                      .defaultStyle
-                                                      .bold
-                                                      .primaryTextColor
-                                                      .setTextSize(
-                                                      kDefaultTextSize),
-                                                ),
-                                                // TODO remove fake data
-                                                const AlarmAnimation(),
-                                              ],
-                                            ),
-                                            onTap: () {
-                                              Navigator.pushNamed(context,
-                                                  ReviewsScreen.routeName,
-                                                  arguments: {
-                                                    'id': id,
-                                                    'orderId': orderId,
-                                                    'orderStatusId': orderStatusId
-                                                  });
-                                            },
-                                          )
-                                        ],
-                                      ),
-                                      const SizedBox(
-                                        height: kDefaultPadding,
-                                      ),
-                                      const Divider(
-                                        color: Color.fromARGB(
-                                            255, 123, 22, 22),
-                                      ),
-                                      const SizedBox(
-                                        height: kDefaultPadding,
-                                      ),
-                                      Text(
-                                        LocalizationText.information,
-                                        style: TextStyles.defaultStyle
-                                            .bold.blackTextColor
-                                            .setTextSize(
-                                            kDefaultTextSize * 1),
-                                      ),
-                                      const SizedBox(
-                                        height: kDefaultPadding / 1.5,
-                                      ),
-                                      Text(
-                                        _hotelModel?.description ?? '',
-                                        softWrap: true,
-                                        textAlign: TextAlign.justify,
-                                        style: TextStyles.defaultStyle
-                                            .regular.blackTextColor
-                                            .setTextSize(
-                                            kDefaultTextSize / 1.2),
-                                      ),
-                                      const SizedBox(
-                                        height: kDefaultPadding,
-                                      ),
-                                      Row(
-                                        children: List.generate(
-                                            _hotelModel
-                                                ?.services?.length ??
-                                                0, (index) {
-                                          return ServiceLoadHelper
-                                              .serviceWidget(
-                                              _hotelModel?.services![
-                                              index] ??
-                                                  "Error");
-                                        }),
-                                      ),
-                                      const SizedBox(
-                                        height: kDefaultPadding,
-                                      ),
-                                      Text(
-                                        LocalizationText.location,
-                                        style: TextStyles.defaultStyle
-                                            .bold.blackTextColor
-                                            .setTextSize(
-                                            kDefaultTextSize * 1),
-                                      ),
-                                      const SizedBox(
-                                        height: kDefaultPadding / 1.5,
-                                      ),
-                                      Text(
-                                        _hotelModel?.locationSpecial ??
-                                            '',
-                                        softWrap: true,
-                                        textAlign: TextAlign.justify,
-                                        style: TextStyles.defaultStyle
-                                            .regular.blackTextColor
-                                            .setTextSize(
-                                            kDefaultTextSize / 1.2),
-                                      ),
-                                      const SizedBox(
-                                        height: kDefaultPadding,
-                                      ),
-                                      Container(
-                                          height: MediaQuery.of(context)
-                                              .size
-                                              .height *
-                                              0.2,
-                                          width: MediaQuery.of(context)
-                                              .size
-                                              .width *
-                                              0.9,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                            BorderRadius.circular(50),
-                                          ),
-                                          child: _hotelModel?.position !=
-                                              null
-                                              ? GoogleMapWidget(
-                                            location: _hotelModel
-                                                ?.position ??
-                                                const LatLng(
-                                                    10.8231,
-                                                    106.6297),
-                                          )
-                                              : Builder(
-                                            builder: (BuildContext
-                                            loadGGContext) {
-                                              return Container(
-                                                child: Loading
-                                                    .centerLoadingWidget,
-                                              );
-                                            },
-                                          )),
-                                    ],
-                                  ))
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ],
-              );
-            },
-          ),
-          Positioned(
-            bottom: 20,
-            child: SizedBox(
-              height: 50,
-              width: 200,
-              child: LocalStorageHelper.getValue("roleId") != 1
-                  ? ButtonWidget(
-                title: LocalizationText.reOrder,
-                ontap: () {
-                  NavigationUtils.navigate(context, ReOrderScreen.routeName, arguments: {
-                    'hotelId': _hotelModel?.id,
-                  });
-                },
-              )
-                  : SizedBox(
-                height: 0,
-              ),
-            ),
-          ),
-        ],
-      )
+            )
           : const SpinKitCircle(
-        color: Colors.black,
-        size: 64.0,
-      ),
+              color: Colors.black,
+              size: 64.0,
+            ),
     );
   }
 }

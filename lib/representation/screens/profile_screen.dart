@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:travel_app_ytb/core/utils/const_utils.dart';
 import 'package:travel_app_ytb/helpers/local_storage_helper.dart';
@@ -17,14 +19,8 @@ import 'package:travel_app_ytb/representation/widgets/number_widget.dart';
 import 'package:travel_app_ytb/representation/widgets/profile_widget.dart';
 
 import '../../core/constants/color_palatte.dart';
+import '../../helpers/http/base_client.dart';
 import '../../routes.dart';
-
-// import 'package:user_profile_example/model/user.dart';
-// import 'package:user_profile_example/utils/user_preferences.dart';
-// import 'package:user_profile_example/widget/appbar_widget.dart';
-// import 'package:user_profile_example/widget/button_widget.dart';
-// import 'package:user_profile_example/widget/numbers_widget.dart';
-// import 'package:user_profile_example/widget/profile_widget.dart';
 
 class ProfilePage extends StatefulWidget {
   ProfilePage({super.key});
@@ -40,11 +36,26 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   bool _isLogOut = false;
+  bool _isNeedReview = false;
 
   Future<String> setUpUserModelAndMakeSureItHasInfor() async {
     await widget.log.setUserProfileModel();
-    print(widget.log.userModelProfile.photoUrl.toString());
+    await checkNeedReview().then((value) => {
+      _isNeedReview = value,
+    });
     return "hello";
+  }
+
+  Future<bool> checkNeedReview() async {
+    var response = await BaseClient(LoginManager().userModel.token ?? "")
+        .get('/orders/check-need-review').catchError((onError) {
+      return false;
+    });
+    if (response == null) {
+      return false;
+    }
+    var dataResponse = jsonDecode(response);
+    return dataResponse['data'];
   }
 
   @override
@@ -178,11 +189,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                     context, OrderHistoryScreen.routeName);
                               },
                             ),
+                            _isNeedReview == true ?
                             const Positioned(
                               right: 10,
-                              // TODO remove fake data
                               child: AlarmAnimation(),
-                            ),
+                            ) : const SizedBox(),
                           ],
                         ),
                       ],

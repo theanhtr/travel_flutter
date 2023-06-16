@@ -69,6 +69,19 @@ class _CommentCardWidgetState extends State<CommentCardWidget> {
                     context: context,
                     builder: (BuildContext context) {
                       return Scaffold(
+                        appBar: AppBar(
+                          backgroundColor: Colors.white,
+                          leading: IconButton(
+                            icon: const Icon(
+                              Icons.arrow_back_ios,
+                              color: Colors.black,
+                            ),
+                            onPressed: () {
+                              Navigator.of(context)
+                                  .pop();
+                            },
+                          ),
+                        ),
                         body: Center(
                             child: ClipRRect(
                           borderRadius: BorderRadius.circular(kMinPadding),

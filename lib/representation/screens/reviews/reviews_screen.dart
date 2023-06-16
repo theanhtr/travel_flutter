@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:image_picker/image_picker.dart';
@@ -8,10 +9,12 @@ import 'package:travel_app_ytb/core/constants/textstyle_constants.dart';
 import 'package:travel_app_ytb/representation/screens/reviews/reviews_controller.dart';
 import 'package:travel_app_ytb/representation/widgets/app_bar_container.dart';
 import 'package:travel_app_ytb/representation/widgets/button_widget.dart';
+import 'package:travel_app_ytb/representation/widgets/loading/loading.dart';
 import 'package:travel_app_ytb/representation/widgets/tapable_widget.dart';
 
 import '../../../helpers/asset_helper.dart';
 import '../../../helpers/image_helper.dart';
+import '../../../helpers/translations/localization_text.dart';
 import '../../models/comment_model.dart';
 import '../../models/reviews_model.dart';
 import '../../widgets/comment_card_wiget.dart';
@@ -42,6 +45,7 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
   var isYellow3 = false;
   var isYellow4 = false;
   var isYellow5 = false;
+  var isCommented = false;
 
   @override
   void initState() {
@@ -108,6 +112,7 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
     id = args['id'];
     final orderId = args['orderId'];
     final orderStatusId = args['orderStatusId'] as int;
+    isCommented = args['isCommented'];
     _initData(id);
 
     return AppBarContainer(
@@ -490,7 +495,7 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                 const SizedBox(
                   height: kMediumPadding,
                 ),
-                orderStatusId == 8
+                orderStatusId == 8 && isCommented == false
                     ? Column(
                         children: [
                           Row(
@@ -742,6 +747,7 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                           ButtonWidget(
                             title: "Submit",
                             ontap: () {
+                              Loading.show(context);
                               _controller
                                   ?.sendDataToServer(
                                       _textEditingController.text,
@@ -749,13 +755,44 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                                       ratingAverage,
                                       orderId)
                                   .then((value) => {
+                                    Loading.dismiss(context),
                                         if (value == true)
                                           {
-                                            // TODO check comment success
+                                            AwesomeDialog(
+                                              context: context,
+                                              dialogType: DialogType.success,
+                                              animType: AnimType.topSlide,
+                                              title: "Comment Success",
+                                              btnOkOnPress: () {
+                                                Navigator.popAndPushNamed(
+                                                    context, ReviewsScreen.routeName,
+                                                    arguments: {
+                                                      'id': id,
+                                                      'orderId': orderId,
+                                                      'isCommented': true,
+                                                      'orderStatusId': orderStatusId
+                                                    });
+                                              },
+                                            ).show()
                                           }
                                         else
                                           {
-// TODO check comment error
+                                            AwesomeDialog(
+                                              context: context,
+                                              dialogType: DialogType.error,
+                                              animType: AnimType.topSlide,
+                                              title: LocalizationText.errorWhenCallApi,
+                                              btnOkOnPress: () {
+                                                Navigator.popAndPushNamed(
+                                                    context, ReviewsScreen.routeName,
+                                                    arguments: {
+                                                      'id': id,
+                                                      'orderId': orderId,
+                                                      'isCommented': false,
+                                                      'orderStatusId': orderStatusId
+                                                    });
+                                              },
+                                            ).show()
                                           }
                                       });
                             },
