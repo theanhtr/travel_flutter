@@ -401,6 +401,9 @@ class _HotelDetailScreenState extends State<HotelDetailScreen> {
                                                         ReviewsScreen.routeName,
                                                         arguments: {
                                                           'id': id,
+                                                          'orderStatusId': 0,
+                                                          'isCommented': true,
+                                                          'orderId': 0,
                                                         });
                                                   },
                                                 )

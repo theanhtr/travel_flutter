@@ -87,7 +87,7 @@ class OrderHistoryItem extends StatelessWidget {
                 children: [
                   ConstrainedBox(
                     constraints: BoxConstraints(
-                      maxWidth: MediaQuery.of(context).size.width * 0.6,
+                      maxWidth: MediaQuery.of(context).size.width * 0.5,
                     ),
                     child: Text(
                       name,

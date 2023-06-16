@@ -162,29 +162,28 @@ class TypeRoomCardWidget extends StatelessWidget {
         const SizedBox(
           height: kDefaultPadding,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+        Column(
           children: [
             ButtonWidget(
               title: LocalizationText.updateTypeRoom,
               ontap: ontap,
             ),
             const SizedBox(
-              width: kMinPadding,
+              height: kMinPadding,
             ),
             ButtonWidget(
               title: LocalizationText.add,
               ontap: addFunction,
             ),
             const SizedBox(
-              width: kMinPadding,
+              height: kMinPadding,
             ),
             ButtonWidget(
               title: LocalizationText.changeImage,
               ontap: changeImageFunction,
             ),
             const SizedBox(
-              width: kMinPadding,
+              height: kMinPadding,
             ),
             ButtonWidget(
               title: LocalizationText.deleteTypeRoom,

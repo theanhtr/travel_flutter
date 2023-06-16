@@ -169,7 +169,7 @@ class AdminManager {
       case "Quản trị viên":
         roleid = 1;
         break;
-      case "Customer":
+      case "User":
         roleid = 2;
         break;
       case "Người dùng":

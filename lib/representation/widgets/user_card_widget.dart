@@ -95,51 +95,7 @@ class _UserCardWidgetState extends State<UserCardWidget> {
                     ),
                     Row(
                       children: [
-                        ButtonWidget(
-                          title: LocalizationText.deleteUser,
-                          ontap: () async {
-                            AwesomeDialog(
-                              context: context,
-                              dialogType: DialogType.error,
-                              animType: AnimType.topSlide,
-                              title: LocalizationText.aboutTodelete,
-                              desc: LocalizationText.confirmDeleteAccount,
-                              btnOkOnPress: () async {
-                                await _controller
-                                    .deleteUser(widget.email.toString())
-                                    .then((value) => {
-                                          if (value['success'] == true)
-                                            {
-                                              AwesomeDialog(
-                                                context: context,
-                                                dialogType: DialogType.success,
-                                                animType: AnimType.topSlide,
-                                                title: LocalizationText
-                                                    .deleteUserSuccess,
-                                                desc: LocalizationText.ok,
-                                                btnOkOnPress: () {
-                                                  widget.callback();
-                                                },
-                                              ).show()
-                                            }
-                                          else
-                                            {
-                                              // Loading.dismiss(context),
-                                              AwesomeDialog(
-                                                context: context,
-                                                dialogType: DialogType.error,
-                                                animType: AnimType.topSlide,
-                                                title: LocalizationText
-                                                    .errorWhenCallApi,
-                                                desc: value['message'],
-                                                btnOkOnPress: () {},
-                                              ).show()
-                                            },
-                                        });
-                              },
-                            ).show();
-                          },
-                        ),
+
                         ButtonWidget(
                           title: LocalizationText.changeRole,
                           ontap: () => showDialog<String>(
